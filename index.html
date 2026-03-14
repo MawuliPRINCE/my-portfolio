@@ -1,115 +1,620 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prince | Projects</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = { darkMode: 'class' }</script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Space Grotesk', sans-serif; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .fade-in { animation: fadeIn 0.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #3b82f6; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prince | Projects</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f5f2ee;
+      --surface: #edeae5;
+      --text: #0f0f0f;
+      --muted: #888;
+      --border: #d8d4ce;
+      --accent: #c84b2f;
+      --accent-light: #e8604040;
+      --card-bg: #ffffff;
+      --modal-bg: #f5f2ee;
+      --sidebar-bg: #0f0f0f;
+      --sidebar-text: #f5f2ee;
+    }
+
+    html.dark {
+      --bg: #0f0f0f;
+      --surface: #191919;
+      --text: #f0ece6;
+      --muted: #666;
+      --border: #2a2a2a;
+      --accent: #e8604a;
+      --accent-light: #e8604025;
+      --card-bg: #191919;
+      --modal-bg: #0f0f0f;
+      --sidebar-bg: #0a0a0a;
+      --sidebar-text: #f0ece6;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .shell { display: flex; flex-direction: row; min-height: 100vh; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 38%; max-width: 520px; min-width: 300px;
+      position: sticky; top: 0; height: 100vh;
+      background: var(--sidebar-bg); color: var(--sidebar-text);
+      display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0;
+    }
+
+    .sidebar-header {
+      padding: 1.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid #ffffff15; flex-shrink: 0;
+    }
+
+    .sidebar-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem; letter-spacing: 0.15em; opacity: 0.5;
+    }
+
+    .recents-count { font-size: 0.65rem; color: var(--accent); letter-spacing: 0.1em; }
+
+    .slides-wrap { flex: 1; position: relative; overflow: hidden; }
+
+    .slide {
+      position: absolute; inset: 0; opacity: 0;
+      transition: opacity 0.7s ease; cursor: pointer;
+    }
+    .slide.active { opacity: 1; }
+
+    .slide-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .slide-placeholder {
+      width: 100%; height: 100%; background: #1a1a1a;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .slide-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, #000000ee 0%, transparent 50%);
+    }
+
+    .slide-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; }
+
+    .slide-tag {
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.4rem; font-weight: 500;
+    }
+
+    .slide-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem; letter-spacing: 0.05em; line-height: 1; color: #fff; margin-bottom: 0.4rem;
+    }
+
+    .slide-subtitle { font-size: 0.78rem; color: #ffffff70; font-weight: 300; }
+
+    .slide-nav {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 10;
+      background: #ffffff15; border: 1px solid #ffffff20; color: #fff;
+      width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; backdrop-filter: blur(8px); transition: background 0.2s; font-size: 1rem;
+    }
+    .slide-nav:hover { background: #ffffff30; }
+    .slide-nav.prev { left: 1rem; }
+    .slide-nav.next { right: 1rem; }
+
+    .slide-dots {
+      position: absolute; bottom: 1.5rem; right: 2rem;
+      display: flex; gap: 0.4rem; z-index: 10;
+    }
+
+    .dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #ffffff40; cursor: pointer; transition: all 0.3s;
+    }
+    .dot.active { background: var(--accent); width: 18px; border-radius: 3px; }
+
+    .progress-bar {
+      position: absolute; bottom: 0; left: 0; height: 2px;
+      background: var(--accent); width: 0%; transition: width 0.1s linear; z-index: 10;
+    }
+
+    .spinner {
+      width: 32px; height: 32px; border: 2px solid #ffffff15;
+      border-top-color: var(--accent); border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .spinner-dark {
+      border: 2px solid var(--border); border-top-color: var(--accent);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── MAIN ── */
+    .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem; display: flex; align-items: center; gap: 1rem;
+      transition: background 0.3s;
+    }
+
+    .topbar-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; letter-spacing: 0.1em; flex-shrink: 0;
+    }
+
+    .filters { display: flex; gap: 0.4rem; overflow-x: auto; flex: 1; }
+    .filters::-webkit-scrollbar { display: none; }
+
+    .filter-btn {
+      font-family: 'DM Sans', sans-serif; font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase; padding: 0.4rem 0.9rem;
+      border: 1px solid var(--border); background: transparent; color: var(--muted);
+      cursor: pointer; white-space: nowrap; transition: all 0.15s;
+    }
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    .icon-btn {
+      width: 38px; height: 38px; border: 1px solid var(--border);
+      background: transparent; color: var(--text); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all 0.15s; font-size: 1rem;
+    }
+    .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── CARDS ── */
+    .projects-wrap { padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .project-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      cursor: pointer; overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      animation: fadeUp 0.5s ease both;
+    }
+    .project-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px #00000015;
+      border-color: var(--accent);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-image { width: 100%; aspect-ratio: 16/7; object-fit: cover; display: block; background: var(--surface); }
+
+    .card-image-placeholder {
+      width: 100%; aspect-ratio: 16/7; background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    }
+
+    .card-body { padding: 1.5rem; }
+
+    .card-meta { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.6rem; }
+
+    .card-year { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
+
+    .card-tag {
+      font-size: 0.6rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-light); padding: 2px 8px;
+    }
+
+    .card-featured {
+      font-size: 0.6rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      background: var(--accent); color: #fff; padding: 2px 8px;
+    }
+
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: 2rem;
+      letter-spacing: 0.05em; line-height: 1; margin-bottom: 0.5rem; transition: color 0.15s;
+    }
+    .project-card:hover .card-title { color: var(--accent); }
+
+    .card-subtitle { font-size: 0.82rem; color: var(--muted); font-weight: 300; margin-bottom: 1rem; }
+
+    .card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+    .tag-pill {
+      font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 9px; border: 1px solid var(--border); color: var(--muted);
+    }
+
+    .card-arrow {
+      float: right; font-size: 1.2rem; color: var(--muted);
+      transition: transform 0.2s, color 0.2s; margin-top: -1.5rem;
+    }
+    .project-card:hover .card-arrow { transform: translate(3px,-3px); color: var(--accent); }
+
+    .end-marker {
+      text-align: center; padding: 3rem;
+      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 100;
+      background: var(--modal-bg); display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s; overflow-y: auto;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal-topbar {
+      position: sticky; top: 0; z-index: 10;
+      background: var(--modal-bg); border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+
+    .modal-back {
+      font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); background: transparent; border: 1px solid var(--border);
+      padding: 0.45rem 1rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;
+      transition: all 0.15s; font-family: 'DM Sans', sans-serif;
+    }
+    .modal-back:hover { border-color: var(--accent); color: var(--accent); }
+
+    .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.1em; }
+
+    .modal-body { max-width: 1000px; margin: 0 auto; width: 100%; padding: 3rem 2rem; }
+
+    .modal-hero {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem); letter-spacing: 0.03em; line-height: 0.9; margin-bottom: 2rem;
+    }
+
+    .modal-meta-row {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 1rem;
+      margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border);
+    }
+
+    .modal-year { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+    .modal-tag {
+      font-size: 0.62rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-light); padding: 3px 10px;
+    }
+
+    .modal-link {
+      margin-left: auto; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--accent); text-decoration: none;
+      border: 1px solid var(--accent); padding: 0.4rem 1rem; transition: all 0.15s;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .modal-link:hover { background: var(--accent); color: #fff; }
+
+    .modal-grid {
+      display: grid; grid-template-columns: 1fr 300px; gap: 3rem; margin-bottom: 3rem;
+    }
+
+    .modal-description { font-size: 1rem; line-height: 1.8; font-weight: 300; }
+
+    .modal-info-list { display: flex; flex-direction: column; gap: 0; }
+
+    .modal-info-item { padding: 0.85rem 0; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.2rem; }
+
+    .modal-info-label { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+    .modal-info-value { font-size: 0.85rem; }
+
+    .modal-tags-wrap { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.3rem; }
+
+    .gallery-section-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem;
+      letter-spacing: 0.1em; margin-bottom: 1rem; color: var(--muted);
+    }
+
+    .modal-gallery {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;
+    }
+
+    .gallery-item {
+      aspect-ratio: 16/10; overflow: hidden;
+      background: var(--surface); border: 1px solid var(--border);
+    }
+    .gallery-item img, .gallery-item video {
+      width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s;
+    }
+    .gallery-item:hover img, .gallery-item:hover video { transform: scale(1.03); }
+
+    .state-box { padding: 5rem 2rem; text-align: center; color: var(--muted); }
+    .state-box h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.05em; color: var(--text); margin-bottom: 0.5rem; }
+    .state-box p { font-size: 0.8rem; }
+
+    @media (max-width: 768px) {
+      .shell { flex-direction: column; }
+      .sidebar { width: 100%; max-width: 100%; height: 60vw; min-height: 260px; position: relative; }
+      .modal-grid { grid-template-columns: 1fr; }
+      .modal-hero { font-size: 3rem; }
+      .projects-wrap { padding: 1rem; }
+      .topbar { padding: 0.75rem 1rem; }
+    }
+  </style>
 </head>
-<body class="bg-white dark:bg-zinc-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
+<body>
 
-    <div class="flex flex-col lg:flex-row min-h-screen">
+<div class="shell">
 
-        <!-- RECENTS -->
-        <div class="w-full lg:w-[35%] xl:w-[30%] h-[50vh] lg:h-screen sticky lg:top-0 bg-black text-white flex flex-col relative" onmouseenter="stopAutoSlide()" onmouseleave="startAutoSlide()">
-            <div class="p-6 border-b border-gray-800 font-bold tracking-wider text-xl uppercase bg-black/50 backdrop-blur-sm">Recents</div>
-            <div id="recents-container" class="flex-1 relative overflow-hidden bg-gray-900 flex items-center justify-center">
-                <div id="recents-loading" class="spinner"></div>
-            </div>
-            <button onclick="prevRecent()" class="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 hover:bg-white/20 rounded-full backdrop-blur-sm z-10"><i data-lucide="chevron-left" class="w-6 h-6"></i></button>
-            <button onclick="nextRecent()" class="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 hover:bg-white/20 rounded-full backdrop-blur-sm z-10"><i data-lucide="chevron-right" class="w-6 h-6"></i></button>
-            <div id="recents-dots" class="absolute bottom-8 left-0 right-0 flex justify-center gap-3 z-10"></div>
-            <div class="absolute top-0 left-0 h-1 bg-white/30 w-full z-20"><div id="progress-bar" class="h-full bg-white transition-all duration-5000 ease-linear w-0"></div></div>
-        </div>
-
-        <!-- PROJECTS -->
-        <div class="flex-1 flex flex-col">
-            <!-- HEADER WITH BACK ARROW -->
-            <div class="sticky top-0 bg-white/95 dark:bg-zinc-950/95 backdrop-blur border-b border-gray-100 dark:border-zinc-800 p-6 flex items-center justify-between gap-4 z-30">
-                <h1 class="text-2xl font-bold tracking-wider uppercase">Projects</h1>
-                <div id="filter-container" class="flex gap-3 overflow-x-auto no-scrollbar flex-1 justify-end"></div>
-                
-                <!-- Back Arrow to Main Portfolio -->
-                <a href="https://your-main-portfolio-url.com" class="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 border border-gray-200 dark:border-zinc-700">
-                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
-                </a>
-                
-                <!-- Theme Toggle -->
-                <button onclick="toggleTheme()" class="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 border border-gray-200 dark:border-zinc-700">
-                    <i data-lucide="moon" id="theme-icon" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <!-- Projects List -->
-            <div id="projects-list" class="px-6 py-12 max-w-5xl mx-auto w-full flex flex-col gap-16"></div>
-            <div class="py-12 text-center text-sm uppercase tracking-widest text-gray-400">End of list</div>
-        </div>
+  <!-- RECENTS SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-label">Recents</span>
+      <span class="recents-count" id="recents-count"></span>
     </div>
-
-    <!-- MODAL WITH BACK LINK INSIDE -->
-    <div id="project-modal" class="fixed inset-0 z-50 bg-white dark:bg-zinc-950 hidden flex-col overflow-y-auto">
-        <div class="sticky top-0 bg-white/90 dark:bg-zinc-950/90 backdrop-blur border-b border-gray-100 dark:border-zinc-800 p-6 flex items-center justify-between z-10">
-            <!-- Back to Main Portfolio inside modal -->
-            <a href="https://your-main-portfolio-url.com" class="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 border border-gray-200 dark:border-zinc-700">
-                <i data-lucide="arrow-left" class="w-5 h-5"></i>
-            </a>
-            <h2 id="modal-title" class="text-2xl font-bold uppercase flex-1 text-center">Project Title</h2>
-            <button onclick="closeModal()" class="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 border border-gray-200 dark:border-zinc-700">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-        </div>
-        <div id="modal-content" class="p-8 max-w-6xl mx-auto"></div>
+    <div class="slides-wrap" id="slides-wrap">
+      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+        <div class="spinner"></div>
+      </div>
     </div>
+    <button class="slide-nav prev" onclick="prevSlide()">&#8592;</button>
+    <button class="slide-nav next" onclick="nextSlide()">&#8594;</button>
+    <div class="slide-dots" id="slide-dots"></div>
+    <div class="progress-bar" id="progress-bar"></div>
+  </aside>
 
-    <script>
-        let projectsData = [];
-        let recentsData = [];
-        let currentRecentIndex = 0;
-        let activeFilter = 'All';
-        let slideInterval;
-        const SLIDE_DURATION = 5000;
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <span class="topbar-title">Projects</span>
+      <div class="filters no-scrollbar" id="filters"></div>
+      <button class="icon-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">☾</button>
+    </div>
+    <div class="projects-wrap" id="projects-wrap">
+      <div class="state-box">
+        <div class="spinner spinner-dark" style="margin:0 auto 1rem;"></div>
+        <p>Loading projects…</p>
+      </div>
+    </div>
+    <div class="end-marker">— End of list —</div>
+  </div>
+</div>
 
-        function showLoading() {
-            document.getElementById('projects-list').innerHTML = `<div class="py-32 text-center text-gray-400"><div class="spinner mx-auto mb-6"></div><p>Loading projects...</p></div>`;
-            document.getElementById('recents-loading').style.display = 'block';
-        }
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-topbar">
+    <button class="modal-back" onclick="closeModal()">&#8592; Back</button>
+    <span class="modal-title" id="modal-title"></span>
+    <button class="icon-btn" onclick="closeModal()">&#10005;</button>
+  </div>
+  <div class="modal-body" id="modal-body"></div>
+</div>
 
-        async function loadData() {
-            try {
-                const res = await fetch('projects.json');
-                projectsData = await res.json();
-                // Assume recents are part of projects.json or separate json — add if needed
-                renderFilters();
-                renderProjects();
-                document.getElementById('recents-loading').style.display = 'none';
-                renderRecents();
-                startAutoSlide();
-            } catch (err) {
-                console.error(err);
-                document.getElementById('projects-list').innerHTML = `<div class="py-32 text-center text-red-500">Error loading data: ${err.message}</div>`;
-            }
-        }
+<script>
+  const JSON_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/projects.json';
+  const SLIDE_MS = 5000;
 
-        // (add your full rendering functions for renderFilters, renderProjects, renderRecents, startAutoSlide, openModal, closeModal, toggleTheme, etc. from your original code)
+  let allProjects = [], filtered = [], recents = [];
+  let activeFilter = 'All';
+  let currentSlide = 0;
+  let rafId = null, progressStart = null;
 
-        window.onload = () => {
-            initTheme();
-            showLoading();
-            lucide.createIcons();
-            loadData();
-        };
-    </script>
+  // ── BOOT ─────────────────────────────────────────────────
+  window.onload = async () => {
+    initTheme();
+    try {
+      const res = await fetch(JSON_URL + '?t=' + Date.now());
+      if (!res.ok) throw new Error('fetch failed');
+      allProjects = await res.json();
+      recents = allProjects.filter(p => p.isRecent);
+      filtered = [...allProjects];
+      renderFilters();
+      renderProjects();
+      renderRecents();
+    } catch(e) {
+      document.getElementById('projects-wrap').innerHTML = `
+        <div class="state-box">
+          <h3>Could not load</h3>
+          <p>Make sure projects.json exists in your repo and GitHub Pages is enabled.</p>
+        </div>`;
+      document.getElementById('slides-wrap').innerHTML = `
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#ffffff20;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;">No data</div>`;
+    }
+  };
+
+  // ── THEME ────────────────────────────────────────────────
+  function initTheme() {
+    const saved = localStorage.getItem('theme') || 'light';
+    document.documentElement.className = saved;
+    document.getElementById('theme-btn').textContent = saved === 'dark' ? '☀' : '☾';
+  }
+
+  function toggleTheme() {
+    const isDark = document.documentElement.classList.contains('dark');
+    document.documentElement.className = isDark ? 'light' : 'dark';
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    document.getElementById('theme-btn').textContent = isDark ? '☾' : '☀';
+  }
+
+  // ── FILTERS ──────────────────────────────────────────────
+  function renderFilters() {
+    const tags = ['All', ...new Set(allProjects.flatMap(p => p.tags || []))];
+    document.getElementById('filters').innerHTML = tags.map(t => `
+      <button class="filter-btn ${t === activeFilter ? 'active' : ''}" onclick="setFilter('${esc(t)}')">${esc(t)}</button>
+    `).join('');
+  }
+
+  function setFilter(tag) {
+    activeFilter = tag;
+    filtered = tag === 'All' ? [...allProjects] : allProjects.filter(p => p.tags?.includes(tag));
+    renderFilters();
+    renderProjects();
+  }
+
+  // ── PROJECTS ─────────────────────────────────────────────
+  function renderProjects() {
+    const wrap = document.getElementById('projects-wrap');
+    if (!filtered.length) {
+      wrap.innerHTML = `<div class="state-box"><h3>Nothing here</h3><p>No projects match this filter.</p></div>`;
+      return;
+    }
+    wrap.innerHTML = filtered.map((p, i) => {
+      const cover = getCover(p);
+      return `
+        <div class="project-card" onclick="openModal('${esc(p.id)}')" style="animation-delay:${i*0.07}s">
+          ${cover
+            ? `<img class="card-image" src="${esc(cover)}" alt="${esc(p.title)}" loading="lazy"/>`
+            : `<div class="card-image-placeholder">No Image</div>`}
+          <div class="card-body">
+            <div class="card-meta">
+              ${p.year ? `<span class="card-year">${esc(p.year)}</span>` : ''}
+              ${p.tags?.[0] ? `<span class="card-tag">${esc(p.tags[0])}</span>` : ''}
+              ${p.isFeatured ? `<span class="card-featured">Featured</span>` : ''}
+            </div>
+            <div class="card-title">${esc(p.title || 'Untitled')}</div>
+            ${p.subtitle ? `<div class="card-subtitle">${esc(p.subtitle)}</div>` : ''}
+            <div class="card-tags">${(p.tags||[]).slice(1).map(t=>`<span class="tag-pill">${esc(t)}</span>`).join('')}</div>
+            <span class="card-arrow">&#8599;</span>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function getCover(p) {
+    if (!p.media?.length) return null;
+    return p.media[p.coverIndex ?? 0]?.url || p.media[0]?.url || null;
+  }
+
+  // ── RECENTS SLIDER ────────────────────────────────────────
+  function renderRecents() {
+    const wrap = document.getElementById('slides-wrap');
+    const dotsWrap = document.getElementById('slide-dots');
+    const countEl = document.getElementById('recents-count');
+
+    if (!recents.length) {
+      wrap.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#ffffff20;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;">No recents yet</div>`;
+      return;
+    }
+
+    countEl.textContent = recents.length + ' items';
+
+    wrap.innerHTML = recents.map((p, i) => {
+      const cover = getCover(p);
+      return `
+        <div class="slide ${i===0?'active':''}" onclick="openModal('${esc(p.id)}')">
+          ${cover
+            ? `<img class="slide-img" src="${esc(cover)}" alt="${esc(p.title)}" loading="lazy"/>`
+            : `<div class="slide-placeholder"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" opacity="0.15"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div>`}
+          <div class="slide-overlay"></div>
+          <div class="slide-info">
+            ${p.tags?.[0] ? `<div class="slide-tag">${esc(p.tags[0])}</div>` : ''}
+            <div class="slide-title">${esc(p.title || 'Untitled')}</div>
+            ${p.subtitle ? `<div class="slide-subtitle">${esc(p.subtitle)}</div>` : ''}
+          </div>
+        </div>`;
+    }).join('');
+
+    dotsWrap.innerHTML = recents.map((_,i) =>
+      `<div class="dot ${i===0?'active':''}" onclick="goSlide(${i})"></div>`
+    ).join('');
+
+    const sidebar = document.getElementById('sidebar');
+    sidebar.addEventListener('mouseenter', () => cancelAnimationFrame(rafId));
+    sidebar.addEventListener('mouseleave', () => {
+      const pct = parseFloat(document.getElementById('progress-bar')?.style.width || 0);
+      progressStart = performance.now() - (pct / 100 * SLIDE_MS);
+      animateProgress();
+    });
+
+    resetProgress();
+  }
+
+  function goSlide(index) {
+    document.querySelectorAll('.slide')[currentSlide]?.classList.remove('active');
+    document.querySelectorAll('.dot')[currentSlide]?.classList.remove('active');
+    currentSlide = ((index % recents.length) + recents.length) % recents.length;
+    document.querySelectorAll('.slide')[currentSlide]?.classList.add('active');
+    document.querySelectorAll('.dot')[currentSlide]?.classList.add('active');
+    resetProgress();
+  }
+
+  function prevSlide() { goSlide(currentSlide - 1); }
+  function nextSlide() { goSlide(currentSlide + 1); }
+
+  function resetProgress() {
+    cancelAnimationFrame(rafId);
+    if (recents.length <= 1) return;
+    progressStart = performance.now();
+    animateProgress();
+  }
+
+  function animateProgress() {
+    const pct = Math.min(((performance.now() - progressStart) / SLIDE_MS) * 100, 100);
+    const bar = document.getElementById('progress-bar');
+    if (bar) bar.style.width = pct + '%';
+    if (pct >= 100) { goSlide(currentSlide + 1); return; }
+    rafId = requestAnimationFrame(animateProgress);
+  }
+
+  // ── MODAL ────────────────────────────────────────────────
+  function openModal(id) {
+    const p = allProjects.find(x => x.id === id);
+    if (!p) return;
+
+    document.getElementById('modal-title').textContent = p.title || 'Project';
+    const media = (p.media || []).filter(m => m.url);
+
+    document.getElementById('modal-body').innerHTML = `
+      <div class="modal-hero">${esc(p.title || 'Untitled')}</div>
+      <div class="modal-meta-row">
+        ${p.year ? `<span class="modal-year">${esc(p.year)}</span>` : ''}
+        ${(p.tags||[]).map(t=>`<span class="modal-tag">${esc(t)}</span>`).join('')}
+        ${p.link ? `<a class="modal-link" href="${esc(p.link)}" target="_blank" rel="noopener">View Live &#8599;</a>` : ''}
+      </div>
+      <div class="modal-grid">
+        <div>
+          ${p.description
+            ? `<p class="modal-description">${esc(p.description).replace(/\n/g,'<br/>')}</p>`
+            : `<p class="modal-description" style="opacity:0.3">No description added.</p>`}
+        </div>
+        <div class="modal-info-list">
+          ${p.subtitle ? `<div class="modal-info-item"><span class="modal-info-label">Role</span><span class="modal-info-value">${esc(p.subtitle)}</span></div>` : ''}
+          ${p.year ? `<div class="modal-info-item"><span class="modal-info-label">Year</span><span class="modal-info-value">${esc(p.year)}</span></div>` : ''}
+          ${p.tags?.length ? `<div class="modal-info-item">
+            <span class="modal-info-label">Tags</span>
+            <div class="modal-tags-wrap">${p.tags.map(t=>`<span class="tag-pill">${esc(t)}</span>`).join('')}</div>
+          </div>` : ''}
+        </div>
+      </div>
+      ${media.length ? `
+        <p class="gallery-section-title">Gallery</p>
+        <div class="modal-gallery">
+          ${media.map(m=>`
+            <div class="gallery-item">
+              ${m.type==='video'
+                ? `<video src="${esc(m.url)}" muted loop playsinline autoplay></video>`
+                : `<img src="${esc(m.url)}" alt="" loading="lazy"/>`}
+            </div>`).join('')}
+        </div>` : ''}
+    `;
+
+    document.getElementById('modal').classList.add('open');
+    document.getElementById('modal').scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  function esc(s) {
+    return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+</script>
 </body>
 </html>
