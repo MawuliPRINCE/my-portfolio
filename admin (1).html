@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prince CMS — Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --border: #2a2a2a;
+      --accent: #e8ff47;
+      --accent2: #ff6b35;
+      --text: #f0f0f0;
+      --muted: #666;
+      --danger: #ff4444;
+      --success: #44ff88;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-display);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* ── LOGIN ── */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 440px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 3rem;
+      position: relative;
+    }
+
+    .login-box::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: -1px;
+      width: 40px; height: 40px;
+      border-top: 2px solid var(--accent);
+      border-left: 2px solid var(--accent);
+    }
+
+    .login-box::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; right: -1px;
+      width: 40px; height: 40px;
+      border-bottom: 2px solid var(--accent);
+      border-right: 2px solid var(--accent);
+    }
+
+    .login-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      margin-bottom: 0.5rem;
+    }
+
+    .login-title {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 2.5rem;
+      line-height: 1.1;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .field-group label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+
+    input[type="text"], input[type="password"], input[type="url"],
+    textarea, select {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      padding: 0.85rem 1rem;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+    textarea { resize: vertical; min-height: 100px; }
+
+    .btn {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+    }
+
+    .btn-primary { background: var(--accent); color: #000; width: 100%; }
+    .btn-primary:hover { background: #d4eb2a; }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--danger);
+      border: 1px solid var(--danger);
+      font-size: 0.7rem;
+      padding: 0.5rem 1rem;
+    }
+    .btn-danger:hover { background: var(--danger); color: #fff; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--accent2);
+      border: 1px solid var(--accent2);
+      font-size: 0.7rem;
+      padding: 0.5rem 1rem;
+    }
+    .btn-ghost:hover { background: var(--accent2); color: #fff; }
+
+    #login-error {
+      color: var(--danger);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .login-hint {
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      line-height: 1.9;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+    }
+    .login-hint a { color: var(--accent); text-decoration: none; }
+
+    /* ── APP ── */
+    #app { display: none; min-height: 100vh; flex-direction: column; }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem; height: 60px;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+
+    .topbar-brand { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; font-family: var(--font-mono); }
+    .topbar-brand span { color: var(--accent); }
+    .topbar-right { display: flex; align-items: center; gap: 1rem; }
+    .repo-info { font-size: 0.65rem; font-family: var(--font-mono); color: var(--muted); }
+    .repo-info b { color: var(--text); }
+
+    .publish-btn {
+      background: var(--accent); color: #000; border: none;
+      font-family: var(--font-display); font-weight: 800;
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.6rem 1.5rem; cursor: pointer; transition: all 0.15s; position: relative;
+    }
+    .publish-btn:hover { background: #d4eb2a; }
+    .publish-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .spinner-sm {
+      display: none; width: 14px; height: 14px;
+      border: 2px solid #00000040; border-top-color: #000;
+      border-radius: 50%; animation: spin 0.6s linear infinite;
+      position: absolute; right: 0.8rem; top: 50%; transform: translateY(-50%);
+    }
+
+    @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+
+    .app-body { display: grid; grid-template-columns: 260px 1fr; flex: 1; }
+
+    .sidebar {
+      background: var(--surface); border-right: 1px solid var(--border);
+      padding: 2rem 0; position: sticky; top: 60px;
+      height: calc(100vh - 60px); overflow-y: auto;
+      display: flex; flex-direction: column;
+    }
+
+    .sidebar-section { padding: 0 1.5rem; margin-bottom: 2rem; }
+
+    .sidebar-section-label {
+      font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--muted); font-family: var(--font-mono);
+      margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+    }
+
+    .project-list { display: flex; flex-direction: column; gap: 0.25rem; }
+
+    .project-item {
+      padding: 0.6rem 0.75rem; cursor: pointer;
+      border-left: 2px solid transparent; transition: all 0.15s;
+      display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+    }
+    .project-item:hover { background: var(--surface2); border-left-color: var(--border); }
+    .project-item.active { background: var(--surface2); border-left-color: var(--accent); }
+
+    .project-item-name {
+      font-size: 0.78rem; font-weight: 600;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1;
+    }
+
+    .project-item-tag {
+      font-size: 0.55rem; font-family: var(--font-mono); letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); background: var(--border); padding: 2px 6px; flex-shrink: 0;
+    }
+
+    .recent-badge {
+      background: var(--accent); color: #000;
+      font-size: 0.5rem; font-family: var(--font-mono); letter-spacing: 0.1em;
+      padding: 2px 5px; text-transform: uppercase; flex-shrink: 0;
+    }
+
+    .add-btn {
+      margin: 0 1.5rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.65rem 0.75rem; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);
+      border: 1px dashed var(--accent); background: transparent;
+      cursor: pointer; transition: all 0.15s; font-family: var(--font-display);
+    }
+    .add-btn:hover { background: var(--accent); color: #000; }
+
+    .main-content { padding: 2.5rem; overflow-y: auto; }
+
+    .section-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);
+    }
+
+    .section-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; }
+    .section-subtitle { font-size: 0.7rem; color: var(--muted); font-family: var(--font-mono); margin-top: 0.25rem; }
+
+    .editor-grid { display: grid; grid-template-columns: 1fr 320px; gap: 2rem; align-items: start; }
+
+    .editor-card {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem;
+    }
+
+    .editor-card-title {
+      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--accent); font-family: var(--font-mono);
+    }
+
+    .tags-display { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.25rem; }
+
+    .tag-chip {
+      background: var(--surface2); border: 1px solid var(--border);
+      font-size: 0.65rem; font-family: var(--font-mono); letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 3px 10px;
+      display: flex; align-items: center; gap: 0.4rem; cursor: pointer; transition: all 0.15s;
+    }
+    .tag-chip:hover { border-color: var(--danger); color: var(--danger); }
+
+    .media-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 0.5rem; }
+
+    .media-thumb {
+      aspect-ratio: 16/9; background: var(--surface2); border: 1px solid var(--border);
+      position: relative; overflow: hidden; cursor: pointer;
+    }
+    .media-thumb img, .media-thumb video { width: 100%; height: 100%; object-fit: cover; }
+
+    .media-thumb-remove {
+      position: absolute; top: 4px; right: 4px;
+      background: var(--danger); color: #fff; border: none;
+      width: 22px; height: 22px; font-size: 0.7rem;
+      cursor: pointer; display: none; align-items: center; justify-content: center;
+    }
+    .media-thumb:hover .media-thumb-remove { display: flex; }
+
+    .media-upload-area {
+      border: 1px dashed var(--border); padding: 1.5rem; text-align: center;
+      cursor: pointer; transition: all 0.15s; position: relative;
+    }
+    .media-upload-area:hover { border-color: var(--accent); }
+    .media-upload-area input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .media-upload-area p { font-size: 0.7rem; font-family: var(--font-mono); color: var(--muted); pointer-events: none; }
+
+    .upload-progress { display: none; margin-top: 0.75rem; }
+    .progress-bar { height: 2px; background: var(--border); width: 100%; margin-bottom: 0.5rem; }
+    .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.3s; }
+    .progress-label { font-size: 0.65rem; font-family: var(--font-mono); color: var(--muted); }
+
+    .toggle-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.75rem 0; border-bottom: 1px solid var(--border);
+    }
+    .toggle-row:last-child { border-bottom: none; }
+    .toggle-label { font-size: 0.78rem; font-weight: 600; }
+    .toggle-desc { font-size: 0.65rem; color: var(--muted); font-family: var(--font-mono); margin-top: 2px; }
+
+    .toggle { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; inset: 0; background: var(--border); cursor: pointer; transition: 0.2s; }
+    .toggle-slider::before {
+      content: ''; position: absolute;
+      width: 16px; height: 16px; left: 3px; bottom: 3px;
+      background: var(--muted); transition: 0.2s;
+    }
+    .toggle input:checked + .toggle-slider { background: var(--accent); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(18px); background: #000; }
+
+    #status-bar {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 0.75rem 2rem; font-size: 0.75rem; font-family: var(--font-mono);
+      z-index: 1000; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex; align-items: center; gap: 0.75rem; white-space: nowrap;
+    }
+    #status-bar.show { transform: translateX(-50%) translateY(0); }
+    #status-bar.success { border-left: 3px solid var(--success); }
+    #status-bar.error { border-left: 3px solid var(--danger); }
+    #status-bar.info { border-left: 3px solid var(--accent); }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .success .status-dot { background: var(--success); }
+    .error .status-dot { background: var(--danger); }
+    .info .status-dot { background: var(--accent); }
+
+    .empty-state { text-align: center; padding: 5rem 2rem; color: var(--muted); }
+    .empty-state h2 { font-size: 2rem; font-weight: 800; color: var(--text); margin-bottom: 0.5rem; }
+    .empty-state p { font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 2rem; }
+
+    .overlay {
+      position: fixed; inset: 0; background: #000000cc;
+      z-index: 200; display: none; align-items: center; justify-content: center;
+    }
+    .overlay.show { display: flex; }
+
+    .dialog {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 2.5rem; max-width: 400px; width: 90%; position: relative;
+    }
+    .dialog::before {
+      content: ''; position: absolute; top: -1px; left: -1px;
+      width: 30px; height: 30px;
+      border-top: 2px solid var(--danger); border-left: 2px solid var(--danger);
+    }
+    .dialog h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .dialog p { font-size: 0.8rem; color: var(--muted); font-family: var(--font-mono); margin-bottom: 2rem; }
+    .dialog-actions { display: flex; gap: 1rem; }
+
+    @media (max-width: 900px) {
+      .app-body { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+      .editor-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <p class="login-label">Prince / CMS</p>
+    <h1 class="login-title">Admin<br>Panel</h1>
+
+    <div class="field-group">
+      <label>GitHub Username</label>
+      <input type="text" id="gh-user" placeholder="your-username" autocomplete="off"/>
+    </div>
+    <div class="field-group">
+      <label>Repository Name</label>
+      <input type="text" id="gh-repo" placeholder="my-portfolio" autocomplete="off"/>
+    </div>
+    <div class="field-group">
+      <label>Branch</label>
+      <input type="text" id="gh-branch" placeholder="main" value="main" autocomplete="off"/>
+    </div>
+    <div class="field-group">
+      <label>GitHub Personal Access Token</label>
+      <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off"/>
+    </div>
+    <div class="field-group">
+      <label>Cloudinary Cloud Name</label>
+      <input type="text" id="cl-cloud" placeholder="your-cloud-name" autocomplete="off"/>
+    </div>
+    <div class="field-group">
+      <label>Cloudinary Upload Preset (unsigned)</label>
+      <input type="text" id="cl-preset" placeholder="ml_default" autocomplete="off"/>
+    </div>
+
+    <button class="btn btn-primary" onclick="handleLogin()">Enter Studio</button>
+    <div id="login-error"></div>
+
+    <div class="login-hint">
+      <b style="color:var(--text)">Quick Setup</b><br>
+      1. <a href="https://github.com/settings/tokens/new" target="_blank">Create GitHub PAT</a> — check the <b>repo</b> scope<br>
+      2. Ensure <b>projects.json</b> exists in your repo root (can be <b>[]</b>)<br>
+      3. <a href="https://cloudinary.com/users/register/free" target="_blank">Create Cloudinary account</a> → Settings → Upload → Add unsigned preset<br>
+      4. Your config saves in your browser. Token is session-only (never stored).
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-brand">Prince / <span>CMS Studio</span></div>
+    <div class="topbar-right">
+      <div class="repo-info">Repo: <b id="repo-display">—</b></div>
+      <button class="btn btn-secondary" style="font-size:0.65rem;padding:0.45rem 1rem;" onclick="logout()">Sign Out</button>
+      <button class="publish-btn" id="publish-btn" onclick="publishToGitHub()">
+        Publish
+        <span class="spinner-sm" id="pub-spinner"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="app-body">
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Projects (<span id="project-count">0</span>)</div>
+        <div id="project-list" class="project-list"></div>
+      </div>
+      <button class="add-btn" onclick="addNewProject()">+ New Project</button>
+    </div>
+
+    <div class="main-content" id="main-content">
+      <div class="empty-state">
+        <h2>No project selected</h2>
+        <p>Choose a project from the sidebar or create a new one</p>
+        <button class="btn btn-primary" style="width:auto;display:inline-block;" onclick="addNewProject()">+ New Project</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirm -->
+<div class="overlay" id="confirm-overlay">
+  <div class="dialog">
+    <h3>Delete Project?</h3>
+    <p>This permanently removes the project. Remember to Publish after deleting.</p>
+    <div class="dialog-actions">
+      <button class="btn btn-danger" id="confirm-delete-btn">Delete</button>
+      <button class="btn btn-secondary" onclick="closeConfirm()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Status Toast -->
+<div id="status-bar">
+  <span class="status-dot"></span>
+  <span id="status-msg"></span>
+</div>
+
+<script>
+let config = {};
+let projects = [];
+let activeProjectId = null;
+let fileSHA = null;
+
+// ── LOGIN ──────────────────────────────────────────────────────
+function handleLogin() {
+  const user   = document.getElementById('gh-user').value.trim();
+  const repo   = document.getElementById('gh-repo').value.trim();
+  const branch = document.getElementById('gh-branch').value.trim() || 'main';
+  const token  = document.getElementById('gh-token').value.trim();
+  const cloud  = document.getElementById('cl-cloud').value.trim();
+  const preset = document.getElementById('cl-preset').value.trim();
+
+  if (!user || !repo || !token) {
+    setLoginError('GitHub username, repo name, and token are required.');
+    return;
+  }
+
+  config = { user, repo, branch, token, cloud, preset };
+  localStorage.setItem('cms_config', JSON.stringify({ user, repo, branch, cloud, preset }));
+  sessionStorage.setItem('cms_token', token);
+  initApp();
+}
+
+function setLoginError(msg) {
+  const el = document.getElementById('login-error');
+  el.textContent = '⚠ ' + msg;
+  el.style.display = 'block';
+}
+
+function logout() {
+  sessionStorage.removeItem('cms_token');
+  location.reload();
+}
+
+// ── GITHUB ─────────────────────────────────────────────────────
+async function loadProjectsFromGitHub() {
+  const url = `https://api.github.com/repos/${config.user}/${config.repo}/contents/projects.json?ref=${config.branch}`;
+  const res = await fetch(url, {
+    headers: {
+      'Authorization': `Bearer ${config.token}`,
+      'Accept': 'application/vnd.github.v3+json'
+    }
+  });
+
+  if (res.status === 404) { projects = []; fileSHA = null; return; }
+  if (!res.ok) throw new Error(`GitHub API ${res.status}: check username/repo/token`);
+
+  const data = await res.json();
+  fileSHA = data.sha;
+  const decoded = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
+  projects = JSON.parse(decoded);
+}
+
+async function publishToGitHub() {
+  const btn = document.getElementById('publish-btn');
+  const spinner = document.getElementById('pub-spinner');
+  btn.disabled = true;
+  spinner.style.display = 'block';
+
+  try {
+    const json = JSON.stringify(projects, null, 2);
+    const encoded = btoa(unescape(encodeURIComponent(json)));
+    const url = `https://api.github.com/repos/${config.user}/${config.repo}/contents/projects.json`;
+
+    const body = {
+      message: `CMS update — ${new Date().toLocaleString()}`,
+      content: encoded,
+      branch: config.branch,
+    };
+    if (fileSHA) body.sha = fileSHA;
+
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${config.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message);
+    }
+
+    const data = await res.json();
+    fileSHA = data.content.sha;
+    showStatus('Published to GitHub ✓', 'success');
+  } catch(e) {
+    showStatus('Publish failed: ' + e.message, 'error');
+  }
+
+  btn.disabled = false;
+  spinner.style.display = 'none';
+}
+
+// ── INIT ───────────────────────────────────────────────────────
+async function initApp() {
+  try {
+    await loadProjectsFromGitHub();
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    document.getElementById('repo-display').textContent = `${config.user}/${config.repo}`;
+    renderSidebar();
+    showStatus('Connected to ' + config.repo, 'success');
+  } catch(e) {
+    setLoginError(e.message);
+  }
+}
+
+// ── SIDEBAR ───────────────────────────────────────────────────
+function renderSidebar() {
+  const list = document.getElementById('project-list');
+  document.getElementById('project-count').textContent = projects.length;
+
+  if (!projects.length) {
+    list.innerHTML = `<p style="font-size:0.7rem;color:var(--muted);font-family:var(--font-mono);padding:0.5rem 0.75rem;">No projects yet.</p>`;
+    return;
+  }
+
+  list.innerHTML = projects.map(p => `
+    <div class="project-item ${p.id === activeProjectId ? 'active' : ''}" onclick="selectProject('${p.id}')">
+      <span class="project-item-name">${p.title || 'Untitled'}</span>
+      ${p.isRecent ? `<span class="recent-badge">★</span>` : ''}
+      ${p.tags?.[0] ? `<span class="project-item-tag">${esc(p.tags[0])}</span>` : ''}
+    </div>
+  `).join('');
+}
+
+// ── EDITOR ────────────────────────────────────────────────────
+function addNewProject() {
+  const id = 'proj_' + Date.now();
+  projects.unshift({
+    id, title: '', subtitle: '', description: '',
+    tags: [], year: new Date().getFullYear().toString(),
+    link: '', media: [], isRecent: false, isFeatured: false, coverIndex: 0
+  });
+  renderSidebar();
+  selectProject(id);
+  showStatus('New project created', 'info');
+}
+
+function selectProject(id) {
+  activeProjectId = id;
+  renderSidebar();
+  renderEditor();
+}
+
+function getProject(id) { return projects.find(p => p.id === id); }
+
+function updateProject(id, key, value) {
+  const p = getProject(id);
+  if (p) { p[key] = value; }
+  if (['title','isRecent','tags'].includes(key)) renderSidebar();
+}
+
+function renderEditor() {
+  const p = getProject(activeProjectId);
+  if (!p) return;
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="section-header">
+      <div>
+        <h1 class="section-title" id="live-title">${esc(p.title) || 'Untitled Project'}</h1>
+        <p class="section-subtitle">ID: ${p.id}</p>
+      </div>
+      <button class="btn btn-danger" onclick="confirmDelete('${p.id}')">Delete</button>
+    </div>
+
+    <div class="editor-grid">
+      <div style="display:flex;flex-direction:column;gap:1.5rem;">
+
+        <div class="editor-card">
+          <p class="editor-card-title">Project Info</p>
+
+          <div class="field-group">
+            <label>Title *</label>
+            <input type="text" value="${esc(p.title)}" placeholder="Project name"
+              oninput="updateProject('${p.id}','title',this.value);document.getElementById('live-title').textContent=this.value||'Untitled'"/>
+          </div>
+          <div class="field-group">
+            <label>Subtitle / Role</label>
+            <input type="text" value="${esc(p.subtitle)}" placeholder="e.g. Brand Identity, UI Design"
+              oninput="updateProject('${p.id}','subtitle',this.value)"/>
+          </div>
+          <div class="field-group">
+            <label>Description</label>
+            <textarea placeholder="Tell the story behind this project..."
+              oninput="updateProject('${p.id}','description',this.value)">${esc(p.description)}</textarea>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="field-group">
+              <label>Year</label>
+              <input type="text" value="${esc(p.year)}" placeholder="${new Date().getFullYear()}"
+                oninput="updateProject('${p.id}','year',this.value)"/>
+            </div>
+          </div>
+          <div class="field-group">
+            <label>External Link (optional)</label>
+            <input type="url" value="${esc(p.link)}" placeholder="https://..."
+              oninput="updateProject('${p.id}','link',this.value)"/>
+          </div>
+        </div>
+
+        <div class="editor-card">
+          <p class="editor-card-title">Tags / Categories</p>
+          <div class="field-group">
+            <label>Add Tag — press Enter</label>
+            <input type="text" id="tag-input-${p.id}" placeholder="Branding, UI, Motion…"
+              onkeydown="handleTagInput(event,'${p.id}')"/>
+          </div>
+          <div class="tags-display" id="tags-display-${p.id}">${renderTags(p)}</div>
+        </div>
+
+        <div class="editor-card">
+          <p class="editor-card-title">Media</p>
+          ${config.cloud ? `
+            <div class="media-upload-area">
+              <input type="file" accept="image/*,video/*" multiple onchange="handleMediaUpload(event,'${p.id}')"/>
+              <p>Drop images or videos here, or click to browse</p>
+              <p style="margin-top:0.3rem;font-size:0.6rem;">JPG, PNG, GIF, MP4, WEBM · Uploads via Cloudinary</p>
+            </div>
+            <div class="upload-progress" id="upload-progress-${p.id}">
+              <div class="progress-bar"><div class="progress-fill" id="progress-fill-${p.id}"></div></div>
+              <p class="progress-label" id="progress-label-${p.id}">Uploading…</p>
+            </div>
+          ` : `<p style="font-size:0.75rem;color:var(--muted);font-family:var(--font-mono);">Cloudinary not configured — paste URLs below.</p>`}
+
+          <div class="field-group" style="margin-top:0.5rem;">
+            <label>Or paste a URL directly</label>
+            <div style="display:flex;gap:0.5rem;">
+              <input type="url" id="manual-url-${p.id}" placeholder="https://res.cloudinary.com/…"/>
+              <button class="btn btn-ghost" style="white-space:nowrap;" onclick="addManualUrl('${p.id}')">Add</button>
+            </div>
+          </div>
+
+          <div class="media-grid" id="media-grid-${p.id}">${renderMediaThumbs(p)}</div>
+        </div>
+
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:1.5rem;">
+
+        <div class="editor-card">
+          <p class="editor-card-title">Display Settings</p>
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label">Mark as Recent ★</div>
+              <div class="toggle-desc">Appears in the Recents slider</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" ${p.isRecent ? 'checked' : ''} onchange="updateProject('${p.id}','isRecent',this.checked)"/>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label">Featured</div>
+              <div class="toggle-desc">Highlighted in project list</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" ${p.isFeatured ? 'checked' : ''} onchange="updateProject('${p.id}','isFeatured',this.checked)"/>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        ${p.media?.length ? `
+        <div class="editor-card">
+          <p class="editor-card-title">Cover Image</p>
+          <p style="font-size:0.7rem;color:var(--muted);font-family:var(--font-mono);margin-bottom:0.75rem;">Select the cover for listings:</p>
+          <div style="display:flex;flex-direction:column;gap:0.4rem;">
+            ${p.media.map((m,i) => `
+              <label style="display:flex;align-items:center;gap:0.75rem;cursor:pointer;padding:0.4rem;border:1px solid ${(p.coverIndex??0)===i?'var(--accent)':'var(--border)'};transition:border-color 0.15s;">
+                <input type="radio" name="cover-${p.id}" value="${i}" ${(p.coverIndex??0)===i?'checked':''}
+                  onchange="updateProject('${p.id}','coverIndex',${i});renderEditor()" style="accent-color:var(--accent);"/>
+                <img src="${esc(m.url)}" style="width:50px;height:34px;object-fit:cover;" onerror="this.style.display='none'"/>
+                <span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;">${m.url.split('/').pop()}</span>
+              </label>
+            `).join('')}
+          </div>
+        </div>
+        ` : ''}
+
+        <div class="editor-card">
+          <p class="editor-card-title">JSON Preview</p>
+          <pre id="json-preview-${p.id}" style="font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);overflow:auto;max-height:280px;line-height:1.7;white-space:pre-wrap;word-break:break-all;">${JSON.stringify(p, null, 2)}</pre>
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  // Live JSON preview
+  const previewInterval = setInterval(() => {
+    const pre = document.getElementById(`json-preview-${p.id}`);
+    if (!pre) { clearInterval(previewInterval); return; }
+    pre.textContent = JSON.stringify(getProject(p.id), null, 2);
+  }, 800);
+}
+
+// ── TAGS ──────────────────────────────────────────────────────
+function handleTagInput(e, id) {
+  if (e.key !== 'Enter') return;
+  e.preventDefault();
+  const input = document.getElementById(`tag-input-${id}`);
+  const val = input.value.trim();
+  if (!val) return;
+  const p = getProject(id);
+  if (!p.tags.includes(val)) {
+    p.tags.push(val);
+    document.getElementById(`tags-display-${id}`).innerHTML = renderTags(p);
+    renderSidebar();
+  }
+  input.value = '';
+}
+
+function removeTag(id, tag) {
+  const p = getProject(id);
+  p.tags = p.tags.filter(t => t !== tag);
+  document.getElementById(`tags-display-${id}`).innerHTML = renderTags(p);
+  renderSidebar();
+}
+
+function renderTags(p) {
+  if (!p.tags?.length) return `<span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);">No tags yet</span>`;
+  return p.tags.map(t => `
+    <span class="tag-chip" onclick="removeTag('${p.id}','${esc(t)}')" title="Click to remove">
+      ${esc(t)} <span style="opacity:0.5">×</span>
+    </span>`).join('');
+}
+
+// ── MEDIA ─────────────────────────────────────────────────────
+async function handleMediaUpload(e, id) {
+  if (!config.cloud || !config.preset) { showStatus('Cloudinary not configured', 'error'); return; }
+  const files = Array.from(e.target.files);
+  const progressWrap = document.getElementById(`upload-progress-${id}`);
+  const fill = document.getElementById(`progress-fill-${id}`);
+  const label = document.getElementById(`progress-label-${id}`);
+  progressWrap.style.display = 'block';
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    label.textContent = `Uploading ${i+1}/${files.length}: ${file.name}`;
+    fill.style.width = `${(i/files.length)*100}%`;
+    try {
+      const url = await uploadToCloudinary(file);
+      const p = getProject(id);
+      p.media.push({ url, type: file.type.startsWith('video/') ? 'video' : 'image' });
+      document.getElementById(`media-grid-${id}`).innerHTML = renderMediaThumbs(p);
+    } catch(err) {
+      showStatus('Upload failed: ' + err.message, 'error');
+    }
+  }
+
+  fill.style.width = '100%';
+  label.textContent = 'Done ✓';
+  setTimeout(() => { progressWrap.style.display = 'none'; fill.style.width = '0'; }, 2000);
+  showStatus(`${files.length} file(s) uploaded`, 'success');
+}
+
+async function uploadToCloudinary(file) {
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('upload_preset', config.preset);
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${config.cloud}/upload`, { method:'POST', body: fd });
+  if (!res.ok) throw new Error('Cloudinary upload failed');
+  return (await res.json()).secure_url;
+}
+
+function addManualUrl(id) {
+  const input = document.getElementById(`manual-url-${id}`);
+  const url = input.value.trim();
+  if (!url) return;
+  const p = getProject(id);
+  const isVideo = /\.(mp4|webm|ogg|mov)$/i.test(url);
+  p.media.push({ url, type: isVideo ? 'video' : 'image' });
+  document.getElementById(`media-grid-${id}`).innerHTML = renderMediaThumbs(p);
+  input.value = '';
+  showStatus('Media URL added', 'info');
+}
+
+function removeMedia(id, index) {
+  const p = getProject(id);
+  p.media.splice(index, 1);
+  if (p.coverIndex >= p.media.length) p.coverIndex = 0;
+  document.getElementById(`media-grid-${id}`).innerHTML = renderMediaThumbs(p);
+}
+
+function renderMediaThumbs(p) {
+  if (!p.media?.length) return `<p style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);grid-column:1/-1;padding:0.5rem 0;">No media yet.</p>`;
+  return p.media.map((m,i) => `
+    <div class="media-thumb">
+      ${m.type==='video'
+        ? `<video src="${esc(m.url)}" muted loop></video>`
+        : `<img src="${esc(m.url)}" alt="" loading="lazy"/>`}
+      <button class="media-thumb-remove" onclick="removeMedia('${p.id}',${i})">×</button>
+    </div>`).join('');
+}
+
+// ── DELETE ────────────────────────────────────────────────────
+let pendingDeleteId = null;
+
+function confirmDelete(id) {
+  pendingDeleteId = id;
+  document.getElementById('confirm-overlay').classList.add('show');
+  document.getElementById('confirm-delete-btn').onclick = () => {
+    projects = projects.filter(p => p.id !== pendingDeleteId);
+    activeProjectId = null;
+    renderSidebar();
+    document.getElementById('main-content').innerHTML = `
+      <div class="empty-state">
+        <h2>Project deleted</h2>
+        <p>Select another or create a new one. Don't forget to Publish.</p>
+        <button class="btn btn-primary" style="width:auto;display:inline-block;" onclick="addNewProject()">+ New Project</button>
+      </div>`;
+    closeConfirm();
+    showStatus('Deleted — remember to Publish', 'info');
+  };
+}
+
+function closeConfirm() { document.getElementById('confirm-overlay').classList.remove('show'); }
+
+// ── STATUS TOAST ──────────────────────────────────────────────
+let statusTimeout;
+function showStatus(msg, type='info') {
+  const bar = document.getElementById('status-bar');
+  document.getElementById('status-msg').textContent = msg;
+  bar.className = `show ${type}`;
+  clearTimeout(statusTimeout);
+  statusTimeout = setTimeout(() => bar.classList.remove('show'), 3500);
+}
+
+// ── UTILS ─────────────────────────────────────────────────────
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── BOOT ──────────────────────────────────────────────────────
+window.onload = () => {
+  const saved = localStorage.getItem('cms_config');
+  const token = sessionStorage.getItem('cms_token');
+  if (saved && token) {
+    const c = JSON.parse(saved);
+    // Pre-fill the form
+    document.getElementById('gh-user').value = c.user || '';
+    document.getElementById('gh-repo').value = c.repo || '';
+    document.getElementById('gh-branch').value = c.branch || 'main';
+    document.getElementById('gh-token').value = token;
+    document.getElementById('cl-cloud').value = c.cloud || '';
+    document.getElementById('cl-preset').value = c.preset || '';
+    config = { ...c, token };
+    initApp();
+  }
+};
+</script>
+</body>
+</html>
