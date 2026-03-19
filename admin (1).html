@@ -1,403 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Prince CMS — Admin</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --bg: #0a0a0a;
-      --surface: #111111;
-      --surface2: #1a1a1a;
-      --border: #2a2a2a;
-      --accent: #e8ff47;
-      --accent2: #ff6b35;
-      --text: #f0f0f0;
-      --muted: #666;
-      --danger: #ff4444;
-      --success: #44ff88;
-      --font-display: 'Syne', sans-serif;
-      --font-mono: 'DM Mono', monospace;
-    }
+    :root{--bg:#0a0a0a;--surface:#111;--surface2:#1a1a1a;--border:#2a2a2a;--accent:#e8ff47;--accent2:#ff6b35;--text:#f0f0f0;--muted:#666;--danger:#ff4444;--success:#44ff88;--F:'Syne',sans-serif;--M:'DM Mono',monospace;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:var(--F);min-height:100vh;overflow-x:hidden;}
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* LOGIN */
+    #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;}
+    .login-box{width:100%;max-width:440px;border:1px solid var(--border);background:var(--surface);padding:3rem;position:relative;}
+    .login-box::before{content:'';position:absolute;top:-1px;left:-1px;width:40px;height:40px;border-top:2px solid var(--accent);border-left:2px solid var(--accent);}
+    .login-box::after{content:'';position:absolute;bottom:-1px;right:-1px;width:40px;height:40px;border-bottom:2px solid var(--accent);border-right:2px solid var(--accent);}
+    .login-label{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-family:var(--M);margin-bottom:.5rem;}
+    .login-title{font-size:2rem;font-weight:800;letter-spacing:-.02em;margin-bottom:2.5rem;line-height:1.1;}
+    .fg{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.25rem;}
+    .fg label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-family:var(--M);}
+    input[type=text],input[type=password],input[type=url],input[type=email],textarea,select{background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:var(--M);font-size:.85rem;padding:.85rem 1rem;width:100%;outline:none;transition:border-color .2s;}
+    input:focus,textarea:focus,select:focus{border-color:var(--accent);}
+    textarea{resize:vertical;min-height:90px;}
+    .btn{font-family:var(--F);font-weight:700;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;padding:.9rem 2rem;cursor:pointer;border:none;transition:all .15s;}
+    .btn-p{background:var(--accent);color:#000;width:100%;}
+    .btn-p:hover{background:#d4eb2a;}
+    .btn-s{background:transparent;color:var(--text);border:1px solid var(--border);}
+    .btn-s:hover{border-color:var(--accent);color:var(--accent);}
+    .btn-d{background:transparent;color:var(--danger);border:1px solid var(--danger);font-size:.7rem;padding:.5rem 1rem;}
+    .btn-d:hover{background:var(--danger);color:#fff;}
+    .btn-g{background:transparent;color:var(--accent2);border:1px solid var(--accent2);font-size:.7rem;padding:.5rem 1rem;}
+    .btn-g:hover{background:var(--accent2);color:#fff;}
+    .btn-sm{font-size:.65rem;padding:.4rem .9rem;}
+    #login-error{color:var(--danger);font-family:var(--M);font-size:.75rem;margin-top:1rem;display:none;}
+    .login-hint{margin-top:1.5rem;font-size:.7rem;color:var(--muted);font-family:var(--M);line-height:1.9;border-top:1px solid var(--border);padding-top:1.5rem;}
+    .login-hint a{color:var(--accent);text-decoration:none;}
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-display);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+    /* APP SHELL */
+    #app{display:none;min-height:100vh;flex-direction:column;}
+    .topbar{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+    .topbar-brand{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;font-family:var(--M);}
+    .topbar-brand span{color:var(--accent);}
+    .topbar-right{display:flex;align-items:center;gap:1rem;}
+    .repo-info{font-size:.65rem;font-family:var(--M);color:var(--muted);}
+    .repo-info b{color:var(--text);}
+    .pub-btn{background:var(--accent);color:#000;border:none;font-family:var(--F);font-weight:800;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;padding:.6rem 1.5rem;cursor:pointer;transition:all .15s;position:relative;}
+    .pub-btn:hover{background:#d4eb2a;}
+    .pub-btn:disabled{opacity:.4;cursor:not-allowed;}
+    .spin-sm{display:none;width:14px;height:14px;border:2px solid #00000040;border-top-color:#000;border-radius:50%;animation:spin .6s linear infinite;position:absolute;right:.8rem;top:50%;transform:translateY(-50%);}
+    @keyframes spin{to{transform:translateY(-50%) rotate(360deg);}}
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 999;
-      opacity: 0.4;
-    }
+    /* TABS */
+    .tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);padding:0 2rem;gap:.5rem;}
+    .tab{font-family:var(--F);font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:.9rem 1.2rem;background:none;border:none;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;white-space:nowrap;}
+    .tab:hover{color:var(--text);}
+    .tab.on{color:var(--accent);border-bottom-color:var(--accent);}
+    .panel{display:none;flex:1;}
+    .panel.on{display:flex;}
 
-    /* ── LOGIN ── */
-    #login-screen {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
+    /* PROJECTS PANEL */
+    .proj-shell{display:grid;grid-template-columns:250px 1fr;width:100%;}
+    .sidebar{background:var(--surface);border-right:1px solid var(--border);padding:2rem 0;position:sticky;top:109px;height:calc(100vh - 109px);overflow-y:auto;display:flex;flex-direction:column;}
+    .sb-lbl{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);font-family:var(--M);margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);padding:0 1.5rem .5rem;}
+    .sb-list{display:flex;flex-direction:column;gap:.2rem;padding:0 0 1rem;}
+    .pi{padding:.55rem .75rem;cursor:pointer;border-left:2px solid transparent;transition:all .15s;display:flex;align-items:center;gap:.5rem;}
+    .pi:hover{background:var(--surface2);border-left-color:var(--border);}
+    .pi.on{background:var(--surface2);border-left-color:var(--accent);}
+    .pi-name{font-size:.75rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;}
+    .pi-tag{font-size:.52rem;font-family:var(--M);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--border);padding:2px 5px;flex-shrink:0;}
+    .rb{background:var(--accent);color:#000;font-size:.48rem;font-family:var(--M);padding:2px 5px;text-transform:uppercase;flex-shrink:0;}
+    .add-proj{margin:0 1.5rem;display:flex;align-items:center;gap:.5rem;padding:.6rem .75rem;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border:1px dashed var(--accent);background:transparent;cursor:pointer;transition:all .15s;font-family:var(--F);}
+    .add-proj:hover{background:var(--accent);color:#000;}
 
-    .login-box {
-      width: 100%;
-      max-width: 440px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      padding: 3rem;
-      position: relative;
-    }
+    /* EDITOR */
+    .editor-wrap{padding:2rem;overflow-y:auto;flex:1;}
+    .ed-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
+    .ed-title{font-size:1.6rem;font-weight:800;letter-spacing:-.02em;}
+    .ed-sub{font-size:.65rem;color:var(--muted);font-family:var(--M);margin-top:.2rem;}
+    .ed-grid{display:grid;grid-template-columns:1fr 300px;gap:1.75rem;align-items:start;}
+    .card{background:var(--surface);border:1px solid var(--border);padding:1.75rem;display:flex;flex-direction:column;gap:1.1rem;margin-bottom:1.5rem;}
+    .card-title{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-family:var(--M);}
+    .hint{font-size:.6rem;color:var(--muted);font-family:var(--M);margin-top:-.5rem;}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
 
-    .login-box::before {
-      content: '';
-      position: absolute;
-      top: -1px; left: -1px;
-      width: 40px; height: 40px;
-      border-top: 2px solid var(--accent);
-      border-left: 2px solid var(--accent);
-    }
+    /* TAGS */
+    .tags-wrap{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.25rem;}
+    .tag-chip{background:var(--surface2);border:1px solid var(--border);font-size:.62rem;font-family:var(--M);letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;display:flex;align-items:center;gap:.35rem;cursor:pointer;transition:all .15s;}
+    .tag-chip:hover{border-color:var(--danger);color:var(--danger);}
 
-    .login-box::after {
-      content: '';
-      position: absolute;
-      bottom: -1px; right: -1px;
-      width: 40px; height: 40px;
-      border-bottom: 2px solid var(--accent);
-      border-right: 2px solid var(--accent);
-    }
+    /* MEDIA GRID */
+    .media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin-top:.5rem;}
+    .m-thumb{aspect-ratio:16/9;background:var(--surface2);border:2px solid var(--border);position:relative;overflow:hidden;cursor:pointer;transition:border-color .15s;display:flex;align-items:center;justify-content:center;}
+    .m-thumb.cover-selected{border-color:var(--accent);}
+    .m-thumb img,.m-thumb video{width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;min-height:10px;background:var(--surface2);}
+    .m-thumb-del{position:absolute;top:3px;right:3px;background:var(--danger);color:#fff;border:none;width:20px;height:20px;font-size:.65rem;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:2;}
+    .m-thumb:hover .m-thumb-del{display:flex;}
+    .cover-badge{position:absolute;bottom:3px;left:3px;background:var(--accent);color:#000;font-size:.48rem;font-family:var(--M);padding:2px 5px;letter-spacing:.1em;text-transform:uppercase;pointer-events:none;}
 
-    .login-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-family: var(--font-mono);
-      margin-bottom: 0.5rem;
-    }
+    /* UPLOAD */
+    .upload-area{border:1px dashed var(--border);padding:1.25rem;text-align:center;cursor:pointer;transition:border-color .15s;position:relative;}
+    .upload-area:hover{border-color:var(--accent);}
+    .upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+    .upload-area p{font-size:.68rem;font-family:var(--M);color:var(--muted);pointer-events:none;}
+    .upload-progress{display:none;margin-top:.65rem;}
+    .prog-bar{height:2px;background:var(--border);width:100%;margin-bottom:.4rem;}
+    .prog-fill{height:100%;background:var(--accent);width:0%;transition:width .3s;}
+    .prog-lbl{font-size:.62rem;font-family:var(--M);color:var(--muted);}
 
-    .login-title {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 2.5rem;
-      line-height: 1.1;
-    }
+    /* TOGGLES */
+    .tog-row{display:flex;align-items:center;justify-content:space-between;padding:.7rem 0;border-bottom:1px solid var(--border);}
+    .tog-row:last-child{border-bottom:none;}
+    .tog-lbl{font-size:.75rem;font-weight:600;}
+    .tog-desc{font-size:.62rem;color:var(--muted);font-family:var(--M);margin-top:2px;}
+    .tog{position:relative;width:40px;height:22px;flex-shrink:0;}
+    .tog input{opacity:0;width:0;height:0;}
+    .tog-sl{position:absolute;inset:0;background:var(--border);cursor:pointer;transition:.2s;}
+    .tog-sl::before{content:'';position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:var(--muted);transition:.2s;}
+    .tog input:checked+.tog-sl{background:var(--accent);}
+    .tog input:checked+.tog-sl::before{transform:translateX(18px);background:#000;}
 
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-bottom: 1.25rem;
-    }
+    /* PREVIEW TEST */
+    .preview-test-wrap{margin-top:.75rem;}
+    .preview-frame-outer{position:relative;width:100%;border:1px solid var(--border);background:var(--surface2);}
+    .preview-frame-outer::before{content:'';display:block;padding-top:56.25%;}
+    .preview-iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+    .preview-note{font-size:.62rem;font-family:var(--M);color:var(--muted);margin-top:.5rem;line-height:1.6;}
 
-    .field-group label {
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-family: var(--font-mono);
-    }
+    /* PROFILE PANEL */
+    .profile-wrap{padding:2rem;max-width:860px;width:100%;display:flex;flex-direction:column;gap:1.5rem;overflow-y:auto;}
 
-    input[type="text"], input[type="password"], input[type="url"],
-    textarea, select {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      padding: 0.85rem 1rem;
-      width: 100%;
-      outline: none;
-      transition: border-color 0.2s;
-    }
+    /* SITE EDIT PANEL */
+    .site-wrap{padding:2rem;max-width:860px;width:100%;display:flex;flex-direction:column;gap:1.5rem;overflow-y:auto;}
+    .site-section-tabs{display:flex;gap:.5rem;margin-bottom:1rem;}
+    .site-tab{font-family:var(--F);font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:.5rem 1rem;background:transparent;border:1px solid var(--border);color:var(--muted);cursor:pointer;transition:all .15s;}
+    .site-tab.on{background:var(--accent);border-color:var(--accent);color:#000;}
 
-    input:focus, textarea:focus, select:focus { border-color: var(--accent); }
-    textarea { resize: vertical; min-height: 100px; }
+    /* STATUS */
+    #status-bar{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--surface);border:1px solid var(--border);padding:.7rem 2rem;font-size:.72rem;font-family:var(--M);z-index:1000;transition:transform .3s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;gap:.75rem;white-space:nowrap;}
+    #status-bar.show{transform:translateX(-50%) translateY(0);}
+    #status-bar.success{border-left:3px solid var(--success);}
+    #status-bar.error{border-left:3px solid var(--danger);}
+    #status-bar.info{border-left:3px solid var(--accent);}
+    .sdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+    .success .sdot{background:var(--success);}
+    .error .sdot{background:var(--danger);}
+    .info .sdot{background:var(--accent);}
 
-    .btn {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 0.8rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 0.9rem 2rem;
-      cursor: pointer;
-      border: none;
-      transition: all 0.15s;
-    }
+    .empty-state{text-align:center;padding:4rem 2rem;color:var(--muted);}
+    .empty-state h2{font-size:1.8rem;font-weight:800;color:var(--text);margin-bottom:.5rem;}
+    .empty-state p{font-family:var(--M);font-size:.78rem;margin-bottom:2rem;}
 
-    .btn-primary { background: var(--accent); color: #000; width: 100%; }
-    .btn-primary:hover { background: #d4eb2a; }
+    .overlay{position:fixed;inset:0;background:#000000cc;z-index:200;display:none;align-items:center;justify-content:center;}
+    .overlay.show{display:flex;}
+    .dialog{background:var(--surface);border:1px solid var(--border);padding:2.5rem;max-width:400px;width:90%;position:relative;}
+    .dialog::before{content:'';position:absolute;top:-1px;left:-1px;width:28px;height:28px;border-top:2px solid var(--danger);border-left:2px solid var(--danger);}
+    .dialog h3{font-size:1.1rem;font-weight:800;margin-bottom:.5rem;}
+    .dialog p{font-size:.78rem;color:var(--muted);font-family:var(--M);margin-bottom:1.75rem;}
+    .dialog-acts{display:flex;gap:1rem;}
 
-    .btn-secondary {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
-
-    .btn-danger {
-      background: transparent;
-      color: var(--danger);
-      border: 1px solid var(--danger);
-      font-size: 0.7rem;
-      padding: 0.5rem 1rem;
-    }
-    .btn-danger:hover { background: var(--danger); color: #fff; }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--accent2);
-      border: 1px solid var(--accent2);
-      font-size: 0.7rem;
-      padding: 0.5rem 1rem;
-    }
-    .btn-ghost:hover { background: var(--accent2); color: #fff; }
-
-    #login-error {
-      color: var(--danger);
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      margin-top: 1rem;
-      display: none;
-    }
-
-    .login-hint {
-      margin-top: 1.5rem;
-      font-size: 0.7rem;
-      color: var(--muted);
-      font-family: var(--font-mono);
-      line-height: 1.9;
-      border-top: 1px solid var(--border);
-      padding-top: 1.5rem;
-    }
-    .login-hint a { color: var(--accent); text-decoration: none; }
-
-    /* ── APP ── */
-    #app { display: none; min-height: 100vh; flex-direction: column; }
-
-    .topbar {
-      position: sticky; top: 0; z-index: 100;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem; height: 60px;
-      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-    }
-
-    .topbar-brand { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; font-family: var(--font-mono); }
-    .topbar-brand span { color: var(--accent); }
-    .topbar-right { display: flex; align-items: center; gap: 1rem; }
-    .repo-info { font-size: 0.65rem; font-family: var(--font-mono); color: var(--muted); }
-    .repo-info b { color: var(--text); }
-
-    .publish-btn {
-      background: var(--accent); color: #000; border: none;
-      font-family: var(--font-display); font-weight: 800;
-      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
-      padding: 0.6rem 1.5rem; cursor: pointer; transition: all 0.15s; position: relative;
-    }
-    .publish-btn:hover { background: #d4eb2a; }
-    .publish-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-    .spinner-sm {
-      display: none; width: 14px; height: 14px;
-      border: 2px solid #00000040; border-top-color: #000;
-      border-radius: 50%; animation: spin 0.6s linear infinite;
-      position: absolute; right: 0.8rem; top: 50%; transform: translateY(-50%);
-    }
-
-    @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
-
-    .app-body { display: grid; grid-template-columns: 260px 1fr; flex: 1; }
-
-    .sidebar {
-      background: var(--surface); border-right: 1px solid var(--border);
-      padding: 2rem 0; position: sticky; top: 60px;
-      height: calc(100vh - 60px); overflow-y: auto;
-      display: flex; flex-direction: column;
-    }
-
-    .sidebar-section { padding: 0 1.5rem; margin-bottom: 2rem; }
-
-    .sidebar-section-label {
-      font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--muted); font-family: var(--font-mono);
-      margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
-    }
-
-    .project-list { display: flex; flex-direction: column; gap: 0.25rem; }
-
-    .project-item {
-      padding: 0.6rem 0.75rem; cursor: pointer;
-      border-left: 2px solid transparent; transition: all 0.15s;
-      display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
-    }
-    .project-item:hover { background: var(--surface2); border-left-color: var(--border); }
-    .project-item.active { background: var(--surface2); border-left-color: var(--accent); }
-
-    .project-item-name {
-      font-size: 0.78rem; font-weight: 600;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1;
-    }
-
-    .project-item-tag {
-      font-size: 0.55rem; font-family: var(--font-mono); letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--muted); background: var(--border); padding: 2px 6px; flex-shrink: 0;
-    }
-
-    .recent-badge {
-      background: var(--accent); color: #000;
-      font-size: 0.5rem; font-family: var(--font-mono); letter-spacing: 0.1em;
-      padding: 2px 5px; text-transform: uppercase; flex-shrink: 0;
-    }
-
-    .add-btn {
-      margin: 0 1.5rem;
-      display: flex; align-items: center; gap: 0.5rem;
-      padding: 0.65rem 0.75rem; font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);
-      border: 1px dashed var(--accent); background: transparent;
-      cursor: pointer; transition: all 0.15s; font-family: var(--font-display);
-    }
-    .add-btn:hover { background: var(--accent); color: #000; }
-
-    .main-content { padding: 2.5rem; overflow-y: auto; }
-
-    .section-header {
-      display: flex; align-items: flex-end; justify-content: space-between;
-      margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);
-    }
-
-    .section-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; }
-    .section-subtitle { font-size: 0.7rem; color: var(--muted); font-family: var(--font-mono); margin-top: 0.25rem; }
-
-    .editor-grid { display: grid; grid-template-columns: 1fr 320px; gap: 2rem; align-items: start; }
-
-    .editor-card {
-      background: var(--surface); border: 1px solid var(--border);
-      padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem;
-    }
-
-    .editor-card-title {
-      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--accent); font-family: var(--font-mono);
-    }
-
-    .tags-display { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.25rem; }
-
-    .tag-chip {
-      background: var(--surface2); border: 1px solid var(--border);
-      font-size: 0.65rem; font-family: var(--font-mono); letter-spacing: 0.1em;
-      text-transform: uppercase; padding: 3px 10px;
-      display: flex; align-items: center; gap: 0.4rem; cursor: pointer; transition: all 0.15s;
-    }
-    .tag-chip:hover { border-color: var(--danger); color: var(--danger); }
-
-    .media-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 0.5rem; }
-
-    .media-thumb {
-      aspect-ratio: 16/9; background: var(--surface2); border: 1px solid var(--border);
-      position: relative; overflow: hidden; cursor: pointer;
-    }
-    .media-thumb img, .media-thumb video { width: 100%; height: 100%; object-fit: cover; }
-
-    .media-thumb-remove {
-      position: absolute; top: 4px; right: 4px;
-      background: var(--danger); color: #fff; border: none;
-      width: 22px; height: 22px; font-size: 0.7rem;
-      cursor: pointer; display: none; align-items: center; justify-content: center;
-    }
-    .media-thumb:hover .media-thumb-remove { display: flex; }
-
-    .media-upload-area {
-      border: 1px dashed var(--border); padding: 1.5rem; text-align: center;
-      cursor: pointer; transition: all 0.15s; position: relative;
-    }
-    .media-upload-area:hover { border-color: var(--accent); }
-    .media-upload-area input[type="file"] {
-      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
-    }
-    .media-upload-area p { font-size: 0.7rem; font-family: var(--font-mono); color: var(--muted); pointer-events: none; }
-
-    .upload-progress { display: none; margin-top: 0.75rem; }
-    .progress-bar { height: 2px; background: var(--border); width: 100%; margin-bottom: 0.5rem; }
-    .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.3s; }
-    .progress-label { font-size: 0.65rem; font-family: var(--font-mono); color: var(--muted); }
-
-    .toggle-row {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0.75rem 0; border-bottom: 1px solid var(--border);
-    }
-    .toggle-row:last-child { border-bottom: none; }
-    .toggle-label { font-size: 0.78rem; font-weight: 600; }
-    .toggle-desc { font-size: 0.65rem; color: var(--muted); font-family: var(--font-mono); margin-top: 2px; }
-
-    .toggle { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
-    .toggle input { opacity: 0; width: 0; height: 0; }
-    .toggle-slider { position: absolute; inset: 0; background: var(--border); cursor: pointer; transition: 0.2s; }
-    .toggle-slider::before {
-      content: ''; position: absolute;
-      width: 16px; height: 16px; left: 3px; bottom: 3px;
-      background: var(--muted); transition: 0.2s;
-    }
-    .toggle input:checked + .toggle-slider { background: var(--accent); }
-    .toggle input:checked + .toggle-slider::before { transform: translateX(18px); background: #000; }
-
-    #status-bar {
-      position: fixed; bottom: 2rem; left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background: var(--surface); border: 1px solid var(--border);
-      padding: 0.75rem 2rem; font-size: 0.75rem; font-family: var(--font-mono);
-      z-index: 1000; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      display: flex; align-items: center; gap: 0.75rem; white-space: nowrap;
-    }
-    #status-bar.show { transform: translateX(-50%) translateY(0); }
-    #status-bar.success { border-left: 3px solid var(--success); }
-    #status-bar.error { border-left: 3px solid var(--danger); }
-    #status-bar.info { border-left: 3px solid var(--accent); }
-    .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-    .success .status-dot { background: var(--success); }
-    .error .status-dot { background: var(--danger); }
-    .info .status-dot { background: var(--accent); }
-
-    .empty-state { text-align: center; padding: 5rem 2rem; color: var(--muted); }
-    .empty-state h2 { font-size: 2rem; font-weight: 800; color: var(--text); margin-bottom: 0.5rem; }
-    .empty-state p { font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 2rem; }
-
-    .overlay {
-      position: fixed; inset: 0; background: #000000cc;
-      z-index: 200; display: none; align-items: center; justify-content: center;
-    }
-    .overlay.show { display: flex; }
-
-    .dialog {
-      background: var(--surface); border: 1px solid var(--border);
-      padding: 2.5rem; max-width: 400px; width: 90%; position: relative;
-    }
-    .dialog::before {
-      content: ''; position: absolute; top: -1px; left: -1px;
-      width: 30px; height: 30px;
-      border-top: 2px solid var(--danger); border-left: 2px solid var(--danger);
-    }
-    .dialog h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .dialog p { font-size: 0.8rem; color: var(--muted); font-family: var(--font-mono); margin-bottom: 2rem; }
-    .dialog-actions { display: flex; gap: 1rem; }
-
-    @media (max-width: 900px) {
-      .app-body { grid-template-columns: 1fr; }
-      .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
-      .editor-grid { grid-template-columns: 1fr; }
+    @media(max-width:860px){
+      .proj-shell{grid-template-columns:1fr;}
+      .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}
+      .ed-grid{grid-template-columns:1fr;}
     }
   </style>
 </head>
@@ -408,41 +172,19 @@
   <div class="login-box">
     <p class="login-label">Prince / CMS</p>
     <h1 class="login-title">Admin<br>Panel</h1>
-
-    <div class="field-group">
-      <label>GitHub Username</label>
-      <input type="text" id="gh-user" placeholder="your-username" autocomplete="off"/>
-    </div>
-    <div class="field-group">
-      <label>Repository Name</label>
-      <input type="text" id="gh-repo" placeholder="my-portfolio" autocomplete="off"/>
-    </div>
-    <div class="field-group">
-      <label>Branch</label>
-      <input type="text" id="gh-branch" placeholder="main" value="main" autocomplete="off"/>
-    </div>
-    <div class="field-group">
-      <label>GitHub Personal Access Token</label>
-      <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off"/>
-    </div>
-    <div class="field-group">
-      <label>Cloudinary Cloud Name</label>
-      <input type="text" id="cl-cloud" placeholder="your-cloud-name" autocomplete="off"/>
-    </div>
-    <div class="field-group">
-      <label>Cloudinary Upload Preset (unsigned)</label>
-      <input type="text" id="cl-preset" placeholder="ml_default" autocomplete="off"/>
-    </div>
-
-    <button class="btn btn-primary" onclick="handleLogin()">Enter Studio</button>
+    <div class="fg"><label>GitHub Username</label><input type="text" id="gh-user" placeholder="MawuliPRINCE" autocomplete="off"/></div>
+    <div class="fg"><label>Repository Name</label><input type="text" id="gh-repo" placeholder="my-portfolio" autocomplete="off"/></div>
+    <div class="fg"><label>Branch</label><input type="text" id="gh-branch" placeholder="main" value="main" autocomplete="off"/></div>
+    <div class="fg"><label>GitHub Personal Access Token</label><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off"/></div>
+    <div class="fg"><label>Cloudinary Cloud Name</label><input type="text" id="cl-cloud" placeholder="your-cloud-name" autocomplete="off"/></div>
+    <div class="fg"><label>Cloudinary Upload Preset (unsigned)</label><input type="text" id="cl-preset" placeholder="ml_default" autocomplete="off"/></div>
+    <button class="btn btn-p" onclick="handleLogin()">Enter Studio</button>
     <div id="login-error"></div>
-
     <div class="login-hint">
-      <b style="color:var(--text)">Quick Setup</b><br>
-      1. <a href="https://github.com/settings/tokens/new" target="_blank">Create GitHub PAT</a> — check the <b>repo</b> scope<br>
-      2. Ensure <b>projects.json</b> exists in your repo root (can be <b>[]</b>)<br>
-      3. <a href="https://cloudinary.com/users/register/free" target="_blank">Create Cloudinary account</a> → Settings → Upload → Add unsigned preset<br>
-      4. Your config saves in your browser. Token is session-only (never stored).
+      <b style="color:var(--text)">Setup</b><br>
+      1. <a href="https://github.com/settings/tokens/new" target="_blank">GitHub PAT</a> — Contents: Read &amp; Write<br>
+      2. <b>projects.json</b> must exist in your repo (content: <b>[]</b>)<br>
+      3. <a href="https://cloudinary.com" target="_blank">Cloudinary</a> → Settings → Upload → unsigned preset
     </div>
   </div>
 </div>
@@ -453,505 +195,624 @@
     <div class="topbar-brand">Prince / <span>CMS Studio</span></div>
     <div class="topbar-right">
       <div class="repo-info">Repo: <b id="repo-display">—</b></div>
-      <button class="btn btn-secondary" style="font-size:0.65rem;padding:0.45rem 1rem;" onclick="logout()">Sign Out</button>
-      <button class="publish-btn" id="publish-btn" onclick="publishToGitHub()">
-        Publish
-        <span class="spinner-sm" id="pub-spinner"></span>
-      </button>
+      <button class="btn btn-s btn-sm" onclick="logout()">Sign Out</button>
+      <button class="pub-btn" id="pub-btn" onclick="publishAll()">Publish<span class="spin-sm" id="pub-spin"></span></button>
     </div>
   </div>
 
-  <div class="app-body">
-    <div class="sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-section-label">Projects (<span id="project-count">0</span>)</div>
-        <div id="project-list" class="project-list"></div>
-      </div>
-      <button class="add-btn" onclick="addNewProject()">+ New Project</button>
-    </div>
+  <div class="tabs">
+    <button class="tab on" onclick="switchTab('projects')">Projects</button>
+    <button class="tab"    onclick="switchTab('site')">Site Content</button>
+  </div>
 
-    <div class="main-content" id="main-content">
-      <div class="empty-state">
-        <h2>No project selected</h2>
-        <p>Choose a project from the sidebar or create a new one</p>
-        <button class="btn btn-primary" style="width:auto;display:inline-block;" onclick="addNewProject()">+ New Project</button>
+  <!-- PROJECTS PANEL -->
+  <div class="panel on" id="panel-projects">
+    <div class="proj-shell">
+      <div class="sidebar">
+        <p class="sb-lbl">Projects (<span id="proj-count">0</span>)</p>
+        <div class="sb-list" id="sb-list"></div>
+        <button class="add-proj" onclick="addProject()">+ New Project</button>
       </div>
+      <div class="editor-wrap" id="editor-wrap">
+        <div class="empty-state">
+          <h2>No project selected</h2>
+          <p>Pick one from the sidebar or create a new one</p>
+          <button class="btn btn-p" style="width:auto;display:inline-block;" onclick="addProject()">+ New Project</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SITE CONTENT PANEL -->
+  <div class="panel" id="panel-site" style="flex-direction:column;">
+    <div class="site-wrap">
+
+      <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:1rem;border-bottom:1px solid var(--border);">
+        <div>
+          <h2 style="font-size:1.4rem;font-weight:800;letter-spacing:-.02em;">Site Content</h2>
+          <p style="font-size:.65rem;color:var(--muted);font-family:var(--M);margin-top:.2rem;">Edit your main portfolio pages</p>
+        </div>
+      </div>
+
+      <div class="site-section-tabs">
+        <button class="site-tab on" onclick="switchSiteTab('home')">Home Page</button>
+        <button class="site-tab" onclick="switchSiteTab('about')">About Page</button>
+      </div>
+
+      <!-- HOME PAGE EDITOR -->
+      <div id="site-home">
+        <div class="card">
+          <p class="card-title">Hero Section</p>
+          <div class="fg"><label>Your Name</label><input type="text" id="s-name" placeholder="Ismael Asumanu Prince"/></div>
+          <div class="fg"><label>Role / Tagline</label><input type="text" id="s-role" placeholder="Graphic Designer / Brand Identity Designer"/></div>
+          <div class="fg">
+            <label>Hero Background</label>
+            <p class="hint" style="margin-top:.25rem;">Paste a Cloudinary URL (image or video) or upload directly</p>
+            <input type="url" id="s-herobg" placeholder="https://res.cloudinary.com/…" oninput="previewHeroBg()"/>
+          </div>
+          <div class="upload-area">
+            <input type="file" accept="image/*,video/*" onchange="uploadSiteMedia(event,'s-herobg','hero-bg-preview','hero-prog')"/>
+            <p>Upload hero background — image or video</p>
+          </div>
+          <div class="upload-progress" id="hero-prog">
+            <div class="prog-bar"><div class="prog-fill" id="hero-prog-fill"></div></div>
+            <p class="prog-lbl" id="hero-prog-lbl">Uploading…</p>
+          </div>
+          <div id="hero-bg-preview"></div>
+        </div>
+
+        <div class="card">
+          <p class="card-title">Contact / Footer</p>
+          <div class="fg"><label>Contact Description</label><textarea id="s-contact-desc" placeholder="Ready to start your next project…"></textarea></div>
+          <div class="row2">
+            <div class="fg"><label>Email</label><input type="email" id="s-email" placeholder="you@email.com"/></div>
+            <div class="fg"><label>LinkedIn URL</label><input type="url" id="s-linkedin" placeholder="https://linkedin.com/in/…"/></div>
+            <div class="fg"><label>Instagram URL</label><input type="url" id="s-instagram" placeholder="https://instagram.com/…"/></div>
+            <div class="fg"><label>Behance URL</label><input type="url" id="s-behance" placeholder="https://behance.net/…"/></div>
+            <div class="fg"><label>Dribbble URL</label><input type="url" id="s-dribbble" placeholder="https://dribbble.com/…"/></div>
+          </div>
+        </div>
+
+        <button class="btn btn-p" style="max-width:260px;" onclick="saveSiteContent('home')">Save &amp; Publish Home</button>
+      </div>
+
+      <!-- ABOUT PAGE EDITOR -->
+      <div id="site-about" style="display:none;">
+        <div class="card">
+          <p class="card-title">About Me Card</p>
+          <div class="fg"><label>Short Preview Text</label><input type="text" id="a-about-short" placeholder="Short teaser shown on the card…"/></div>
+          <div class="fg"><label>Full Detail Text</label><textarea id="a-about-full" style="min-height:120px;" placeholder="Full paragraph shown when clicked…"></textarea></div>
+        </div>
+        <div class="card">
+          <p class="card-title">Education Card</p>
+          <div class="fg"><label>Short Preview</label><input type="text" id="a-edu-short" placeholder="University, Degree…"/></div>
+          <div class="fg"><label>Full Detail</label><textarea id="a-edu-full" placeholder="Full education detail…"></textarea></div>
+        </div>
+        <div class="card">
+          <p class="card-title">Work Experience Card</p>
+          <div class="fg"><label>Short Preview</label><input type="text" id="a-work-short" placeholder="Role, Date…"/></div>
+          <div class="fg"><label>Full Detail</label><textarea id="a-work-full" placeholder="Full work experience detail…"></textarea></div>
+        </div>
+        <div class="card">
+          <p class="card-title">Skills Card</p>
+          <div class="fg"><label>Short Preview</label><input type="text" id="a-skills-short" placeholder="Photoshop, Illustrator…"/></div>
+          <div class="fg"><label>Full Detail (one skill per line)</label><textarea id="a-skills-full" placeholder="Adobe Photoshop&#10;Adobe Illustrator&#10;Brand Identity"></textarea></div>
+        </div>
+        <button class="btn btn-p" style="max-width:260px;" onclick="saveSiteContent('about')">Save &amp; Publish About</button>
+      </div>
+
     </div>
   </div>
 </div>
 
-<!-- Delete Confirm -->
+<!-- Confirm Delete -->
 <div class="overlay" id="confirm-overlay">
   <div class="dialog">
     <h3>Delete Project?</h3>
-    <p>This permanently removes the project. Remember to Publish after deleting.</p>
-    <div class="dialog-actions">
-      <button class="btn btn-danger" id="confirm-delete-btn">Delete</button>
-      <button class="btn btn-secondary" onclick="closeConfirm()">Cancel</button>
+    <p>This permanently removes the project. Remember to Publish after.</p>
+    <div class="dialog-acts">
+      <button class="btn btn-d" id="confirm-del-btn">Delete</button>
+      <button class="btn btn-s" onclick="closeConfirm()">Cancel</button>
     </div>
   </div>
 </div>
 
-<!-- Status Toast -->
-<div id="status-bar">
-  <span class="status-dot"></span>
-  <span id="status-msg"></span>
-</div>
+<div id="status-bar"><span class="sdot"></span><span id="status-msg"></span></div>
 
 <script>
-let config = {};
-let projects = [];
-let activeProjectId = null;
-let fileSHA = null;
+let config={}, projects=[], activeId=null, projSHA=null;
+let siteData={home:{}, about:{}};
+let homeSHA=null, aboutSHA=null;
 
 // ── LOGIN ──────────────────────────────────────────────────────
-function handleLogin() {
-  const user   = document.getElementById('gh-user').value.trim();
-  const repo   = document.getElementById('gh-repo').value.trim();
-  const branch = document.getElementById('gh-branch').value.trim() || 'main';
-  const token  = document.getElementById('gh-token').value.trim();
-  const cloud  = document.getElementById('cl-cloud').value.trim();
-  const preset = document.getElementById('cl-preset').value.trim();
-
-  if (!user || !repo || !token) {
-    setLoginError('GitHub username, repo name, and token are required.');
-    return;
-  }
-
-  config = { user, repo, branch, token, cloud, preset };
-  localStorage.setItem('cms_config', JSON.stringify({ user, repo, branch, cloud, preset }));
-  sessionStorage.setItem('cms_token', token);
+function handleLogin(){
+  const u=gv('gh-user'),r=gv('gh-repo'),b=gv('gh-branch')||'main',t=gv('gh-token'),cl=gv('cl-cloud'),pr=gv('cl-preset');
+  if(!u||!r||!t){loginErr('GitHub username, repo and token are required.');return;}
+  config={user:u,repo:r,branch:b,token:t,cloud:cl,preset:pr};
+  localStorage.setItem('cms_cfg',JSON.stringify({user:u,repo:r,branch:b,cloud:cl,preset:pr}));
+  localStorage.setItem('cms_cloud',cl);
+  localStorage.setItem('cms_preset',pr);
+  sessionStorage.setItem('cms_tok',t);
   initApp();
 }
-
-function setLoginError(msg) {
-  const el = document.getElementById('login-error');
-  el.textContent = '⚠ ' + msg;
-  el.style.display = 'block';
-}
-
-function logout() {
-  sessionStorage.removeItem('cms_token');
-  location.reload();
-}
+function gv(id){return document.getElementById(id)?.value.trim()||'';}
+function loginErr(m){const e=document.getElementById('login-error');e.textContent='⚠ '+m;e.style.display='block';}
+function logout(){sessionStorage.removeItem('cms_tok');location.reload();}
 
 // ── GITHUB ─────────────────────────────────────────────────────
-async function loadProjectsFromGitHub() {
-  const url = `https://api.github.com/repos/${config.user}/${config.repo}/contents/projects.json?ref=${config.branch}`;
-  const res = await fetch(url, {
-    headers: {
-      'Authorization': `Bearer ${config.token}`,
-      'Accept': 'application/vnd.github.v3+json'
-    }
-  });
-
-  if (res.status === 404) { projects = []; fileSHA = null; return; }
-  if (!res.ok) throw new Error(`GitHub API ${res.status}: check username/repo/token`);
-
-  const data = await res.json();
-  fileSHA = data.sha;
-  const decoded = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
-  projects = JSON.parse(decoded);
+async function ghGet(path){
+  const r=await fetch(`https://api.github.com/repos/${config.user}/${config.repo}/contents/${path}?ref=${config.branch}`,
+    {headers:{'Authorization':`Bearer ${config.token}`,'Accept':'application/vnd.github.v3+json'}});
+  if(r.status===404)return null;
+  if(!r.ok)throw new Error(`GitHub ${r.status} — check credentials`);
+  return r.json();
 }
 
-async function publishToGitHub() {
-  const btn = document.getElementById('publish-btn');
-  const spinner = document.getElementById('pub-spinner');
-  btn.disabled = true;
-  spinner.style.display = 'block';
-
-  try {
-    const json = JSON.stringify(projects, null, 2);
-    const encoded = btoa(unescape(encodeURIComponent(json)));
-    const url = `https://api.github.com/repos/${config.user}/${config.repo}/contents/projects.json`;
-
-    const body = {
-      message: `CMS update — ${new Date().toLocaleString()}`,
-      content: encoded,
-      branch: config.branch,
-    };
-    if (fileSHA) body.sha = fileSHA;
-
-    const res = await fetch(url, {
-      method: 'PUT',
-      headers: {
-        'Authorization': `Bearer ${config.token}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
-
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message);
-    }
-
-    const data = await res.json();
-    fileSHA = data.content.sha;
-    showStatus('Published to GitHub ✓', 'success');
-  } catch(e) {
-    showStatus('Publish failed: ' + e.message, 'error');
-  }
-
-  btn.disabled = false;
-  spinner.style.display = 'none';
+async function ghPut(path,content,sha,msg){
+  const body={message:msg,content:btoa(unescape(encodeURIComponent(content))),branch:config.branch};
+  if(sha)body.sha=sha;
+  const r=await fetch(`https://api.github.com/repos/${config.user}/${config.repo}/contents/${path}`,
+    {method:'PUT',headers:{'Authorization':`Bearer ${config.token}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!r.ok){const e=await r.json();throw new Error(e.message);}
+  return r.json();
 }
 
-// ── INIT ───────────────────────────────────────────────────────
-async function initApp() {
-  try {
-    await loadProjectsFromGitHub();
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'flex';
-    document.getElementById('repo-display').textContent = `${config.user}/${config.repo}`;
+function ghDecode(content){return JSON.parse(decodeURIComponent(escape(atob(content.replace(/\n/g,'')))));}
+
+// ── INIT ────────────────────────────────────────────────────────
+async function initApp(){
+  try{
+    const [pd, hd, ad] = await Promise.all([
+      ghGet('projects.json'),
+      ghGet('site-home.json'),
+      ghGet('site-about.json')
+    ]);
+    if(pd){projSHA=pd.sha; projects=ghDecode(pd.content);}
+    else{projects=[];projSHA=null;}
+    if(hd){homeSHA=hd.sha; siteData.home=ghDecode(hd.content); fillHomeForm();}
+    if(ad){aboutSHA=ad.sha; siteData.about=ghDecode(ad.content); fillAboutForm();}
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='flex';
+    document.getElementById('repo-display').textContent=`${config.user}/${config.repo}`;
     renderSidebar();
-    showStatus('Connected to ' + config.repo, 'success');
-  } catch(e) {
-    setLoginError(e.message);
-  }
+    showStatus('Connected ✓','success');
+  }catch(e){loginErr(e.message);}
 }
 
-// ── SIDEBAR ───────────────────────────────────────────────────
-function renderSidebar() {
-  const list = document.getElementById('project-list');
-  document.getElementById('project-count').textContent = projects.length;
+// ── PUBLISH ALL ─────────────────────────────────────────────────
+async function publishAll(){
+  const btn=document.getElementById('pub-btn');
+  const sp=document.getElementById('pub-spin');
+  btn.disabled=true;sp.style.display='block';
+  try{
+    const d=await ghPut('projects.json',JSON.stringify(projects,null,2),projSHA,`CMS update — ${new Date().toLocaleString()}`);
+    projSHA=d.content.sha;
+    showStatus('Published ✓','success');
+  }catch(e){showStatus('Publish failed: '+e.message,'error');}
+  btn.disabled=false;sp.style.display='none';
+}
 
-  if (!projects.length) {
-    list.innerHTML = `<p style="font-size:0.7rem;color:var(--muted);font-family:var(--font-mono);padding:0.5rem 0.75rem;">No projects yet.</p>`;
+// ── TABS ────────────────────────────────────────────────────────
+function switchTab(tab){
+  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',['projects','site'][i]===tab));
+  document.getElementById('panel-projects').classList.toggle('on',tab==='projects');
+  document.getElementById('panel-site').classList.toggle('on',tab==='site');
+}
+
+function switchSiteTab(tab){
+  document.querySelectorAll('.site-tab').forEach((b,i)=>b.classList.toggle('on',['home','about'][i]===tab));
+  document.getElementById('site-home').style.display=tab==='home'?'block':'none';
+  document.getElementById('site-about').style.display=tab==='about'?'block':'none';
+}
+
+// ── SIDEBAR ─────────────────────────────────────────────────────
+function renderSidebar(){
+  const list=document.getElementById('sb-list');
+  document.getElementById('proj-count').textContent=projects.length;
+  if(!projects.length){
+    list.innerHTML=`<p style="font-size:.68rem;color:var(--muted);font-family:var(--M);padding:.5rem 1.5rem;">No projects yet.</p>`;
     return;
   }
-
-  list.innerHTML = projects.map(p => `
-    <div class="project-item ${p.id === activeProjectId ? 'active' : ''}" onclick="selectProject('${p.id}')">
-      <span class="project-item-name">${p.title || 'Untitled'}</span>
-      ${p.isRecent ? `<span class="recent-badge">★</span>` : ''}
-      ${p.tags?.[0] ? `<span class="project-item-tag">${esc(p.tags[0])}</span>` : ''}
-    </div>
-  `).join('');
-}
-
-// ── EDITOR ────────────────────────────────────────────────────
-function addNewProject() {
-  const id = 'proj_' + Date.now();
-  projects.unshift({
-    id, title: '', subtitle: '', description: '',
-    tags: [], year: new Date().getFullYear().toString(),
-    link: '', media: [], isRecent: false, isFeatured: false, coverIndex: 0
-  });
-  renderSidebar();
-  selectProject(id);
-  showStatus('New project created', 'info');
-}
-
-function selectProject(id) {
-  activeProjectId = id;
-  renderSidebar();
-  renderEditor();
-}
-
-function getProject(id) { return projects.find(p => p.id === id); }
-
-function updateProject(id, key, value) {
-  const p = getProject(id);
-  if (p) { p[key] = value; }
-  if (['title','isRecent','tags'].includes(key)) renderSidebar();
-}
-
-function renderEditor() {
-  const p = getProject(activeProjectId);
-  if (!p) return;
-
-  document.getElementById('main-content').innerHTML = `
-    <div class="section-header">
-      <div>
-        <h1 class="section-title" id="live-title">${esc(p.title) || 'Untitled Project'}</h1>
-        <p class="section-subtitle">ID: ${p.id}</p>
-      </div>
-      <button class="btn btn-danger" onclick="confirmDelete('${p.id}')">Delete</button>
-    </div>
-
-    <div class="editor-grid">
-      <div style="display:flex;flex-direction:column;gap:1.5rem;">
-
-        <div class="editor-card">
-          <p class="editor-card-title">Project Info</p>
-
-          <div class="field-group">
-            <label>Title *</label>
-            <input type="text" value="${esc(p.title)}" placeholder="Project name"
-              oninput="updateProject('${p.id}','title',this.value);document.getElementById('live-title').textContent=this.value||'Untitled'"/>
-          </div>
-          <div class="field-group">
-            <label>Subtitle / Role</label>
-            <input type="text" value="${esc(p.subtitle)}" placeholder="e.g. Brand Identity, UI Design"
-              oninput="updateProject('${p.id}','subtitle',this.value)"/>
-          </div>
-          <div class="field-group">
-            <label>Description</label>
-            <textarea placeholder="Tell the story behind this project..."
-              oninput="updateProject('${p.id}','description',this.value)">${esc(p.description)}</textarea>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-            <div class="field-group">
-              <label>Year</label>
-              <input type="text" value="${esc(p.year)}" placeholder="${new Date().getFullYear()}"
-                oninput="updateProject('${p.id}','year',this.value)"/>
-            </div>
-          </div>
-          <div class="field-group">
-            <label>External Link (optional)</label>
-            <input type="url" value="${esc(p.link)}" placeholder="https://..."
-              oninput="updateProject('${p.id}','link',this.value)"/>
-          </div>
-        </div>
-
-        <div class="editor-card">
-          <p class="editor-card-title">Tags / Categories</p>
-          <div class="field-group">
-            <label>Add Tag — press Enter</label>
-            <input type="text" id="tag-input-${p.id}" placeholder="Branding, UI, Motion…"
-              onkeydown="handleTagInput(event,'${p.id}')"/>
-          </div>
-          <div class="tags-display" id="tags-display-${p.id}">${renderTags(p)}</div>
-        </div>
-
-        <div class="editor-card">
-          <p class="editor-card-title">Media</p>
-          ${config.cloud ? `
-            <div class="media-upload-area">
-              <input type="file" accept="image/*,video/*" multiple onchange="handleMediaUpload(event,'${p.id}')"/>
-              <p>Drop images or videos here, or click to browse</p>
-              <p style="margin-top:0.3rem;font-size:0.6rem;">JPG, PNG, GIF, MP4, WEBM · Uploads via Cloudinary</p>
-            </div>
-            <div class="upload-progress" id="upload-progress-${p.id}">
-              <div class="progress-bar"><div class="progress-fill" id="progress-fill-${p.id}"></div></div>
-              <p class="progress-label" id="progress-label-${p.id}">Uploading…</p>
-            </div>
-          ` : `<p style="font-size:0.75rem;color:var(--muted);font-family:var(--font-mono);">Cloudinary not configured — paste URLs below.</p>`}
-
-          <div class="field-group" style="margin-top:0.5rem;">
-            <label>Or paste a URL directly</label>
-            <div style="display:flex;gap:0.5rem;">
-              <input type="url" id="manual-url-${p.id}" placeholder="https://res.cloudinary.com/…"/>
-              <button class="btn btn-ghost" style="white-space:nowrap;" onclick="addManualUrl('${p.id}')">Add</button>
-            </div>
-          </div>
-
-          <div class="media-grid" id="media-grid-${p.id}">${renderMediaThumbs(p)}</div>
-        </div>
-
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:1.5rem;">
-
-        <div class="editor-card">
-          <p class="editor-card-title">Display Settings</p>
-          <div class="toggle-row">
-            <div>
-              <div class="toggle-label">Mark as Recent ★</div>
-              <div class="toggle-desc">Appears in the Recents slider</div>
-            </div>
-            <label class="toggle">
-              <input type="checkbox" ${p.isRecent ? 'checked' : ''} onchange="updateProject('${p.id}','isRecent',this.checked)"/>
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="toggle-row">
-            <div>
-              <div class="toggle-label">Featured</div>
-              <div class="toggle-desc">Highlighted in project list</div>
-            </div>
-            <label class="toggle">
-              <input type="checkbox" ${p.isFeatured ? 'checked' : ''} onchange="updateProject('${p.id}','isFeatured',this.checked)"/>
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-        </div>
-
-        ${p.media?.length ? `
-        <div class="editor-card">
-          <p class="editor-card-title">Cover Image</p>
-          <p style="font-size:0.7rem;color:var(--muted);font-family:var(--font-mono);margin-bottom:0.75rem;">Select the cover for listings:</p>
-          <div style="display:flex;flex-direction:column;gap:0.4rem;">
-            ${p.media.map((m,i) => `
-              <label style="display:flex;align-items:center;gap:0.75rem;cursor:pointer;padding:0.4rem;border:1px solid ${(p.coverIndex??0)===i?'var(--accent)':'var(--border)'};transition:border-color 0.15s;">
-                <input type="radio" name="cover-${p.id}" value="${i}" ${(p.coverIndex??0)===i?'checked':''}
-                  onchange="updateProject('${p.id}','coverIndex',${i});renderEditor()" style="accent-color:var(--accent);"/>
-                <img src="${esc(m.url)}" style="width:50px;height:34px;object-fit:cover;" onerror="this.style.display='none'"/>
-                <span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;">${m.url.split('/').pop()}</span>
-              </label>
-            `).join('')}
-          </div>
-        </div>
-        ` : ''}
-
-        <div class="editor-card">
-          <p class="editor-card-title">JSON Preview</p>
-          <pre id="json-preview-${p.id}" style="font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);overflow:auto;max-height:280px;line-height:1.7;white-space:pre-wrap;word-break:break-all;">${JSON.stringify(p, null, 2)}</pre>
-        </div>
-
-      </div>
-    </div>
-  `;
-
-  // Live JSON preview
-  const previewInterval = setInterval(() => {
-    const pre = document.getElementById(`json-preview-${p.id}`);
-    if (!pre) { clearInterval(previewInterval); return; }
-    pre.textContent = JSON.stringify(getProject(p.id), null, 2);
-  }, 800);
-}
-
-// ── TAGS ──────────────────────────────────────────────────────
-function handleTagInput(e, id) {
-  if (e.key !== 'Enter') return;
-  e.preventDefault();
-  const input = document.getElementById(`tag-input-${id}`);
-  const val = input.value.trim();
-  if (!val) return;
-  const p = getProject(id);
-  if (!p.tags.includes(val)) {
-    p.tags.push(val);
-    document.getElementById(`tags-display-${id}`).innerHTML = renderTags(p);
-    renderSidebar();
-  }
-  input.value = '';
-}
-
-function removeTag(id, tag) {
-  const p = getProject(id);
-  p.tags = p.tags.filter(t => t !== tag);
-  document.getElementById(`tags-display-${id}`).innerHTML = renderTags(p);
-  renderSidebar();
-}
-
-function renderTags(p) {
-  if (!p.tags?.length) return `<span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);">No tags yet</span>`;
-  return p.tags.map(t => `
-    <span class="tag-chip" onclick="removeTag('${p.id}','${esc(t)}')" title="Click to remove">
-      ${esc(t)} <span style="opacity:0.5">×</span>
-    </span>`).join('');
-}
-
-// ── MEDIA ─────────────────────────────────────────────────────
-async function handleMediaUpload(e, id) {
-  if (!config.cloud || !config.preset) { showStatus('Cloudinary not configured', 'error'); return; }
-  const files = Array.from(e.target.files);
-  const progressWrap = document.getElementById(`upload-progress-${id}`);
-  const fill = document.getElementById(`progress-fill-${id}`);
-  const label = document.getElementById(`progress-label-${id}`);
-  progressWrap.style.display = 'block';
-
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    label.textContent = `Uploading ${i+1}/${files.length}: ${file.name}`;
-    fill.style.width = `${(i/files.length)*100}%`;
-    try {
-      const url = await uploadToCloudinary(file);
-      const p = getProject(id);
-      p.media.push({ url, type: file.type.startsWith('video/') ? 'video' : 'image' });
-      document.getElementById(`media-grid-${id}`).innerHTML = renderMediaThumbs(p);
-    } catch(err) {
-      showStatus('Upload failed: ' + err.message, 'error');
-    }
-  }
-
-  fill.style.width = '100%';
-  label.textContent = 'Done ✓';
-  setTimeout(() => { progressWrap.style.display = 'none'; fill.style.width = '0'; }, 2000);
-  showStatus(`${files.length} file(s) uploaded`, 'success');
-}
-
-async function uploadToCloudinary(file) {
-  const fd = new FormData();
-  fd.append('file', file);
-  fd.append('upload_preset', config.preset);
-  const res = await fetch(`https://api.cloudinary.com/v1_1/${config.cloud}/upload`, { method:'POST', body: fd });
-  if (!res.ok) throw new Error('Cloudinary upload failed');
-  return (await res.json()).secure_url;
-}
-
-function addManualUrl(id) {
-  const input = document.getElementById(`manual-url-${id}`);
-  const url = input.value.trim();
-  if (!url) return;
-  const p = getProject(id);
-  const isVideo = /\.(mp4|webm|ogg|mov)$/i.test(url);
-  p.media.push({ url, type: isVideo ? 'video' : 'image' });
-  document.getElementById(`media-grid-${id}`).innerHTML = renderMediaThumbs(p);
-  input.value = '';
-  showStatus('Media URL added', 'info');
-}
-
-function removeMedia(id, index) {
-  const p = getProject(id);
-  p.media.splice(index, 1);
-  if (p.coverIndex >= p.media.length) p.coverIndex = 0;
-  document.getElementById(`media-grid-${id}`).innerHTML = renderMediaThumbs(p);
-}
-
-function renderMediaThumbs(p) {
-  if (!p.media?.length) return `<p style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);grid-column:1/-1;padding:0.5rem 0;">No media yet.</p>`;
-  return p.media.map((m,i) => `
-    <div class="media-thumb">
-      ${m.type==='video'
-        ? `<video src="${esc(m.url)}" muted loop></video>`
-        : `<img src="${esc(m.url)}" alt="" loading="lazy"/>`}
-      <button class="media-thumb-remove" onclick="removeMedia('${p.id}',${i})">×</button>
+  list.innerHTML=projects.map(p=>`
+    <div class="pi ${p.id===activeId?'on':''}" onclick="selectProject('${p.id}')">
+      <span class="pi-name">${esc(p.title||'Untitled')}</span>
+      ${p.isRecent?`<span class="rb">★</span>`:''}
+      ${p.tags?.[0]?`<span class="pi-tag">${esc(p.tags[0])}</span>`:''}
     </div>`).join('');
 }
 
-// ── DELETE ────────────────────────────────────────────────────
-let pendingDeleteId = null;
+// ── PROJECT EDITOR ──────────────────────────────────────────────
+function addProject(){
+  const id='proj_'+Date.now();
+  projects.unshift({id,title:'',subtitle:'',description:'',tags:[],year:new Date().getFullYear()+'',link:'',previewUrl:'',media:[],isRecent:false,isFeatured:false,coverIndex:0});
+  renderSidebar();selectProject(id);showStatus('New project created','info');
+}
 
-function confirmDelete(id) {
-  pendingDeleteId = id;
+function selectProject(id){activeId=id;renderSidebar();renderEditor();}
+function getProj(id){return projects.find(p=>p.id===id);}
+
+function setProp(id,key,val){
+  const p=getProj(id);if(p)p[key]=val;
+  if(['title','isRecent','tags'].includes(key))renderSidebar();
+}
+
+function renderEditor(){
+  const p=getProj(activeId);if(!p)return;
+  const wrap=document.getElementById('editor-wrap');
+
+  wrap.innerHTML=`
+  <div class="ed-header">
+    <div>
+      <div class="ed-title" id="live-title">${esc(p.title)||'Untitled'}</div>
+      <div class="ed-sub">ID: ${p.id}</div>
+    </div>
+    <button class="btn btn-d btn-sm" onclick="confirmDel('${p.id}')">Delete</button>
+  </div>
+  <div class="ed-grid">
+    <div>
+
+      <!-- INFO -->
+      <div class="card">
+        <p class="card-title">Project Info</p>
+        <div class="fg"><label>Title *</label>
+          <input type="text" value="${esc(p.title)}" placeholder="Project name"
+            oninput="setProp('${p.id}','title',this.value);document.getElementById('live-title').textContent=this.value||'Untitled'"/></div>
+        <div class="fg"><label>Subtitle / Role</label>
+          <input type="text" value="${esc(p.subtitle)}" oninput="setProp('${p.id}','subtitle',this.value)"/></div>
+        <div class="fg"><label>Description</label>
+          <textarea oninput="setProp('${p.id}','description',this.value)">${esc(p.description)}</textarea></div>
+        <div class="row2">
+          <div class="fg"><label>Year</label>
+            <input type="text" value="${esc(p.year)}" oninput="setProp('${p.id}','year',this.value)"/></div>
+          <div class="fg"><label>External Link</label>
+            <input type="url" value="${esc(p.link)}" oninput="setProp('${p.id}','link',this.value)"/></div>
+        </div>
+      </div>
+
+      <!-- WEBSITE PREVIEW -->
+      <div class="card">
+        <p class="card-title">Website Preview URL</p>
+        <p class="hint">Viewers can interact with this site inside your portfolio modal</p>
+        <div class="fg" style="margin-top:.25rem;">
+          <input type="url" id="prev-url-${p.id}" value="${esc(p.previewUrl||'')}"
+            placeholder="https://client-site.com"
+            oninput="setProp('${p.id}','previewUrl',this.value)"/>
+        </div>
+        <button class="btn btn-g btn-sm" onclick="testPreview('${p.id}')">Test Preview</button>
+        <div id="preview-test-${p.id}" class="preview-test-wrap" style="display:none;">
+          <div class="preview-frame-outer">
+            <iframe class="preview-iframe" id="prev-iframe-${p.id}" src="" loading="lazy"
+              sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+          </div>
+          <p class="preview-note">
+            ⚠ Some sites block embedding (Google, Facebook etc). If it shows blank, the site blocks iframes — that's normal.
+            Your portfolio will still show a "View Live" button instead.
+          </p>
+        </div>
+      </div>
+
+      <!-- TAGS -->
+      <div class="card">
+        <p class="card-title">Tags</p>
+        <div class="fg"><label>Add Tag — press Enter</label>
+          <input type="text" id="tag-inp-${p.id}" placeholder="Branding, UI…" onkeydown="addTag(event,'${p.id}')"/></div>
+        <div class="tags-wrap" id="tags-${p.id}">${renderTags(p)}</div>
+      </div>
+
+      <!-- MEDIA -->
+      <div class="card">
+        <p class="card-title">Media</p>
+        ${config.cloud?`
+          <div class="upload-area">
+            <input type="file" accept="image/*,video/*" multiple onchange="uploadMedia(event,'${p.id}')"/>
+            <p>Drop images or videos — uploads via Cloudinary</p>
+            <p style="font-size:.58rem;margin-top:.2rem;">JPG PNG GIF MP4 WEBM supported</p>
+          </div>
+          <div class="upload-progress" id="uprog-${p.id}">
+            <div class="prog-bar"><div class="prog-fill" id="uprog-fill-${p.id}"></div></div>
+            <p class="prog-lbl" id="uprog-lbl-${p.id}">Uploading…</p>
+          </div>`
+        :`<p style="font-size:.72rem;color:var(--muted);font-family:var(--M);">No Cloudinary — paste URLs below.</p>`}
+        <div class="fg" style="margin-top:.5rem;"><label>Paste URL directly</label>
+          <div style="display:flex;gap:.5rem;">
+            <input type="url" id="man-url-${p.id}" placeholder="https://…"/>
+            <button class="btn btn-g btn-sm" onclick="addManualUrl('${p.id}')">Add</button>
+          </div>
+        </div>
+        <p style="font-size:.62rem;color:var(--muted);font-family:var(--M);margin-top:.25rem;">
+          Click any thumbnail below to set it as the cover
+        </p>
+        <div class="media-grid" id="mgrid-${p.id}">${renderThumbs(p)}</div>
+      </div>
+
+    </div>
+    <div>
+
+      <!-- DISPLAY SETTINGS -->
+      <div class="card">
+        <p class="card-title">Display Settings</p>
+        <div class="tog-row">
+          <div><div class="tog-lbl">Mark as Recent ★</div>
+          <div class="tog-desc">Slider only — not in Projects list</div></div>
+          <label class="tog"><input type="checkbox" ${p.isRecent?'checked':''} onchange="setProp('${p.id}','isRecent',this.checked)"/><span class="tog-sl"></span></label>
+        </div>
+        <div class="tog-row">
+          <div><div class="tog-lbl">Featured</div>
+          <div class="tog-desc">Highlighted in Projects list</div></div>
+          <label class="tog"><input type="checkbox" ${p.isFeatured?'checked':''} onchange="setProp('${p.id}','isFeatured',this.checked)"/><span class="tog-sl"></span></label>
+        </div>
+      </div>
+
+      <!-- JSON PREVIEW -->
+      <div class="card">
+        <p class="card-title">JSON Preview</p>
+        <pre id="jprev-${p.id}" style="font-family:var(--M);font-size:.58rem;color:var(--muted);overflow:auto;max-height:300px;line-height:1.7;white-space:pre-wrap;word-break:break-all;">${JSON.stringify(p,null,2)}</pre>
+      </div>
+
+    </div>
+  </div>`;
+
+  // Live JSON update
+  const iv=setInterval(()=>{
+    const el=document.getElementById(`jprev-${p.id}`);
+    if(!el){clearInterval(iv);return;}
+    el.textContent=JSON.stringify(getProj(p.id),null,2);
+  },800);
+}
+
+// ── COVER SELECTION (click on thumb) ────────────────────────────
+// No renderEditor() call — just updates data and badge visually
+function selectCover(projId, index){
+  const p=getProj(projId);if(!p)return;
+  p.coverIndex=index;
+  // Update visual badges without re-rendering whole editor
+  document.querySelectorAll(`#mgrid-${projId} .m-thumb`).forEach((el,i)=>{
+    el.classList.toggle('cover-selected',i===index);
+    const badge=el.querySelector('.cover-badge');
+    if(badge) badge.remove();
+    if(i===index){
+      const b=document.createElement('div');
+      b.className='cover-badge';b.textContent='Cover';
+      el.appendChild(b);
+    }
+  });
+  showStatus('Cover set — hit Publish to save','info');
+}
+
+// ── TAGS ────────────────────────────────────────────────────────
+function addTag(e,id){
+  if(e.key!=='Enter')return;e.preventDefault();
+  const inp=document.getElementById(`tag-inp-${id}`);
+  const val=inp.value.trim();if(!val)return;
+  const p=getProj(id);
+  if(!p.tags.includes(val)){p.tags.push(val);document.getElementById(`tags-${id}`).innerHTML=renderTags(p);renderSidebar();}
+  inp.value='';
+}
+function removeTag(id,tag){
+  const p=getProj(id);p.tags=p.tags.filter(t=>t!==tag);
+  document.getElementById(`tags-${id}`).innerHTML=renderTags(p);renderSidebar();
+}
+function renderTags(p){
+  if(!p.tags?.length)return`<span style="font-family:var(--M);font-size:.62rem;color:var(--muted);">No tags yet</span>`;
+  return p.tags.map(t=>`<span class="tag-chip" onclick="removeTag('${p.id}','${esc(t)}')">${esc(t)} <span style="opacity:.5">×</span></span>`).join('');
+}
+
+// ── MEDIA UPLOAD ────────────────────────────────────────────────
+async function uploadMedia(e,id){
+  const cloud=config.cloud||localStorage.getItem('cms_cloud')||'';
+  const preset=config.preset||localStorage.getItem('cms_preset')||'';
+  if(!cloud||!preset){showStatus('Cloudinary not configured','error');return;}
+  const files=Array.from(e.target.files);if(!files.length)return;
+  const pw=document.getElementById(`uprog-${id}`);
+  const fill=document.getElementById(`uprog-fill-${id}`);
+  const lbl=document.getElementById(`uprog-lbl-${id}`);
+  if(pw)pw.style.display='block';
+  let ok=0;
+  for(let i=0;i<files.length;i++){
+    if(lbl)lbl.textContent=`Uploading ${i+1}/${files.length}: ${files[i].name}`;
+    if(fill)fill.style.width=`${(i/files.length)*100}%`;
+    try{
+      const url=await cloudinaryUpload(files[i],cloud,preset);
+      const p=getProj(id);
+      p.media.push({url,type:files[i].type.startsWith('video/')?'video':'image'});
+      const g=document.getElementById(`mgrid-${id}`);
+      if(g)g.innerHTML=renderThumbs(p);
+      ok++;
+    }catch(err){showStatus('Upload failed: '+err.message,'error');console.error(err);}
+  }
+  if(fill)fill.style.width='100%';
+  if(lbl)lbl.textContent=ok>0?`Done ✓ (${ok} uploaded)`:'Failed';
+  setTimeout(()=>{if(pw)pw.style.display='none';if(fill)fill.style.width='0';},2500);
+  if(ok>0)showStatus(ok+' file(s) uploaded — Publish to save','success');
+}
+
+async function cloudinaryUpload(file,cloud,preset){
+  const fd=new FormData();fd.append('file',file);fd.append('upload_preset',preset);
+  const r=await fetch(`https://api.cloudinary.com/v1_1/${cloud}/upload`,{method:'POST',body:fd});
+  if(!r.ok){const d=await r.json().catch(()=>({}));throw new Error(d.error?.message||`Cloudinary ${r.status}`);}
+  const d=await r.json();
+  if(!d.secure_url)throw new Error('No URL returned');
+  return d.secure_url;
+}
+
+function addManualUrl(id){
+  const inp=document.getElementById(`man-url-${id}`);
+  const url=inp.value.trim();if(!url)return;
+  const p=getProj(id);
+  const isVid=/\.(mp4|webm|ogg|mov)$/i.test(url)||url.includes('/video/upload/');
+  p.media.push({url,type:isVid?'video':'image'});
+  const g=document.getElementById(`mgrid-${id}`);
+  if(g)g.innerHTML=renderThumbs(p);
+  inp.value='';showStatus('URL added','info');
+}
+
+function removeMedia(id,index,e){
+  e.stopPropagation();
+  const p=getProj(id);p.media.splice(index,1);
+  if(p.coverIndex>=p.media.length)p.coverIndex=0;
+  const g=document.getElementById(`mgrid-${id}`);
+  if(g)g.innerHTML=renderThumbs(p);
+}
+
+function renderThumbs(p){
+  if(!p.media?.length)return`<p style="font-family:var(--M);font-size:.62rem;color:var(--muted);grid-column:1/-1;padding:.5rem 0;">No media yet — upload above or paste a URL.</p>`;
+  const ci=p.coverIndex??0;
+  return p.media.map((m,i)=>{
+    const isVid=isVidUrl(m.url)||m.type==='video';
+    const urlNoCache=m.url+(m.url.includes('?')?'&':'?')+'t='+Date.now();
+    return `
+    <div class="m-thumb ${i===ci?'cover-selected':''}" onclick="selectCover('${p.id}',${i})" title="Click to set as cover">
+      ${isVid
+        ?`<video src="${esc(m.url)}" muted loop playsinline crossorigin="anonymous"
+            onerror="this.style.background='#2a2a2a';this.insertAdjacentHTML('afterend','<span style=\'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:.55rem;color:#666;font-family:var(--M);\'>VIDEO</span>')"></video>`
+        :`<img src="${esc(m.url)}" alt="" crossorigin="anonymous"
+            onerror="this.src='';this.style.background='#2a2a2a';this.insertAdjacentHTML('afterend','<span style=\'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:.55rem;color:#666;font-family:var(--M);\'>IMG</span>')"/>`}
+      <button class="m-thumb-del" onclick="removeMedia('${p.id}',${i},event)">×</button>
+      ${i===ci?`<div class="cover-badge">Cover</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function isVidUrl(url){return /\.(mp4|webm|mov|ogg)(\?|$)/i.test(url)||url.includes('/video/upload/');}
+
+// ── PREVIEW TEST ────────────────────────────────────────────────
+function testPreview(id){
+  const p=getProj(id);if(!p)return;
+  const url=p.previewUrl||document.getElementById(`prev-url-${id}`)?.value.trim()||'';
+  if(!url){showStatus('Enter a URL first','error');return;}
+  const section=document.getElementById(`preview-test-${id}`);
+  const iframe=document.getElementById(`prev-iframe-${id}`);
+  if(!section||!iframe)return;
+  if(section.style.display==='none'){
+    section.style.display='block';
+    iframe.src=url;
+  }else{
+    section.style.display='none';
+    iframe.src='';
+  }
+}
+
+// ── DELETE ──────────────────────────────────────────────────────
+let pendingDel=null;
+function confirmDel(id){
+  pendingDel=id;
   document.getElementById('confirm-overlay').classList.add('show');
-  document.getElementById('confirm-delete-btn').onclick = () => {
-    projects = projects.filter(p => p.id !== pendingDeleteId);
-    activeProjectId = null;
-    renderSidebar();
-    document.getElementById('main-content').innerHTML = `
-      <div class="empty-state">
-        <h2>Project deleted</h2>
-        <p>Select another or create a new one. Don't forget to Publish.</p>
-        <button class="btn btn-primary" style="width:auto;display:inline-block;" onclick="addNewProject()">+ New Project</button>
-      </div>`;
-    closeConfirm();
-    showStatus('Deleted — remember to Publish', 'info');
+  document.getElementById('confirm-del-btn').onclick=()=>{
+    projects=projects.filter(p=>p.id!==pendingDel);
+    activeId=null;renderSidebar();
+    document.getElementById('editor-wrap').innerHTML=`<div class="empty-state"><h2>Deleted</h2><p>Create a new project or select another.</p><button class="btn btn-p" style="width:auto;display:inline-block;" onclick="addProject()">+ New Project</button></div>`;
+    closeConfirm();showStatus('Deleted — Publish to apply','info');
   };
 }
+function closeConfirm(){document.getElementById('confirm-overlay').classList.remove('show');}
 
-function closeConfirm() { document.getElementById('confirm-overlay').classList.remove('show'); }
-
-// ── STATUS TOAST ──────────────────────────────────────────────
-let statusTimeout;
-function showStatus(msg, type='info') {
-  const bar = document.getElementById('status-bar');
-  document.getElementById('status-msg').textContent = msg;
-  bar.className = `show ${type}`;
-  clearTimeout(statusTimeout);
-  statusTimeout = setTimeout(() => bar.classList.remove('show'), 3500);
+// ── SITE CONTENT ────────────────────────────────────────────────
+function fillHomeForm(){
+  const d=siteData.home;
+  sf('s-name',d.name);sf('s-role',d.role);sf('s-herobg',d.heroBg);
+  sf('s-contact-desc',d.contactDesc);sf('s-email',d.email);
+  sf('s-linkedin',d.linkedin);sf('s-instagram',d.instagram);
+  sf('s-behance',d.behance);sf('s-dribbble',d.dribbble);
+  if(d.heroBg)previewHeroBg();
 }
 
-// ── UTILS ─────────────────────────────────────────────────────
-function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fillAboutForm(){
+  const d=siteData.about;
+  sf('a-about-short',d.aboutShort);sf('a-about-full',d.aboutFull);
+  sf('a-edu-short',d.eduShort);sf('a-edu-full',d.eduFull);
+  sf('a-work-short',d.workShort);sf('a-work-full',d.workFull);
+  sf('a-skills-short',d.skillsShort);sf('a-skills-full',d.skillsFull);
+}
 
-// ── BOOT ──────────────────────────────────────────────────────
-window.onload = () => {
-  const saved = localStorage.getItem('cms_config');
-  const token = sessionStorage.getItem('cms_token');
-  if (saved && token) {
-    const c = JSON.parse(saved);
-    // Pre-fill the form
-    document.getElementById('gh-user').value = c.user || '';
-    document.getElementById('gh-repo').value = c.repo || '';
-    document.getElementById('gh-branch').value = c.branch || 'main';
-    document.getElementById('gh-token').value = token;
-    document.getElementById('cl-cloud').value = c.cloud || '';
-    document.getElementById('cl-preset').value = c.preset || '';
-    config = { ...c, token };
+function sf(id,val){const el=document.getElementById(id);if(el)el.value=val||'';}
+function gf(id){return document.getElementById(id)?.value.trim()||'';}
+
+async function saveSiteContent(section){
+  let data, sha, filename;
+  if(section==='home'){
+    data={
+      name:gf('s-name'),role:gf('s-role'),heroBg:gf('s-herobg'),
+      contactDesc:gf('s-contact-desc'),email:gf('s-email'),
+      linkedin:gf('s-linkedin'),instagram:gf('s-instagram'),
+      behance:gf('s-behance'),dribbble:gf('s-dribbble')
+    };
+    sha=homeSHA;filename='site-home.json';
+  } else {
+    data={
+      aboutShort:gf('a-about-short'),aboutFull:gf('a-about-full'),
+      eduShort:gf('a-edu-short'),eduFull:gf('a-edu-full'),
+      workShort:gf('a-work-short'),workFull:gf('a-work-full'),
+      skillsShort:gf('a-skills-short'),skillsFull:gf('a-skills-full')
+    };
+    sha=aboutSHA;filename='site-about.json';
+  }
+  try{
+    const d=await ghPut(filename,JSON.stringify(data,null,2),sha,`CMS: update ${filename} — ${new Date().toLocaleString()}`);
+    if(section==='home'){homeSHA=d.content.sha;siteData.home=data;}
+    else{aboutSHA=d.content.sha;siteData.about=data;}
+    showStatus(`${section==='home'?'Home':'About'} published ✓`,'success');
+  }catch(e){showStatus('Publish failed: '+e.message,'error');}
+}
+
+// Upload for site media (hero background)
+async function uploadSiteMedia(e,inputId,previewId,progressId){
+  const cloud=config.cloud||localStorage.getItem('cms_cloud')||'';
+  const preset=config.preset||localStorage.getItem('cms_preset')||'';
+  if(!cloud||!preset){showStatus('Cloudinary not configured','error');return;}
+  const file=e.target.files[0];if(!file)return;
+  const pw=document.getElementById(progressId);
+  const fill=document.getElementById(progressId+'-fill');
+  const lbl=document.getElementById(progressId+'-lbl');
+  if(pw)pw.style.display='block';if(fill)fill.style.width='40%';
+  try{
+    const url=await cloudinaryUpload(file,cloud,preset);
+    const inp=document.getElementById(inputId);
+    if(inp)inp.value=url;
+    if(fill)fill.style.width='100%';if(lbl)lbl.textContent='Done ✓';
+    previewHeroBg();
+    showStatus('Uploaded ✓','success');
+  }catch(err){showStatus('Upload failed: '+err.message,'error');}
+  setTimeout(()=>{if(pw)pw.style.display='none';if(fill)fill.style.width='0';},2500);
+}
+
+function previewHeroBg(){
+  const url=document.getElementById('s-herobg')?.value.trim()||'';
+  const div=document.getElementById('hero-bg-preview');
+  if(!div)return;
+  if(!url){div.innerHTML='';return;}
+  const isVid=isVidUrl(url);
+  div.innerHTML=isVid
+    ?`<video src="${esc(url)}" muted loop autoplay style="width:100%;max-height:160px;object-fit:cover;border:1px solid var(--border);margin-top:.5rem;"></video>`
+    :`<img src="${esc(url)}" style="width:100%;max-height:160px;object-fit:cover;border:1px solid var(--border);margin-top:.5rem;" onerror="this.style.display='none'"/>`;
+}
+
+// ── STATUS ──────────────────────────────────────────────────────
+let stTimeout;
+function showStatus(msg,type='info'){
+  const bar=document.getElementById('status-bar');
+  document.getElementById('status-msg').textContent=msg;
+  bar.className=`show ${type}`;
+  clearTimeout(stTimeout);
+  stTimeout=setTimeout(()=>bar.classList.remove('show'),3500);
+}
+
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ── BOOT ────────────────────────────────────────────────────────
+window.onload=()=>{
+  const saved=localStorage.getItem('cms_cfg');
+  const token=sessionStorage.getItem('cms_tok');
+  if(saved&&token){
+    const c=JSON.parse(saved);
+    const cloud=c.cloud||localStorage.getItem('cms_cloud')||'';
+    const preset=c.preset||localStorage.getItem('cms_preset')||'';
+    config={...c,token,cloud,preset};
+    document.getElementById('gh-user').value=c.user||'';
+    document.getElementById('gh-repo').value=c.repo||'';
+    document.getElementById('gh-branch').value=c.branch||'main';
+    document.getElementById('gh-token').value=token;
+    document.getElementById('cl-cloud').value=cloud;
+    document.getElementById('cl-preset').value=preset;
     initApp();
   }
 };
