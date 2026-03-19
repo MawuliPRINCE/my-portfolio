@@ -20,6 +20,10 @@
     }
     *{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s;}
+    /* Download protection */
+    img,video{pointer-events:none;-webkit-user-drag:none;}
+    *{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
+    .modal-description,.modal-info-value{-webkit-user-select:text;user-select:text;}
     .no-scrollbar::-webkit-scrollbar{display:none;}
     .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
     .shell{display:flex;min-height:100vh;}
@@ -450,7 +454,22 @@
     if (iframe) iframe.src = '';
   }
 
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  // ── DOWNLOAD PROTECTION ─────────────────────────
+  // Block right-click context menu
+  document.addEventListener('contextmenu', e => e.preventDefault());
+
+  // Block keyboard shortcuts + Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModal(); return; }
+    if ((e.ctrlKey||e.metaKey) && ['s','u','p'].includes(e.key.toLowerCase())) e.preventDefault();
+    if (e.key === 'F12') e.preventDefault();
+    if ((e.ctrlKey||e.metaKey) && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase())) e.preventDefault();
+  });
+
+  // Block drag of images and videos
+  document.addEventListener('dragstart', e => {
+    if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault();
+  });
 
   function esc(s) {
     return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
