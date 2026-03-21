@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ismael Asumanu Prince - About</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Space Grotesk',sans-serif; }
+        html { scroll-behavior:smooth; }
+        body { background:#000; color:#fff; overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; }
+
+        /* HEADER */
+        header {
+            position:fixed; top:0; left:0; width:100%; z-index:1000;
+            display:flex; justify-content:space-between; align-items:center;
+            padding:20px 40px;
+            background:#fff; color:#000;
+            transition:background .3s,color .3s;
+        }
+        .logo { color:#ff4500; font-size:24px; font-weight:700; }
+
+        /* Orange line under header */
+        .header-line {
+            position:fixed; top:80px; left:0; width:100%; height:2px;
+            background:#ff4500; z-index:999;
+        }
+
+        .nav-icons button {
+            font-size:24px; background:none; border:none; cursor:pointer;
+            color:#000; transition:color .3s;
+        }
+        .nav-icons button:hover { color:#ff4500; }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex:1; padding-top:100px; position:relative;
+            background:#000; color:#fff;
+            transition:background .3s,color .3s, opacity 1.2s ease, transform 1.2s ease;
+        }
+        .main-content.fade-out { opacity:0; transform:scale(0.97); }
+
+        /* HAMBURGER MENU */
+        .menu {
+            position:fixed; top:0; right:-100%; width:300px; height:100vh;
+            background:#fff; color:#000; display:flex; flex-direction:column;
+            justify-content:center; align-items:center; transition:right .3s; z-index:999;
+        }
+        .menu.open { right:0; }
+        .menu ul { list-style:none; text-align:center; }
+        .menu li { margin:20px 0; }
+        .menu a { color:inherit; text-decoration:none; font-size:20px; transition:color .3s; }
+        .menu a:hover { color:#ff4500; }
+
+        .about { display:flex; flex-direction:column; justify-content:center; align-items:center; padding:100px 20px; }
+        .about-container { display:grid; grid-template-columns:repeat(2,1fr); gap:40px; max-width:1200px; width:100%; }
+
+        .about-card { padding:30px 0; cursor:pointer; transition:transform .3s; }
+        .about-card:hover { transform:translateY(-8px); }
+        .about-card h3 { font-size:24px; font-weight:700; display:flex; align-items:center; gap:10px; margin-bottom:15px; color:#ff4500; }
+        .short-text { font-size:16px; line-height:1.7; }
+        .see-more { color:#ff4500; font-weight:500; margin-top:15px; display:inline-block; }
+        .see-more:hover { text-decoration:underline; }
+
+        /* DETAIL OVERLAY */
+        .detail-overlay {
+            position:absolute; top:0; left:0; width:100%; height:100%;
+            background:rgba(0,0,0,0.97); display:flex; align-items:center; justify-content:center;
+            opacity:0; visibility:hidden; transition:opacity 1.2s ease,visibility 1.2s ease;
+            z-index:900;
+        }
+        .detail-overlay.active { opacity:1; visibility:visible; }
+
+        .detail-content {
+            background:rgba(255,255,255,0.06); backdrop-filter:blur(16px);
+            padding:60px; border-radius:20px; max-width:900px; width:90%;
+            max-height:90vh; overflow-y:auto; position:relative;
+            animation:slideUp 1s ease forwards;
+        }
+        @keyframes slideUp { from{transform:translateY(60px);opacity:0} to{transform:translateY(0);opacity:1} }
+
+        .close-detail {
+            position:absolute; top:20px; right:25px; font-size:36px; color:#ff4500;
+            background:none; border:none; cursor:pointer; transition:transform .3s;
+        }
+        .close-detail:hover { transform:rotate(90deg); }
+
+        .detail-content h3 { font-size:36px; margin-bottom:25px; display:flex; align-items:center; gap:15px; color:#ff4500; }
+        .detail-content p, .detail-content li { font-size:18px; color:#eee; line-height:1.8; margin-bottom:15px; }
+        .detail-content ul { padding-left:25px; margin:20px 0; }
+
+        /* EXPERIENCE COUNTER */
+        .experience { text-align:center; margin-top:80px; }
+        .experience h3 { font-size:24px; margin-bottom:12px; }
+        .experience-number { font-size:100px; font-weight:700; color:#ff4500; }
+        .experience-number .plus { font-size:0.6em; vertical-align:super; }
+
+        /* FOOTER */
+        footer {
+            padding:60px 40px;
+            background:#000; color:#fff;
+            text-align:left; position:relative; z-index:1;
+        }
+        footer h2 { font-size:36px; font-weight:700; }
+        .underline { width:100px; height:2px; background:#ff4500; margin:10px 0; }
+        footer p { font-size:16px; max-width:600px; margin-bottom:40px; }
+        .social-icons { display:flex; gap:20px; }
+        .social-icon { font-size:24px; color:#fff; transition:color .3s; }
+        .social-icon:hover { color:#ff4500; }
+        .go-to-top { position:absolute; right:40px; bottom:60px; font-size:24px; color:#ff4500; cursor:pointer; }
+
+        /* THEME SYSTEM */
+        body:not(.dark) header,
+        body:not(.dark) .main-content,
+        body:not(.dark) .detail-overlay { background:#fff !important; color:#000 !important; }
+        body:not(.dark) .nav-icons button { color:#000 !important; }
+        body:not(.dark) footer { background:#000 !important; color:#fff !important; }
+        body:not(.dark) footer p { color:#ccc !important; }
+        body:not(.dark) .short-text,
+        body:not(.dark) .detail-content p,
+        body:not(.dark) .detail-content li { color:#444 !important; }
+
+        body.dark header,
+        body.dark .main-content,
+        body.dark .detail-overlay { background:#000 !important; color:#fff !important; }
+        body.dark .nav-icons button { color:#fff !important; }
+        body.dark footer { background:#fff !important; color:#000 !important; }
+        body.dark footer p { color:#444 !important; }
+        body.dark .social-icon { color:#000; }
+        body.dark .detail-content { background:rgba(0,0,0,0.5); }
+
+        @media (max-width:768px) {
+            header, footer { padding:20px; }
+            .logo { font-size:20px; }
+            .nav-icons button { font-size:20px; }
+            .header-line { top:70px; }
+            .main-content { padding-top:90px; }
+            .about-container { grid-template-columns:1fr; gap:30px; }
+            .about-card { padding:25px 0; }
+            .about-card h3 { font-size:20px; }
+            .short-text { font-size:15px; }
+            footer h2 { font-size:32px; }
+            .social-icons { justify-content:center; }
+            .go-to-top { right:50%; transform:translateX(50%); bottom:40px; }
+            .experience-number { font-size:80px; }
+        }
+    </style>
+</head>
+<body class="light">
+
+    <header>
+        <div class="logo">Prince</div>
+        <div class="nav-icons">
+            <button class="theme-toggle"><i class="fas fa-lightbulb"></i></button>
+            <button class="hamburger"><i class="fas fa-bars"></i></button>
+        </div>
+       </header>
+
+    <div class="header-line"></div>
+
+    <nav class="menu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="file:///C|/Users/USER/Desktop/PORTENGINE/index.html">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content" id="mainContent">
+        <section class="about">
+            <div class="about-container">
+                <div class="about-card" data-title="About Me" data-icon="fa-user">
+                    <h3><i class="fas fa-user"></i> About Me</h3>
+                    <div class="short-text">
+                        Dedicated graphic design student at the University of Education, Winneba with a passion for creativity and attention to detail...<br>
+                        <span class="see-more">See more →</span>
+                    </div>
+                </div>
+                <div class="about-card" data-title="Education" data-icon="fa-graduation-cap">
+                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                    <div class="short-text">
+                        University of Education, Winneba<br>Bachelor's Degree in Graphic Design | Expected 2026...<br>
+                        <span class="see-more">See more →</span>
+                    </div>
+                </div>
+                <div class="about-card" data-title="Work Experience" data-icon="fa-briefcase">
+                    <h3><i class="fas fa-briefcase"></i> Work Experience</h3>
+                    <div class="short-text">
+                        Freelance Graphic Designer (2023–Present)<br>Designed custom graphics and layouts for various clients...<br>
+                        <span class="see-more">See more →</span>
+                    </div>
+                </div>
+                <div class="about-card" data-title="Skills" data-icon="fa-tools">
+                    <h3><i class="fas fa-tools"></i> Skills</h3>
+                    <div class="short-text">
+                        Adobe Photoshop, Illustrator, InDesign<br>Typography, Layout Design, Branding...<br>
+                        <span class="see-more">See more →</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="experience" id="experienceSection">
+                <h3>Years of Experience</h3>
+                <div class="experience-number">
+                    <span id="years">0</span><span class="plus">+</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="detail-overlay" id="detailOverlay">
+        <div class="detail-content">
+            <button class="close-detail">×</button>
+            <h3 id="detailTitle"><i class="fas fa-user"></i> About Me</h3>
+            <div id="detailText"></div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <h2>Let's Connect</h2>
+        <div class="underline"></div>
+        <p>Ready to start your next project or want to collaborate? I'm always open to new opportunities. Connect with me instantly via email or through social media.</p>
+        <div class="social-icons">
+            <a href="#" class="social-icon"><i class="fas fa-envelope"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-dribbble"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-behance"></i></a>
+        </div>
+        <div class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></div>
+    </footer>
+
+    <script>
+        // Theme & Menu
+        document.querySelector('.theme-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+        });
+
+        document.querySelector('.hamburger').addEventListener('click', () => {
+            document.querySelector('.menu').classList.toggle('open');
+        });
+
+        // Detail overlay
+        const main = document.getElementById('mainContent');
+        const overlay = document.getElementById('detailOverlay');
+        const title = document.getElementById('detailTitle');
+        const text = document.getElementById('detailText');
+        const close = document.querySelector('.close-detail');
+
+        const data = {
+            "About Me": {icon:"fa-user", content:`<p>Dedicated graphic design student at the University of Education, Winneba with a passion for creativity and attention to detail. Familiar with Adobe Photoshop and Illustrator.</p><p>I strive to create simple, effective designs while learning and growing in the field. I love clean aesthetics, meaningful visuals, and solving creative challenges. Always eager to take on new projects and collaborate.</p>`},
+            "Education": {icon:"fa-graduation-cap", content:`<p><strong>University of Education, Winneba</strong><br>Bachelor's Degree in Graphic Design<br>Expected Graduation: 2026</p><p>Currently pursuing a degree in Graphic Design with a focus on visual communication, layout design, branding, typography, and digital media.</p>`},
+            "Work Experience": {icon:"fa-briefcase", content:`<p><strong>Freelance Graphic Designer — Self-Employed</strong><br>Dec 2023 – Present</p><ul><li>Designed custom graphics and layouts for various clients</li><li>Managed multiple projects independently</li><li>Collaborated with clients to bring creative concepts to life</li></ul><p><strong>Graphic Design Projects — University</strong> (Ongoing)</p>`},
+            "Skills": {icon:"fa-tools", content:`<ul><li>Adobe Photoshop</li><li>Adobe Illustrator</li><li>Adobe InDesign</li><li>Typography & Layout Design</li><li>Brand Identity Design</li><li>Visual Communication</li><li>Color Theory</li><li>Attention to Detail & Problem Solving</li></ul>`}
+        };
+
+        document.querySelectorAll('.about-card').forEach(c => {
+            c.addEventListener('click', () => {
+                const t = c.getAttribute('data-title');
+                title.innerHTML = `<i class="fas ${data[t].icon}"></i> ${t}`;
+                text.innerHTML = data[t].content;
+                main.classList.add('fade-out');
+                setTimeout(() => overlay.classList.add('active'), 600);
+            });
+        });
+
+        function closeOverlay() {
+            overlay.classList.remove('active');
+            setTimeout(() => main.classList.remove('fade-out'), 600);
+        }
+        close.addEventListener('click', closeOverlay);
+        overlay.addEventListener('click', e => { if (e.target === overlay) closeOverlay(); });
+
+        // Scroll-triggered counter animation (runs every time you scroll past it)
+        const experienceSection = document.getElementById('experienceSection');
+        const counter = document.getElementById('years');
+        const plus = document.querySelector('.plus');
+        let hasAnimated = false;
+
+        function runCounterAnimation() {
+            if (hasAnimated) return;
+            hasAnimated = true;
+
+            const start = 2023;
+            const now = new Date();
+            const year = now.getFullYear();
+            const years = now >= new Date(year, 0, 1) ? year - start + 1 : year - start;
+
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i <= years) {
+                    counter.textContent = i;
+                    counter.style.color = i % 2 === 0 ? '#ff4500' : (document.body.classList.contains('dark') ? '#fff' : '#000');
+                    plus.style.color = i % 2 === 0 ? '#ff4500' : (document.body.classList.contains('dark') ? '#fff' : '#000');
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    counter.style.color = '#ff4500';
+                    plus.style.color = '#ff4500';
+                }
+            }, 400);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    runCounterAnimation();
+                } else {
+                    // Reset for next scroll (optional: remove if you want only once)
+                    hasAnimated = false;
+                    counter.textContent = '0';
+                }
+            });
+        }, { threshold: 0.7 });
+
+        observer.observe(experienceSection);
+    </script>
+</body>
+</html>
