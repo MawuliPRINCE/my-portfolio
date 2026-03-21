@@ -140,10 +140,8 @@
         }
 
         .text-container {
-            background: rgba(0, 0, 0, 0.42);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            padding: clamp(28px, 4vw, 52px) clamp(32px, 5vw, 68px);
+            background: transparent;
+            padding: clamp(20px, 3vw, 40px) clamp(24px, 4vw, 56px);
             border-left: 3px solid #ff4500;
             z-index: 2;
             max-width: 90%;
@@ -411,10 +409,12 @@
             // Update name
             const h1 = document.querySelector('.hero h1');
             if (d.name && h1) {
-              const parts = d.name.trim().split(' ');
-              const last  = parts.pop();
-              const first = parts.join(' ');
-              h1.innerHTML = first + ' <span style="color:#ff4500;">' + last + '</span>';
+              // Show full name — last word in orange
+              const name  = d.name.trim();
+              const idx   = name.lastIndexOf(' ');
+              const first = idx > -1 ? name.slice(0, idx) : '';
+              const last  = idx > -1 ? name.slice(idx + 1) : name;
+              h1.innerHTML = (first ? first + '<br>' : '') + '<span style="color:#ff4500;">' + last + '</span>';
             }
 
             // Update role
@@ -451,10 +451,21 @@
 
               if (isVid) {
                 media = document.createElement('video');
-                media.setAttribute('autoplay', '');
+                // Both property AND attribute needed for cross-browser autoplay
+                media.muted    = true;
+                media.autoplay = true;
+                media.loop     = true;
                 media.setAttribute('muted', '');
+                media.setAttribute('autoplay', '');
                 media.setAttribute('loop', '');
                 media.setAttribute('playsinline', '');
+                media.setAttribute('preload', 'auto');
+                // Use source element for better browser compatibility
+                const source = document.createElement('source');
+                source.src  = d.heroBg;
+                source.type = 'video/mp4';
+                media.appendChild(source);
+                // Fallback direct src
                 media.src = d.heroBg;
               } else {
                 media = document.createElement('img');
@@ -466,6 +477,12 @@
 
               // Insert as first child so it's behind the text
               hero.insertBefore(media, hero.firstChild);
+
+              // Force play after insertion (some browsers need this)
+              if (isVid) {
+                media.load();
+                media.play().catch(() => {});
+              }
 
               // Add dark overlay if not already present
               if (!hero.querySelector('.hero-overlay-dynamic')) {
