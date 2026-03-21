@@ -114,7 +114,8 @@
         /* Hero Section */
         .hero {
             position: relative; /* For background video/image positioning */
-            min-height: 80vh; /* Adjusted to create space matching screenshot */
+            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -123,7 +124,7 @@
             /* For custom background image placeholder: uncomment and replace URL */
             /* background: url('your-custom-image.jpg') no-repeat center center/cover; */
             text-align: center;
-            padding: clamp(80px, 10vh, 100px) clamp(10px, 2vw, 20px) clamp(10px, 2vw, 20px);
+            padding: 0 clamp(10px, 2vw, 20px);
             overflow: hidden;
         }
 
@@ -135,24 +136,28 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
+            display: block;
         }
 
         .text-container {
-            background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark layer */
-            backdrop-filter: blur(10px); /* Glassy blur effect */
-            padding: clamp(10px, 2vw, 20px) clamp(20px, 4vw, 40px);
-            border-radius: 10px;
-            z-index: 1; /* Ensure it's above the background media */
-            max-width: 80%;
+            background: rgba(0, 0, 0, 0.42);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            padding: clamp(28px, 4vw, 52px) clamp(32px, 5vw, 68px);
+            border-left: 3px solid #ff4500;
+            z-index: 1;
+            max-width: 90%;
+            text-align: left;
         }
 
         .hero h1 {
-            font-size: clamp(32px, 5vw + 1rem, 48px);
+            font-size: clamp(34px, 5.5vw + 1rem, 62px);
             font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
             opacity: 0;
             transform: translateY(50px);
             transition: opacity 1s, transform 1s;
-            white-space: nowrap; /* Force name on one line */
         }
 
         .hero h1.visible {
@@ -161,13 +166,15 @@
         }
 
         .hero p {
-            font-size: clamp(16px, 2vw + 0.5rem, 18px);
-            color: #ccc; /* Made lighter for better legibility */
-            margin-top: 10px;
+            font-size: clamp(11px, 1.3vw + 0.2rem, 15px);
+            color: #ffffff85;
+            margin-top: 16px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            font-weight: 400;
             opacity: 0;
             transform: translateY(50px);
             transition: opacity 1s 0.3s, transform 1s 0.3s;
-            white-space: nowrap; /* Force title on one line */
         }
 
         .hero p.visible {
@@ -320,15 +327,22 @@
     </nav>
 
     <section id="home" class="hero">
-        <!-- For custom background video placeholder: uncomment and replace src -->
         <!--
-        <video autoplay muted loop class="bg-video">
-            <source src="your-custom-video.mp4" type="video/mp4">
+        ═══════════════════════════════════════════
+        BACKGROUND — uncomment ONE option:
+
+        IMAGE:
+        <img class="bg-video" src="your-image.jpg" alt="background"/>
+
+        VIDEO:
+        <video autoplay muted loop playsinline class="bg-video">
+            <source src="your-video.mp4" type="video/mp4">
         </video>
+        ═══════════════════════════════════════════
         -->
         <div class="text-container">
-            <h1>Ismael Asumanu Prince</h1>
-            <p>Graphic Designer / Brand Identity Designer</p>
+            <h1>Ismael Asumanu <span style="color:#ff4500;">Prince</span></h1>
+            <p>Graphic Designer &nbsp;·&nbsp; Brand Identity Designer</p>
         </div>
     </section>
 
