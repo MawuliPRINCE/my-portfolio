@@ -71,7 +71,8 @@
     ],
     "isRecent": false,
     "isFeatured": false,
-    "coverIndex": 2
+    "coverIndex": 2,
+    "aiPercent": 30
   },
   {
     "id": "proj_1773935794716",
