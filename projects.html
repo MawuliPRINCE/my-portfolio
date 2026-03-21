@@ -146,6 +146,39 @@
     .gallery-item img,.gallery-item video{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s;}
     .gallery-item:hover img,.gallery-item:hover video{transform:scale(1.03);}
 
+
+    /* ── AI INVOLVEMENT BAR ── */
+    .ai-bar-wrap {
+      padding: .75rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: .5rem;
+    }
+    .ai-bar-label { font-size: .58rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .ai-bar-track {
+      height: 6px; border-radius: 3px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden; position: relative;
+    }
+    .ai-bar-fill {
+      height: 100%; border-radius: 3px;
+      background: linear-gradient(90deg, #ff4500, #ff8c00);
+      transition: width .4s ease;
+    }
+    .ai-bar-numbers {
+      display: flex; justify-content: space-between;
+      font-size: .62rem; font-family: 'DM Sans', sans-serif;
+    }
+    .ai-pct  { color: var(--accent); font-weight: 600; }
+    .hum-pct { color: var(--muted); }
+    /* 100% human badge */
+    .human-badge {
+      display: inline-flex; align-items: center; gap: .35rem;
+      font-size: .58rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: #44cc88;
+      border: 1px solid #44cc8860; padding: 3px 9px;
+      background: #44cc8812;
+    }
     @media(max-width:768px){
       .shell{flex-direction:column;}
       .sidebar{width:100%;max-width:100%;height:58vw;min-height:240px;position:relative;}
@@ -446,6 +479,21 @@
             <div class="modal-info-item">
               <span class="modal-info-label">Tags</span>
               <div class="modal-tags-wrap">${p.tags.map(t=>`<span class="tag-pill">${esc(t)}</span>`).join('')}</div>
+            </div>` : ''}
+          ${(p.aiPercent !== undefined) ? `
+            <div class="ai-bar-wrap">
+              <span class="ai-bar-label">AI Involvement</span>
+              ${p.aiPercent === 0 ? `
+                <div><span class="human-badge">&#10003; 100% Human</span></div>
+              ` : `
+                <div class="ai-bar-track">
+                  <div class="ai-bar-fill" style="width:${p.aiPercent}%"></div>
+                </div>
+                <div class="ai-bar-numbers">
+                  <span class="ai-pct">${p.aiPercent}% AI Assisted</span>
+                  <span class="hum-pct">${100 - p.aiPercent}% Human</span>
+                </div>
+              `}
             </div>` : ''}
         </div>
       </div>
