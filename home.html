@@ -135,7 +135,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -1;
+            z-index: 0;
             display: block;
         }
 
@@ -145,7 +145,7 @@
             -webkit-backdrop-filter: blur(14px);
             padding: clamp(28px, 4vw, 52px) clamp(32px, 5vw, 68px);
             border-left: 3px solid #ff4500;
-            z-index: 1;
+            z-index: 2;
             max-width: 90%;
             text-align: left;
         }
@@ -437,27 +437,43 @@
 
             // Apply hero background — image or video
             if (d.heroBg) {
-              const hero   = document.getElementById('home');
-              const isVid  = /\.(mp4|webm|mov|ogg)(\?|$)/i.test(d.heroBg) || d.heroBg.includes('/video/upload/');
-              // Remove placeholder comment node if present
-              let existing = hero.querySelector('.bg-video');
+              const hero = document.getElementById('home');
+
+              // Remove any existing bg-video element
+              const existing = hero.querySelector('.bg-video');
               if (existing) existing.remove();
 
+              // Remove black background so media shows through
+              hero.style.backgroundColor = 'transparent';
+
+              const isVid = /\.(mp4|webm|mov|ogg)(\?|$)/i.test(d.heroBg) || d.heroBg.includes('/video/upload/');
               let media;
+
               if (isVid) {
                 media = document.createElement('video');
-                media.autoplay = true;
-                media.muted    = true;
-                media.loop     = true;
-                media.setAttribute('playsinline','');
+                media.setAttribute('autoplay', '');
+                media.setAttribute('muted', '');
+                media.setAttribute('loop', '');
+                media.setAttribute('playsinline', '');
                 media.src = d.heroBg;
               } else {
                 media = document.createElement('img');
-                media.alt = 'background';
+                media.alt = '';
                 media.src = d.heroBg;
               }
+
               media.className = 'bg-video';
+
+              // Insert as first child so it's behind the text
               hero.insertBefore(media, hero.firstChild);
+
+              // Add dark overlay if not already present
+              if (!hero.querySelector('.hero-overlay-dynamic')) {
+                const overlay = document.createElement('div');
+                overlay.className = 'hero-overlay-dynamic';
+                overlay.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,0.45);z-index:1;pointer-events:none;';
+                hero.insertBefore(overlay, hero.children[1]);
+              }
             }
           })
           .catch(() => {}); // Fail silently — hardcoded defaults remain
