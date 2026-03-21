@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Prince | Projects</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects — Ismael Asumanu Prince</title>
+  <meta name="description" content="Ismael Asumanu Prince — Graphic Designer and Brand Identity Designer based in Ghana.">
+  <meta name="author" content="Ismael Asumanu Prince">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Projects — Ismael Asumanu Prince">
+  <meta property="og:description" content="Graphic Designer and Brand Identity Designer based in Ghana.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mawuliprince.github.io/my-portfolio/projects.html">
+  <meta property="og:image" content="https://mawuliprince.github.io/my-portfolio/og-image.jpg">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ismael Asumanu Prince — Graphic Designer">
+  <meta name="twitter:description" content="Graphic Designer and Brand Identity Designer based in Ghana.">
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-size='80' font-family='serif' fill='%23ff4500'>P</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -187,7 +201,7 @@
   <!-- MAIN -->
   <div class="main">
     <div class="topbar">
-      <a href="home.html" class="back-btn">&#8592; Home</a>
+      <a href="index.html" class="back-btn">&#8592; Home</a>
       <span class="topbar-title">Projects</span>
       <div class="filters no-scrollbar" id="filters"></div>
       <button class="icon-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">&#9790;</button>
@@ -502,7 +516,7 @@
     if (type === 'video') {
       inner.innerHTML = `<video class="lightbox-media" src="${url}" controls autoplay loop muted playsinline></video>`;
     } else {
-      inner.innerHTML = `<img class="lightbox-media" src="${url}" alt=""/>`;
+      inner.innerHTML = `<img class="lightbox-media" src="${clOpt(url)}" alt=""/>`;
     }
     document.getElementById('lightbox').classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -515,6 +529,15 @@
     document.getElementById('lightbox-inner').innerHTML = '';
     document.body.style.overflow = '';
   }
+  // Cloudinary auto-optimization — cuts image size 60-70%
+  function clOpt(url) {
+    if (!url) return url;
+    if (url.includes('res.cloudinary.com') && url.includes('/upload/') && !url.includes('q_auto')) {
+      return url.replace('/upload/', '/upload/q_auto,f_auto,w_auto/');
+    }
+    return url;
+  }
+
   function esc(s) {
     return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
