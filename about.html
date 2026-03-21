@@ -318,6 +318,46 @@
         }, { threshold: 0.7 });
 
         observer.observe(experienceSection);
+
+        // ── LOAD FROM CMS ────────────────────────────────
+        const ABOUT_DATA_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-about.json';
+
+        fetch(ABOUT_DATA_URL + '?t=' + Date.now())
+          .then(r => r.ok ? r.json() : null)
+          .then(d => {
+            if (!d) return;
+
+            // Update short preview texts on cards
+            const cards = document.querySelectorAll('.about-card');
+            const fields = [
+              { short: d.aboutShort,  card: 'About Me' },
+              { short: d.eduShort,    card: 'Education' },
+              { short: d.workShort,   card: 'Work Experience' },
+              { short: d.skillsShort, card: 'Skills' }
+            ];
+
+            cards.forEach(card => {
+              const title = card.getAttribute('data-title');
+              const match = fields.find(f => f.card === title);
+              if (match?.short) {
+                const shortEl = card.querySelector('.short-text');
+                if (shortEl) {
+                  shortEl.innerHTML = match.short + '<br><span class="see-more">See more →</span>';
+                }
+              }
+            });
+
+            // Update full detail content in cardData object
+            if (d.aboutFull)  cardData['About Me'].content   = '<p>' + d.aboutFull.replace(/\n/g,'</p><p>') + '</p>';
+            if (d.eduFull)    cardData['Education'].content  = '<p>' + d.eduFull.replace(/\n/g,'</p><p>') + '</p>';
+            if (d.workFull)   cardData['Work Experience'].content = '<p>' + d.workFull.replace(/\n/g,'</p><p>') + '</p>';
+            if (d.skillsFull) {
+              const items = d.skillsFull.split('\n').filter(Boolean);
+              cardData['Skills'].content = '<ul>' + items.map(s => '<li>' + s + '</li>').join('') + '</ul>';
+            }
+          })
+          .catch(() => {});
+
     </script>
 </body>
 </html>
