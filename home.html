@@ -399,6 +399,69 @@
         }, { threshold: 0.1 });
 
         heroElements.forEach(el => observer.observe(el));
+
+        // ── LOAD FROM CMS ────────────────────────────────
+        const SITE_DATA_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json';
+
+        fetch(SITE_DATA_URL + '?t=' + Date.now())
+          .then(r => r.ok ? r.json() : null)
+          .then(d => {
+            if (!d) return;
+
+            // Update name
+            const h1 = document.querySelector('.hero h1');
+            if (d.name && h1) {
+              const parts = d.name.trim().split(' ');
+              const last  = parts.pop();
+              const first = parts.join(' ');
+              h1.innerHTML = first + ' <span style="color:#ff4500;">' + last + '</span>';
+            }
+
+            // Update role
+            const role = document.querySelector('.hero p');
+            if (d.role && role) {
+              role.textContent = d.role;
+            }
+
+            // Update contact description
+            const desc = document.querySelector('footer p');
+            if (d.contactDesc && desc) desc.textContent = d.contactDesc;
+
+            // Update social links
+            const links = document.querySelectorAll('.social-icon');
+            const socials = ['email','linkedin','dribbble','instagram','behance'];
+            links.forEach((el, i) => {
+              const val = d[socials[i]];
+              if (val) el.href = socials[i] === 'email' ? 'mailto:' + val : val;
+            });
+
+            // Apply hero background — image or video
+            if (d.heroBg) {
+              const hero   = document.getElementById('home');
+              const isVid  = /\.(mp4|webm|mov|ogg)(\?|$)/i.test(d.heroBg) || d.heroBg.includes('/video/upload/');
+              // Remove placeholder comment node if present
+              let existing = hero.querySelector('.bg-video');
+              if (existing) existing.remove();
+
+              let media;
+              if (isVid) {
+                media = document.createElement('video');
+                media.autoplay = true;
+                media.muted    = true;
+                media.loop     = true;
+                media.setAttribute('playsinline','');
+                media.src = d.heroBg;
+              } else {
+                media = document.createElement('img');
+                media.alt = 'background';
+                media.src = d.heroBg;
+              }
+              media.className = 'bg-video';
+              hero.insertBefore(media, hero.firstChild);
+            }
+          })
+          .catch(() => {}); // Fail silently — hardcoded defaults remain
+
     </script>
 
 </body>
