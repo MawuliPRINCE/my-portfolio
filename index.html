@@ -6,148 +6,198 @@
     <title>Ismael Asumanu Prince — Graphic Designer</title>
     <meta name="description" content="Ismael Asumanu Prince — Graphic Designer and Brand Identity Designer based in Ghana.">
     <meta name="author" content="Ismael Asumanu Prince">
-    <!-- Open Graph -->
     <meta property="og:title" content="Ismael Asumanu Prince — Graphic Designer">
     <meta property="og:description" content="Graphic Designer and Brand Identity Designer based in Ghana.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mawuliprince.github.io/my-portfolio/">
     <meta property="og:image" content="https://mawuliprince.github.io/my-portfolio/og-image.jpg">
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Ismael Asumanu Prince — Graphic Designer">
     <meta name="twitter:description" content="Graphic Designer and Brand Identity Designer based in Ghana.">
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-size='80' font-family='serif' fill='%23ff4500'>P</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
+        *, *::before, *::after {
+            margin: 0; padding: 0;
             box-sizing: border-box;
             font-family: 'Space Grotesk', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        html {
-            scroll-behavior: smooth; /* For smooth scrolling to anchors */
-        }
+        html { scroll-behavior: smooth; }
 
         body {
-            background-color: #000;
+            background: #000;
             color: #fff;
             overflow-x: hidden;
         }
 
-        /* Header */
+        /* ── HEADER ── */
         header {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+            top: 0; left: 0; width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: clamp(10px, 2vw, 20px) clamp(20px, 4vw, 40px);
-            background-color: #fff;
+            padding: clamp(14px, 2.5vw, 22px) clamp(20px, 4vw, 40px);
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             color: #000;
-            transition: background-color 0.3s, color 0.3s;
-            z-index: 1000;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            z-index: 100;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+        }
+
+        body.dark header {
+            background: rgba(0,0,0,0.88);
+            color: #fff;
+            box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+        }
+
+        /* Transparent header when at top of hero */
+        header.at-top {
+            background: transparent;
+            box-shadow: none;
+            color: #fff;
         }
 
         .logo {
-            color: #ff4500; /* Orange */
+            color: #ff4500;
             font-size: clamp(18px, 2vw + 0.5rem, 24px);
             font-weight: 700;
-            text-transform: none; /* Changed to none to allow title case */
+            text-decoration: none;
+            letter-spacing: -0.01em;
         }
 
         .nav-icons {
             display: flex;
             align-items: center;
-            gap: clamp(10px, 2vw, 20px);
+            gap: clamp(8px, 2vw, 16px);
         }
 
-        .theme-toggle,
-        .hamburger {
-            font-size: clamp(18px, 2vw + 0.5rem, 24px);
+        .theme-toggle, .hamburger {
+            font-size: clamp(16px, 2vw + 0.3rem, 20px);
             cursor: pointer;
             background: none;
             border: none;
             color: inherit;
-            transition: color 0.3s;
+            transition: color 0.2s, transform 0.2s;
+            padding: 8px;
+            border-radius: 50%;
+            line-height: 1;
+            display: flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px;
         }
 
-        .theme-toggle:hover,
-        .hamburger:hover {
-            color: #ff4500;
+        .theme-toggle:hover, .hamburger:hover { color: #ff4500; }
+        .hamburger:active { transform: scale(0.9); }
+
+        /* Hamburger icon swap */
+        .hamburger .fa-bars  { display: block; }
+        .hamburger .fa-times { display: none; }
+        .hamburger.open .fa-bars  { display: none; }
+        .hamburger.open .fa-times { display: block; }
+
+        /* ── MENU BACKDROP ── */
+        .menu-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 98;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .menu-backdrop.open {
+            opacity: 1;
+            pointer-events: all;
         }
 
-        /* Menu */
+        /* ── MENU ── */
         .menu {
             position: fixed;
-            top: 0;
-            right: -100%;
-            width: clamp(250px, 50vw, 300px);
+            top: 0; right: -100%;
+            width: min(300px, 85vw);
             height: 100vh;
-            background-color: #fff;
+            background: #fff;
             color: #000;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: right 0.3s;
-            z-index: 999;
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 99;
+            box-shadow: -8px 0 32px rgba(0,0,0,0.15);
         }
 
-        .menu.open {
-            right: 0;
+        .menu.open { right: 0; }
+
+        body.dark .menu {
+            background: #111;
+            color: #fff;
+            box-shadow: -8px 0 32px rgba(0,0,0,0.5);
         }
 
-        .menu ul {
-            list-style: none;
-            text-align: center;
-        }
+        .menu ul { list-style: none; text-align: center; width: 100%; padding: 0 2rem; }
 
-        .menu li {
-            margin: clamp(10px, 2vw, 20px) 0;
-        }
+        .menu li { margin: 6px 0; }
 
         .menu a {
             color: inherit;
             text-decoration: none;
-            font-size: clamp(16px, 2vw + 0.5rem, 20px);
-            transition: color 0.3s;
+            font-size: clamp(18px, 4vw, 22px);
+            font-weight: 500;
+            display: block;
+            padding: 14px 20px;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s;
         }
 
-        .menu a:hover {
+        .menu a:hover, .menu a:active {
             color: #ff4500;
+            background: rgba(255,69,0,0.06);
         }
 
-        /* Hero Section */
-        .hero {
-            position: relative; /* For background video/image positioning */
-            height: 100vh;
-            min-height: 100vh;
+        /* Active nav item */
+        .menu a.active { color: #ff4500; font-weight: 700; }
+
+        /* Menu divider line */
+        .menu-divider {
+            width: 40px; height: 2px;
+            background: #ff4500;
+            margin: 1.5rem auto;
+        }
+
+        .menu-footer {
+            position: absolute;
+            bottom: 2.5rem;
+            font-size: 0.7rem;
+            color: #aaa;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* ── HERO ── */
+        #home {
+            position: relative;
+            width: 100%; height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            background-color: #000; /* Default black, as in screenshot */
-            /* For custom background image placeholder: uncomment and replace URL */
-            /* background: url('your-custom-image.jpg') no-repeat center center/cover; */
-            text-align: center;
-            padding: 0 clamp(10px, 2vw, 20px);
+            justify-content: center;
             overflow: hidden;
+            background: #000;
         }
 
         .bg-video {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
+            width: 100%; height: 100%;
             object-fit: cover;
             z-index: 0;
             display: block;
@@ -160,6 +210,7 @@
             z-index: 2;
             max-width: 90%;
             text-align: left;
+            position: relative;
         }
 
         .hero h1 {
@@ -168,14 +219,11 @@
             line-height: 1.1;
             letter-spacing: -0.02em;
             opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1s, transform 1s;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
-        .hero h1.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .hero h1.visible { opacity: 1; transform: translateY(0); }
 
         .hero p {
             font-size: clamp(11px, 1.3vw + 0.2rem, 15px);
@@ -185,234 +233,290 @@
             text-transform: uppercase;
             font-weight: 400;
             opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1s 0.3s, transform 1s 0.3s;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease 0.25s, transform 0.8s ease 0.25s;
         }
 
-        .hero p.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .hero p.visible { opacity: 1; transform: translateY(0); }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.5s forwards;
+            cursor: pointer;
         }
 
-        /* Separator */
-        .separator {
-            width: 100%;
-            height: 1px;
-            background-color: #fff;
+        .scroll-indicator span {
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #ffffff60;
         }
 
-        /* Footer */
+        .scroll-indicator i {
+            color: #ff4500;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+            to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* ── SEPARATOR ── */
+        .separator { width: 100%; height: 1px; background: #222; }
+
+        /* ── FOOTER ── */
         footer {
             padding: clamp(40px, 6vw, 60px) clamp(20px, 4vw, 40px);
-            background-color: #000;
+            background: #000;
             color: #fff;
             text-align: left;
-            transition: background-color 0.3s, color 0.3s;
-            position: relative; /* For go-to-top positioning */
+            transition: background 0.3s, color 0.3s;
+            position: relative;
         }
 
+        body.dark footer { background: #fff; color: #000; }
+
         footer h2 {
-            font-size: clamp(28px, 4vw + 1rem, 36px);
+            font-size: clamp(26px, 4vw, 36px);
             font-weight: 700;
         }
 
         .underline {
-            width: clamp(80px, 10vw, 100px);
+            width: clamp(60px, 8vw, 100px);
             height: 2px;
-            background-color: #ff4500; /* Red/Orange */
-            margin: clamp(5px, 1vw, 10px) 0;
+            background: #ff4500;
+            margin: 10px 0 20px;
         }
 
         footer p {
-            font-size: clamp(14px, 1.5vw + 0.5rem, 16px);
-            color: #ddd; /* Lighter gray for better visibility in dark bg */
-            max-width: clamp(400px, 60vw, 600px);
-            margin-bottom: clamp(20px, 4vw, 40px);
+            font-size: clamp(14px, 1.5vw + 0.3rem, 16px);
+            color: #aaa;
+            max-width: 520px;
+            margin-bottom: clamp(24px, 4vw, 40px);
+            line-height: 1.7;
             transition: color 0.3s;
         }
+
+        body.dark footer p { color: #555; }
 
         .social-icons {
             display: flex;
-            gap: clamp(10px, 2vw, 20px);
+            gap: clamp(12px, 2vw, 20px);
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .social-icon {
-            font-size: clamp(18px, 2vw + 0.5rem, 24px);
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            border: 1px solid #333;
+            display: flex; align-items: center; justify-content: center;
             color: #fff;
             text-decoration: none;
-            transition: color 0.3s;
+            font-size: 16px;
+            transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
         }
 
         .social-icon:hover {
             color: #ff4500;
+            border-color: #ff4500;
+            transform: translateY(-3px);
         }
+
+        body.dark .social-icon { color: #000; border-color: #ccc; }
+        body.dark .social-icon:hover { color: #ff4500; border-color: #ff4500; }
 
         .go-to-top {
             position: absolute;
             right: clamp(20px, 4vw, 40px);
-            bottom: clamp(40px, 6vw, 60px);
-            font-size: clamp(18px, 2vw + 0.5rem, 24px);
-            color: #ff4500;
+            bottom: clamp(30px, 5vw, 50px);
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: #ff4500;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
             cursor: pointer;
-            transition: color 0.3s;
+            transition: transform 0.2s, background 0.2s;
+            font-size: 16px;
         }
 
-        .go-to-top:hover {
-            color: #ff4500; /* Already orange, but for consistency */
-        }
+        .go-to-top:hover { transform: translateY(-3px); background: #e03a00; }
 
-        /* Dark Mode */
-        body.dark header {
-            background-color: #000;
-            color: #fff;
-        }
-
-        body.dark .menu {
-            background-color: #000;
-            color: #fff;
-        }
-
-        body.dark footer {
-            background-color: #fff;
-            color: #000;
-        }
-
-        body.dark .social-icon {
-            color: #000;
-        }
-
-        body.dark .social-icon:hover {
-            color: #ff4500;
-        }
-
-        body.dark footer p {
-            color: #333; /* Darker gray for better visibility on white bg */
-        }
-
-        /* Light Mode is default: header white, footer dark */
-
-        /* Additional Responsive Adjustments */
+        /* ── MOBILE ── */
         @media (max-width: 768px) {
-            .menu {
-                width: 100%; /* Full width on mobile */
-            }
-
-            .text-container {
-                max-width: 90%;
-            }
-
-            footer {
-                text-align: center; /* Center footer text on small screens */
-            }
-
-            .social-icons {
-                justify-content: center;
-            }
-
+            footer { text-align: center; }
+            footer p { max-width: 100%; }
+            .social-icons { justify-content: center; }
             .go-to-top {
-                right: 50%;
-                transform: translateX(50%);
-                bottom: clamp(20px, 4vw, 40px);
+                position: relative;
+                right: auto; bottom: auto;
+                margin: 2rem auto 0;
             }
         }
-
     </style>
 </head>
-<body class="light"> <!-- Start in light mode: header white, footer dark -->
+<body class="light">
 
-    <header>
-        <div class="logo">Prince</div>
+    <!-- Backdrop (closes menu when tapped outside) -->
+    <div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
+
+    <!-- HEADER -->
+    <header id="site-header">
+        <a href="index.html" class="logo">Prince</a>
         <div class="nav-icons">
-            <button class="theme-toggle"><i class="fas fa-lightbulb"></i></button>
-            <button class="hamburger"><i class="fas fa-bars"></i></button>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                <i class="fas fa-lightbulb"></i>
+            </button>
+            <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-times"></i>
+            </button>
         </div>
     </header>
 
-    <nav class="menu">
+    <!-- MENU -->
+    <nav class="menu" id="menu">
+        <div class="menu-divider"></div>
         <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="index.html"    class="active" onclick="closeMenu()">Home</a></li>
+            <li><a href="about.html"    onclick="closeMenu()">About</a></li>
+            <li><a href="projects.html" onclick="closeMenu()">Projects</a></li>
+            <li><a href="#contact"      onclick="closeMenu()">Contact</a></li>
         </ul>
+        <p class="menu-footer">© <span id="menu-year"></span> Prince</p>
     </nav>
 
+    <!-- HERO -->
     <section id="home" class="hero">
         <!--
-        ═══════════════════════════════════════════
-        BACKGROUND — uncomment ONE option:
+        BACKGROUND — uncomment ONE:
 
-        IMAGE:
-        <img class="bg-video" src="your-image.jpg" alt="background"/>
+        IMAGE:  <img class="bg-video" src="your-image.jpg" alt="bg"/>
 
-        VIDEO:
-        <video autoplay muted loop playsinline class="bg-video">
-            <source src="your-video.mp4" type="video/mp4">
-        </video>
-        ═══════════════════════════════════════════
+        VIDEO:  <video autoplay muted loop playsinline class="bg-video">
+                    <source src="your-video.mp4" type="video/mp4">
+                </video>
         -->
         <div class="text-container">
-            <h1>Ismael Asumanu <span style="color:#ff4500;">Prince</span></h1>
-            <p>Graphic Designer &nbsp;·&nbsp; Brand Identity Designer</p>
+            <h1 id="hero-name">Ismael Asumanu <span style="color:#ff4500;">Prince</span></h1>
+            <p id="hero-role">Graphic Designer &nbsp;·&nbsp; Brand Identity Designer</p>
+        </div>
+
+        <div class="scroll-indicator" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+            <span>Scroll</span>
+            <i class="fas fa-chevron-down"></i>
         </div>
     </section>
 
     <div class="separator"></div>
 
+    <!-- FOOTER / CONTACT -->
     <footer id="contact">
         <h2>Let's Connect</h2>
         <div class="underline"></div>
-        <p>Ready to start your next project or want to collaborate? I'm always open to new opportunities. Connect with me instantly via email or through social media.</p>
+        <p id="footer-desc">Ready to start your next project or want to collaborate? I'm always open to new opportunities.</p>
         <div class="social-icons">
-            <a href="#" class="social-icon"><i class="fas fa-envelope"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-dribbble"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-behance"></i></a>
+            <a href="#" class="social-icon" id="social-email"    title="Email"><i class="fas fa-envelope"></i></a>
+            <a href="#" class="social-icon" id="social-linkedin" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-icon" id="social-dribbble" title="Dribbble"><i class="fab fa-dribbble"></i></a>
+            <a href="#" class="social-icon" id="social-instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon" id="social-behance"  title="Behance"><i class="fab fa-behance"></i></a>
         </div>
-        <div class="go-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="fas fa-arrow-up"></i></div>
+        <div class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+            <i class="fas fa-arrow-up"></i>
+        </div>
     </footer>
 
     <script>
-        // Theme Toggle
-        const themeToggle = document.querySelector('.theme-toggle');
-        const body = document.body;
+        // ── YEAR ──────────────────────────────────────────
+        document.getElementById('menu-year').textContent = new Date().getFullYear();
 
-        themeToggle.addEventListener('click', () => {
-            if (body.classList.contains('light')) {
-                body.classList.remove('light');
-                body.classList.add('dark');
+        // ── THEME ─────────────────────────────────────────
+        function toggleTheme() {
+            const isDark = document.body.classList.contains('dark');
+            document.body.classList.toggle('dark', !isDark);
+            document.body.classList.toggle('light', isDark);
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        }
+
+        // Restore saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.className = savedTheme;
+
+        // ── MENU ──────────────────────────────────────────
+        const menu       = document.getElementById('menu');
+        const backdrop   = document.getElementById('menu-backdrop');
+        const hamburger  = document.getElementById('hamburger');
+
+        function openMenu() {
+            menu.classList.add('open');
+            backdrop.classList.add('open');
+            hamburger.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            menu.classList.remove('open');
+            backdrop.classList.remove('open');
+            hamburger.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function toggleMenu() {
+            menu.classList.contains('open') ? closeMenu() : openMenu();
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeMenu();
+        });
+
+        // Swipe left to close menu on touch devices
+        let touchStartX = 0;
+        menu.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+        menu.addEventListener('touchend', e => {
+            if (e.changedTouches[0].clientX - touchStartX > 60) closeMenu();
+        }, { passive: true });
+
+        // ── TRANSPARENT HEADER AT TOP ─────────────────────
+        const siteHeader = document.getElementById('site-header');
+
+        function handleScroll() {
+            if (window.scrollY < 60) {
+                siteHeader.classList.add('at-top');
             } else {
-                body.classList.remove('dark');
-                body.classList.add('light');
+                siteHeader.classList.remove('at-top');
             }
-        });
+        }
 
-        // Hamburger Menu
-        const hamburger = document.querySelector('.hamburger');
-        const menu = document.querySelector('.menu');
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll(); // Run on load
 
-        hamburger.addEventListener('click', () => {
-            menu.classList.toggle('open');
-        });
-
-        // Scroll Triggered Animation (re-triggers on scroll in/out)
-        const heroElements = document.querySelectorAll('.hero h1, .hero p');
-
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                } else {
-                    entry.target.classList.remove('visible');
-                }
+        // ── HERO ANIMATION ────────────────────────────────
+        // Trigger immediately on load (don't wait for scroll)
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.hero h1, .hero p').forEach(el => {
+                el.classList.add('visible');
             });
-        }, { threshold: 0.1 });
+        });
 
-        heroElements.forEach(el => observer.observe(el));
-
-        // ── LOAD FROM CMS ────────────────────────────────
+        // ── CMS DATA ──────────────────────────────────────
         const SITE_DATA_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json';
 
         fetch(SITE_DATA_URL + '?t=' + Date.now())
@@ -420,96 +524,82 @@
           .then(d => {
             if (!d) return;
 
-            // Update name
-            const h1 = document.querySelector('.hero h1');
+            // Name
+            const h1 = document.getElementById('hero-name');
             if (d.name && h1) {
-              // Show full name — last word in orange
-              const name  = d.name.trim();
-              const idx   = name.lastIndexOf(' ');
-              const first = idx > -1 ? name.slice(0, idx) : '';
-              const last  = idx > -1 ? name.slice(idx + 1) : name;
-              h1.innerHTML = (first ? first + '<br>' : '') + '<span style="color:#ff4500;">' + last + '</span>';
+                const name  = d.name.trim();
+                const idx   = name.lastIndexOf(' ');
+                const first = idx > -1 ? name.slice(0, idx) : '';
+                const last  = idx > -1 ? name.slice(idx + 1) : name;
+                h1.innerHTML = (first ? first + '<br>' : '') + '<span style="color:#ff4500;">' + last + '</span>';
             }
 
-            // Update role
-            const role = document.querySelector('.hero p');
-            if (d.role && role) {
-              role.textContent = d.role;
-            }
+            // Role
+            const role = document.getElementById('hero-role');
+            if (d.role && role) role.textContent = d.role;
 
-            // Update contact description
-            const desc = document.querySelector('footer p');
-            if (d.contactDesc && desc) desc.textContent = d.contactDesc;
+            // Footer description
+            if (d.contactDesc) document.getElementById('footer-desc').textContent = d.contactDesc;
 
-            // Update social links
-            const links = document.querySelectorAll('.social-icon');
-            const socials = ['email','linkedin','dribbble','instagram','behance'];
-            links.forEach((el, i) => {
-              const val = d[socials[i]];
-              if (val) el.href = socials[i] === 'email' ? 'mailto:' + val : val;
+            // Social links
+            const map = {
+                'social-email':    d.email    ? 'mailto:' + d.email : null,
+                'social-linkedin': d.linkedin || null,
+                'social-dribbble': d.dribbble || null,
+                'social-instagram':d.instagram|| null,
+                'social-behance':  d.behance  || null,
+            };
+            Object.entries(map).forEach(([id, href]) => {
+                if (href) document.getElementById(id).href = href;
             });
 
-            // Apply hero background — image or video
+            // Hero background
             if (d.heroBg) {
-              const hero = document.getElementById('home');
+                const hero   = document.getElementById('home');
+                const existing = hero.querySelector('.bg-video');
+                if (existing) existing.remove();
 
-              // Remove any existing bg-video element
-              const existing = hero.querySelector('.bg-video');
-              if (existing) existing.remove();
+                hero.style.backgroundColor = 'transparent';
 
-              // Remove black background so media shows through
-              hero.style.backgroundColor = 'transparent';
+                const isVid = /\.(mp4|webm|mov|ogg)(\?|$)/i.test(d.heroBg) || d.heroBg.includes('/video/upload/');
+                let media;
 
-              const isVid = /\.(mp4|webm|mov|ogg)(\?|$)/i.test(d.heroBg) || d.heroBg.includes('/video/upload/');
-              let media;
+                if (isVid) {
+                    media = document.createElement('video');
+                    media.muted = true;
+                    media.autoplay = true;
+                    media.loop = true;
+                    media.setAttribute('muted','');
+                    media.setAttribute('autoplay','');
+                    media.setAttribute('loop','');
+                    media.setAttribute('playsinline','');
+                    media.setAttribute('preload','auto');
+                    const src = document.createElement('source');
+                    src.src  = d.heroBg;
+                    src.type = 'video/mp4';
+                    media.appendChild(src);
+                    media.src = d.heroBg;
+                } else {
+                    media = document.createElement('img');
+                    media.alt = '';
+                    media.src = d.heroBg.replace('/upload/', '/upload/q_auto,f_auto/');
+                }
 
-              if (isVid) {
-                media = document.createElement('video');
-                // Both property AND attribute needed for cross-browser autoplay
-                media.muted    = true;
-                media.autoplay = true;
-                media.loop     = true;
-                media.setAttribute('muted', '');
-                media.setAttribute('autoplay', '');
-                media.setAttribute('loop', '');
-                media.setAttribute('playsinline', '');
-                media.setAttribute('preload', 'auto');
-                // Use source element for better browser compatibility
-                const source = document.createElement('source');
-                source.src  = d.heroBg;
-                source.type = 'video/mp4';
-                media.appendChild(source);
-                // Fallback direct src
-                media.src = d.heroBg.replace('/upload/', '/upload/q_auto,f_auto/');
-              } else {
-                media = document.createElement('img');
-                media.alt = '';
-                media.src = d.heroBg.replace('/upload/', '/upload/q_auto,f_auto/');
-              }
+                media.className = 'bg-video';
+                hero.insertBefore(media, hero.firstChild);
 
-              media.className = 'bg-video';
+                // Dark overlay
+                if (!hero.querySelector('.hero-overlay-dynamic')) {
+                    const ov = document.createElement('div');
+                    ov.className = 'hero-overlay-dynamic';
+                    ov.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,0.45);z-index:1;pointer-events:none;';
+                    hero.insertBefore(ov, hero.children[1]);
+                }
 
-              // Insert as first child so it's behind the text
-              hero.insertBefore(media, hero.firstChild);
-
-              // Force play after insertion (some browsers need this)
-              if (isVid) {
-                media.load();
-                media.play().catch(() => {});
-              }
-
-              // Add dark overlay if not already present
-              if (!hero.querySelector('.hero-overlay-dynamic')) {
-                const overlay = document.createElement('div');
-                overlay.className = 'hero-overlay-dynamic';
-                overlay.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,0.45);z-index:1;pointer-events:none;';
-                hero.insertBefore(overlay, hero.children[1]);
-              }
+                if (isVid) { media.load(); media.play().catch(()=>{}); }
             }
           })
-          .catch(() => {}); // Fail silently — hardcoded defaults remain
-
+          .catch(() => {});
     </script>
-
 </body>
 </html>
