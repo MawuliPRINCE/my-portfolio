@@ -5,373 +5,1111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About — Ismael Asumanu Prince</title>
     <meta name="description" content="Ismael Asumanu Prince — Graphic Designer and Brand Identity Designer based in Ghana.">
-    <meta name="author" content="Ismael Asumanu Prince">
-    <!-- Open Graph -->
     <meta property="og:title" content="About — Ismael Asumanu Prince">
     <meta property="og:description" content="Graphic Designer and Brand Identity Designer based in Ghana.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mawuliprince.github.io/my-portfolio/about.html">
     <meta property="og:image" content="https://mawuliprince.github.io/my-portfolio/og-image.jpg">
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Ismael Asumanu Prince — Graphic Designer">
-    <meta name="twitter:description" content="Graphic Designer and Brand Identity Designer based in Ghana.">
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-size='80' font-family='serif' fill='%23ff4500'>P</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Space Grotesk',sans-serif; }
-        html { scroll-behavior:smooth; }
-        body { background:#000; color:#fff; overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; }
+        :root {
+            --bg: #faf9f7;
+            --surface: #f2f0ec;
+            --text: #111;
+            --muted: #888;
+            --border: #e0ddd8;
+            --accent: #ff4500;
+            --accent-dim: rgba(255,69,0,0.08);
+            --gold: #c8a96e;
+        }
 
-        /* HEADER */
+        body.dark {
+            --bg: #0d0d0d;
+            --surface: #161616;
+            --text: #f0ede8;
+            --muted: #666;
+            --border: #2a2a2a;
+            --accent-dim: rgba(255,69,0,0.12);
+        }
+
+        *, *::before, *::after {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* ── HEADER ── */
         header {
-            position:fixed; top:0; left:0; width:100%; z-index:1000;
-            display:flex; justify-content:space-between; align-items:center;
-            padding:20px 40px;
-            background:#fff; color:#000;
-            transition:background .3s,color .3s;
-        }
-        .logo { color:#ff4500; font-size:24px; font-weight:700; }
-
-        /* Orange line under header */
-        .header-line {
-            position:fixed; top:80px; left:0; width:100%; height:2px;
-            background:#ff4500; z-index:999;
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: clamp(14px,2.5vw,22px) clamp(20px,4vw,40px);
+            background: rgba(250,249,247,0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            transition: background 0.3s, border-color 0.3s;
         }
 
-        .nav-icons button {
-            font-size:24px; background:none; border:none; cursor:pointer;
-            color:#000; transition:color .3s;
+        body.dark header {
+            background: rgba(13,13,13,0.92);
         }
-        .nav-icons button:hover { color:#ff4500; }
 
-        /* MAIN CONTENT */
-        .main-content {
-            flex:1; padding-top:100px; position:relative;
-            background:#000; color:#fff;
-            transition:background .3s,color .3s, opacity 1.2s ease, transform 1.2s ease;
+        .logo {
+            color: var(--accent);
+            font-size: clamp(18px,2vw+0.5rem,24px);
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: -0.01em;
         }
-        .main-content.fade-out { opacity:0; transform:scale(0.97); }
 
-        /* HAMBURGER MENU */
+        .header-right { display: flex; align-items: center; gap: 6px; }
+
+        .icon-btn {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            border: none; background: none;
+            color: var(--text);
+            font-size: clamp(15px,1.5vw,18px);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: color 0.2s, background 0.2s;
+        }
+        .icon-btn:hover { color: var(--accent); background: var(--accent-dim); }
+
+        /* Language selector */
+        .lang-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            padding: 6px 28px 6px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+        .lang-select:hover { border-color: var(--accent); }
+
+        /* Hamburger */
+        .hamburger .fa-bars  { display: block; }
+        .hamburger .fa-times { display: none; }
+        .hamburger.open .fa-bars  { display: none; }
+        .hamburger.open .fa-times { display: block; }
+
+        /* ── MENU ── */
+        .menu-backdrop {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(4px);
+            z-index: 98; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .menu-backdrop.open { opacity: 1; pointer-events: all; }
+
         .menu {
-            position:fixed; top:0; right:-100%; width:300px; height:100vh;
-            background:#fff; color:#000; display:flex; flex-direction:column;
-            justify-content:center; align-items:center; transition:right .3s; z-index:999;
+            position: fixed;
+            top: 0; right: -100%;
+            width: min(300px,85vw); height: 100vh;
+            background: var(--bg);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+            z-index: 99;
+            box-shadow: -8px 0 40px rgba(0,0,0,0.12);
         }
-        .menu.open { right:0; }
-        .menu ul { list-style:none; text-align:center; }
-        .menu li { margin:20px 0; }
-        .menu a { color:inherit; text-decoration:none; font-size:20px; transition:color .3s; }
-        .menu a:hover { color:#ff4500; }
+        .menu.open { right: 0; }
+        .menu ul { list-style: none; text-align: center; width: 100%; padding: 0 2rem; }
+        .menu li { margin: 4px 0; }
+        .menu a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: clamp(17px,3.5vw,21px);
+            font-weight: 500;
+            display: block;
+            padding: 13px 20px;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .menu a:hover, .menu a.active { color: var(--accent); background: var(--accent-dim); }
+        .menu-divider { width: 36px; height: 2px; background: var(--accent); margin-bottom: 2rem; }
+        .menu-footer { position: absolute; bottom: 2rem; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
-        .about { display:flex; flex-direction:column; justify-content:center; align-items:center; padding:100px 20px; }
-        .about-container { display:grid; grid-template-columns:repeat(2,1fr); gap:40px; max-width:1200px; width:100%; }
+        /* ── PAGE CONTENT ── */
+        .page { padding-top: clamp(72px,10vw,90px); }
 
-        .about-card { padding:30px 0; cursor:pointer; transition:transform .3s; }
-        .about-card:hover { transform:translateY(-8px); }
-        .about-card h3 { font-size:24px; font-weight:700; display:flex; align-items:center; gap:10px; margin-bottom:15px; color:#ff4500; }
-        .short-text { font-size:16px; line-height:1.7; }
-        .see-more { color:#ff4500; font-weight:500; margin-top:15px; display:inline-block; }
-        .see-more:hover { text-decoration:underline; }
+        /* ── HERO STRIP ── */
+        .about-hero {
+            padding: clamp(60px,10vw,100px) clamp(20px,5vw,80px) clamp(40px,6vw,60px);
+            position: relative;
+            overflow: hidden;
+        }
 
-        /* DETAIL OVERLAY */
+        .about-hero::before {
+            content: 'PRINCE';
+            position: absolute;
+            right: -20px; top: 50%;
+            transform: translateY(-50%);
+            font-size: clamp(80px,14vw,160px);
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            color: var(--border);
+            letter-spacing: -0.04em;
+            pointer-events: none;
+            user-select: none;
+            line-height: 1;
+        }
+
+        .about-eyebrow {
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        .about-eyebrow::after {
+            content: '';
+            flex: 1; max-width: 60px; height: 1px;
+            background: var(--accent);
+        }
+
+        .about-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(40px,7vw,80px);
+            font-weight: 600;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            max-width: 700px;
+        }
+
+        .about-hero h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .about-tagline {
+            margin-top: 1.5rem;
+            font-size: clamp(14px,1.5vw,17px);
+            color: var(--muted);
+            max-width: 500px;
+            line-height: 1.7;
+        }
+
+        /* ── DIVIDER ── */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, var(--accent), transparent);
+            margin: 0 clamp(20px,5vw,80px);
+        }
+
+        /* ── INFO CARDS ── */
+        .cards-section {
+            padding: clamp(50px,8vw,80px) clamp(20px,5vw,80px);
+        }
+
+        .section-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        .section-label::before {
+            content: '';
+            width: 24px; height: 1px;
+            background: var(--accent);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(260px,100%), 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .info-card {
+            background: var(--bg);
+            padding: clamp(24px,3vw,36px);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: var(--accent);
+            transition: width 0.4s ease;
+        }
+
+        .info-card:hover { background: var(--surface); }
+        .info-card:hover::before { width: 100%; }
+
+        .info-card-icon {
+            width: 44px; height: 44px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--accent);
+            font-size: 16px;
+            margin-bottom: 1.25rem;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .info-card:hover .info-card-icon {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .info-card h3 {
+            font-size: clamp(15px,1.8vw,18px);
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        .info-card p {
+            font-size: clamp(13px,1.3vw,15px);
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        .info-card-arrow {
+            position: absolute;
+            top: 1.5rem; right: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+            opacity: 0;
+            transform: translate(-4px, 4px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .info-card:hover .info-card-arrow {
+            opacity: 1;
+            transform: translate(0,0);
+        }
+
+        /* ── DETAIL OVERLAY ── */
         .detail-overlay {
-            position:fixed; top:0; left:0; width:100%; height:100%;
-            background:rgba(0,0,0,0.97); display:flex; align-items:center; justify-content:center;
-            opacity:0; visibility:hidden; transition:opacity 1.2s ease,visibility 1.2s ease;
-            z-index:900;
+            position: fixed; inset: 0; z-index: 200;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            padding: 1rem;
         }
-        .detail-overlay.active { opacity:1; visibility:visible; }
+        .detail-overlay.active { opacity: 1; visibility: visible; }
 
         .detail-content {
-            background:rgba(255,255,255,0.06); backdrop-filter:blur(16px);
-            padding:60px; border-radius:20px; max-width:900px; width:90%;
-            max-height:90vh; overflow-y:auto; position:relative;
-            animation:slideUp 1s ease forwards;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: clamp(28px,5vw,56px);
+            max-width: 680px; width: 100%;
+            max-height: 88vh; overflow-y: auto;
+            position: relative;
+            transform: translateY(24px);
+            transition: transform 0.4s ease;
         }
-        @keyframes slideUp { from{transform:translateY(60px);opacity:0} to{transform:translateY(0);opacity:1} }
+        .detail-overlay.active .detail-content { transform: translateY(0); }
+
+        .detail-accent-line {
+            width: 40px; height: 2px;
+            background: var(--accent);
+            margin-bottom: 1.5rem;
+        }
 
         .close-detail {
-            position:absolute; top:20px; right:25px; font-size:36px; color:#ff4500;
-            background:none; border:none; cursor:pointer; transition:transform .3s;
+            position: absolute; top: 1.25rem; right: 1.25rem;
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 1px solid var(--border);
+            background: none; color: var(--text);
+            font-size: 1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
         }
-        .close-detail:hover { transform:rotate(90deg); }
+        .close-detail:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-        .detail-content h3 { font-size:36px; margin-bottom:25px; display:flex; align-items:center; gap:15px; color:#ff4500; }
-        .detail-content p, .detail-content li { font-size:18px; color:#eee; line-height:1.8; margin-bottom:15px; }
-        .detail-content ul { padding-left:25px; margin:20px 0; }
+        .detail-content h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(26px,4vw,38px);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
 
-        /* EXPERIENCE COUNTER */
-        .experience { text-align:center; margin-top:80px; }
-        .experience h3 { font-size:24px; margin-bottom:12px; }
-        .experience-number { font-size:100px; font-weight:700; color:#ff4500; }
-        .experience-number .plus { font-size:0.6em; vertical-align:super; }
+        .detail-content p {
+            font-size: clamp(14px,1.5vw,16px);
+            color: var(--muted);
+            line-height: 1.85;
+            margin-bottom: 1rem;
+        }
 
-        /* FOOTER */
+        .detail-content strong { color: var(--text); font-weight: 600; }
+
+        .detail-content ul {
+            padding-left: 0;
+            list-style: none;
+            display: flex; flex-wrap: wrap; gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .detail-content li {
+            font-size: 0.78rem;
+            letter-spacing: 0.05em;
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 5px 12px;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .detail-content li:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* ── STATS ── */
+        .stats-section {
+            padding: clamp(40px,6vw,70px) clamp(20px,5vw,80px);
+            background: var(--surface);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+            gap: 2rem;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-item { text-align: center; }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(52px,8vw,80px);
+            font-weight: 600;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .stat-plus { font-size: 0.5em; vertical-align: super; }
+
+        .stat-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 0.5rem;
+        }
+
+        /* ── REVIEWS ── */
+        .reviews-section {
+            padding: clamp(50px,8vw,80px) clamp(20px,5vw,80px);
+            overflow: hidden;
+        }
+
+        .reviews-header {
+            display: flex; align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap; gap: 1rem;
+        }
+
+        .reviews-nav { display: flex; gap: 0.5rem; }
+
+        .rev-btn {
+            width: 44px; height: 44px;
+            border: 1px solid var(--border);
+            background: none; color: var(--text);
+            cursor: pointer; border-radius: 50%;
+            font-size: 0.85rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .rev-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+        .reviews-track-wrap { overflow: hidden; }
+
+        .reviews-track {
+            display: flex;
+            gap: 1.5rem;
+            transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .review-card {
+            min-width: clamp(280px,45vw,420px);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: clamp(24px,3vw,36px);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .review-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(15px,2vw,18px);
+            font-style: italic;
+            line-height: 1.7;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+
+        .review-quote::before {
+            content: '\201C';
+            font-size: 3rem;
+            line-height: 0;
+            vertical-align: -0.5em;
+            color: var(--accent);
+            margin-right: 4px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .review-author {
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+
+        .review-avatar {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-weight: 700; font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .review-name { font-weight: 600; font-size: 0.88rem; }
+        .review-role { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+        .review-stars {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            color: var(--gold);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+        }
+
+        .reviews-dots {
+            display: flex; gap: 0.4rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .rev-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--border);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .rev-dot.active {
+            background: var(--accent);
+            width: 20px; border-radius: 3px;
+        }
+
+        /* ── FOOTER ── */
         footer {
-            padding:60px 40px;
-            background:#000; color:#fff;
-            text-align:left; position:relative; z-index:1;
+            padding: clamp(40px,6vw,60px) clamp(20px,5vw,80px);
+            background: #0d0d0d;
+            color: #f0ede8;
+            position: relative;
         }
-        footer h2 { font-size:36px; font-weight:700; }
-        .underline { width:100px; height:2px; background:#ff4500; margin:10px 0; }
-        footer p { font-size:16px; max-width:600px; margin-bottom:40px; }
-        .social-icons { display:flex; gap:20px; }
-        .social-icon { font-size:24px; color:#fff; transition:color .3s; }
-        .social-icon:hover { color:#ff4500; }
-        .go-to-top { position:absolute; right:40px; bottom:60px; font-size:24px; color:#ff4500; cursor:pointer; }
 
-        /* THEME SYSTEM */
-        body:not(.dark) header,
-        body:not(.dark) .main-content,
-        body:not(.dark) .detail-overlay { background:#fff !important; color:#000 !important; }
-        body:not(.dark) .nav-icons button { color:#000 !important; }
-        body:not(.dark) footer { background:#000 !important; color:#fff !important; }
-        body:not(.dark) footer p { color:#ccc !important; }
-        body:not(.dark) .short-text,
-        body:not(.dark) .detail-content p,
-        body:not(.dark) .detail-content li { color:#444 !important; }
+        body.dark footer { background: #000; }
 
-        body.dark header,
-        body.dark .main-content,
-        body.dark .detail-overlay { background:#000 !important; color:#fff !important; }
-        body.dark .nav-icons button { color:#fff !important; }
-        body.dark footer { background:#fff !important; color:#000 !important; }
-        body.dark footer p { color:#444 !important; }
-        body.dark .social-icon { color:#000; }
-        body.dark .detail-content { background:rgba(0,0,0,0.5); }
+        .footer-top {
+            display: flex; justify-content: space-between;
+            align-items: flex-start; flex-wrap: wrap;
+            gap: 2rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid #222;
+            margin-bottom: 2.5rem;
+        }
 
-        @media (max-width:768px) {
-            header, footer { padding:20px; }
-            .logo { font-size:20px; }
-            .nav-icons button { font-size:20px; }
-            .header-line { top:70px; }
-            .main-content { padding-top:90px; }
-            .about-container { grid-template-columns:1fr; gap:30px; }
-            .about-card { padding:25px 0; }
-            .about-card h3 { font-size:20px; }
-            .short-text { font-size:15px; }
-            footer h2 { font-size:32px; }
-            .social-icons { justify-content:center; }
-            .go-to-top { right:50%; transform:translateX(50%); bottom:40px; }
-            .experience-number { font-size:80px; }
+        footer h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(28px,5vw,44px);
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        .footer-underline { width: 40px; height: 2px; background: var(--accent); margin: 0.75rem 0 1rem; }
+
+        footer p {
+            font-size: clamp(13px,1.4vw,15px);
+            color: #888;
+            max-width: 420px;
+            line-height: 1.7;
+        }
+
+        .social-icons {
+            display: flex; gap: 0.75rem;
+            flex-wrap: wrap; align-items: center;
+        }
+
+        .social-icon {
+            width: 44px; height: 44px; border-radius: 50%;
+            border: 1px solid #333;
+            display: flex; align-items: center; justify-content: center;
+            color: #aaa; text-decoration: none; font-size: 15px;
+            transition: all 0.2s;
+        }
+        .social-icon:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+
+        .footer-bottom {
+            display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 1rem;
+            font-size: 0.7rem; color: #555;
+            letter-spacing: 0.05em;
+        }
+
+        .go-to-top {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--accent);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            font-size: 15px; border: none;
+        }
+        .go-to-top:hover { transform: translateY(-3px); background: #e03a00; }
+
+        /* ── SCROLL REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .about-hero::before { display: none; }
+            .reviews-header { flex-direction: column; align-items: flex-start; }
+            .footer-top { flex-direction: column; }
+            .footer-bottom { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
-<body class="light">
+<body>
 
+    <div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
+
+    <!-- HEADER -->
     <header>
-        <div class="logo">Prince</div>
-        <div class="nav-icons">
-            <button class="theme-toggle"><i class="fas fa-lightbulb"></i></button>
-            <button class="hamburger"><i class="fas fa-bars"></i></button>
+        <a href="index.html" class="logo">Prince</a>
+        <div class="header-right">
+            <!-- Language selector -->
+            <select class="lang-select" id="lang-select" onchange="switchLang(this.value)" aria-label="Language">
+                <option value="en">EN</option>
+                <option value="fr">FR</option>
+                <option value="es">ES</option>
+                <option value="de">DE</option>
+            </select>
+            <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+                <i class="fas fa-lightbulb"></i>
+            </button>
+            <button class="icon-btn hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-       </header>
+    </header>
 
-    <div class="header-line"></div>
-
-    <nav class="menu">
+    <nav class="menu" id="menu">
+        <div class="menu-divider"></div>
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="index.html"    onclick="closeMenu()" data-i18n="nav-home">Home</a></li>
+            <li><a href="about.html"    onclick="closeMenu()" class="active" data-i18n="nav-about">About</a></li>
+            <li><a href="projects.html" onclick="closeMenu()" data-i18n="nav-projects">Projects</a></li>
+            <li><a href="#contact"      onclick="closeMenu()" data-i18n="nav-contact">Contact</a></li>
         </ul>
+        <p class="menu-footer">© <span id="menu-year"></span> Prince</p>
     </nav>
 
-    <div class="main-content" id="mainContent">
-        <section class="about">
-            <div class="about-container">
-                <div class="about-card" data-title="About Me" data-icon="fa-user">
-                    <h3><i class="fas fa-user"></i> About Me</h3>
-                    <div class="short-text">
-                        Dedicated graphic design student at the University of Education, Winneba with a passion for creativity and attention to detail...<br>
-                        <span class="see-more">See more →</span>
-                    </div>
-                </div>
-                <div class="about-card" data-title="Education" data-icon="fa-graduation-cap">
-                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
-                    <div class="short-text">
-                        University of Education, Winneba<br>Bachelor's Degree in Graphic Design | Expected 2026...<br>
-                        <span class="see-more">See more →</span>
-                    </div>
-                </div>
-                <div class="about-card" data-title="Work Experience" data-icon="fa-briefcase">
-                    <h3><i class="fas fa-briefcase"></i> Work Experience</h3>
-                    <div class="short-text">
-                        Freelance Graphic Designer (2023–Present)<br>Designed custom graphics and layouts for various clients...<br>
-                        <span class="see-more">See more →</span>
-                    </div>
-                </div>
-                <div class="about-card" data-title="Skills" data-icon="fa-tools">
-                    <h3><i class="fas fa-tools"></i> Skills</h3>
-                    <div class="short-text">
-                        Adobe Photoshop, Illustrator, InDesign<br>Typography, Layout Design, Branding...<br>
-                        <span class="see-more">See more →</span>
-                    </div>
-                </div>
-            </div>
+    <div class="page">
 
-            <div class="experience" id="experienceSection">
-                <h3>Years of Experience</h3>
-                <div class="experience-number">
-                    <span id="years">0</span><span class="plus">+</span>
+        <!-- HERO -->
+        <section class="about-hero">
+            <p class="about-eyebrow" data-i18n="about-eyebrow">About Me</p>
+            <h1 data-i18n="about-headline">Designing with<br><em>purpose</em> &amp; precision</h1>
+            <p class="about-tagline" data-i18n="about-tagline">
+                Graphic Designer and Brand Identity specialist based in Ghana, currently studying at the University of Education, Winneba.
+            </p>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- INFO CARDS -->
+        <section class="cards-section">
+            <p class="section-label reveal" data-i18n="section-background">Background</p>
+            <div class="cards-grid">
+
+                <div class="info-card reveal" data-title="About Me" data-icon="fa-user">
+                    <div class="info-card-icon"><i class="fas fa-user"></i></div>
+                    <h3 data-i18n="card-about-title">About Me</h3>
+                    <p data-i18n="card-about-short">Dedicated graphic design student with a passion for creativity and attention to detail. Always eager to take on new projects.</p>
+                    <span class="info-card-arrow"><i class="fas fa-arrow-up-right"></i></span>
                 </div>
+
+                <div class="info-card reveal" data-title="Education" data-icon="fa-graduation-cap">
+                    <div class="info-card-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3 data-i18n="card-edu-title">Education</h3>
+                    <p data-i18n="card-edu-short">University of Education, Winneba — Bachelor's in Graphic Design. Expected 2026.</p>
+                    <span class="info-card-arrow"><i class="fas fa-arrow-up-right"></i></span>
+                </div>
+
+                <div class="info-card reveal" data-title="Work Experience" data-icon="fa-briefcase">
+                    <div class="info-card-icon"><i class="fas fa-briefcase"></i></div>
+                    <h3 data-i18n="card-work-title">Experience</h3>
+                    <p data-i18n="card-work-short">Freelance Graphic Designer since Dec 2023. Delivering brand identities and visual solutions for clients.</p>
+                    <span class="info-card-arrow"><i class="fas fa-arrow-up-right"></i></span>
+                </div>
+
+                <div class="info-card reveal" data-title="Skills" data-icon="fa-tools">
+                    <div class="info-card-icon"><i class="fas fa-tools"></i></div>
+                    <h3 data-i18n="card-skills-title">Skills</h3>
+                    <p data-i18n="card-skills-short">Photoshop · Illustrator · InDesign · Brand Identity · Typography · Layout Design</p>
+                    <span class="info-card-arrow"><i class="fas fa-arrow-up-right"></i></span>
+                </div>
+
             </div>
         </section>
-    </div>
 
+        <!-- STATS -->
+        <section class="stats-section">
+            <div class="stat-item reveal">
+                <div class="stat-number"><span id="years">0</span><span class="stat-plus">+</span></div>
+                <p class="stat-label" data-i18n="stat-experience">Years Experience</p>
+            </div>
+            <div class="stat-item reveal">
+                <div class="stat-number">10<span class="stat-plus">+</span></div>
+                <p class="stat-label" data-i18n="stat-projects">Projects Delivered</p>
+            </div>
+            <div class="stat-item reveal">
+                <div class="stat-number">100<span class="stat-plus">%</span></div>
+                <p class="stat-label" data-i18n="stat-passion">Passion</p>
+            </div>
+        </section>
+
+        <!-- REVIEWS -->
+        <section class="reviews-section">
+            <div class="reviews-header reveal">
+                <div>
+                    <p class="section-label" data-i18n="section-reviews">Client Reviews</p>
+                    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,40px);font-weight:600;line-height:1.1;" data-i18n="reviews-headline">What clients say</h2>
+                </div>
+                <div class="reviews-nav">
+                    <button class="rev-btn" onclick="shiftReview(-1)" aria-label="Previous"><i class="fas fa-arrow-left"></i></button>
+                    <button class="rev-btn" onclick="shiftReview(1)"  aria-label="Next"><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="reviews-track-wrap">
+                <div class="reviews-track" id="reviews-track">
+
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-quote" data-i18n="review-1">Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional — beyond what we expected.</p>
+                        <div class="review-author">
+                            <div class="review-avatar">AK</div>
+                            <div>
+                                <p class="review-name">Ama Korkor</p>
+                                <p class="review-role" data-i18n="review-1-role">Founder, AK Studio</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-quote" data-i18n="review-2">The attention to detail was remarkable. Every revision was handled swiftly and the final result spoke for itself.</p>
+                        <div class="review-author">
+                            <div class="review-avatar">JM</div>
+                            <div>
+                                <p class="review-name">Julius Mensah</p>
+                                <p class="review-role" data-i18n="review-2-role">Marketing Director</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-quote" data-i18n="review-3">Working with Prince was smooth from start to finish. He understood the brief immediately and delivered a stunning result.</p>
+                        <div class="review-author">
+                            <div class="review-avatar">EA</div>
+                            <div>
+                                <p class="review-name">Efua Asante</p>
+                                <p class="review-role" data-i18n="review-3-role">Creative Director</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-quote" data-i18n="review-4">Highly recommended. Prince brings creativity and professionalism to every project. Our brand has never looked better.</p>
+                        <div class="review-author">
+                            <div class="review-avatar">KO</div>
+                            <div>
+                                <p class="review-name">Kofi Osei</p>
+                                <p class="review-role" data-i18n="review-4-role">Business Owner</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="reviews-dots" id="reviews-dots"></div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer id="contact">
+            <div class="footer-top">
+                <div>
+                    <h2 data-i18n="footer-title">Let's Connect</h2>
+                    <div class="footer-underline"></div>
+                    <p data-i18n="footer-desc">Ready to start your next project or want to collaborate? I'm always open to new opportunities.</p>
+                </div>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" id="social-email"     title="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="#" class="social-icon" id="social-linkedin"  title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon" id="social-dribbble"  title="Dribbble"><i class="fab fa-dribbble"></i></a>
+                    <a href="#" class="social-icon" id="social-instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon" id="social-behance"   title="Behance"><i class="fab fa-behance"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© <span id="footer-year"></span> Ismael Asumanu Prince</span>
+                <button class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+                    <i class="fas fa-arrow-up"></i>
+                </button>
+            </div>
+        </footer>
+
+    </div><!-- end .page -->
+
+    <!-- DETAIL OVERLAY -->
     <div class="detail-overlay" id="detailOverlay">
         <div class="detail-content">
-            <button class="close-detail">×</button>
-            <h3 id="detailTitle"><i class="fas fa-user"></i> About Me</h3>
+            <div class="detail-accent-line"></div>
+            <button class="close-detail" onclick="closeOverlay()"><i class="fas fa-times"></i></button>
+            <h3 id="detailTitle">About Me</h3>
             <div id="detailText"></div>
         </div>
     </div>
 
-    <footer id="contact">
-        <h2>Let's Connect</h2>
-        <div class="underline"></div>
-        <p>Ready to start your next project or want to collaborate? I'm always open to new opportunities. Connect with me instantly via email or through social media.</p>
-        <div class="social-icons">
-            <a href="#" class="social-icon"><i class="fas fa-envelope"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-dribbble"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-behance"></i></a>
-        </div>
-        <div class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></div>
-    </footer>
-
     <script>
-        // Theme & Menu
-        document.querySelector('.theme-toggle').addEventListener('click', () => {
+        // ── YEARS ──────────────────────────────────────────
+        const yr = new Date().getFullYear();
+        document.getElementById('menu-year').textContent  = yr;
+        document.getElementById('footer-year').textContent = yr;
+
+        // ── THEME ─────────────────────────────────────────
+        function toggleTheme() {
             document.body.classList.toggle('dark');
-        });
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        }
+        if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
 
-        document.querySelector('.hamburger').addEventListener('click', () => {
-            document.querySelector('.menu').classList.toggle('open');
-        });
+        // ── MENU ──────────────────────────────────────────
+        const menuEl    = document.getElementById('menu');
+        const backdrop  = document.getElementById('menu-backdrop');
+        const hamburger = document.getElementById('hamburger');
 
-        // Detail overlay
-        const main = document.getElementById('mainContent');
-        const overlay = document.getElementById('detailOverlay');
-        const title = document.getElementById('detailTitle');
-        const text = document.getElementById('detailText');
-        const close = document.querySelector('.close-detail');
+        function openMenu()   { menuEl.classList.add('open'); backdrop.classList.add('open'); hamburger.classList.add('open'); document.body.style.overflow='hidden'; }
+        function closeMenu()  { menuEl.classList.remove('open'); backdrop.classList.remove('open'); hamburger.classList.remove('open'); document.body.style.overflow=''; }
+        function toggleMenu() { menuEl.classList.contains('open') ? closeMenu() : openMenu(); }
 
-        const data = {
-            "About Me": {icon:"fa-user", content:`<p>Dedicated graphic design student at the University of Education, Winneba with a passion for creativity and attention to detail. Familiar with Adobe Photoshop and Illustrator.</p><p>I strive to create simple, effective designs while learning and growing in the field. I love clean aesthetics, meaningful visuals, and solving creative challenges. Always eager to take on new projects and collaborate.</p>`},
-            "Education": {icon:"fa-graduation-cap", content:`<p><strong>University of Education, Winneba</strong><br>Bachelor's Degree in Graphic Design<br>Expected Graduation: 2026</p><p>Currently pursuing a degree in Graphic Design with a focus on visual communication, layout design, branding, typography, and digital media.</p>`},
-            "Work Experience": {icon:"fa-briefcase", content:`<p><strong>Freelance Graphic Designer — Self-Employed</strong><br>Dec 2023 – Present</p><ul><li>Designed custom graphics and layouts for various clients</li><li>Managed multiple projects independently</li><li>Collaborated with clients to bring creative concepts to life</li></ul><p><strong>Graphic Design Projects — University</strong> (Ongoing)</p>`},
-            "Skills": {icon:"fa-tools", content:`<ul><li>Adobe Photoshop</li><li>Adobe Illustrator</li><li>Adobe InDesign</li><li>Typography & Layout Design</li><li>Brand Identity Design</li><li>Visual Communication</li><li>Color Theory</li><li>Attention to Detail & Problem Solving</li></ul>`}
+        document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeMenu(); closeOverlay(); } });
+
+        let touchStartX = 0;
+        menuEl.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+        menuEl.addEventListener('touchend',   e => { if(e.changedTouches[0].clientX - touchStartX > 60) closeMenu(); }, { passive: true });
+
+        // ── SCROLL REVEAL ─────────────────────────────────
+        const revealEls = document.querySelectorAll('.reveal');
+        const revObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if(e.isIntersecting){ e.target.classList.add('visible'); revObs.unobserve(e.target); }
+            });
+        }, { threshold: 0.12 });
+        revealEls.forEach(el => revObs.observe(el));
+
+        // ── CARD DATA ─────────────────────────────────────
+        const cardData = {
+            "About Me": {
+                content: `<p>Dedicated graphic design student at the University of Education, Winneba with a passion for creativity and attention to detail. Familiar with Adobe Photoshop and Illustrator.</p><p>I strive to create simple, effective designs while learning and growing in the field. I love clean aesthetics, meaningful visuals, and solving creative challenges. Always eager to take on new projects and collaborate.</p>`
+            },
+            "Education": {
+                content: `<p><strong>University of Education, Winneba</strong><br>Bachelor's Degree in Graphic Design<br>Expected Graduation: 2026</p><p>Pursuing a degree with a focus on visual communication, layout design, branding, typography, and digital media.</p>`
+            },
+            "Work Experience": {
+                content: `<p><strong>Freelance Graphic Designer — Self-Employed</strong><br>Dec 2023 – Present</p><ul><li>Custom graphics and layouts for various clients</li><li>Managed multiple projects independently</li><li>Collaborated with clients to bring creative concepts to life</li><li>Graphic Design Projects — University (Ongoing)</li></ul>`
+            },
+            "Skills": {
+                content: `<ul><li>Adobe Photoshop</li><li>Adobe Illustrator</li><li>Adobe InDesign</li><li>Typography & Layout</li><li>Brand Identity Design</li><li>Visual Communication</li><li>Color Theory</li><li>Problem Solving</li></ul>`
+            }
         };
 
-        document.querySelectorAll('.about-card').forEach(c => {
-            c.addEventListener('click', () => {
-                const t = c.getAttribute('data-title');
-                title.innerHTML = `<i class="fas ${data[t].icon}"></i> ${t}`;
-                text.innerHTML = data[t].content;
-                main.classList.add('fade-out');
-                setTimeout(() => overlay.classList.add('active'), 600);
+        // ── INFO CARDS ────────────────────────────────────
+        const overlay   = document.getElementById('detailOverlay');
+        const titleEl   = document.getElementById('detailTitle');
+        const textEl    = document.getElementById('detailText');
+
+        document.querySelectorAll('.info-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const t = card.getAttribute('data-title');
+                titleEl.textContent = t;
+                textEl.innerHTML    = cardData[t]?.content || '';
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
             });
         });
 
         function closeOverlay() {
             overlay.classList.remove('active');
-            setTimeout(() => main.classList.remove('fade-out'), 600);
-        }
-        close.addEventListener('click', closeOverlay);
-        overlay.addEventListener('click', e => { if (e.target === overlay) closeOverlay(); });
-
-        // Scroll-triggered counter animation (runs every time you scroll past it)
-        const experienceSection = document.getElementById('experienceSection');
-        const counter = document.getElementById('years');
-        const plus = document.querySelector('.plus');
-        let hasAnimated = false;
-
-        function runCounterAnimation() {
-            if (hasAnimated) return;
-            hasAnimated = true;
-
-            const start = 2023;
-            const now = new Date();
-            const year = now.getFullYear();
-            const years = now >= new Date(year, 0, 1) ? year - start + 1 : year - start;
-
-            let i = 0;
-            const interval = setInterval(() => {
-                if (i <= years) {
-                    counter.textContent = i;
-                    counter.style.color = i % 2 === 0 ? '#ff4500' : (document.body.classList.contains('dark') ? '#fff' : '#000');
-                    plus.style.color = i % 2 === 0 ? '#ff4500' : (document.body.classList.contains('dark') ? '#fff' : '#000');
-                    i++;
-                } else {
-                    clearInterval(interval);
-                    counter.style.color = '#ff4500';
-                    plus.style.color = '#ff4500';
-                }
-            }, 400);
+            document.body.style.overflow = '';
         }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    runCounterAnimation();
-                } else {
-                    // Reset for next scroll (optional: remove if you want only once)
-                    hasAnimated = false;
-                    counter.textContent = '0';
+        overlay.addEventListener('click', e => { if(e.target === overlay) closeOverlay(); });
+
+        // ── EXPERIENCE COUNTER ────────────────────────────
+        const expEl = document.getElementById('years');
+        let counted = false;
+
+        const cntObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if(e.isIntersecting && !counted) {
+                    counted = true;
+                    const total = new Date().getFullYear() - 2023 + 1;
+                    let i = 0;
+                    const iv = setInterval(() => {
+                        expEl.textContent = i;
+                        if(i >= total) clearInterval(iv);
+                        i++;
+                    }, 350);
                 }
             });
-        }, { threshold: 0.7 });
+        }, { threshold: 0.6 });
 
-        observer.observe(experienceSection);
+        cntObs.observe(document.querySelector('.stats-section'));
 
-        // ── LOAD FROM CMS ────────────────────────────────
-        const ABOUT_DATA_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-about.json';
+        // ── REVIEWS SLIDER ────────────────────────────────
+        const track  = document.getElementById('reviews-track');
+        const dotsEl = document.getElementById('reviews-dots');
+        const cards  = Array.from(track.querySelectorAll('.review-card'));
+        let revIdx   = 0;
 
-        fetch(ABOUT_DATA_URL + '?t=' + Date.now())
+        // Build dots
+        cards.forEach((_,i) => {
+            const d = document.createElement('div');
+            d.className = 'rev-dot' + (i===0?' active':'');
+            d.onclick = () => goReview(i);
+            dotsEl.appendChild(d);
+        });
+
+        function getVisible() {
+            const w = track.parentElement.offsetWidth;
+            const cardW = cards[0]?.offsetWidth + 24 || 300;
+            return Math.max(1, Math.floor(w / cardW));
+        }
+
+        function goReview(idx) {
+            const cardW = cards[0]?.offsetWidth + 24 || 300;
+            const maxIdx = Math.max(0, cards.length - getVisible());
+            revIdx = Math.min(Math.max(idx, 0), maxIdx);
+            track.style.transform = `translateX(-${revIdx * cardW}px)`;
+            dotsEl.querySelectorAll('.rev-dot').forEach((d,i) => d.classList.toggle('active', i === revIdx));
+        }
+
+        function shiftReview(dir) {
+            goReview(revIdx + dir);
+        }
+
+        // Auto advance
+        let revTimer = setInterval(() => shiftReview(1), 5000);
+        track.addEventListener('mouseenter', () => clearInterval(revTimer));
+        track.addEventListener('mouseleave', () => { revTimer = setInterval(() => shiftReview(1), 5000); });
+
+        // Touch swipe on reviews
+        let revTouchX = 0;
+        track.addEventListener('touchstart', e => { revTouchX = e.touches[0].clientX; }, { passive: true });
+        track.addEventListener('touchend',   e => {
+            const diff = revTouchX - e.changedTouches[0].clientX;
+            if(Math.abs(diff) > 40) shiftReview(diff > 0 ? 1 : -1);
+        }, { passive: true });
+
+        // ── LANGUAGE SWITCHER ─────────────────────────────
+        const i18n = {
+            en: {
+                'nav-home':'Home','nav-about':'About','nav-projects':'Projects','nav-contact':'Contact',
+                'about-eyebrow':'About Me',
+                'about-headline':'Designing with<br><em>purpose</em> &amp; precision',
+                'about-tagline':'Graphic Designer and Brand Identity specialist based in Ghana, currently studying at the University of Education, Winneba.',
+                'section-background':'Background',
+                'card-about-title':'About Me','card-about-short':'Dedicated graphic design student with a passion for creativity and attention to detail. Always eager to take on new projects.',
+                'card-edu-title':'Education','card-edu-short':'University of Education, Winneba — Bachelor\'s in Graphic Design. Expected 2026.',
+                'card-work-title':'Experience','card-work-short':'Freelance Graphic Designer since Dec 2023. Delivering brand identities and visual solutions for clients.',
+                'card-skills-title':'Skills','card-skills-short':'Photoshop · Illustrator · InDesign · Brand Identity · Typography · Layout Design',
+                'stat-experience':'Years Experience','stat-projects':'Projects Delivered','stat-passion':'Passion',
+                'section-reviews':'Client Reviews','reviews-headline':'What clients say',
+                'review-1':'Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional — beyond what we expected.',
+                'review-1-role':'Founder, AK Studio',
+                'review-2':'The attention to detail was remarkable. Every revision was handled swiftly and the final result spoke for itself.',
+                'review-2-role':'Marketing Director',
+                'review-3':'Working with Prince was smooth from start to finish. He understood the brief immediately and delivered a stunning result.',
+                'review-3-role':'Creative Director',
+                'review-4':'Highly recommended. Prince brings creativity and professionalism to every project. Our brand has never looked better.',
+                'review-4-role':'Business Owner',
+                'footer-title':'Let\'s Connect','footer-desc':'Ready to start your next project or want to collaborate? I\'m always open to new opportunities.',
+            },
+            fr: {
+                'nav-home':'Accueil','nav-about':'À Propos','nav-projects':'Projets','nav-contact':'Contact',
+                'about-eyebrow':'À Propos',
+                'about-headline':'Concevoir avec<br><em>intention</em> &amp; précision',
+                'about-tagline':'Designer graphique et spécialiste en identité de marque basé au Ghana, étudiant à l\'Université d\'Éducation de Winneba.',
+                'section-background':'Parcours',
+                'card-about-title':'À Propos','card-about-short':'Étudiant en design graphique passionné par la créativité et le souci du détail.',
+                'card-edu-title':'Formation','card-edu-short':'Université d\'Éducation, Winneba — Licence en Design Graphique. Prévu 2026.',
+                'card-work-title':'Expérience','card-work-short':'Designer graphique freelance depuis décembre 2023. Identités de marque et solutions visuelles.',
+                'card-skills-title':'Compétences','card-skills-short':'Photoshop · Illustrator · InDesign · Identité de marque · Typographie',
+                'stat-experience':'Ans d\'expérience','stat-projects':'Projets livrés','stat-passion':'Passion',
+                'section-reviews':'Avis clients','reviews-headline':'Ce que disent les clients',
+                'review-1':'Prince a livré une identité de marque qui a parfaitement capturé notre vision. Propre, précis et professionnel.',
+                'review-1-role':'Fondatrice, AK Studio',
+                'review-2':'L\'attention aux détails était remarquable. Chaque révision a été traitée rapidement.',
+                'review-2-role':'Directeur Marketing',
+                'review-3':'Travailler avec Prince était fluide du début à la fin. Il a compris le brief immédiatement.',
+                'review-3-role':'Directeur Créatif',
+                'review-4':'Fortement recommandé. Prince apporte créativité et professionnalisme à chaque projet.',
+                'review-4-role':'Chef d\'entreprise',
+                'footer-title':'Connectons-nous','footer-desc':'Prêt à démarrer votre prochain projet ou à collaborer ? Je suis toujours ouvert à de nouvelles opportunités.',
+            },
+            es: {
+                'nav-home':'Inicio','nav-about':'Acerca','nav-projects':'Proyectos','nav-contact':'Contacto',
+                'about-eyebrow':'Acerca de Mí',
+                'about-headline':'Diseñando con<br><em>propósito</em> y precisión',
+                'about-tagline':'Diseñador gráfico y especialista en identidad de marca con sede en Ghana.',
+                'section-background':'Trayectoria',
+                'card-about-title':'Acerca de Mí','card-about-short':'Estudiante de diseño gráfico apasionado por la creatividad y la atención al detalle.',
+                'card-edu-title':'Educación','card-edu-short':'Universidad de Educación, Winneba — Licenciatura en Diseño Gráfico. Previsto 2026.',
+                'card-work-title':'Experiencia','card-work-short':'Diseñador gráfico freelance desde dic. 2023. Identidades de marca y soluciones visuales.',
+                'card-skills-title':'Habilidades','card-skills-short':'Photoshop · Illustrator · InDesign · Identidad de marca · Tipografía',
+                'stat-experience':'Años de experiencia','stat-projects':'Proyectos entregados','stat-passion':'Pasión',
+                'section-reviews':'Reseñas de clientes','reviews-headline':'Lo que dicen los clientes',
+                'review-1':'Prince entregó una identidad de marca que capturó perfectamente nuestra visión.',
+                'review-1-role':'Fundadora, AK Studio',
+                'review-2':'La atención al detalle fue notable. Cada revisión fue manejada rápidamente.',
+                'review-2-role':'Director de Marketing',
+                'review-3':'Trabajar con Prince fue fluido de principio a fin.',
+                'review-3-role':'Director Creativo',
+                'review-4':'Muy recomendable. Prince aporta creatividad y profesionalismo a cada proyecto.',
+                'review-4-role':'Dueño de negocio',
+                'footer-title':'Conectemos','footer-desc':'¿Listo para comenzar tu próximo proyecto? Siempre estoy abierto a nuevas oportunidades.',
+            },
+            de: {
+                'nav-home':'Startseite','nav-about':'Über mich','nav-projects':'Projekte','nav-contact':'Kontakt',
+                'about-eyebrow':'Über mich',
+                'about-headline':'Gestalten mit<br><em>Absicht</em> &amp; Präzision',
+                'about-tagline':'Grafikdesigner und Markenidentitätsspezialist aus Ghana, derzeit an der Universität Winneba.',
+                'section-background':'Hintergrund',
+                'card-about-title':'Über mich','card-about-short':'Engagierter Grafikdesignstudent mit Leidenschaft für Kreativität und Liebe zum Detail.',
+                'card-edu-title':'Ausbildung','card-edu-short':'Universität für Bildung, Winneba — Bachelor in Grafikdesign. Erwartet 2026.',
+                'card-work-title':'Erfahrung','card-work-short':'Freiberuflicher Grafikdesigner seit Dez. 2023. Markenidentitäten und visuelle Lösungen.',
+                'card-skills-title':'Fähigkeiten','card-skills-short':'Photoshop · Illustrator · InDesign · Markenidentität · Typografie',
+                'stat-experience':'Jahre Erfahrung','stat-projects':'Projekte geliefert','stat-passion':'Leidenschaft',
+                'section-reviews':'Kundenbewertungen','reviews-headline':'Was Kunden sagen',
+                'review-1':'Prince lieferte eine Markenidentität, die unsere Vision perfekt einfing.',
+                'review-1-role':'Gründerin, AK Studio',
+                'review-2':'Die Liebe zum Detail war bemerkenswert. Jede Überarbeitung wurde zügig erledigt.',
+                'review-2-role':'Marketingdirektor',
+                'review-3':'Die Zusammenarbeit mit Prince verlief von Anfang bis Ende reibungslos.',
+                'review-3-role':'Kreativdirektor',
+                'review-4':'Sehr empfehlenswert. Prince bringt Kreativität und Professionalität in jedes Projekt.',
+                'review-4-role':'Geschäftsinhaber',
+                'footer-title':'Verbinden wir uns','footer-desc':'Bereit für Ihr nächstes Projekt? Ich bin immer offen für neue Möglichkeiten.',
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'en';
+        document.getElementById('lang-select').value = currentLang;
+
+        function switchLang(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            applyLang(lang);
+        }
+
+        function applyLang(lang) {
+            const t = i18n[lang] || i18n.en;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(t[key] !== undefined) el.innerHTML = t[key];
+            });
+            document.documentElement.lang = lang;
+        }
+
+        applyLang(currentLang);
+
+        // ── CMS DATA ──────────────────────────────────────
+        const ABOUT_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-about.json';
+        fetch(ABOUT_URL + '?t=' + Date.now())
           .then(r => r.ok ? r.json() : null)
           .then(d => {
-            if (!d) return;
-
-            // Update short preview texts on cards
-            const cards = document.querySelectorAll('.about-card');
-            const fields = [
-              { short: d.aboutShort,  card: 'About Me' },
-              { short: d.eduShort,    card: 'Education' },
-              { short: d.workShort,   card: 'Work Experience' },
-              { short: d.skillsShort, card: 'Skills' }
+            if(!d) return;
+            const map = [
+              ['card-about-short', d.aboutShort],
+              ['card-edu-short',   d.eduShort],
+              ['card-work-short',  d.workShort],
+              ['card-skills-short',d.skillsShort],
             ];
-
-            cards.forEach(card => {
-              const title = card.getAttribute('data-title');
-              const match = fields.find(f => f.card === title);
-              if (match?.short) {
-                const shortEl = card.querySelector('.short-text');
-                if (shortEl) {
-                  shortEl.innerHTML = match.short + '<br><span class="see-more">See more →</span>';
-                }
-              }
+            map.forEach(([key, val]) => {
+              if(val) document.querySelectorAll(`[data-i18n="${key}"]`).forEach(el => el.textContent = val);
             });
-
-            // Update full detail content in cardData object
-            if (d.aboutFull)  cardData['About Me'].content   = '<p>' + d.aboutFull.replace(/\n/g,'</p><p>') + '</p>';
-            if (d.eduFull)    cardData['Education'].content  = '<p>' + d.eduFull.replace(/\n/g,'</p><p>') + '</p>';
-            if (d.workFull)   cardData['Work Experience'].content = '<p>' + d.workFull.replace(/\n/g,'</p><p>') + '</p>';
-            if (d.skillsFull) {
-              const items = d.skillsFull.split('\n').filter(Boolean);
-              cardData['Skills'].content = '<ul>' + items.map(s => '<li>' + s + '</li>').join('') + '</ul>';
+            if(d.aboutFull)  cardData['About Me'].content       = '<p>'+d.aboutFull.replace(/\n/g,'</p><p>')+'</p>';
+            if(d.eduFull)    cardData['Education'].content      = '<p>'+d.eduFull.replace(/\n/g,'</p><p>')+'</p>';
+            if(d.workFull)   cardData['Work Experience'].content= '<p>'+d.workFull.replace(/\n/g,'</p><p>')+'</p>';
+            if(d.skillsFull) {
+              cardData['Skills'].content = '<ul>'+d.skillsFull.split('\n').filter(Boolean).map(s=>`<li>${s}</li>`).join('')+'</ul>';
             }
-          })
-          .catch(() => {});
+          }).catch(()=>{});
 
+        const HOME_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json';
+        fetch(HOME_URL + '?t=' + Date.now())
+          .then(r => r.ok ? r.json() : null)
+          .then(d => {
+            if(!d) return;
+            const map = {
+              'social-email':    d.email    ? 'mailto:'+d.email : null,
+              'social-linkedin': d.linkedin || null,
+              'social-dribbble': d.dribbble || null,
+              'social-instagram':d.instagram|| null,
+              'social-behance':  d.behance  || null,
+            };
+            Object.entries(map).forEach(([id,href])=>{ if(href) document.getElementById(id).href=href; });
+            if(d.contactDesc) document.querySelector('[data-i18n="footer-desc"]').textContent = d.contactDesc;
+          }).catch(()=>{});
     </script>
+
 </body>
 </html>
