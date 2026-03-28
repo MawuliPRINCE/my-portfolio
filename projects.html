@@ -80,6 +80,18 @@
     .icon-btn:hover { color: var(--accent); background: var(--accent-light); }
 
     /* Hamburger */
+
+    .lang-select {
+      appearance: none; -webkit-appearance: none;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--text); font-family: 'DM Sans', sans-serif;
+      font-size: .72rem; font-weight: 500; letter-spacing: .08em;
+      padding: 6px 28px 6px 10px; border-radius: 20px;
+      cursor: pointer; outline: none; transition: border-color .2s;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 10px center;
+    }
+    .lang-select:hover { border-color: var(--accent); }
     .hamburger .fa-bars  { display: block; }
     .hamburger .fa-times { display: none; }
     .hamburger.open .fa-bars  { display: none; }
@@ -258,7 +270,7 @@
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
     .card-cover { width: 100%; aspect-ratio: 16/7; object-fit: cover; display: block; background: var(--surface); }
-    .card-cover-video { width: 100%; aspect-ratio: 16/7; object-fit: cover; display: block; background: var(--surface); pointer-events: none; }
+    .card-cover-video { width: 100%; aspect-ratio: 16/7; object-fit: cover; display: block; background: var(--surface); pointer-events: none; -webkit-media-controls: none; }
     .card-cover-none {
       width: 100%; aspect-ratio: 16/7; background: var(--surface);
       display: flex; align-items: center; justify-content: center;
@@ -389,19 +401,12 @@
 
     /* Gallery */
     .modal-gallery { display: grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap: .85rem; }
+    @media(max-width:600px){ .modal-gallery { grid-template-columns: repeat(2,1fr); gap: .5rem; } }
     .gallery-item { aspect-ratio: 16/10; overflow: hidden; background: var(--surface); border: 1px solid var(--border); cursor: pointer; }
     .gallery-item img, .gallery-item video { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
     .gallery-item:hover img, .gallery-item:hover video { transform: scale(1.05); }
 
-    /* AI bar */
-    .ai-bar-wrap { padding: .8rem 0; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: .5rem; }
-    .ai-bar-label { font-size: .58rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
-    .ai-bar-track { height: 5px; border-radius: 3px; background: var(--surface); border: 1px solid var(--border); overflow: hidden; }
-    .ai-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #ff4500, #ff8c00); transition: width .4s ease; }
-    .ai-bar-numbers { display: flex; justify-content: space-between; font-size: .6rem; }
-    .ai-pct { color: var(--accent); font-weight: 600; }
-    .hum-pct { color: var(--muted); }
-    .human-badge { display: inline-flex; align-items: center; gap: .35rem; font-size: .58rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #44cc88; border: 1px solid rgba(68,204,136,0.4); padding: 3px 9px; background: rgba(68,204,136,0.07); border-radius: 2px; }
+
 
     /* Lightbox */
     .lightbox { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.96); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .25s; }
@@ -431,6 +436,7 @@
 <header class="site-header">
   <a href="index.html" class="logo">Prince</a>
   <div class="header-right">
+    <select class="lang-select" id="lang-select" onchange="switchLang(this.value)" aria-label="Language"><option value="en">EN</option><option value="fr">FR</option><option value="es">ES</option><option value="de">DE</option></select>
     <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle theme"><i class="fas fa-lightbulb"></i></button>
     <button class="icon-btn hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <i class="fas fa-bars"></i><i class="fas fa-times"></i>
@@ -442,10 +448,10 @@
 <nav class="menu" id="menu">
   <div class="menu-divider"></div>
   <ul>
-    <li><a href="index.html"    onclick="closeMenu()">Home</a></li>
-    <li><a href="about.html"    onclick="closeMenu()">About</a></li>
-    <li><a href="projects.html" onclick="closeMenu()" class="active">Projects</a></li>
-    <li><a href="index.html#contact" onclick="closeMenu()">Contact</a></li>
+    <li><a href="index.html"    onclick="closeMenu()" data-i18n="nav-home">Home</a></li>
+    <li><a href="about.html"    onclick="closeMenu()" data-i18n="nav-about">About</a></li>
+    <li><a href="projects.html" onclick="closeMenu()" class="active" data-i18n="nav-projects">Projects</a></li>
+    <li><a href="index.html#contact" onclick="closeMenu()" data-i18n="nav-contact">Contact</a></li>
   </ul>
   <p class="menu-footer">© <span id="menu-year"></span> Prince</p>
 </nav>
@@ -455,7 +461,7 @@
   <!-- RECENTS SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <span class="sidebar-label">Recents</span>
+      <span class="sidebar-label" data-i18n="recents">Recents</span>
       <span class="recents-count" id="recents-count"></span>
     </div>
     <div class="slides-wrap" id="slides-wrap">
@@ -472,8 +478,8 @@
 
     <!-- Page hero -->
     <div class="page-hero">
-      <p class="page-eyebrow">Selected Work</p>
-      <h1 class="page-title">Projects &amp; Works</h1>
+      <p class="page-eyebrow" data-i18n="eyebrow">Selected Work</p>
+      <h1 class="page-title" data-i18n="page-title">Projects &amp; Works</h1>
     </div>
 
     <!-- Topbar with filters -->
@@ -489,7 +495,7 @@
       </div>
     </div>
 
-    <div class="end-marker">— End of selected works —</div>
+    <div class="end-marker"><span data-i18n="end-marker">— End of selected works —</span></div>
   </div>
 </div>
 
@@ -585,7 +591,7 @@
         <div class="project-card" onclick="openModal('${esc(p.id)}')" style="animation-delay:${i*0.065}s">
           ${cover
             ? isVidCover
-              ? `<video class="card-cover-video" src="${esc(cover)}" muted loop autoplay playsinline></video>`
+              ? `<video class="card-cover-video" src="${esc(cover)}" muted loop autoplay playsinline disablepictureinpicture style="pointer-events:none;display:block;"></video>`
               : `<img class="card-cover" src="${clOpt(cover)}" alt="${esc(p.title)}" loading="lazy"/>`
             : `<div class="card-cover-none">No Image</div>`}
           <div class="card-body">
@@ -629,7 +635,7 @@
       return `<div class="slide ${i===0?'active':''}" onclick="openModal('${esc(p.id)}')">
         ${cover
           ?isVid
-            ?`<video class="slide-media" src="${esc(cover)}" muted loop autoplay playsinline></video>`
+            ?`<video class="slide-media" src="${esc(cover)}" muted loop autoplay playsinline disablepictureinpicture style="pointer-events:none;"></video>`
             :`<img class="slide-media" src="${clOpt(cover)}" alt="${esc(p.title)}" loading="lazy"/>`
           :`<div class="slide-placeholder">No Image</div>`}
         <div class="slide-overlay"></div>
@@ -708,15 +714,6 @@
           ${p.subtitle?`<div class="modal-info-item"><span class="modal-info-label">Role</span><span class="modal-info-value">${esc(p.subtitle)}</span></div>`:''}
           ${p.year?`<div class="modal-info-item"><span class="modal-info-label">Year</span><span class="modal-info-value">${esc(p.year)}</span></div>`:''}
           ${p.tags?.length?`<div class="modal-info-item"><span class="modal-info-label">Tags</span><div class="modal-tags-wrap">${p.tags.map(t=>`<span class="tag-pill">${esc(t)}</span>`).join('')}</div></div>`:''}
-          ${p.aiPercent!==undefined?`
-            <div class="ai-bar-wrap">
-              <span class="ai-bar-label">AI Involvement</span>
-              ${p.aiPercent===0
-                ?`<div><span class="human-badge"><i class="fas fa-check"></i> 100% Human</span></div>`
-                :`<div class="ai-bar-track"><div class="ai-bar-fill" style="width:${p.aiPercent}%"></div></div>
-                  <div class="ai-bar-numbers"><span class="ai-pct">${p.aiPercent}% AI Assisted</span><span class="hum-pct">${100-p.aiPercent}% Human</span></div>`}
-            </div>`:''}
-        </div>
       </div>
 
       ${media.length?`
@@ -792,6 +789,37 @@
     return url;
   }
 
+
+  // ── LANGUAGE ──────────────────────────────────────────
+  const i18n = {
+    en: { 'eyebrow':'Selected Work', 'page-title':'Projects & Works', 'recents':'Recents', 'end-marker':'— End of selected works —', 'nav-home':'Home','nav-about':'About','nav-projects':'Projects','nav-contact':'Contact', 'back':'Home', 'filter-all':'All' },
+    fr: { 'eyebrow':'Travaux sélectionnés', 'page-title':'Projets & Travaux', 'recents':'Récents', 'end-marker':'— Fin des travaux —', 'nav-home':'Accueil','nav-about':'À Propos','nav-projects':'Projets','nav-contact':'Contact', 'back':'Accueil', 'filter-all':'Tous' },
+    es: { 'eyebrow':'Trabajo seleccionado', 'page-title':'Proyectos y Trabajos', 'recents':'Recientes', 'end-marker':'— Fin de trabajos —', 'nav-home':'Inicio','nav-about':'Acerca','nav-projects':'Proyectos','nav-contact':'Contacto', 'back':'Inicio', 'filter-all':'Todos' },
+    de: { 'eyebrow':'Ausgewählte Arbeiten', 'page-title':'Projekte & Arbeiten', 'recents':'Aktuell', 'end-marker':'— Ende der Arbeiten —', 'nav-home':'Startseite','nav-about':'Über mich','nav-projects':'Projekte','nav-contact':'Kontakt', 'back':'Startseite', 'filter-all':'Alle' },
+  };
+
+  let currentLang = localStorage.getItem('lang') || 'en';
+  document.getElementById('lang-select').value = currentLang;
+
+  function switchLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    applyLang(lang);
+  }
+
+  function applyLang(lang) {
+    const t = i18n[lang] || i18n.en;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+    // Update back button text
+    const backBtn = document.querySelector('.back-btn');
+    if (backBtn && t['back']) backBtn.innerHTML = `<i class="fas fa-arrow-left"></i> ${t['back']}`;
+    document.documentElement.lang = lang;
+  }
+
+  applyLang(currentLang);
   function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 </script>
 </body>
