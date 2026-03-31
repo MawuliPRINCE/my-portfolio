@@ -5,601 +5,508 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ismael Asumanu Prince — Graphic Designer</title>
     <meta name="description" content="Ismael Asumanu Prince — Graphic Designer and Brand Identity Designer based in Ghana.">
-    <meta name="author" content="Ismael Asumanu Prince">
     <meta property="og:title" content="Ismael Asumanu Prince — Graphic Designer">
     <meta property="og:description" content="Graphic Designer and Brand Identity Designer based in Ghana.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mawuliprince.github.io/my-portfolio/">
     <meta property="og:image" content="https://mawuliprince.github.io/my-portfolio/og-image.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Ismael Asumanu Prince — Graphic Designer">
-    <meta name="twitter:description" content="Graphic Designer and Brand Identity Designer based in Ghana.">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-size='80' font-family='serif' fill='%23ff4500'>P</text></svg>">
+   
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        *, *::before, *::after {
-            margin: 0; padding: 0;
-            box-sizing: border-box;
-            font-family: 'Space Grotesk', sans-serif;
-            -webkit-tap-highlight-color: transparent;
+        :root {
+            --bg: #faf9f7;
+            --surface: #f2f0ec;
+            --text: #111;
+            --muted: #888;
+            --border: #e0ddd8;
+            --accent: #ff4500;
+            --accent-dim: rgba(255,69,0,0.08);
+            --footer-bg: #0d0d0d;
+            --footer-text: #f0ede8;
         }
-
+        body.dark {
+            --bg: #0d0d0d;
+            --surface: #161616;
+            --text: #f0ede8;
+            --muted: #555;
+            --border: #2a2a2a;
+            --accent-dim: rgba(255,69,0,0.12);
+            --footer-bg: #ffffff;
+            --footer-text: #111111;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-
         body {
-            background: #000;
-            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-
-        /* ── HEADER ── */
+        /* HEADER */
         header {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: clamp(14px, 2.5vw, 22px) clamp(20px, 4vw, 40px);
-            background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            color: #000;
-            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-            z-index: 100;
-            box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: clamp(14px,2.5vw,22px) clamp(20px,4vw,40px);
+            transition: all .4s ease;
         }
-
-        body.dark header {
-            background: rgba(0,0,0,0.88);
-            color: #fff;
-            box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+        header.at-top { background: transparent; border-bottom: transparent; }
+        header.scrolled {
+            background: rgba(250,249,247,0.94);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
         }
-
-        /* Transparent header when at top of hero */
-        header.at-top {
-            background: transparent;
-            box-shadow: none;
-            color: #fff;
-        }
-
+        body.dark header.scrolled { background: rgba(13,13,13,0.94); }
         .logo {
-            color: #ff4500;
-            font-size: clamp(18px, 2vw + 0.5rem, 24px);
+            color: var(--accent);
+            font-size: clamp(20px, 2.5vw, 28px);
             font-weight: 700;
             text-decoration: none;
-            letter-spacing: -0.01em;
         }
-
-        .nav-icons {
-            display: flex;
-            align-items: center;
-            gap: clamp(8px, 2vw, 16px);
-        }
-
-        .theme-toggle, .hamburger {
-            font-size: clamp(16px, 2vw + 0.3rem, 20px);
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: inherit;
-            transition: color 0.2s, transform 0.2s;
-            padding: 8px;
-            border-radius: 50%;
-            line-height: 1;
-            display: flex; align-items: center; justify-content: center;
-            width: 40px; height: 40px;
-        }
-
-        .theme-toggle:hover, .hamburger:hover { color: #ff4500; }
-        .hamburger:active { transform: scale(0.9); }
-
-        /* Hamburger icon swap */
-        .hamburger .fa-bars  { display: block; }
-        .hamburger .fa-times { display: none; }
-        .hamburger.open .fa-bars  { display: none; }
-        .hamburger.open .fa-times { display: block; }
-
-        /* ── MENU BACKDROP ── */
-        .menu-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            z-index: 98;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-        .menu-backdrop.open {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        /* ── MENU ── */
-        .menu {
-            position: fixed;
-            top: 0; right: -100%;
-            width: min(300px, 85vw);
-            height: 100vh;
-            background: #fff;
-            color: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 99;
-            box-shadow: -8px 0 32px rgba(0,0,0,0.15);
-        }
-
-        .menu.open { right: 0; }
-
-        body.dark .menu {
-            background: #111;
-            color: #fff;
-            box-shadow: -8px 0 32px rgba(0,0,0,0.5);
-        }
-
-        .menu ul { list-style: none; text-align: center; width: 100%; padding: 0 2rem; }
-
-        .menu li { margin: 6px 0; }
-
-        .menu a {
-            color: inherit;
-            text-decoration: none;
-            font-size: clamp(18px, 4vw, 22px);
+        header.at-top .logo { color: #fff; }
+        .header-right { display: flex; align-items: center; gap: 8px; }
+        
+        /* LANGUAGE SELECTOR - FIXED THEMING */
+        .lang-select {
+            padding: 8px 32px 8px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
             font-weight: 500;
-            display: block;
-            padding: 14px 20px;
-            border-radius: 8px;
-            transition: background 0.2s, color 0.2s;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.4);
+            color: #fff;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 2L6 7L11 2' fill='none' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; 
+            background-position: right 12px center;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        body:not(.dark) header.scrolled .lang-select {
+            background: var(--surface);
+            color: var(--text);
+            border-color: var(--border);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 2L6 7L11 2' fill='none' stroke='%23333' stroke-width='1.5'/%3E%3C/svg%3E");
         }
 
-        .menu a:hover, .menu a:active {
-            color: #ff4500;
-            background: rgba(255,69,0,0.06);
+        .icon-btn {
+            width: 42px; height: 42px; border-radius: 50%;
+            border: none; background: none;
+            color: #fff; 
+            font-size: 1.1rem;
+            cursor: pointer;
         }
-
-        /* Active nav item */
-        .menu a.active { color: #ff4500; font-weight: 700; }
-
-        /* Menu divider line */
-        .menu-divider {
-            width: 40px; height: 2px;
-            background: #ff4500;
-            margin: 1.5rem auto;
+        body:not(.dark) header.scrolled .icon-btn { 
+            color: var(--text); 
         }
-
-        .menu-footer {
-            position: absolute;
-            bottom: 2.5rem;
-            font-size: 0.7rem;
-            color: #aaa;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
+        .icon-btn:hover {
+            color: var(--accent);
         }
-
-        /* ── HERO ── */
-        #home {
+        .hamburger .fa-bars { display: block; }
+        .hamburger .fa-times { display: none; }
+        .hamburger.open .fa-bars { display: none; }
+        .hamburger.open .fa-times { display: block; }
+        /* MENU */
+        .menu-backdrop {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 98; opacity: 0; pointer-events: none;
+            transition: opacity .3s;
+        }
+        .menu-backdrop.open { opacity: 1; pointer-events: all; }
+        .menu {
+            position: fixed; top: 0; right: -100%;
+            width: min(300px,85vw); height: 100vh;
+            background: var(--bg);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 99; transition: right .35s cubic-bezier(.4,0,.2,1);
+        }
+        .menu.open { right: 0; }
+        .menu ul { list-style: none; text-align: center; width: 100%; padding: 0 2rem; }
+        .menu li { margin: 6px 0; }
+        .menu a {
+            color: var(--text); text-decoration: none;
+            font-size: clamp(18px,4vw,22px); font-weight: 500;
+            display: block; padding: 14px 20px; border-radius: 8px;
+        }
+        .menu a:hover, .menu a.active { color: var(--accent); background: var(--accent-dim); }
+        /* HERO */
+        .hero {
             position: relative;
-            width: 100%; height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 100%; min-height: 100vh;
+            display: flex; align-items: center; justify-content: flex-start;
             overflow: hidden;
-            background: #000;
+            background: #0d0d0d;
+            flex: 1;
         }
-
-        .bg-video {
-            position: absolute;
-            inset: 0;
+        .hero-bg {
+            position: absolute; inset: 0;
             width: 100%; height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            display: block;
+            object-fit: cover; z-index: 0;
         }
-
-        .text-container {
-            background: transparent;
-            padding: clamp(20px, 3vw, 40px) clamp(24px, 4vw, 56px);
-            border-left: 3px solid #ff4500;
-            z-index: 2;
-            max-width: 90%;
-            text-align: left;
-            position: relative;
+        .hero-overlay {
+            position: absolute; inset: 0; z-index: 1;
+            background: linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.1) 100%);
         }
-
-        .hero h1 {
-            font-size: clamp(34px, 5.5vw + 1rem, 62px);
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+        .hero-content {
+            position: relative; z-index: 2;
+            padding: 0 clamp(24px,6vw,100px);
+            max-width: 760px;
         }
-
-        .hero h1.visible { opacity: 1; transform: translateY(0); }
-
-        .hero p {
-            font-size: clamp(11px, 1.3vw + 0.2rem, 15px);
-            color: #ffffff85;
-            margin-top: 16px;
-            letter-spacing: 0.22em;
+        .hero-eyebrow {
+            font-size: .65rem; letter-spacing: .35em; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 1.25rem;
+        }
+        .hero-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(58px, 9.5vw, 110px);
+            font-weight: 600; line-height: .92; letter-spacing: -.03em;
+            color: #fff; margin-bottom: 1rem;
+        }
+        .hero-name em { font-style: italic; color: var(--accent); }
+        .hero-role {
+            font-size: clamp(13px,1.6vw,17px);
+            color: rgba(255,255,255,0.8);
+            letter-spacing: .2em; text-transform: uppercase;
+            margin-bottom: 2.8rem;
+        }
+        .explore-btn {
+            display: inline-flex; align-items: center; gap: .75rem;
+            text-decoration: none; color: #fff;
+            font-size: .78rem; font-weight: 600; letter-spacing: .22em;
             text-transform: uppercase;
-            font-weight: 400;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease 0.25s, transform 0.8s ease 0.25s;
+            border: 1px solid rgba(255,255,255,0.5);
+            padding: 14px 32px; border-radius: 50px;
+            position: relative; overflow: hidden;
+            animation: riseUp .8s ease forwards, subtleBounce 3s ease 1s infinite;
         }
-
-        .hero p.visible { opacity: 1; transform: translateY(0); }
-
-        /* Scroll indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            opacity: 0;
-            animation: fadeInUp 1s ease 1.5s forwards;
-            cursor: pointer;
-        }
-
-        .scroll-indicator span {
-            font-size: 0.62rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: #ffffff60;
-        }
-
-        .scroll-indicator i {
-            color: #ff4500;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
+        @keyframes subtleBounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(6px); }
+            50% { transform: translateY(-6px); }
         }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateX(-50%) translateY(10px); }
-            to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .explore-btn::before {
+            content: ''; position: absolute; inset: 0;
+            background: var(--accent);
+            transform: scaleX(0); transform-origin: left;
+            transition: transform .4s cubic-bezier(.4,0,.2,1);
+            z-index: -1;
         }
-
-        /* ── SEPARATOR ── */
-        .separator { width: 100%; height: 1px; background: #222; }
-
-        /* ── FOOTER ── */
+        .explore-btn:hover::before { transform: scaleX(1); }
+        .explore-btn:hover { border-color: var(--accent); }
+        /* FOOTER */
         footer {
-            padding: clamp(40px, 6vw, 60px) clamp(20px, 4vw, 40px);
-            background: #000;
-            color: #fff;
-            text-align: left;
-            transition: background 0.3s, color 0.3s;
-            position: relative;
+            background: var(--footer-bg);
+            color: var(--footer-text);
+            padding: clamp(48px,7vw,90px) clamp(24px,5vw,80px) 50px;
+            margin-top: auto;
         }
-
-        body.dark footer { background: #fff; color: #000; }
-
+        .footer-top {
+            display: flex; justify-content: space-between;
+            align-items: flex-start; flex-wrap: wrap;
+            gap: 2.5rem; padding-bottom: 2.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
         footer h2 {
-            font-size: clamp(26px, 4vw, 36px);
-            font-weight: 700;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(30px,5vw,50px); font-weight: 600;
         }
-
-        .underline {
-            width: clamp(60px, 8vw, 100px);
-            height: 2px;
-            background: #ff4500;
-            margin: 10px 0 20px;
-        }
-
-        footer p {
-            font-size: clamp(14px, 1.5vw + 0.3rem, 16px);
-            color: #aaa;
-            max-width: 520px;
-            margin-bottom: clamp(24px, 4vw, 40px);
-            line-height: 1.7;
-            transition: color 0.3s;
-        }
-
-        body.dark footer p { color: #555; }
-
-        .social-icons {
-            display: flex;
-            gap: clamp(12px, 2vw, 20px);
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
+        .footer-accent { width: 40px; height: 2px; background: var(--accent); margin: 1rem 0 1.5rem; }
+        footer p { max-width: 420px; line-height: 1.7; opacity: 0.85; }
+        .social-row { display: flex; gap: .8rem; flex-wrap: wrap; }
         .social-icon {
-            width: 44px; height: 44px;
-            border-radius: 50%;
-            border: 1px solid #333;
+            width: 46px; height: 46px; border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
             display: flex; align-items: center; justify-content: center;
-            color: #fff;
-            text-decoration: none;
-            font-size: 16px;
-            transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+            color: var(--footer-text); font-size: 1.1rem;
+            transition: all .3s;
         }
-
-        .social-icon:hover {
-            color: #ff4500;
-            border-color: #ff4500;
-            transform: translateY(-3px);
+        .social-icon:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
+        .footer-bottom {
+            margin-top: 3rem;
+            display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 1rem;
+            font-size: .75rem; opacity: 0.6;
         }
-
-        body.dark .social-icon { color: #000; border-color: #ccc; }
-        body.dark .social-icon:hover { color: #ff4500; border-color: #ff4500; }
-
         .go-to-top {
-            position: absolute;
-            right: clamp(20px, 4vw, 40px);
-            bottom: clamp(30px, 5vw, 50px);
-            width: 44px; height: 44px;
-            border-radius: 50%;
-            background: #ff4500;
-            display: flex; align-items: center; justify-content: center;
-            color: #fff;
+            width: 48px; height: 48px; border-radius: 50%;
+            background: var(--accent); border: none;
+            color: #fff; font-size: 1.1rem;
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-            font-size: 16px;
         }
-
-        .go-to-top:hover { transform: translateY(-3px); background: #e03a00; }
-
-        /* ── MOBILE ── */
-        @media (max-width: 768px) {
-            footer { text-align: center; }
-            footer p { max-width: 100%; }
-            .social-icons { justify-content: center; }
-            .go-to-top {
-                position: relative;
-                right: auto; bottom: auto;
-                margin: 2rem auto 0;
-            }
-        }
+        .go-to-top:hover { background: #e03a00; transform: translateY(-3px); }
     </style>
 </head>
-<body class="light">
-
-    <!-- Backdrop (closes menu when tapped outside) -->
+<body>
     <div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
-
     <!-- HEADER -->
-    <header id="site-header">
+    <header id="site-header" class="at-top">
         <a href="index.html" class="logo">Prince</a>
-        <div class="nav-icons">
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-                <i class="fas fa-lightbulb"></i>
-            </button>
-            <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+        <div class="header-right">
+            <select class="lang-select" id="lang-select" onchange="switchLang(this.value)">
+                <option value="en">EN</option>
+                <option value="fr">FR</option>
+                <option value="es">ES</option>
+                <option value="de">DE</option>
+            </select>
+            <button class="icon-btn" onclick="toggleTheme()"><i class="fas fa-lightbulb"></i></button>
+            <button class="icon-btn hamburger" id="hamburger" onclick="toggleMenu()">
                 <i class="fas fa-bars"></i>
                 <i class="fas fa-times"></i>
             </button>
         </div>
     </header>
-
     <!-- MENU -->
     <nav class="menu" id="menu">
-        <div class="menu-divider"></div>
         <ul>
-            <li><a href="index.html"    class="active" onclick="closeMenu()">Home</a></li>
-            <li><a href="about.html"    onclick="closeMenu()">About</a></li>
-            <li><a href="projects.html" onclick="closeMenu()">Projects</a></li>
-            <li><a href="#contact"      onclick="closeMenu()">Contact</a></li>
+            <li><a href="index.html" class="active" onclick="closeMenu()" data-i18n="nav-home">Home</a></li>
+            <li><a href="about.html" onclick="closeMenu()" data-i18n="nav-about">About</a></li>
+            <li><a href="projects.html" onclick="closeMenu()" data-i18n="nav-projects">Projects</a></li>
+            <li><a href="#contact" onclick="closeMenu()" data-i18n="nav-contact">Contact</a></li>
         </ul>
         <p class="menu-footer">© <span id="menu-year"></span> Prince</p>
     </nav>
-
     <!-- HERO -->
-    <section id="home" class="hero">
-        <!--
-        BACKGROUND — uncomment ONE:
-
-        IMAGE:  <img class="bg-video" src="your-image.jpg" alt="bg"/>
-
-        VIDEO:  <video autoplay muted loop playsinline class="bg-video">
-                    <source src="your-video.mp4" type="video/mp4">
-                </video>
-        -->
-        <div class="text-container">
-            <h1 id="hero-name">Ismael Asumanu <span style="color:#ff4500;">Prince</span></h1>
-            <p id="hero-role">Graphic Designer &nbsp;·&nbsp; Brand Identity Designer</p>
-        </div>
-
-        <div class="scroll-indicator" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
-            <span>Scroll</span>
-            <i class="fas fa-chevron-down"></i>
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-eyebrow" data-i18n="hero-eyebrow">Portfolio</p>
+            <h1 class="hero-name" id="hero-name">
+                Ismael Asumanu<br><em>Prince</em>
+            </h1>
+            <p class="hero-role" id="hero-role" data-i18n="hero-role">Graphic Designer &nbsp;·&nbsp; Brand Identity Designer</p>
+            <a href="projects.html" class="explore-btn">
+                <span data-i18n="explore">Explore Works</span>
+                <i class="fas fa-arrow-right explore-icon"></i>
+            </a>
         </div>
     </section>
-
-    <div class="separator"></div>
-
-    <!-- FOOTER / CONTACT -->
+    <!-- FOOTER -->
     <footer id="contact">
-        <h2>Let's Connect</h2>
-        <div class="underline"></div>
-        <p id="footer-desc">Ready to start your next project or want to collaborate? I'm always open to new opportunities.</p>
-        <div class="social-icons">
-            <a href="#" class="social-icon" id="social-email"    title="Email"><i class="fas fa-envelope"></i></a>
-            <a href="#" class="social-icon" id="social-linkedin" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="social-icon" id="social-dribbble" title="Dribbble"><i class="fab fa-dribbble"></i></a>
-            <a href="#" class="social-icon" id="social-instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-icon" id="social-behance"  title="Behance"><i class="fab fa-behance"></i></a>
+        <div class="footer-top">
+            <div>
+                <h2 data-i18n="footer-title">Let's Connect</h2>
+                <div class="footer-accent"></div>
+                <p id="footer-desc" data-i18n="footer-desc">Ready to start your next project or want to collaborate? I'm always open to new opportunities.</p>
+            </div>
+            <div class="social-row">
+                <a href="#" class="social-icon" id="social-email" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="#" class="social-icon" id="social-linkedin" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-icon" id="social-dribbble" title="Dribbble"><i class="fab fa-dribbble"></i></a>
+                <a href="#" class="social-icon" id="social-instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon" id="social-behance" title="Behance"><i class="fab fa-behance"></i></a>
+            </div>
         </div>
-        <div class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
-            <i class="fas fa-arrow-up"></i>
+        <div class="footer-bottom">
+            <span>© <span id="footer-year"></span> Ismael Asumanu Prince</span>
+            <button class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+                <i class="fas fa-arrow-up"></i>
+            </button>
         </div>
     </footer>
 
     <script>
-        // ── YEAR ──────────────────────────────────────────
-        document.getElementById('menu-year').textContent = new Date().getFullYear();
+        // Year
+        document.getElementById('menu-year').textContent = document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-        // ── THEME ─────────────────────────────────────────
+        // === FULL TRANSLATION DATA ===
+        const i18n = {
+            en: {
+                "nav-home": "Home",
+                "nav-about": "About",
+                "nav-projects": "Projects",
+                "nav-contact": "Contact",
+                "hero-eyebrow": "Portfolio",
+                "hero-role": "Graphic Designer · Brand Identity Designer",
+                "explore": "Explore Works",
+                "footer-title": "Let's Connect",
+                "footer-desc": "Ready to start your next project or want to collaborate? I'm always open to new opportunities."
+            },
+            fr: {
+                "nav-home": "Accueil",
+                "nav-about": "À propos",
+                "nav-projects": "Projets",
+                "nav-contact": "Contact",
+                "hero-eyebrow": "Portfolio",
+                "hero-role": "Designer Graphique · Designer d'Identité de Marque",
+                "explore": "Explorer les Travaux",
+                "footer-title": "Connectons-nous",
+                "footer-desc": "Prêt à démarrer votre prochain projet ou souhaitez collaborer ? Je suis toujours ouvert aux nouvelles opportunités."
+            },
+            es: {
+                "nav-home": "Inicio",
+                "nav-about": "Acerca de",
+                "nav-projects": "Proyectos",
+                "nav-contact": "Contacto",
+                "hero-eyebrow": "Portafolio",
+                "hero-role": "Diseñador Gráfico · Diseñador de Identidad de Marca",
+                "explore": "Explorar Trabajos",
+                "footer-title": "Conectemos",
+                "footer-desc": "Listo para comenzar tu próximo proyecto o quieres colaborar? Siempre estoy abierto a nuevas oportunidades."
+            },
+            de: {
+                "nav-home": "Start",
+                "nav-about": "Über mich",
+                "nav-projects": "Projekte",
+                "nav-contact": "Kontakt",
+                "hero-eyebrow": "Portfolio",
+                "hero-role": "Grafikdesigner · Brand Identity Designer",
+                "explore": "Arbeiten entdecken",
+                "footer-title": "Lass uns verbinden",
+                "footer-desc": "Bereit, dein nächstes Projekt zu starten oder möchtest du zusammenarbeiten? Ich bin immer offen für neue Möglichkeiten."
+            }
+        };
+
+        // Theme
         function toggleTheme() {
-            const isDark = document.body.classList.contains('dark');
-            document.body.classList.toggle('dark', !isDark);
-            document.body.classList.toggle('light', isDark);
-            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
         }
+        if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
 
-        // Restore saved theme
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.body.className = savedTheme;
-
-        // ── MENU ──────────────────────────────────────────
-        const menu       = document.getElementById('menu');
-        const backdrop   = document.getElementById('menu-backdrop');
-        const hamburger  = document.getElementById('hamburger');
-
+        // Menu
+        const menuEl = document.getElementById('menu');
+        const backdrop = document.getElementById('menu-backdrop');
+        const hamBtn = document.getElementById('hamburger');
         function openMenu() {
-            menu.classList.add('open');
+            menuEl.classList.add('open');
             backdrop.classList.add('open');
-            hamburger.classList.add('open');
+            hamBtn.classList.add('open');
             document.body.style.overflow = 'hidden';
         }
-
         function closeMenu() {
-            menu.classList.remove('open');
+            menuEl.classList.remove('open');
             backdrop.classList.remove('open');
-            hamburger.classList.remove('open');
+            hamBtn.classList.remove('open');
             document.body.style.overflow = '';
         }
+        function toggleMenu() { menuEl.classList.contains('open') ? closeMenu() : openMenu(); }
 
-        function toggleMenu() {
-            menu.classList.contains('open') ? closeMenu() : openMenu();
-        }
-
-        // Close on Escape key
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') closeMenu();
-        });
-
-        // Swipe left to close menu on touch devices
-        let touchStartX = 0;
-        menu.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-        menu.addEventListener('touchend', e => {
-            if (e.changedTouches[0].clientX - touchStartX > 60) closeMenu();
-        }, { passive: true });
-
-        // ── TRANSPARENT HEADER AT TOP ─────────────────────
-        const siteHeader = document.getElementById('site-header');
-
+        // Header Scroll
+        const hdr = document.getElementById('site-header');
         function handleScroll() {
-            if (window.scrollY < 60) {
-                siteHeader.classList.add('at-top');
+            if (window.scrollY > 60) {
+                hdr.classList.remove('at-top');
+                hdr.classList.add('scrolled');
             } else {
-                siteHeader.classList.remove('at-top');
+                hdr.classList.add('at-top');
+                hdr.classList.remove('scrolled');
             }
         }
-
         window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll(); // Run on load
+        handleScroll();
 
-        // ── HERO ANIMATION ────────────────────────────────
-        // Trigger immediately on load (don't wait for scroll)
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.hero h1, .hero p').forEach(el => {
-                el.classList.add('visible');
+        // Language System
+        let currentLang = localStorage.getItem('lang') || 'en';
+        document.getElementById('lang-select').value = currentLang;
+
+        function switchLang(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            applyLang(lang);
+        }
+
+        function applyLang(lang) {
+            const t = i18n[lang] || i18n.en;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
             });
-        });
+        }
 
-        // ── CMS DATA ──────────────────────────────────────
-        const SITE_DATA_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json';
+        // Apply initial language
+        applyLang(currentLang);
 
-        fetch(SITE_DATA_URL + '?t=' + Date.now())
+        // Video Smart Control
+        let heroVideo;
+        function setupVideoControl() {
+            heroVideo = document.querySelector('#home video');
+            if (!heroVideo) return;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (heroVideo.paused) heroVideo.play().catch(() => {});
+                    } else {
+                        heroVideo.pause();
+                    }
+                });
+            }, { threshold: 0.3 });
+            observer.observe(document.getElementById('home'));
+        }
+
+        // CMS Data + Dynamic Background
+        const SITE_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json';
+        fetch(SITE_URL + '?t=' + Date.now())
           .then(r => r.ok ? r.json() : null)
           .then(d => {
             if (!d) return;
-
             // Name
             const h1 = document.getElementById('hero-name');
             if (d.name && h1) {
-                const name  = d.name.trim();
-                const idx   = name.lastIndexOf(' ');
+                const name = d.name.trim();
+                const idx = name.lastIndexOf(' ');
                 const first = idx > -1 ? name.slice(0, idx) : '';
-                const last  = idx > -1 ? name.slice(idx + 1) : name;
-                h1.innerHTML = (first ? first + '<br>' : '') + '<span style="color:#ff4500;">' + last + '</span>';
+                const last = idx > -1 ? name.slice(idx + 1) : name;
+                h1.innerHTML = (first ? first + '<br>' : '') + '<em>' + last + '</em>';
             }
-
-            // Role
-            const role = document.getElementById('hero-role');
-            if (d.role && role) role.textContent = d.role;
-
-            // Footer description
+            if (d.role) document.getElementById('hero-role').textContent = d.role;
             if (d.contactDesc) document.getElementById('footer-desc').textContent = d.contactDesc;
 
             // Social links
-            const map = {
-                'social-email':    d.email    ? 'mailto:' + d.email : null,
-                'social-linkedin': d.linkedin || null,
-                'social-dribbble': d.dribbble || null,
-                'social-instagram':d.instagram|| null,
-                'social-behance':  d.behance  || null,
+            const socials = {
+                'social-email': d.email ? 'mailto:' + d.email : null,
+                'social-linkedin': d.linkedin,
+                'social-dribbble': d.dribbble,
+                'social-instagram': d.instagram,
+                'social-behance': d.behance
             };
-            Object.entries(map).forEach(([id, href]) => {
+            Object.entries(socials).forEach(([id, href]) => {
                 if (href) document.getElementById(id).href = href;
             });
 
-            // Hero background
+            // Dynamic Hero Background
             if (d.heroBg) {
-                const hero   = document.getElementById('home');
-                const existing = hero.querySelector('.bg-video');
+                const hero = document.getElementById('home');
+                const existing = hero.querySelector('.hero-bg');
                 if (existing) existing.remove();
-
-                hero.style.backgroundColor = 'transparent';
-
-                const isVid = /\.(mp4|webm|mov|ogg)(\?|$)/i.test(d.heroBg) || d.heroBg.includes('/video/upload/');
+                const isVid = /\.(mp4|webm|mov|ogg)(\?|$)/i.test(d.heroBg);
                 let media;
-
                 if (isVid) {
                     media = document.createElement('video');
+                    media.className = 'hero-bg';
                     media.muted = true;
                     media.autoplay = true;
                     media.loop = true;
-                    media.setAttribute('muted','');
-                    media.setAttribute('autoplay','');
-                    media.setAttribute('loop','');
-                    media.setAttribute('playsinline','');
-                    media.setAttribute('preload','auto');
+                    media.playsInline = true;
                     const src = document.createElement('source');
-                    src.src  = d.heroBg;
+                    src.src = d.heroBg;
                     src.type = 'video/mp4';
                     media.appendChild(src);
-                    media.src = d.heroBg;
                 } else {
                     media = document.createElement('img');
+                    media.className = 'hero-bg';
                     media.alt = '';
-                    media.src = d.heroBg.replace('/upload/', '/upload/q_auto,f_auto/');
+                    media.src = d.heroBg;
                 }
-
-                media.className = 'bg-video';
                 hero.insertBefore(media, hero.firstChild);
-
-                // Dark overlay
-                if (!hero.querySelector('.hero-overlay-dynamic')) {
-                    const ov = document.createElement('div');
-                    ov.className = 'hero-overlay-dynamic';
-                    ov.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,0.45);z-index:1;pointer-events:none;';
-                    hero.insertBefore(ov, hero.children[1]);
+                if (isVid) {
+                    media.load();
+                    media.play().catch(() => {});
+                    heroVideo = media;
                 }
-
-                if (isVid) { media.load(); media.play().catch(()=>{}); }
             }
           })
           .catch(() => {});
+
+        // Initialize video control
+        window.addEventListener('load', setupVideoControl);
     </script>
 </body>
 </html>
