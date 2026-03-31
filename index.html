@@ -72,7 +72,6 @@
         header.at-top .logo { color: #fff; }
         .header-right { display: flex; align-items: center; gap: 8px; }
         
-        /* LANGUAGE SELECTOR - FIXED THEMING */
         .lang-select {
             padding: 8px 32px 8px 14px;
             border-radius: 30px;
@@ -113,6 +112,7 @@
         .hamburger .fa-times { display: none; }
         .hamburger.open .fa-bars { display: none; }
         .hamburger.open .fa-times { display: block; }
+
         /* MENU */
         .menu-backdrop {
             position: fixed; inset: 0;
@@ -138,6 +138,7 @@
             display: block; padding: 14px 20px; border-radius: 8px;
         }
         .menu a:hover, .menu a.active { color: var(--accent); background: var(--accent-dim); }
+
         /* HERO */
         .hero {
             position: relative;
@@ -201,6 +202,7 @@
         }
         .explore-btn:hover::before { transform: scaleX(1); }
         .explore-btn:hover { border-color: var(--accent); }
+
         /* FOOTER */
         footer {
             background: var(--footer-bg);
@@ -246,6 +248,7 @@
 </head>
 <body>
     <div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
+
     <!-- HEADER -->
     <header id="site-header" class="at-top">
         <a href="index.html" class="logo">Prince</a>
@@ -263,6 +266,7 @@
             </button>
         </div>
     </header>
+
     <!-- MENU -->
     <nav class="menu" id="menu">
         <ul>
@@ -273,21 +277,21 @@
         </ul>
         <p class="menu-footer">© <span id="menu-year"></span> Prince</p>
     </nav>
+
     <!-- HERO -->
     <section class="hero" id="home">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <p class="hero-eyebrow" data-i18n="hero-eyebrow">Portfolio</p>
-            <h1 class="hero-name" id="hero-name">
-                Ismael Asumanu<br><em>Prince</em>
-            </h1>
-            <p class="hero-role" id="hero-role" data-i18n="hero-role">Graphic Designer &nbsp;·&nbsp; Brand Identity Designer</p>
+            <h1 class="hero-name" id="hero-name">Ismael Asumanu<br><em>Prince</em></h1>
+            <p class="hero-role" id="hero-role" data-i18n="hero-role">Graphic Designer · Brand Identity Designer</p>
             <a href="projects.html" class="explore-btn">
                 <span data-i18n="explore">Explore Works</span>
-                <i class="fas fa-arrow-right explore-icon"></i>
+                <i class="fas fa-arrow-right"></i>
             </a>
         </div>
     </section>
+
     <!-- FOOTER -->
     <footer id="contact">
         <div class="footer-top">
@@ -306,9 +310,7 @@
         </div>
         <div class="footer-bottom">
             <span>© <span id="footer-year"></span> Ismael Asumanu Prince</span>
-            <button class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-                <i class="fas fa-arrow-up"></i>
-            </button>
+            <button class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
         </div>
     </footer>
 
@@ -316,53 +318,31 @@
         // Year
         document.getElementById('menu-year').textContent = document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-        // === FULL TRANSLATION DATA ===
+        // === PROFESSIONAL TRANSLATIONS (unchanged) ===
         const i18n = {
-            en: {
-                "nav-home": "Home",
-                "nav-about": "About",
-                "nav-projects": "Projects",
-                "nav-contact": "Contact",
-                "hero-eyebrow": "Portfolio",
-                "hero-role": "Graphic Designer · Brand Identity Designer",
-                "explore": "Explore Works",
-                "footer-title": "Let's Connect",
-                "footer-desc": "Ready to start your next project or want to collaborate? I'm always open to new opportunities."
-            },
-            fr: {
-                "nav-home": "Accueil",
-                "nav-about": "À propos",
-                "nav-projects": "Projets",
-                "nav-contact": "Contact",
-                "hero-eyebrow": "Portfolio",
-                "hero-role": "Designer Graphique · Designer d'Identité de Marque",
-                "explore": "Explorer les Travaux",
-                "footer-title": "Connectons-nous",
-                "footer-desc": "Prêt à démarrer votre prochain projet ou souhaitez collaborer ? Je suis toujours ouvert aux nouvelles opportunités."
-            },
-            es: {
-                "nav-home": "Inicio",
-                "nav-about": "Acerca de",
-                "nav-projects": "Proyectos",
-                "nav-contact": "Contacto",
-                "hero-eyebrow": "Portafolio",
-                "hero-role": "Diseñador Gráfico · Diseñador de Identidad de Marca",
-                "explore": "Explorar Trabajos",
-                "footer-title": "Conectemos",
-                "footer-desc": "Listo para comenzar tu próximo proyecto o quieres colaborar? Siempre estoy abierto a nuevas oportunidades."
-            },
-            de: {
-                "nav-home": "Start",
-                "nav-about": "Über mich",
-                "nav-projects": "Projekte",
-                "nav-contact": "Kontakt",
-                "hero-eyebrow": "Portfolio",
-                "hero-role": "Grafikdesigner · Brand Identity Designer",
-                "explore": "Arbeiten entdecken",
-                "footer-title": "Lass uns verbinden",
-                "footer-desc": "Bereit, dein nächstes Projekt zu starten oder möchtest du zusammenarbeiten? Ich bin immer offen für neue Möglichkeiten."
-            }
+            en: { "nav-home": "Home", "nav-about": "About", "nav-projects": "Projects", "nav-contact": "Contact", "hero-eyebrow": "Portfolio", "hero-role": "Graphic Designer · Brand Identity Designer", "explore": "Explore Works", "footer-title": "Let's Connect", "footer-desc": "Ready to start your next project or want to collaborate? I'm always open to new opportunities." },
+            fr: { "nav-home": "Accueil", "nav-about": "À propos", "nav-projects": "Projets", "nav-contact": "Contact", "hero-eyebrow": "Portfolio", "hero-role": "Graphiste · Créateur d’identité de marque", "explore": "Découvrir mes travaux", "footer-title": "Entrons en contact", "footer-desc": "Prêt à lancer votre prochain projet ou souhaitez collaborer ? Je suis toujours ouvert aux nouvelles opportunités." },
+            es: { "nav-home": "Inicio", "nav-about": "Sobre mí", "nav-projects": "Proyectos", "nav-contact": "Contacto", "hero-eyebrow": "Portafolio", "hero-role": "Diseñador Gráfico · Creador de Identidad de Marca", "explore": "Descubrir mis trabajos", "footer-title": "Conectemos", "footer-desc": "¿Listo para tu próximo proyecto o quieres colaborar? Siempre estoy abierto a nuevas oportunidades." },
+            de: { "nav-home": "Start", "nav-about": "Über mich", "nav-projects": "Projekte", "nav-contact": "Kontakt", "hero-eyebrow": "Portfolio", "hero-role": "Grafikdesigner · Brand Identity Designer", "explore": "Meine Arbeiten entdecken", "footer-title": "Lass uns verbinden", "footer-desc": "Bereit für dein nächstes Projekt oder möchtest du zusammenarbeiten? Ich bin immer offen für neue Möglichkeiten." }
         };
+
+        let currentLang = localStorage.getItem('lang') || 'en';
+        document.getElementById('lang-select').value = currentLang;
+
+        function switchLang(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            applyLang(lang);
+        }
+
+        function applyLang(lang) {
+            const t = i18n[lang] || i18n.en;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+        }
+        applyLang(currentLang);
 
         // Theme
         function toggleTheme() {
@@ -403,29 +383,96 @@
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll();
 
-        // Language System
-        let currentLang = localStorage.getItem('lang') || 'en';
-        document.getElementById('lang-select').value = currentLang;
-
-        function switchLang(lang) {
-            currentLang = lang;
-            localStorage.setItem('lang', lang);
-            applyLang(lang);
-        }
-
-        function applyLang(lang) {
-            const t = i18n[lang] || i18n.en;
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (t[key]) el.textContent = t[key];
-            });
-        }
-
-        // Apply initial language
-        applyLang(currentLang);
-
-        // Video Smart Control
+        // ====================== IMPROVED VIDEO + IMAGE BACKGROUND ======================
         let heroVideo;
+        const SITE_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json';
+
+        fetch(SITE_URL + '?t=' + Date.now())
+            .then(r => r.ok ? r.json() : Promise.reject('Failed to load JSON'))
+            .then(d => {
+                if (!d) return;
+
+                // Name & Role from CMS
+                const h1 = document.getElementById('hero-name');
+                if (d.name && h1) {
+                    const name = d.name.trim();
+                    const idx = name.lastIndexOf(' ');
+                    const first = idx > -1 ? name.slice(0, idx) : '';
+                    const last = idx > -1 ? name.slice(idx + 1) : name;
+                    h1.innerHTML = (first ? first + '<br>' : '') + '<em>' + last + '</em>';
+                }
+                if (d.role) document.getElementById('hero-role').textContent = d.role;
+                if (d.contactDesc) document.getElementById('footer-desc').textContent = d.contactDesc;
+
+                // Social links
+                const socials = {
+                    'social-email': d.email ? 'mailto:' + d.email : null,
+                    'social-linkedin': d.linkedin,
+                    'social-dribbble': d.dribbble,
+                    'social-instagram': d.instagram,
+                    'social-behance': d.behance
+                };
+                Object.entries(socials).forEach(([id, href]) => {
+                    if (href) document.getElementById(id).href = href;
+                });
+
+                // === DYNAMIC BACKGROUND (Fixed) ===
+                if (d.heroBg) {
+                    const hero = document.getElementById('home');
+                    const existing = hero.querySelector('.hero-bg');
+                    if (existing) existing.remove();
+
+                    const url = d.heroBg.trim();
+                    const isVideo = /\.(mp4|webm|mov|ogg)(\?|$)/i.test(url);
+
+                    let media;
+                    if (isVideo) {
+                        media = document.createElement('video');
+                        media.className = 'hero-bg';
+                        media.muted = true;
+                        media.autoplay = true;
+                        media.loop = true;
+                        media.playsInline = true;
+                        media.preload = 'auto';
+
+                        const source = document.createElement('source');
+                        source.src = url;
+
+                        // Dynamic MIME type
+                        if (url.includes('.webm')) source.type = 'video/webm';
+                        else if (url.includes('.mov')) source.type = 'video/quicktime';
+                        else if (url.includes('.ogg')) source.type = 'video/ogg';
+                        else source.type = 'video/mp4';
+
+                        media.appendChild(source);
+
+                        // Error handling
+                        media.onerror = () => console.error('❌ Video failed to load. Check URL or format:', url);
+                        media.onloadeddata = () => console.log('✅ Video background loaded successfully');
+                    } else {
+                        media = document.createElement('img');
+                        media.className = 'hero-bg';
+                        media.alt = '';
+                        media.src = url;
+                        media.onerror = () => console.error('❌ Image background failed to load:', url);
+                    }
+
+                    hero.insertBefore(media, hero.firstChild);
+
+                    if (isVideo) {
+                        heroVideo = media;
+                        media.load();
+                        media.play().catch(e => {
+                            console.warn('Autoplay blocked or video error:', e);
+                        });
+                    }
+                }
+            })
+            .catch(err => {
+                console.error('❌ Failed to load site-home.json:', err);
+            });
+
+        // Video smart control
         function setupVideoControl() {
             heroVideo = document.querySelector('#home video');
             if (!heroVideo) return;
@@ -440,72 +487,6 @@
             }, { threshold: 0.3 });
             observer.observe(document.getElementById('home'));
         }
-
-        // CMS Data + Dynamic Background
-        const SITE_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json';
-        fetch(SITE_URL + '?t=' + Date.now())
-          .then(r => r.ok ? r.json() : null)
-          .then(d => {
-            if (!d) return;
-            // Name
-            const h1 = document.getElementById('hero-name');
-            if (d.name && h1) {
-                const name = d.name.trim();
-                const idx = name.lastIndexOf(' ');
-                const first = idx > -1 ? name.slice(0, idx) : '';
-                const last = idx > -1 ? name.slice(idx + 1) : name;
-                h1.innerHTML = (first ? first + '<br>' : '') + '<em>' + last + '</em>';
-            }
-            if (d.role) document.getElementById('hero-role').textContent = d.role;
-            if (d.contactDesc) document.getElementById('footer-desc').textContent = d.contactDesc;
-
-            // Social links
-            const socials = {
-                'social-email': d.email ? 'mailto:' + d.email : null,
-                'social-linkedin': d.linkedin,
-                'social-dribbble': d.dribbble,
-                'social-instagram': d.instagram,
-                'social-behance': d.behance
-            };
-            Object.entries(socials).forEach(([id, href]) => {
-                if (href) document.getElementById(id).href = href;
-            });
-
-            // Dynamic Hero Background
-            if (d.heroBg) {
-                const hero = document.getElementById('home');
-                const existing = hero.querySelector('.hero-bg');
-                if (existing) existing.remove();
-                const isVid = /\.(mp4|webm|mov|ogg)(\?|$)/i.test(d.heroBg);
-                let media;
-                if (isVid) {
-                    media = document.createElement('video');
-                    media.className = 'hero-bg';
-                    media.muted = true;
-                    media.autoplay = true;
-                    media.loop = true;
-                    media.playsInline = true;
-                    const src = document.createElement('source');
-                    src.src = d.heroBg;
-                    src.type = 'video/mp4';
-                    media.appendChild(src);
-                } else {
-                    media = document.createElement('img');
-                    media.className = 'hero-bg';
-                    media.alt = '';
-                    media.src = d.heroBg;
-                }
-                hero.insertBefore(media, hero.firstChild);
-                if (isVid) {
-                    media.load();
-                    media.play().catch(() => {});
-                    heroVideo = media;
-                }
-            }
-          })
-          .catch(() => {});
-
-        // Initialize video control
         window.addEventListener('load', setupVideoControl);
     </script>
 </body>
