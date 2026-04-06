@@ -455,7 +455,7 @@
         }
         .rev-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-        .reviews-track-wrap { overflow: hidden; }
+        .reviews-track-wrap { overflow: hidden; max-width: 100%; }
 
         .reviews-track {
             display: flex;
@@ -464,7 +464,7 @@
         }
 
         .review-card {
-            min-width: clamp(260px,80vw,420px);
+            min-width: clamp(240px,78vw,400px);
             background: var(--surface);
             border: 1px solid var(--border);
             padding: clamp(24px,3vw,36px);
@@ -606,6 +606,15 @@
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
         /* ── RESPONSIVE ── */
+
+        @media (max-width: 480px) {
+            .review-card { padding: 1.25rem; }
+            .review-quote { font-size: clamp(13px,3.5vw,16px); }
+            .review-name { font-size: .82rem; }
+            .review-role { font-size: .65rem; }
+            .reviews-section { padding: clamp(32px,6vw,60px) clamp(16px,4vw,40px); }
+            .reviews-header h2 { font-size: clamp(22px,6vw,32px); }
+        }
         @media (max-width: 600px) {
             .about-hero::before { display: none; }
             .reviews-header { flex-direction: column; align-items: flex-start; }
@@ -710,10 +719,7 @@
                 <div class="stat-number">10<span class="stat-plus">+</span></div>
                 <p class="stat-label" data-i18n="stat-projects">Projects Delivered</p>
             </div>
-            <div class="stat-item reveal">
-                <div class="stat-number">100<span class="stat-plus">%</span></div>
-                <p class="stat-label" data-i18n="stat-passion">Passion</p>
-            </div>
+
         </section>
 
         <!-- REVIEWS -->
@@ -940,8 +946,8 @@
 
         function goReview(idx) {
             const cardW = cards[0]?.offsetWidth + 24 || 300;
-            const maxIdx = Math.max(0, cards.length - getVisible());
-            revIdx = Math.min(Math.max(idx, 0), maxIdx);
+            // Wrap around — loop back to start after last card
+            revIdx = ((idx % cards.length) + cards.length) % cards.length;
             track.style.transform = `translateX(-${revIdx * cardW}px)`;
             dotsEl.querySelectorAll('.rev-dot').forEach((d,i) => d.classList.toggle('active', i === revIdx));
         }
