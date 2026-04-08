@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Me — Ismael Asumanu Prince</title>
+    <meta name="description" content="Book Ismael Asumanu Prince for your next design project.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-size='80' font-family='serif' fill='%23ff4500'>P</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg:#faf9f7; --surface:#f2f0ec; --text:#111; --muted:#888;
+            --border:#e0ddd8; --accent:#ff4500; --accent-dim:rgba(255,69,0,0.08);
+            --footer-bg:#0d0d0d; --footer-text:#f0ede8;
+        }
+        body.dark {
+            --bg:#0d0d0d; --surface:#161616; --text:#f0ede8; --muted:#555;
+            --border:#2a2a2a; --accent-dim:rgba(255,69,0,0.1);
+            --footer-bg:#fff; --footer-text:#111;
+        }
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        html { scroll-behavior:smooth; }
+        body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; transition:background .3s,color .3s; }
+
+        /* ── HEADER ── */
+        header {
+            position:fixed; top:0; left:0; width:100%; z-index:100;
+            display:flex; justify-content:space-between; align-items:center;
+            padding:clamp(14px,2.5vw,22px) clamp(20px,4vw,40px);
+            background:rgba(250,249,247,0.94);
+            backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+            border-bottom:1px solid var(--border);
+            transition:background .3s, border-color .3s;
+        }
+        body.dark header { background:rgba(13,13,13,0.94); }
+        .logo { color:var(--accent); font-size:clamp(18px,2vw,24px); font-weight:700; text-decoration:none; letter-spacing:-.01em; }
+        .header-right { display:flex; align-items:center; gap:6px; }
+        .icon-btn { width:40px; height:40px; border-radius:50%; border:none; background:none; color:var(--text); font-size:clamp(15px,1.5vw,18px); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:color .2s,background .2s; }
+        .icon-btn:hover { color:var(--accent); background:var(--accent-dim); }
+        .lang-select { appearance:none; -webkit-appearance:none; background:var(--surface); border:1px solid var(--border); color:var(--text); font-family:'DM Sans',sans-serif; font-size:.72rem; font-weight:500; letter-spacing:.08em; padding:6px 28px 6px 10px; border-radius:20px; cursor:pointer; outline:none; transition:border-color .2s; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 10px center; }
+        .lang-select:hover { border-color:var(--accent); }
+        .hamburger .fa-bars { display:block; }
+        .hamburger .fa-times { display:none; }
+        .hamburger.open .fa-bars { display:none; }
+        .hamburger.open .fa-times { display:block; }
+
+        /* ── MENU ── */
+        .menu-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); z-index:98; opacity:0; pointer-events:none; transition:opacity .3s; }
+        .menu-backdrop.open { opacity:1; pointer-events:all; }
+        .menu { position:fixed; top:0; right:-100%; width:min(300px,85vw); height:100vh; background:var(--bg); display:flex; flex-direction:column; justify-content:center; align-items:center; transition:right .35s cubic-bezier(.4,0,.2,1); z-index:99; box-shadow:-8px 0 40px rgba(0,0,0,0.12); }
+        .menu.open { right:0; }
+        .menu ul { list-style:none; text-align:center; width:100%; padding:0 2rem; }
+        .menu li { margin:4px 0; }
+        .menu a { color:var(--text); text-decoration:none; font-size:clamp(18px,4vw,22px); font-weight:500; display:block; padding:14px 20px; border-radius:8px; transition:background .2s,color .2s; }
+        .menu a:hover, .menu a.active { color:var(--accent); background:var(--accent-dim); }
+        .menu-divider { width:36px; height:2px; background:var(--accent); margin-bottom:2rem; }
+        .menu-footer { position:absolute; bottom:2rem; font-size:.65rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
+
+        /* ── PAGE ── */
+        .page { padding-top:clamp(64px,9vw,88px); }
+
+        /* ── HERO ── */
+        .booking-hero {
+            padding:clamp(56px,9vw,100px) clamp(20px,5vw,80px) clamp(36px,5vw,56px);
+            position:relative; overflow:hidden;
+            border-bottom:1px solid var(--border);
+        }
+        .booking-hero::before {
+            content:'BOOK';
+            position:absolute; right:-10px; top:50%; transform:translateY(-50%);
+            font-family:'Cormorant Garamond',serif;
+            font-size:clamp(70px,13vw,150px); font-weight:600;
+            color:var(--border); letter-spacing:-.04em;
+            pointer-events:none; user-select:none; line-height:1;
+        }
+        .hero-eyebrow { font-size:.62rem; letter-spacing:.3em; text-transform:uppercase; color:var(--accent); margin-bottom:.75rem; display:flex; align-items:center; gap:.6rem; }
+        .hero-eyebrow::after { content:''; width:30px; height:1px; background:var(--accent); }
+        .booking-hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(36px,6vw,72px); font-weight:600; line-height:1.05; letter-spacing:-.02em; margin-bottom:1rem; }
+        .booking-hero h1 em { font-style:italic; color:var(--accent); }
+        .booking-hero p { font-size:clamp(14px,1.5vw,17px); color:var(--muted); max-width:520px; line-height:1.75; }
+
+        /* ── LAYOUT ── */
+        .booking-layout {
+            display:grid;
+            grid-template-columns:1fr 380px;
+            gap:0;
+            min-height:60vh;
+        }
+
+        /* ── FORM SIDE ── */
+        .form-side {
+            padding:clamp(36px,5vw,64px) clamp(20px,5vw,64px);
+            border-right:1px solid var(--border);
+        }
+
+        .section-eyebrow { font-size:.6rem; letter-spacing:.28em; text-transform:uppercase; color:var(--muted); margin-bottom:1.75rem; display:flex; align-items:center; gap:.6rem; }
+        .section-eyebrow::before { content:''; width:20px; height:1px; background:var(--accent); }
+
+        /* Form fields */
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem; }
+        .form-group { margin-bottom:1rem; display:flex; flex-direction:column; gap:.4rem; }
+
+        label { font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); font-weight:500; }
+
+        input, select, textarea {
+            width:100%; padding:12px 14px;
+            background:var(--surface); border:1px solid var(--border);
+            color:var(--text); font-family:'DM Sans',sans-serif;
+            font-size:.9rem; font-weight:300;
+            outline:none; transition:border-color .2s, box-shadow .2s;
+            border-radius:0;
+            appearance:none; -webkit-appearance:none;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color:var(--accent);
+            box-shadow:0 0 0 3px rgba(255,69,0,0.08);
+        }
+        input::placeholder, textarea::placeholder { color:var(--muted); opacity:.5; }
+        textarea { resize:vertical; min-height:120px; line-height:1.6; }
+        select {
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 2L6 7L11 2' fill='none' stroke='%23888' stroke-width='1.5'/%3E%3C/svg%3E");
+            background-repeat:no-repeat; background-position:right 14px center;
+            padding-right:36px; cursor:pointer;
+        }
+
+        /* Project type pills */
+        .type-grid { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.4rem; }
+        .type-pill {
+            font-size:.62rem; letter-spacing:.1em; text-transform:uppercase;
+            padding:7px 14px; border:1px solid var(--border);
+            color:var(--muted); cursor:pointer; border-radius:20px;
+            transition:all .2s; background:transparent; font-family:'DM Sans',sans-serif;
+        }
+        .type-pill:hover { border-color:var(--accent); color:var(--accent); }
+        .type-pill.selected { background:var(--accent); border-color:var(--accent); color:#fff; }
+
+        /* Hidden input for project type */
+        #project-type-input { display:none; }
+
+        /* Submit */
+        .submit-btn {
+            display:inline-flex; align-items:center; gap:.75rem;
+            font-size:.72rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase;
+            color:#fff; background:var(--accent);
+            border:none; padding:15px 36px; cursor:pointer;
+            font-family:'DM Sans',sans-serif; border-radius:40px;
+            transition:background .2s, transform .2s;
+            margin-top:.5rem;
+        }
+        .submit-btn:hover { background:#e03a00; transform:translateY(-2px); }
+        .submit-btn:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+
+        /* Status message */
+        .form-status {
+            margin-top:1rem; padding:12px 16px;
+            border-radius:4px; font-size:.82rem;
+            display:none;
+        }
+        .form-status.success { background:rgba(68,204,136,0.1); border:1px solid rgba(68,204,136,0.3); color:#2a9d5c; display:block; }
+        .form-status.error { background:rgba(255,69,0,0.08); border:1px solid rgba(255,69,0,0.25); color:var(--accent); display:block; }
+
+        /* ── INFO SIDE ── */
+        .info-side {
+            padding:clamp(36px,5vw,64px) clamp(20px,4vw,48px);
+            background:var(--surface);
+            display:flex; flex-direction:column; gap:2.5rem;
+        }
+
+        .info-block h3 { font-family:'Cormorant Garamond',serif; font-size:clamp(18px,2.5vw,24px); font-weight:600; margin-bottom:.75rem; }
+        .info-block p { font-size:clamp(13px,1.3vw,15px); color:var(--muted); line-height:1.75; }
+
+        .info-divider { width:40px; height:1px; background:var(--border); }
+
+        /* Service list */
+        .service-list { display:flex; flex-direction:column; gap:.5rem; margin-top:.75rem; }
+        .service-item { display:flex; align-items:center; gap:.6rem; font-size:.82rem; color:var(--muted); }
+        .service-item::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+
+        /* Response time badge */
+        .response-badge {
+            display:inline-flex; align-items:center; gap:.5rem;
+            font-size:.65rem; letter-spacing:.12em; text-transform:uppercase;
+            color:var(--accent); border:1px solid rgba(255,69,0,0.3);
+            padding:6px 12px; border-radius:20px;
+            background:var(--accent-dim); margin-top:.75rem;
+        }
+
+        /* Social row */
+        .info-social { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.5rem; }
+        .info-social a {
+            width:38px; height:38px; border-radius:50%;
+            border:1px solid var(--border);
+            display:flex; align-items:center; justify-content:center;
+            color:var(--muted); text-decoration:none; font-size:.85rem;
+            transition:all .2s;
+        }
+        .info-social a:hover { color:var(--accent); border-color:var(--accent); transform:translateY(-2px); }
+
+        /* ── FOOTER ── */
+        footer {
+            background:var(--footer-bg); color:var(--footer-text);
+            padding:clamp(36px,5vw,56px) clamp(20px,5vw,80px) clamp(24px,4vw,40px);
+            border-top:1px solid var(--border);
+        }
+        .footer-inner { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem; }
+        .footer-logo { color:var(--accent); font-size:1.1rem; font-weight:700; text-decoration:none; }
+        .footer-copy { font-size:.68rem; opacity:.4; letter-spacing:.05em; }
+        .go-to-top { width:42px; height:42px; border-radius:50%; background:var(--accent); border:none; color:#fff; font-size:.9rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s,transform .2s; }
+        .go-to-top:hover { background:#e03a00; transform:translateY(-2px); }
+
+        /* ── REVEAL ── */
+        .reveal { opacity:0; transform:translateY(20px); transition:opacity .6s ease,transform .6s ease; }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width:900px) {
+            .booking-layout { grid-template-columns:1fr; }
+            .form-side { border-right:none; border-bottom:1px solid var(--border); }
+        }
+        @media (max-width:600px) {
+            .form-row { grid-template-columns:1fr; }
+            .booking-hero::before { display:none; }
+            .footer-inner { flex-direction:column; text-align:center; align-items:center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
+
+<!-- HEADER -->
+<header>
+    <a href="index.html" class="logo">Prince</a>
+    <div class="header-right">
+        <select class="lang-select" id="lang-select" onchange="switchLang(this.value)" aria-label="Language">
+            <option value="en">EN</option>
+            <option value="fr">FR</option>
+            <option value="es">ES</option>
+            <option value="de">DE</option>
+        </select>
+        <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle theme"><i class="fas fa-lightbulb"></i></button>
+        <button class="icon-btn hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+            <i class="fas fa-bars"></i><i class="fas fa-times"></i>
+        </button>
+    </div>
+</header>
+
+<!-- MENU -->
+<nav class="menu" id="menu">
+    <div class="menu-divider"></div>
+    <ul>
+        <li><a href="index.html"    onclick="closeMenu()" data-i18n="nav-home">Home</a></li>
+        <li><a href="about.html"    onclick="closeMenu()" data-i18n="nav-about">About</a></li>
+        <li><a href="projects.html" onclick="closeMenu()" data-i18n="nav-projects">Projects</a></li>
+        <li><a href="booking.html"  onclick="closeMenu()" class="active" data-i18n="nav-booking">Book Me</a></li>
+    </ul>
+    <p class="menu-footer">© <span id="menu-year"></span> Prince</p>
+</nav>
+
+<div class="page">
+
+    <!-- HERO -->
+    <section class="booking-hero">
+        <p class="hero-eyebrow" data-i18n="hero-eyebrow">Let's Work Together</p>
+        <h1 data-i18n="hero-title">Start your next<br><em>project</em></h1>
+        <p data-i18n="hero-desc">Fill out the form and I'll get back to you within 24 hours. Every great design starts with a conversation.</p>
+    </section>
+
+    <!-- BOOKING LAYOUT -->
+    <div class="booking-layout">
+
+        <!-- FORM -->
+        <div class="form-side">
+            <p class="section-eyebrow reveal" data-i18n="form-eyebrow">Project Details</p>
+
+            <!-- Formspree — replace YOUR_FORM_ID with your actual Formspree form ID -->
+            <form id="booking-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name" data-i18n="label-name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Ama Owusu" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-i18n="label-email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="ama@example.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="company" data-i18n="label-company">Company / Brand (optional)</label>
+                    <input type="text" id="company" name="company" placeholder="Your company name">
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="label-type">Project Type</label>
+                    <div class="type-grid" id="type-grid">
+                        <button type="button" class="type-pill" onclick="selectType(this,'Brand Identity')" data-i18n="type-brand">Brand Identity</button>
+                        <button type="button" class="type-pill" onclick="selectType(this,'Logo Design')" data-i18n="type-logo">Logo Design</button>
+                        <button type="button" class="type-pill" onclick="selectType(this,'Print Design')" data-i18n="type-print">Print Design</button>
+                        <button type="button" class="type-pill" onclick="selectType(this,'Social Media')" data-i18n="type-social">Social Media</button>
+                        <button type="button" class="type-pill" onclick="selectType(this,'Packaging')" data-i18n="type-packaging">Packaging</button>
+                        <button type="button" class="type-pill" onclick="selectType(this,'Other')" data-i18n="type-other">Other</button>
+                    </div>
+                    <input type="hidden" id="project-type-input" name="project_type">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="budget" data-i18n="label-budget">Budget Range</label>
+                        <select id="budget" name="budget" required>
+                            <option value="" disabled selected data-i18n="budget-placeholder">Select range</option>
+                            <option value="Under $200" data-i18n="budget-1">Under $200</option>
+                            <option value="$200 – $500" data-i18n="budget-2">$200 – $500</option>
+                            <option value="$500 – $1000" data-i18n="budget-3">$500 – $1,000</option>
+                            <option value="$1000 – $2000" data-i18n="budget-4">$1,000 – $2,000</option>
+                            <option value="$2000+" data-i18n="budget-5">$2,000+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="timeline" data-i18n="label-timeline">Timeline</label>
+                        <select id="timeline" name="timeline" required>
+                            <option value="" disabled selected data-i18n="timeline-placeholder">Select timeline</option>
+                            <option value="ASAP" data-i18n="timeline-1">As soon as possible</option>
+                            <option value="1-2 weeks" data-i18n="timeline-2">1 – 2 weeks</option>
+                            <option value="1 month" data-i18n="timeline-3">About 1 month</option>
+                            <option value="2-3 months" data-i18n="timeline-4">2 – 3 months</option>
+                            <option value="Flexible" data-i18n="timeline-5">I'm flexible</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" data-i18n="label-message">Tell Me About Your Project</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Describe your vision, goals, references, or anything else that helps me understand what you need..." required></textarea>
+                </div>
+
+                <!-- Hidden fields for context -->
+                <input type="hidden" name="_subject" value="New Booking Request — Prince Portfolio">
+                <input type="text" name="_gotcha" style="display:none">
+
+                <button type="submit" class="submit-btn" id="submit-btn">
+                    <span data-i18n="submit-btn">Send Request</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+
+                <div class="form-status" id="form-status"></div>
+            </form>
+        </div>
+
+        <!-- INFO SIDE -->
+        <div class="info-side">
+
+            <div class="info-block reveal">
+                <p class="section-eyebrow" data-i18n="info-eyebrow">What I Offer</p>
+                <div class="service-list">
+                    <div class="service-item" data-i18n="service-1">Brand Identity Design</div>
+                    <div class="service-item" data-i18n="service-2">Logo & Visual Identity</div>
+                    <div class="service-item" data-i18n="service-3">Print & Layout Design</div>
+                    <div class="service-item" data-i18n="service-4">Social Media Graphics</div>
+                    <div class="service-item" data-i18n="service-5">Packaging Design</div>
+                    <div class="service-item" data-i18n="service-6">Typography & Color Systems</div>
+                </div>
+            </div>
+
+            <div class="info-divider"></div>
+
+            <div class="info-block reveal">
+                <h3 data-i18n="process-title">My Process</h3>
+                <p data-i18n="process-desc">Every project starts with understanding your vision. I then research, sketch, refine, and deliver — keeping you involved at every step.</p>
+                <div class="response-badge">
+                    <i class="fas fa-clock"></i>
+                    <span data-i18n="response-time">Response within 24 hours</span>
+                </div>
+            </div>
+
+            <div class="info-divider"></div>
+
+            <div class="info-block reveal">
+                <h3 data-i18n="connect-title">Or reach me directly</h3>
+                <p data-i18n="connect-desc">Prefer to talk first? Find me on social media or send a direct message.</p>
+                <div class="info-social" id="info-social">
+                    <a href="#" id="s-email"     title="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="#" id="s-linkedin"  title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" id="s-instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" id="s-behance"   title="Behance"><i class="fab fa-behance"></i></a>
+                    <a href="#" id="s-dribbble"  title="Dribbble"><i class="fab fa-dribbble"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <a href="index.html" class="footer-logo">Prince</a>
+            <span class="footer-copy">© <span id="footer-year"></span> Ismael Asumanu Prince</span>
+            <button class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+        </div>
+    </footer>
+</div>
+
+<script>
+    document.getElementById('menu-year').textContent =
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+    // ── THEME ─────────────────────────────────────────
+    function toggleTheme() {
+        document.body.classList.toggle('dark');
+        localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    }
+    if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+
+    // ── MENU ──────────────────────────────────────────
+    const menuEl=document.getElementById('menu'), backdrop=document.getElementById('menu-backdrop'), hamBtn=document.getElementById('hamburger');
+    function openMenu()   { menuEl.classList.add('open'); backdrop.classList.add('open'); hamBtn.classList.add('open'); document.body.style.overflow='hidden'; }
+    function closeMenu()  { menuEl.classList.remove('open'); backdrop.classList.remove('open'); hamBtn.classList.remove('open'); document.body.style.overflow=''; }
+    function toggleMenu() { menuEl.classList.contains('open') ? closeMenu() : openMenu(); }
+    document.addEventListener('keydown', e => { if(e.key==='Escape') closeMenu(); });
+    let mTX=0;
+    menuEl.addEventListener('touchstart',e=>{mTX=e.touches[0].clientX;},{passive:true});
+    menuEl.addEventListener('touchend',e=>{if(e.changedTouches[0].clientX-mTX>60)closeMenu();},{passive:true});
+
+    // ── SCROLL REVEAL ─────────────────────────────────
+    const revObs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); revObs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+    // ── PROJECT TYPE PILLS ────────────────────────────
+    function selectType(btn, value) {
+        document.querySelectorAll('.type-pill').forEach(p => p.classList.remove('selected'));
+        btn.classList.add('selected');
+        document.getElementById('project-type-input').value = value;
+    }
+
+    // ── FORM SUBMIT ───────────────────────────────────
+    const form = document.getElementById('booking-form');
+    const status = document.getElementById('form-status');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async e => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Sending…</span> <i class="fas fa-spinner fa-spin"></i>';
+        status.className = 'form-status';
+
+        try {
+            const res = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (res.ok) {
+                status.textContent = '✓ Message sent! I\'ll be in touch within 24 hours.';
+                status.className = 'form-status success';
+                form.reset();
+                document.querySelectorAll('.type-pill').forEach(p => p.classList.remove('selected'));
+                document.getElementById('project-type-input').value = '';
+                submitBtn.innerHTML = '<span data-i18n="submit-btn">Send Request</span> <i class="fas fa-arrow-right"></i>';
+            } else {
+                throw new Error();
+            }
+        } catch {
+            status.textContent = '✗ Something went wrong. Please try again or reach out via social media.';
+            status.className = 'form-status error';
+            submitBtn.innerHTML = '<span data-i18n="submit-btn">Send Request</span> <i class="fas fa-arrow-right"></i>';
+        }
+        submitBtn.disabled = false;
+    });
+
+    // ── CMS SOCIAL LINKS ──────────────────────────────
+    fetch('https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json?t='+Date.now())
+      .then(r=>r.ok?r.json():null)
+      .then(d=>{
+        if(!d) return;
+        if(d.email)    document.getElementById('s-email').href='mailto:'+d.email;
+        if(d.linkedin) document.getElementById('s-linkedin').href=d.linkedin;
+        if(d.instagram)document.getElementById('s-instagram').href=d.instagram;
+        if(d.behance)  document.getElementById('s-behance').href=d.behance;
+        if(d.dribbble) document.getElementById('s-dribbble').href=d.dribbble;
+      }).catch(()=>{});
+
+    // ── LANGUAGE ──────────────────────────────────────
+    const i18n = {
+        en: {
+            'nav-home':'Home','nav-about':'About','nav-projects':'Projects','nav-booking':'Book Me',
+            'hero-eyebrow':"Let's Work Together",'hero-title':'Start your next<br><em>project</em>',
+            'hero-desc':"Fill out the form and I'll get back to you within 24 hours. Every great design starts with a conversation.",
+            'form-eyebrow':'Project Details','info-eyebrow':'What I Offer',
+            'label-name':'Full Name','label-email':'Email Address','label-company':'Company / Brand (optional)',
+            'label-type':'Project Type','label-budget':'Budget Range','label-timeline':'Timeline','label-message':'Tell Me About Your Project',
+            'type-brand':'Brand Identity','type-logo':'Logo Design','type-print':'Print Design',
+            'type-social':'Social Media','type-packaging':'Packaging','type-other':'Other',
+            'budget-placeholder':'Select range','budget-1':'Under $200','budget-2':'$200 – $500',
+            'budget-3':'$500 – $1,000','budget-4':'$1,000 – $2,000','budget-5':'$2,000+',
+            'timeline-placeholder':'Select timeline','timeline-1':'As soon as possible',
+            'timeline-2':'1 – 2 weeks','timeline-3':'About 1 month','timeline-4':'2 – 3 months','timeline-5':"I'm flexible",
+            'submit-btn':'Send Request',
+            'service-1':'Brand Identity Design','service-2':'Logo & Visual Identity',
+            'service-3':'Print & Layout Design','service-4':'Social Media Graphics',
+            'service-5':'Packaging Design','service-6':'Typography & Color Systems',
+            'process-title':'My Process','process-desc':'Every project starts with understanding your vision. I research, sketch, refine, and deliver — keeping you involved at every step.',
+            'response-time':'Response within 24 hours',
+            'connect-title':'Or reach me directly','connect-desc':'Prefer to talk first? Find me on social media or send a direct message.',
+        },
+        fr: {
+            'nav-home':'Accueil','nav-about':'À Propos','nav-projects':'Projets','nav-booking':'Me Réserver',
+            'hero-eyebrow':'Travaillons Ensemble','hero-title':'Démarrez votre<br><em>prochain projet</em>',
+            'hero-desc':"Remplissez le formulaire et je vous répondrai dans les 24 heures.",
+            'form-eyebrow':'Détails du projet','info-eyebrow':'Ce que je propose',
+            'label-name':'Nom complet','label-email':'Adresse email','label-company':'Entreprise / Marque (optionnel)',
+            'label-type':'Type de projet','label-budget':'Budget','label-timeline':'Délai','label-message':'Parlez-moi de votre projet',
+            'type-brand':'Identité de marque','type-logo':'Logo','type-print':'Impression',
+            'type-social':'Réseaux sociaux','type-packaging':'Emballage','type-other':'Autre',
+            'budget-placeholder':'Sélectionner','timeline-placeholder':'Sélectionner',
+            'timeline-1':'Dès que possible','timeline-2':'1 – 2 semaines','timeline-3':'Environ 1 mois','timeline-4':'2 – 3 mois','timeline-5':'Je suis flexible',
+            'submit-btn':'Envoyer la demande',
+            'service-1':'Design d\'identité de marque','service-2':'Logo & identité visuelle',
+            'service-3':'Design print & mise en page','service-4':'Graphiques réseaux sociaux',
+            'service-5':'Design d\'emballage','service-6':'Typographie & systèmes de couleurs',
+            'process-title':'Mon processus','process-desc':'Chaque projet commence par comprendre votre vision.',
+            'response-time':'Réponse dans les 24 heures',
+            'connect-title':'Ou contactez-moi directement','connect-desc':'Préférez-vous d\'abord discuter ? Retrouvez-moi sur les réseaux sociaux.',
+        },
+        es: {
+            'nav-home':'Inicio','nav-about':'Acerca','nav-projects':'Proyectos','nav-booking':'Reservarme',
+            'hero-eyebrow':'Trabajemos Juntos','hero-title':'Empieza tu próximo<br><em>proyecto</em>',
+            'hero-desc':'Completa el formulario y te responderé en 24 horas.',
+            'form-eyebrow':'Detalles del proyecto','info-eyebrow':'Lo que ofrezco',
+            'label-name':'Nombre completo','label-email':'Correo electrónico','label-company':'Empresa / Marca (opcional)',
+            'label-type':'Tipo de proyecto','label-budget':'Presupuesto','label-timeline':'Plazo','label-message':'Cuéntame sobre tu proyecto',
+            'type-brand':'Identidad de marca','type-logo':'Diseño de logo','type-print':'Diseño impreso',
+            'type-social':'Redes sociales','type-packaging':'Empaque','type-other':'Otro',
+            'budget-placeholder':'Seleccionar','timeline-placeholder':'Seleccionar',
+            'timeline-1':'Lo antes posible','timeline-2':'1 – 2 semanas','timeline-3':'Aproximadamente 1 mes','timeline-4':'2 – 3 meses','timeline-5':'Soy flexible',
+            'submit-btn':'Enviar solicitud',
+            'service-1':'Diseño de identidad de marca','service-2':'Logo e identidad visual',
+            'service-3':'Diseño de impresión y maquetación','service-4':'Gráficos para redes sociales',
+            'service-5':'Diseño de empaque','service-6':'Tipografía y sistemas de color',
+            'process-title':'Mi proceso','process-desc':'Todo proyecto comienza entendiendo tu visión.',
+            'response-time':'Respuesta en 24 horas',
+            'connect-title':'O contáctame directamente','connect-desc':'¿Prefieres hablar primero? Encuéntrame en redes sociales.',
+        },
+        de: {
+            'nav-home':'Startseite','nav-about':'Über mich','nav-projects':'Projekte','nav-booking':'Buchen',
+            'hero-eyebrow':'Lass uns zusammenarbeiten','hero-title':'Starte dein nächstes<br><em>Projekt</em>',
+            'hero-desc':'Fülle das Formular aus und ich melde mich innerhalb von 24 Stunden.',
+            'form-eyebrow':'Projektdetails','info-eyebrow':'Was ich anbiete',
+            'label-name':'Vollständiger Name','label-email':'E-Mail-Adresse','label-company':'Unternehmen / Marke (optional)',
+            'label-type':'Projekttyp','label-budget':'Budget','label-timeline':'Zeitplan','label-message':'Erzähl mir von deinem Projekt',
+            'type-brand':'Markenidentität','type-logo':'Logo-Design','type-print':'Druckdesign',
+            'type-social':'Social Media','type-packaging':'Verpackung','type-other':'Sonstiges',
+            'budget-placeholder':'Auswählen','timeline-placeholder':'Auswählen',
+            'timeline-1':'So schnell wie möglich','timeline-2':'1 – 2 Wochen','timeline-3':'Ungefähr 1 Monat','timeline-4':'2 – 3 Monate','timeline-5':'Ich bin flexibel',
+            'submit-btn':'Anfrage senden',
+            'service-1':'Markenidentitäts-Design','service-2':'Logo & visuelle Identität',
+            'service-3':'Print- & Layout-Design','service-4':'Social-Media-Grafiken',
+            'service-5':'Verpackungsdesign','service-6':'Typografie & Farbsysteme',
+            'process-title':'Mein Prozess','process-desc':'Jedes Projekt beginnt damit, deine Vision zu verstehen.',
+            'response-time':'Antwort innerhalb von 24 Stunden',
+            'connect-title':'Oder kontaktiere mich direkt','connect-desc':'Möchtest du zuerst sprechen? Finde mich in den sozialen Medien.',
+        },
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'en';
+    document.getElementById('lang-select').value = currentLang;
+
+    function switchLang(lang) { currentLang=lang; localStorage.setItem('lang',lang); applyLang(lang); }
+    function applyLang(lang) {
+        const t=i18n[lang]||i18n.en;
+        document.querySelectorAll('[data-i18n]').forEach(el=>{
+            const key=el.getAttribute('data-i18n');
+            if(t[key]!==undefined) el.innerHTML=t[key];
+        });
+        document.documentElement.lang=lang;
+    }
+    applyLang(currentLang);
+</script>
+</body>
+</html>
