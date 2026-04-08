@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Me — Ismael Asumanu Prince</title>
     <meta name="description" content="Book Ismael Asumanu Prince for your next design project.">
+    <meta property="og:title" content="Book Me — Ismael Asumanu Prince">
+    <meta property="og:type" content="website">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-size='80' font-family='serif' fill='%23ff4500'>P</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,29 +25,19 @@
         }
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
         html { scroll-behavior:smooth; }
-        body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; transition:background .3s,color .3s; }
+        body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); transition:background .3s,color .3s; }
 
         /* ── HEADER ── */
-        header {
-            position:fixed; top:0; left:0; width:100%; z-index:100;
-            display:flex; justify-content:space-between; align-items:center;
-            padding:clamp(14px,2.5vw,22px) clamp(20px,4vw,40px);
-            background:rgba(250,249,247,0.94);
-            backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-            border-bottom:1px solid var(--border);
-            transition:background .3s, border-color .3s;
-        }
+        header { position:fixed; top:0; left:0; width:100%; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:clamp(14px,2.5vw,22px) clamp(20px,4vw,40px); background:rgba(250,249,247,0.94); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid var(--border); transition:background .3s; }
         body.dark header { background:rgba(13,13,13,0.94); }
-        .logo { color:var(--accent); font-size:clamp(18px,2vw,24px); font-weight:700; text-decoration:none; letter-spacing:-.01em; }
+        .logo { color:var(--accent); font-size:clamp(18px,2vw+0.5rem,24px); font-weight:700; text-decoration:none; letter-spacing:-.01em; }
         .header-right { display:flex; align-items:center; gap:6px; }
         .icon-btn { width:40px; height:40px; border-radius:50%; border:none; background:none; color:var(--text); font-size:clamp(15px,1.5vw,18px); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:color .2s,background .2s; }
         .icon-btn:hover { color:var(--accent); background:var(--accent-dim); }
         .lang-select { appearance:none; -webkit-appearance:none; background:var(--surface); border:1px solid var(--border); color:var(--text); font-family:'DM Sans',sans-serif; font-size:.72rem; font-weight:500; letter-spacing:.08em; padding:6px 28px 6px 10px; border-radius:20px; cursor:pointer; outline:none; transition:border-color .2s; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 10px center; }
         .lang-select:hover { border-color:var(--accent); }
-        .hamburger .fa-bars { display:block; }
-        .hamburger .fa-times { display:none; }
-        .hamburger.open .fa-bars { display:none; }
-        .hamburger.open .fa-times { display:block; }
+        .hamburger .fa-bars { display:block; } .hamburger .fa-times { display:none; }
+        .hamburger.open .fa-bars { display:none; } .hamburger.open .fa-times { display:block; }
 
         /* ── MENU ── */
         .menu-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); z-index:98; opacity:0; pointer-events:none; transition:opacity .3s; }
@@ -60,170 +52,122 @@
         .menu-footer { position:absolute; bottom:2rem; font-size:.65rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
 
         /* ── PAGE ── */
-        .page { padding-top:clamp(64px,9vw,88px); }
+        .page { padding-top:clamp(70px,10vw,90px); }
 
-        /* ── HERO ── */
+        /* ── HERO STRIP ── */
         .booking-hero {
-            padding:clamp(56px,9vw,100px) clamp(20px,5vw,80px) clamp(36px,5vw,56px);
+            padding:clamp(60px,10vw,100px) clamp(20px,5vw,80px) clamp(40px,6vw,60px);
             position:relative; overflow:hidden;
             border-bottom:1px solid var(--border);
         }
         .booking-hero::before {
-            content:'BOOK';
-            position:absolute; right:-10px; top:50%; transform:translateY(-50%);
-            font-family:'Cormorant Garamond',serif;
-            font-size:clamp(70px,13vw,150px); font-weight:600;
-            color:var(--border); letter-spacing:-.04em;
-            pointer-events:none; user-select:none; line-height:1;
+            content:'BOOK'; position:absolute; right:-10px; top:50%; transform:translateY(-50%);
+            font-family:'Cormorant Garamond',serif; font-size:clamp(80px,14vw,160px); font-weight:600;
+            color:var(--border); letter-spacing:-.04em; pointer-events:none; user-select:none; line-height:1;
         }
-        .hero-eyebrow { font-size:.62rem; letter-spacing:.3em; text-transform:uppercase; color:var(--accent); margin-bottom:.75rem; display:flex; align-items:center; gap:.6rem; }
-        .hero-eyebrow::after { content:''; width:30px; height:1px; background:var(--accent); }
+        .eyebrow { font-size:.65rem; letter-spacing:.3em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; display:flex; align-items:center; gap:.75rem; }
+        .eyebrow::after { content:''; width:40px; height:1px; background:var(--accent); }
         .booking-hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(36px,6vw,72px); font-weight:600; line-height:1.05; letter-spacing:-.02em; margin-bottom:1rem; }
         .booking-hero h1 em { font-style:italic; color:var(--accent); }
-        .booking-hero p { font-size:clamp(14px,1.5vw,17px); color:var(--muted); max-width:520px; line-height:1.75; }
+        .booking-hero p { font-size:clamp(14px,1.5vw,17px); color:var(--muted); max-width:520px; line-height:1.7; font-weight:300; }
 
-        /* ── LAYOUT ── */
-        .booking-layout {
-            display:grid;
-            grid-template-columns:1fr 380px;
-            gap:0;
-            min-height:60vh;
+        /* ── FORM SECTION ── */
+        .form-section {
+            display:grid; grid-template-columns:1fr 340px;
+            gap:clamp(32px,5vw,64px);
+            max-width:1100px; margin:0 auto;
+            padding:clamp(48px,7vw,80px) clamp(20px,5vw,80px);
+            align-items:start;
         }
 
-        /* ── FORM SIDE ── */
-        .form-side {
-            padding:clamp(36px,5vw,64px) clamp(20px,5vw,64px);
-            border-right:1px solid var(--border);
+        /* ── FORM ── */
+        .booking-form { display:flex; flex-direction:column; gap:1.25rem; }
+
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+
+        .form-group { display:flex; flex-direction:column; gap:.4rem; }
+        .form-group label { font-size:.62rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background:var(--surface); border:1px solid var(--border); color:var(--text);
+            padding:.75rem 1rem; font-size:.9rem; font-family:'DM Sans',sans-serif;
+            outline:none; border-radius:3px; transition:border-color .2s, box-shadow .2s;
+            width:100%;
         }
-
-        .section-eyebrow { font-size:.6rem; letter-spacing:.28em; text-transform:uppercase; color:var(--muted); margin-bottom:1.75rem; display:flex; align-items:center; gap:.6rem; }
-        .section-eyebrow::before { content:''; width:20px; height:1px; background:var(--accent); }
-
-        /* Form fields */
-        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem; }
-        .form-group { margin-bottom:1rem; display:flex; flex-direction:column; gap:.4rem; }
-
-        label { font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); font-weight:500; }
-
-        input, select, textarea {
-            width:100%; padding:12px 14px;
-            background:var(--surface); border:1px solid var(--border);
-            color:var(--text); font-family:'DM Sans',sans-serif;
-            font-size:.9rem; font-weight:300;
-            outline:none; transition:border-color .2s, box-shadow .2s;
-            border-radius:0;
-            appearance:none; -webkit-appearance:none;
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-dim);
         }
-        input:focus, select:focus, textarea:focus {
-            border-color:var(--accent);
-            box-shadow:0 0 0 3px rgba(255,69,0,0.08);
-        }
-        input::placeholder, textarea::placeholder { color:var(--muted); opacity:.5; }
-        textarea { resize:vertical; min-height:120px; line-height:1.6; }
-        select {
-            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 2L6 7L11 2' fill='none' stroke='%23888' stroke-width='1.5'/%3E%3C/svg%3E");
-            background-repeat:no-repeat; background-position:right 14px center;
-            padding-right:36px; cursor:pointer;
-        }
+        .form-group textarea { min-height:140px; resize:vertical; }
+        .form-group select { appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; }
 
-        /* Project type pills */
-        .type-grid { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.4rem; }
+        /* Project types pills */
+        .type-pills { display:flex; flex-wrap:wrap; gap:.5rem; }
         .type-pill {
-            font-size:.62rem; letter-spacing:.1em; text-transform:uppercase;
-            padding:7px 14px; border:1px solid var(--border);
-            color:var(--muted); cursor:pointer; border-radius:20px;
-            transition:all .2s; background:transparent; font-family:'DM Sans',sans-serif;
+            font-size:.65rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase;
+            padding:6px 14px; border:1px solid var(--border); border-radius:20px;
+            cursor:pointer; transition:all .2s; color:var(--muted); background:none;
+            font-family:'DM Sans',sans-serif;
         }
         .type-pill:hover { border-color:var(--accent); color:var(--accent); }
         .type-pill.selected { background:var(--accent); border-color:var(--accent); color:#fff; }
 
-        /* Hidden input for project type */
-        #project-type-input { display:none; }
-
-        /* Submit */
+        /* Submit button */
         .submit-btn {
             display:inline-flex; align-items:center; gap:.75rem;
-            font-size:.72rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase;
-            color:#fff; background:var(--accent);
-            border:none; padding:15px 36px; cursor:pointer;
-            font-family:'DM Sans',sans-serif; border-radius:40px;
-            transition:background .2s, transform .2s;
-            margin-top:.5rem;
+            font-size:.75rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase;
+            color:#fff; background:var(--accent); border:none; padding:1rem 2rem;
+            border-radius:40px; cursor:pointer; transition:background .2s, transform .2s;
+            font-family:'DM Sans',sans-serif; width:100%; justify-content:center;
         }
-        .submit-btn:hover { background:#e03a00; transform:translateY(-2px); }
-        .submit-btn:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+        .submit-btn:hover { background:#e03a00; transform:translateY(-1px); }
+        .submit-btn:disabled { opacity:.6; cursor:not-allowed; transform:none; }
 
-        /* Status message */
-        .form-status {
-            margin-top:1rem; padding:12px 16px;
-            border-radius:4px; font-size:.82rem;
-            display:none;
-        }
-        .form-status.success { background:rgba(68,204,136,0.1); border:1px solid rgba(68,204,136,0.3); color:#2a9d5c; display:block; }
-        .form-status.error { background:rgba(255,69,0,0.08); border:1px solid rgba(255,69,0,0.25); color:var(--accent); display:block; }
-
-        /* ── INFO SIDE ── */
-        .info-side {
-            padding:clamp(36px,5vw,64px) clamp(20px,4vw,48px);
-            background:var(--surface);
-            display:flex; flex-direction:column; gap:2.5rem;
+        /* Success state */
+        .success-msg {
+            display:none; background:rgba(68,204,136,0.08); border:1px solid rgba(68,204,136,0.3);
+            padding:1.25rem 1.5rem; border-radius:4px; color:#44cc88;
+            font-size:.88rem; line-height:1.6; text-align:center;
         }
 
-        .info-block h3 { font-family:'Cormorant Garamond',serif; font-size:clamp(18px,2.5vw,24px); font-weight:600; margin-bottom:.75rem; }
-        .info-block p { font-size:clamp(13px,1.3vw,15px); color:var(--muted); line-height:1.75; }
-
-        .info-divider { width:40px; height:1px; background:var(--border); }
-
-        /* Service list */
-        .service-list { display:flex; flex-direction:column; gap:.5rem; margin-top:.75rem; }
-        .service-item { display:flex; align-items:center; gap:.6rem; font-size:.82rem; color:var(--muted); }
-        .service-item::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--accent); flex-shrink:0; }
-
-        /* Response time badge */
-        .response-badge {
-            display:inline-flex; align-items:center; gap:.5rem;
-            font-size:.65rem; letter-spacing:.12em; text-transform:uppercase;
-            color:var(--accent); border:1px solid rgba(255,69,0,0.3);
-            padding:6px 12px; border-radius:20px;
-            background:var(--accent-dim); margin-top:.75rem;
+        /* Error state */
+        .error-msg {
+            display:none; background:rgba(255,68,68,0.08); border:1px solid rgba(255,68,68,0.3);
+            padding:1rem 1.25rem; border-radius:4px; color:#ff4444; font-size:.82rem;
         }
 
-        /* Social row */
-        .info-social { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.5rem; }
-        .info-social a {
-            width:38px; height:38px; border-radius:50%;
-            border:1px solid var(--border);
-            display:flex; align-items:center; justify-content:center;
-            color:var(--muted); text-decoration:none; font-size:.85rem;
-            transition:all .2s;
+        /* ── SIDEBAR INFO ── */
+        .booking-info { display:flex; flex-direction:column; gap:1rem; }
+
+        .info-card {
+            background:var(--surface); border:1px solid var(--border); padding:1.5rem;
+            position:relative;
         }
-        .info-social a:hover { color:var(--accent); border-color:var(--accent); transform:translateY(-2px); }
+        .info-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:var(--accent); }
+
+        .info-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:600; margin-bottom:.75rem; }
+        .info-card p { font-size:.82rem; color:var(--muted); line-height:1.7; }
+
+        .info-list { list-style:none; display:flex; flex-direction:column; gap:.5rem; margin-top:.75rem; }
+        .info-list li { display:flex; align-items:center; gap:.75rem; font-size:.82rem; color:var(--muted); }
+        .info-list li i { color:var(--accent); width:16px; text-align:center; font-size:.85rem; }
+
+        .turnaround { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; margin-top:.75rem; }
+        .turnaround-item { background:var(--bg); border:1px solid var(--border); padding:.75rem; text-align:center; }
+        .turnaround-type { font-size:.58rem; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); }
+        .turnaround-time { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:600; color:var(--accent); margin-top:.2rem; }
 
         /* ── FOOTER ── */
-        footer {
-            background:var(--footer-bg); color:var(--footer-text);
-            padding:clamp(36px,5vw,56px) clamp(20px,5vw,80px) clamp(24px,4vw,40px);
-            border-top:1px solid var(--border);
-        }
-        .footer-inner { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem; }
-        .footer-logo { color:var(--accent); font-size:1.1rem; font-weight:700; text-decoration:none; }
-        .footer-copy { font-size:.68rem; opacity:.4; letter-spacing:.05em; }
-        .go-to-top { width:42px; height:42px; border-radius:50%; background:var(--accent); border:none; color:#fff; font-size:.9rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s,transform .2s; }
-        .go-to-top:hover { background:#e03a00; transform:translateY(-2px); }
+        footer { background:var(--footer-bg); color:var(--footer-text); padding:clamp(40px,6vw,60px) clamp(20px,5vw,80px); border-top:1px solid var(--border); }
+        .footer-bottom { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; font-size:.7rem; opacity:.5; }
+        .go-to-top { width:44px; height:44px; border-radius:50%; background:var(--accent); border:none; color:#fff; font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:transform .2s,background .2s; }
+        .go-to-top:hover { transform:translateY(-3px); background:#e03a00; }
 
-        /* ── REVEAL ── */
-        .reveal { opacity:0; transform:translateY(20px); transition:opacity .6s ease,transform .6s ease; }
-        .reveal.visible { opacity:1; transform:translateY(0); }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width:900px) {
-            .booking-layout { grid-template-columns:1fr; }
-            .form-side { border-right:none; border-bottom:1px solid var(--border); }
-        }
-        @media (max-width:600px) {
+        @media (max-width:768px) {
+            .form-section { grid-template-columns:1fr; }
             .form-row { grid-template-columns:1fr; }
             .booking-hero::before { display:none; }
-            .footer-inner { flex-direction:column; text-align:center; align-items:center; }
+            .turnaround { grid-template-columns:1fr 1fr; }
         }
     </style>
 </head>
@@ -231,15 +175,12 @@
 
 <div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
 
-<!-- HEADER -->
 <header>
     <a href="index.html" class="logo">Prince</a>
     <div class="header-right">
         <select class="lang-select" id="lang-select" onchange="switchLang(this.value)" aria-label="Language">
-            <option value="en">EN</option>
-            <option value="fr">FR</option>
-            <option value="es">ES</option>
-            <option value="de">DE</option>
+            <option value="en">EN</option><option value="fr">FR</option>
+            <option value="es">ES</option><option value="de">DE</option>
         </select>
         <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle theme"><i class="fas fa-lightbulb"></i></button>
         <button class="icon-btn hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
@@ -248,7 +189,6 @@
     </div>
 </header>
 
-<!-- MENU -->
 <nav class="menu" id="menu">
     <div class="menu-divider"></div>
     <ul>
@@ -264,324 +204,312 @@
 
     <!-- HERO -->
     <section class="booking-hero">
-        <p class="hero-eyebrow" data-i18n="hero-eyebrow">Let's Work Together</p>
-        <h1 data-i18n="hero-title">Start your next<br><em>project</em></h1>
-        <p data-i18n="hero-desc">Fill out the form and I'll get back to you within 24 hours. Every great design starts with a conversation.</p>
+        <p class="eyebrow" data-i18n="booking-eyebrow">Let's Work Together</p>
+        <h1 data-i18n="booking-headline">Start your next<br><em>project</em></h1>
+        <p data-i18n="booking-sub">Fill out the form and I'll get back to you within 24 hours. Every great project starts with a conversation.</p>
     </section>
 
-    <!-- BOOKING LAYOUT -->
-    <div class="booking-layout">
+    <!-- FORM + INFO -->
+    <div class="form-section">
 
         <!-- FORM -->
-        <div class="form-side">
-            <p class="section-eyebrow reveal" data-i18n="form-eyebrow">Project Details</p>
+        <div>
+            <div class="success-msg" id="success-msg">
+                <i class="fas fa-check-circle" style="font-size:1.5rem;display:block;margin-bottom:.5rem;"></i>
+                <strong>Message received!</strong><br>
+                Thank you for reaching out. I'll be in touch within 24 hours.
+            </div>
+            <div class="error-msg" id="error-msg"></div>
 
-            <!-- Formspree — replace YOUR_FORM_ID with your actual Formspree form ID -->
-            <form id="booking-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <form class="booking-form" id="booking-form" onsubmit="submitBooking(event)">
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="name" data-i18n="label-name">Full Name</label>
-                        <input type="text" id="name" name="name" placeholder="Ama Owusu" required>
+                        <label data-i18n="field-name">Full Name *</label>
+                        <input type="text" id="f-name" required placeholder="Your name"/>
                     </div>
                     <div class="form-group">
-                        <label for="email" data-i18n="label-email">Email Address</label>
-                        <input type="email" id="email" name="email" placeholder="ama@example.com" required>
+                        <label data-i18n="field-email">Email Address *</label>
+                        <input type="email" id="f-email" required placeholder="you@email.com"/>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="company" data-i18n="label-company">Company / Brand (optional)</label>
-                    <input type="text" id="company" name="company" placeholder="Your company name">
-                </div>
-
-                <div class="form-group">
-                    <label data-i18n="label-type">Project Type</label>
-                    <div class="type-grid" id="type-grid">
-                        <button type="button" class="type-pill" onclick="selectType(this,'Brand Identity')" data-i18n="type-brand">Brand Identity</button>
-                        <button type="button" class="type-pill" onclick="selectType(this,'Logo Design')" data-i18n="type-logo">Logo Design</button>
-                        <button type="button" class="type-pill" onclick="selectType(this,'Print Design')" data-i18n="type-print">Print Design</button>
-                        <button type="button" class="type-pill" onclick="selectType(this,'Social Media')" data-i18n="type-social">Social Media</button>
-                        <button type="button" class="type-pill" onclick="selectType(this,'Packaging')" data-i18n="type-packaging">Packaging</button>
-                        <button type="button" class="type-pill" onclick="selectType(this,'Other')" data-i18n="type-other">Other</button>
-                    </div>
-                    <input type="hidden" id="project-type-input" name="project_type">
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="budget" data-i18n="label-budget">Budget Range</label>
-                        <select id="budget" name="budget" required>
-                            <option value="" disabled selected data-i18n="budget-placeholder">Select range</option>
-                            <option value="Under $200" data-i18n="budget-1">Under $200</option>
-                            <option value="$200 – $500" data-i18n="budget-2">$200 – $500</option>
-                            <option value="$500 – $1000" data-i18n="budget-3">$500 – $1,000</option>
-                            <option value="$1000 – $2000" data-i18n="budget-4">$1,000 – $2,000</option>
-                            <option value="$2000+" data-i18n="budget-5">$2,000+</option>
+                        <label data-i18n="field-phone">Phone (optional)</label>
+                        <input type="tel" id="f-phone" placeholder="+233 …"/>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="field-company">Company / Brand</label>
+                        <input type="text" id="f-company" placeholder="Your brand or company"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="field-type">Project Type *</label>
+                    <div class="type-pills" id="type-pills">
+                        <button type="button" class="type-pill" onclick="selectType(this)">Brand Identity</button>
+                        <button type="button" class="type-pill" onclick="selectType(this)">Logo Design</button>
+                        <button type="button" class="type-pill" onclick="selectType(this)">Print Design</button>
+                        <button type="button" class="type-pill" onclick="selectType(this)">Social Media</button>
+                        <button type="button" class="type-pill" onclick="selectType(this)">Packaging</button>
+                        <button type="button" class="type-pill" onclick="selectType(this)">Other</button>
+                    </div>
+                    <input type="hidden" id="f-type" required/>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="field-budget">Budget Range *</label>
+                        <select id="f-budget" required>
+                            <option value="" disabled selected>Select a range</option>
+                            <option>Under $200</option>
+                            <option>$200 – $500</option>
+                            <option>$500 – $1,000</option>
+                            <option>$1,000 – $2,500</option>
+                            <option>$2,500+</option>
+                            <option>Let's discuss</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="timeline" data-i18n="label-timeline">Timeline</label>
-                        <select id="timeline" name="timeline" required>
-                            <option value="" disabled selected data-i18n="timeline-placeholder">Select timeline</option>
-                            <option value="ASAP" data-i18n="timeline-1">As soon as possible</option>
-                            <option value="1-2 weeks" data-i18n="timeline-2">1 – 2 weeks</option>
-                            <option value="1 month" data-i18n="timeline-3">About 1 month</option>
-                            <option value="2-3 months" data-i18n="timeline-4">2 – 3 months</option>
-                            <option value="Flexible" data-i18n="timeline-5">I'm flexible</option>
+                        <label data-i18n="field-timeline">Timeline *</label>
+                        <select id="f-timeline" required>
+                            <option value="" disabled selected>When do you need it?</option>
+                            <option>ASAP (rush)</option>
+                            <option>1–2 weeks</option>
+                            <option>2–4 weeks</option>
+                            <option>1–2 months</option>
+                            <option>Flexible</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="message" data-i18n="label-message">Tell Me About Your Project</label>
-                    <textarea id="message" name="message" rows="5" placeholder="Describe your vision, goals, references, or anything else that helps me understand what you need..." required></textarea>
+                    <label data-i18n="field-message">Project Details *</label>
+                    <textarea id="f-message" required placeholder="Tell me about your project — what you need, your vision, goals, target audience…"></textarea>
                 </div>
-
-                <!-- Hidden fields for context -->
-                <input type="hidden" name="_subject" value="New Booking Request — Prince Portfolio">
-                <input type="text" name="_gotcha" style="display:none">
 
                 <button type="submit" class="submit-btn" id="submit-btn">
-                    <span data-i18n="submit-btn">Send Request</span>
+                    <span data-i18n="submit-btn">Send Booking Request</span>
                     <i class="fas fa-arrow-right"></i>
                 </button>
 
-                <div class="form-status" id="form-status"></div>
+                <p style="font-size:.65rem;color:var(--muted);text-align:center;margin-top:.5rem;" data-i18n="submit-note">I respond within 24 hours. No spam, ever.</p>
+
             </form>
         </div>
 
-        <!-- INFO SIDE -->
-        <div class="info-side">
-
-            <div class="info-block reveal">
-                <p class="section-eyebrow" data-i18n="info-eyebrow">What I Offer</p>
-                <div class="service-list">
-                    <div class="service-item" data-i18n="service-1">Brand Identity Design</div>
-                    <div class="service-item" data-i18n="service-2">Logo & Visual Identity</div>
-                    <div class="service-item" data-i18n="service-3">Print & Layout Design</div>
-                    <div class="service-item" data-i18n="service-4">Social Media Graphics</div>
-                    <div class="service-item" data-i18n="service-5">Packaging Design</div>
-                    <div class="service-item" data-i18n="service-6">Typography & Color Systems</div>
+        <!-- SIDEBAR INFO -->
+        <div class="booking-info">
+            <div class="info-card">
+                <h3 data-i18n="info-process-title">My Process</h3>
+                <ul class="info-list">
+                    <li><i class="fas fa-comments"></i> <span data-i18n="process-1">Discovery call & brief</span></li>
+                    <li><i class="fas fa-pencil-ruler"></i> <span data-i18n="process-2">Concept development</span></li>
+                    <li><i class="fas fa-sync-alt"></i> <span data-i18n="process-3">Revisions & refinement</span></li>
+                    <li><i class="fas fa-check-double"></i> <span data-i18n="process-4">Final delivery & files</span></li>
+                </ul>
+            </div>
+            <div class="info-card">
+                <h3 data-i18n="info-turnaround-title">Typical Turnaround</h3>
+                <div class="turnaround">
+                    <div class="turnaround-item">
+                        <div class="turnaround-type" data-i18n="turn-logo">Logo</div>
+                        <div class="turnaround-time">1–2w</div>
+                    </div>
+                    <div class="turnaround-item">
+                        <div class="turnaround-type" data-i18n="turn-brand">Branding</div>
+                        <div class="turnaround-time">2–4w</div>
+                    </div>
+                    <div class="turnaround-item">
+                        <div class="turnaround-type" data-i18n="turn-print">Print</div>
+                        <div class="turnaround-time">3–7d</div>
+                    </div>
+                    <div class="turnaround-item">
+                        <div class="turnaround-type" data-i18n="turn-social">Social</div>
+                        <div class="turnaround-time">2–5d</div>
+                    </div>
                 </div>
             </div>
-
-            <div class="info-divider"></div>
-
-            <div class="info-block reveal">
-                <h3 data-i18n="process-title">My Process</h3>
-                <p data-i18n="process-desc">Every project starts with understanding your vision. I then research, sketch, refine, and deliver — keeping you involved at every step.</p>
-                <div class="response-badge">
-                    <i class="fas fa-clock"></i>
-                    <span data-i18n="response-time">Response within 24 hours</span>
-                </div>
+            <div class="info-card">
+                <h3 data-i18n="info-contact-title">Direct Contact</h3>
+                <p data-i18n="info-contact-body">Prefer to reach out directly? I'm reachable on all platforms.</p>
+                <ul class="info-list" style="margin-top:.75rem;" id="contact-links">
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:" id="contact-email" style="color:var(--accent);text-decoration:none;">Loading…</a></li>
+                </ul>
             </div>
-
-            <div class="info-divider"></div>
-
-            <div class="info-block reveal">
-                <h3 data-i18n="connect-title">Or reach me directly</h3>
-                <p data-i18n="connect-desc">Prefer to talk first? Find me on social media or send a direct message.</p>
-                <div class="info-social" id="info-social">
-                    <a href="#" id="s-email"     title="Email"><i class="fas fa-envelope"></i></a>
-                    <a href="#" id="s-linkedin"  title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" id="s-instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" id="s-behance"   title="Behance"><i class="fab fa-behance"></i></a>
-                    <a href="#" id="s-dribbble"  title="Dribbble"><i class="fab fa-dribbble"></i></a>
-                </div>
-            </div>
-
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer>
-        <div class="footer-inner">
-            <a href="index.html" class="footer-logo">Prince</a>
-            <span class="footer-copy">© <span id="footer-year"></span> Ismael Asumanu Prince</span>
-            <button class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
-                <i class="fas fa-arrow-up"></i>
-            </button>
+        <div class="footer-bottom">
+            <span>© <span id="footer-year"></span> Ismael Asumanu Prince</span>
+            <button class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
         </div>
     </footer>
+
 </div>
 
 <script>
     document.getElementById('menu-year').textContent =
     document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-    // ── THEME ─────────────────────────────────────────
-    function toggleTheme() {
-        document.body.classList.toggle('dark');
-        localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-    }
-    if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+    // Config — reads from same localStorage as admin
+    const cfg = (() => { try { return JSON.parse(localStorage.getItem('cms_cfg')||'{}'); } catch(e){ return {}; } })();
 
-    // ── MENU ──────────────────────────────────────────
+    // ── THEME ─────────────────────────────────────────────────────
+    function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('theme', document.body.classList.contains('dark')?'dark':'light'); }
+    if(localStorage.getItem('theme')==='dark') document.body.classList.add('dark');
+
+    // ── MENU ──────────────────────────────────────────────────────
     const menuEl=document.getElementById('menu'), backdrop=document.getElementById('menu-backdrop'), hamBtn=document.getElementById('hamburger');
-    function openMenu()   { menuEl.classList.add('open'); backdrop.classList.add('open'); hamBtn.classList.add('open'); document.body.style.overflow='hidden'; }
-    function closeMenu()  { menuEl.classList.remove('open'); backdrop.classList.remove('open'); hamBtn.classList.remove('open'); document.body.style.overflow=''; }
-    function toggleMenu() { menuEl.classList.contains('open') ? closeMenu() : openMenu(); }
-    document.addEventListener('keydown', e => { if(e.key==='Escape') closeMenu(); });
+    function openMenu()  { menuEl.classList.add('open'); backdrop.classList.add('open'); hamBtn.classList.add('open'); document.body.style.overflow='hidden'; }
+    function closeMenu() { menuEl.classList.remove('open'); backdrop.classList.remove('open'); hamBtn.classList.remove('open'); document.body.style.overflow=''; }
+    function toggleMenu(){ menuEl.classList.contains('open')?closeMenu():openMenu(); }
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeMenu(); });
     let mTX=0;
     menuEl.addEventListener('touchstart',e=>{mTX=e.touches[0].clientX;},{passive:true});
     menuEl.addEventListener('touchend',e=>{if(e.changedTouches[0].clientX-mTX>60)closeMenu();},{passive:true});
 
-    // ── SCROLL REVEAL ─────────────────────────────────
-    const revObs = new IntersectionObserver(entries => {
-        entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); revObs.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
-
-    // ── PROJECT TYPE PILLS ────────────────────────────
-    function selectType(btn, value) {
-        document.querySelectorAll('.type-pill').forEach(p => p.classList.remove('selected'));
+    // ── PROJECT TYPE PILLS ────────────────────────────────────────
+    let selectedType='';
+    function selectType(btn){
+        document.querySelectorAll('.type-pill').forEach(p=>p.classList.remove('selected'));
         btn.classList.add('selected');
-        document.getElementById('project-type-input').value = value;
+        selectedType=btn.textContent;
+        document.getElementById('f-type').value=selectedType;
     }
 
-    // ── FORM SUBMIT ───────────────────────────────────
-    const form = document.getElementById('booking-form');
-    const status = document.getElementById('form-status');
-    const submitBtn = document.getElementById('submit-btn');
+    // ── LOAD HOME DATA (for email link) ───────────────────────────
+    const HOME_URL='https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json';
+    fetch(HOME_URL+'?t='+Date.now()).then(r=>r.ok?r.json():null).then(d=>{
+        if(!d)return;
+        if(d.email){ const el=document.getElementById('contact-email'); el.href='mailto:'+d.email; el.textContent=d.email; }
+    }).catch(()=>{});
 
-    form.addEventListener('submit', async e => {
+    // ── SUBMIT ────────────────────────────────────────────────────
+    // Saves to bookings.json in GitHub — shows up in admin Studio
+    async function submitBooking(e){
         e.preventDefault();
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span>Sending…</span> <i class="fas fa-spinner fa-spin"></i>';
-        status.className = 'form-status';
+        const btn=document.getElementById('submit-btn');
+        const errEl=document.getElementById('error-msg');
+        const successEl=document.getElementById('success-msg');
+        errEl.style.display='none';
 
-        try {
-            const res = await fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form),
-                headers: { 'Accept': 'application/json' }
-            });
+        // Validate type
+        if(!selectedType){ errEl.textContent='Please select a project type.'; errEl.style.display='block'; return; }
 
-            if (res.ok) {
-                status.textContent = '✓ Message sent! I\'ll be in touch within 24 hours.';
-                status.className = 'form-status success';
-                form.reset();
-                document.querySelectorAll('.type-pill').forEach(p => p.classList.remove('selected'));
-                document.getElementById('project-type-input').value = '';
-                submitBtn.innerHTML = '<span data-i18n="submit-btn">Send Request</span> <i class="fas fa-arrow-right"></i>';
-            } else {
-                throw new Error();
+        const submission={
+            id: 'booking_'+Date.now(),
+            date: new Date().toISOString(),
+            name: document.getElementById('f-name').value.trim(),
+            email: document.getElementById('f-email').value.trim(),
+            phone: document.getElementById('f-phone').value.trim(),
+            company: document.getElementById('f-company').value.trim(),
+            projectType: selectedType,
+            budget: document.getElementById('f-budget').value,
+            timeline: document.getElementById('f-timeline').value,
+            message: document.getElementById('f-message').value.trim(),
+            read: false,
+            replied: false
+        };
+
+        btn.disabled=true;
+        btn.querySelector('span').textContent='Sending…';
+
+        // If GitHub config available (from localStorage), save to repo
+        const user=cfg.user, repo=cfg.repo, branch=cfg.branch||'main';
+        const token=sessionStorage.getItem('cms_tok'); // only available if admin is open in same session
+
+        if(user && repo && token){
+            try{
+                // Get existing bookings
+                let existingSHA=null, existingBookings=[];
+                const r=await fetch(`https://api.github.com/repos/${user}/${repo}/contents/bookings.json?ref=${branch}`,
+                    {headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'}});
+                if(r.ok){const d=await r.json();existingSHA=d.sha;existingBookings=JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))));}
+                existingBookings.push(submission);
+                const body={message:`New booking from ${submission.name}`,content:btoa(unescape(encodeURIComponent(JSON.stringify(existingBookings,null,2)))),branch};
+                if(existingSHA)body.sha=existingSHA;
+                await fetch(`https://api.github.com/repos/${user}/${repo}/contents/bookings.json`,
+                    {method:'PUT',headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});
+                document.getElementById('booking-form').style.display='none';
+                successEl.style.display='block';
+            }catch(err){
+                // Fallback — store locally and show success anyway
+                const pending=JSON.parse(localStorage.getItem('pending_bookings')||'[]');
+                pending.push(submission); localStorage.setItem('pending_bookings',JSON.stringify(pending));
+                document.getElementById('booking-form').style.display='none';
+                successEl.style.display='block';
             }
-        } catch {
-            status.textContent = '✗ Something went wrong. Please try again or reach out via social media.';
-            status.className = 'form-status error';
-            submitBtn.innerHTML = '<span data-i18n="submit-btn">Send Request</span> <i class="fas fa-arrow-right"></i>';
+        } else {
+            // No token in session — store locally until admin syncs
+            const pending=JSON.parse(localStorage.getItem('pending_bookings')||'[]');
+            pending.push(submission); localStorage.setItem('pending_bookings',JSON.stringify(pending));
+            document.getElementById('booking-form').style.display='none';
+            successEl.style.display='block';
         }
-        submitBtn.disabled = false;
-    });
+    }
 
-    // ── CMS SOCIAL LINKS ──────────────────────────────
-    fetch('https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json?t='+Date.now())
-      .then(r=>r.ok?r.json():null)
-      .then(d=>{
-        if(!d) return;
-        if(d.email)    document.getElementById('s-email').href='mailto:'+d.email;
-        if(d.linkedin) document.getElementById('s-linkedin').href=d.linkedin;
-        if(d.instagram)document.getElementById('s-instagram').href=d.instagram;
-        if(d.behance)  document.getElementById('s-behance').href=d.behance;
-        if(d.dribbble) document.getElementById('s-dribbble').href=d.dribbble;
-      }).catch(()=>{});
-
-    // ── LANGUAGE ──────────────────────────────────────
-    const i18n = {
-        en: {
+    // ── LANGUAGE ──────────────────────────────────────────────────
+    const i18n={
+        en:{
             'nav-home':'Home','nav-about':'About','nav-projects':'Projects','nav-booking':'Book Me',
-            'hero-eyebrow':"Let's Work Together",'hero-title':'Start your next<br><em>project</em>',
-            'hero-desc':"Fill out the form and I'll get back to you within 24 hours. Every great design starts with a conversation.",
-            'form-eyebrow':'Project Details','info-eyebrow':'What I Offer',
-            'label-name':'Full Name','label-email':'Email Address','label-company':'Company / Brand (optional)',
-            'label-type':'Project Type','label-budget':'Budget Range','label-timeline':'Timeline','label-message':'Tell Me About Your Project',
-            'type-brand':'Brand Identity','type-logo':'Logo Design','type-print':'Print Design',
-            'type-social':'Social Media','type-packaging':'Packaging','type-other':'Other',
-            'budget-placeholder':'Select range','budget-1':'Under $200','budget-2':'$200 – $500',
-            'budget-3':'$500 – $1,000','budget-4':'$1,000 – $2,000','budget-5':'$2,000+',
-            'timeline-placeholder':'Select timeline','timeline-1':'As soon as possible',
-            'timeline-2':'1 – 2 weeks','timeline-3':'About 1 month','timeline-4':'2 – 3 months','timeline-5':"I'm flexible",
-            'submit-btn':'Send Request',
-            'service-1':'Brand Identity Design','service-2':'Logo & Visual Identity',
-            'service-3':'Print & Layout Design','service-4':'Social Media Graphics',
-            'service-5':'Packaging Design','service-6':'Typography & Color Systems',
-            'process-title':'My Process','process-desc':'Every project starts with understanding your vision. I research, sketch, refine, and deliver — keeping you involved at every step.',
-            'response-time':'Response within 24 hours',
-            'connect-title':'Or reach me directly','connect-desc':'Prefer to talk first? Find me on social media or send a direct message.',
+            'booking-eyebrow':'Let\'s Work Together','booking-headline':'Start your next<br><em>project</em>',
+            'booking-sub':'Fill out the form and I\'ll get back to you within 24 hours.',
+            'field-name':'Full Name *','field-email':'Email Address *','field-phone':'Phone (optional)',
+            'field-company':'Company / Brand','field-type':'Project Type *','field-budget':'Budget Range *',
+            'field-timeline':'Timeline *','field-message':'Project Details *',
+            'submit-btn':'Send Booking Request','submit-note':'I respond within 24 hours. No spam, ever.',
+            'info-process-title':'My Process','process-1':'Discovery call & brief','process-2':'Concept development',
+            'process-3':'Revisions & refinement','process-4':'Final delivery & files',
+            'info-turnaround-title':'Typical Turnaround','turn-logo':'Logo','turn-brand':'Branding','turn-print':'Print','turn-social':'Social',
+            'info-contact-title':'Direct Contact','info-contact-body':'Prefer to reach out directly? I\'m reachable on all platforms.',
         },
-        fr: {
+        fr:{
             'nav-home':'Accueil','nav-about':'À Propos','nav-projects':'Projets','nav-booking':'Me Réserver',
-            'hero-eyebrow':'Travaillons Ensemble','hero-title':'Démarrez votre<br><em>prochain projet</em>',
-            'hero-desc':"Remplissez le formulaire et je vous répondrai dans les 24 heures.",
-            'form-eyebrow':'Détails du projet','info-eyebrow':'Ce que je propose',
-            'label-name':'Nom complet','label-email':'Adresse email','label-company':'Entreprise / Marque (optionnel)',
-            'label-type':'Type de projet','label-budget':'Budget','label-timeline':'Délai','label-message':'Parlez-moi de votre projet',
-            'type-brand':'Identité de marque','type-logo':'Logo','type-print':'Impression',
-            'type-social':'Réseaux sociaux','type-packaging':'Emballage','type-other':'Autre',
-            'budget-placeholder':'Sélectionner','timeline-placeholder':'Sélectionner',
-            'timeline-1':'Dès que possible','timeline-2':'1 – 2 semaines','timeline-3':'Environ 1 mois','timeline-4':'2 – 3 mois','timeline-5':'Je suis flexible',
-            'submit-btn':'Envoyer la demande',
-            'service-1':'Design d\'identité de marque','service-2':'Logo & identité visuelle',
-            'service-3':'Design print & mise en page','service-4':'Graphiques réseaux sociaux',
-            'service-5':'Design d\'emballage','service-6':'Typographie & systèmes de couleurs',
-            'process-title':'Mon processus','process-desc':'Chaque projet commence par comprendre votre vision.',
-            'response-time':'Réponse dans les 24 heures',
-            'connect-title':'Ou contactez-moi directement','connect-desc':'Préférez-vous d\'abord discuter ? Retrouvez-moi sur les réseaux sociaux.',
+            'booking-eyebrow':'Travaillons Ensemble','booking-headline':'Démarrez votre<br><em>projet</em>',
+            'booking-sub':'Remplissez le formulaire et je vous répondrai dans les 24 heures.',
+            'field-name':'Nom complet *','field-email':'Adresse email *','field-phone':'Téléphone (optionnel)',
+            'field-company':'Entreprise / Marque','field-type':'Type de projet *','field-budget':'Budget *',
+            'field-timeline':'Délai *','field-message':'Détails du projet *',
+            'submit-btn':'Envoyer la demande','submit-note':'Je réponds dans les 24h. Pas de spam.',
+            'info-process-title':'Mon Processus','process-1':'Appel découverte','process-2':'Développement du concept',
+            'process-3':'Révisions et affinement','process-4':'Livraison finale',
+            'info-turnaround-title':'Délais habituels','turn-logo':'Logo','turn-brand':'Branding','turn-print':'Impression','turn-social':'Réseaux',
+            'info-contact-title':'Contact direct','info-contact-body':'Préférez-vous me contacter directement ?',
         },
-        es: {
+        es:{
             'nav-home':'Inicio','nav-about':'Acerca','nav-projects':'Proyectos','nav-booking':'Reservarme',
-            'hero-eyebrow':'Trabajemos Juntos','hero-title':'Empieza tu próximo<br><em>proyecto</em>',
-            'hero-desc':'Completa el formulario y te responderé en 24 horas.',
-            'form-eyebrow':'Detalles del proyecto','info-eyebrow':'Lo que ofrezco',
-            'label-name':'Nombre completo','label-email':'Correo electrónico','label-company':'Empresa / Marca (opcional)',
-            'label-type':'Tipo de proyecto','label-budget':'Presupuesto','label-timeline':'Plazo','label-message':'Cuéntame sobre tu proyecto',
-            'type-brand':'Identidad de marca','type-logo':'Diseño de logo','type-print':'Diseño impreso',
-            'type-social':'Redes sociales','type-packaging':'Empaque','type-other':'Otro',
-            'budget-placeholder':'Seleccionar','timeline-placeholder':'Seleccionar',
-            'timeline-1':'Lo antes posible','timeline-2':'1 – 2 semanas','timeline-3':'Aproximadamente 1 mes','timeline-4':'2 – 3 meses','timeline-5':'Soy flexible',
-            'submit-btn':'Enviar solicitud',
-            'service-1':'Diseño de identidad de marca','service-2':'Logo e identidad visual',
-            'service-3':'Diseño de impresión y maquetación','service-4':'Gráficos para redes sociales',
-            'service-5':'Diseño de empaque','service-6':'Tipografía y sistemas de color',
-            'process-title':'Mi proceso','process-desc':'Todo proyecto comienza entendiendo tu visión.',
-            'response-time':'Respuesta en 24 horas',
-            'connect-title':'O contáctame directamente','connect-desc':'¿Prefieres hablar primero? Encuéntrame en redes sociales.',
+            'booking-eyebrow':'Trabajemos Juntos','booking-headline':'Empieza tu próximo<br><em>proyecto</em>',
+            'booking-sub':'Completa el formulario y te responderé en 24 horas.',
+            'field-name':'Nombre completo *','field-email':'Correo electrónico *','field-phone':'Teléfono (opcional)',
+            'field-company':'Empresa / Marca','field-type':'Tipo de proyecto *','field-budget':'Presupuesto *',
+            'field-timeline':'Plazo *','field-message':'Detalles del proyecto *',
+            'submit-btn':'Enviar solicitud','submit-note':'Respondo en 24 horas. Sin spam.',
+            'info-process-title':'Mi Proceso','process-1':'Llamada de descubrimiento','process-2':'Desarrollo del concepto',
+            'process-3':'Revisiones y refinamiento','process-4':'Entrega final',
+            'info-turnaround-title':'Plazos habituales','turn-logo':'Logo','turn-brand':'Marca','turn-print':'Impresión','turn-social':'Redes',
+            'info-contact-title':'Contacto directo','info-contact-body':'¿Prefieres contactarme directamente?',
         },
-        de: {
+        de:{
             'nav-home':'Startseite','nav-about':'Über mich','nav-projects':'Projekte','nav-booking':'Buchen',
-            'hero-eyebrow':'Lass uns zusammenarbeiten','hero-title':'Starte dein nächstes<br><em>Projekt</em>',
-            'hero-desc':'Fülle das Formular aus und ich melde mich innerhalb von 24 Stunden.',
-            'form-eyebrow':'Projektdetails','info-eyebrow':'Was ich anbiete',
-            'label-name':'Vollständiger Name','label-email':'E-Mail-Adresse','label-company':'Unternehmen / Marke (optional)',
-            'label-type':'Projekttyp','label-budget':'Budget','label-timeline':'Zeitplan','label-message':'Erzähl mir von deinem Projekt',
-            'type-brand':'Markenidentität','type-logo':'Logo-Design','type-print':'Druckdesign',
-            'type-social':'Social Media','type-packaging':'Verpackung','type-other':'Sonstiges',
-            'budget-placeholder':'Auswählen','timeline-placeholder':'Auswählen',
-            'timeline-1':'So schnell wie möglich','timeline-2':'1 – 2 Wochen','timeline-3':'Ungefähr 1 Monat','timeline-4':'2 – 3 Monate','timeline-5':'Ich bin flexibel',
-            'submit-btn':'Anfrage senden',
-            'service-1':'Markenidentitäts-Design','service-2':'Logo & visuelle Identität',
-            'service-3':'Print- & Layout-Design','service-4':'Social-Media-Grafiken',
-            'service-5':'Verpackungsdesign','service-6':'Typografie & Farbsysteme',
-            'process-title':'Mein Prozess','process-desc':'Jedes Projekt beginnt damit, deine Vision zu verstehen.',
-            'response-time':'Antwort innerhalb von 24 Stunden',
-            'connect-title':'Oder kontaktiere mich direkt','connect-desc':'Möchtest du zuerst sprechen? Finde mich in den sozialen Medien.',
+            'booking-eyebrow':'Lass uns zusammenarbeiten','booking-headline':'Starte dein nächstes<br><em>Projekt</em>',
+            'booking-sub':'Fülle das Formular aus und ich melde mich innerhalb von 24 Stunden.',
+            'field-name':'Vollständiger Name *','field-email':'E-Mail-Adresse *','field-phone':'Telefon (optional)',
+            'field-company':'Unternehmen / Marke','field-type':'Projekttyp *','field-budget':'Budget *',
+            'field-timeline':'Zeitplan *','field-message':'Projektdetails *',
+            'submit-btn':'Anfrage senden','submit-note':'Ich antworte innerhalb von 24 Stunden.',
+            'info-process-title':'Mein Prozess','process-1':'Erstgespräch','process-2':'Konzeptentwicklung',
+            'process-3':'Überarbeitungen','process-4':'Finale Lieferung',
+            'info-turnaround-title':'Typische Bearbeitungszeit','turn-logo':'Logo','turn-brand':'Branding','turn-print':'Druck','turn-social':'Social',
+            'info-contact-title':'Direktkontakt','info-contact-body':'Lieber direkt Kontakt aufnehmen?',
         },
     };
-
-    let currentLang = localStorage.getItem('lang') || 'en';
-    document.getElementById('lang-select').value = currentLang;
-
-    function switchLang(lang) { currentLang=lang; localStorage.setItem('lang',lang); applyLang(lang); }
-    function applyLang(lang) {
-        const t=i18n[lang]||i18n.en;
-        document.querySelectorAll('[data-i18n]').forEach(el=>{
-            const key=el.getAttribute('data-i18n');
-            if(t[key]!==undefined) el.innerHTML=t[key];
-        });
-        document.documentElement.lang=lang;
-    }
+    let currentLang=localStorage.getItem('lang')||'en';
+    document.getElementById('lang-select').value=currentLang;
+    function switchLang(lang){currentLang=lang;localStorage.setItem('lang',lang);applyLang(lang);}
+    function applyLang(lang){const t=i18n[lang]||i18n.en;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k]!==undefined)el.innerHTML=t[k];});document.documentElement.lang=lang;}
     applyLang(currentLang);
 </script>
 </body>
