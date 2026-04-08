@@ -6,5 +6,35 @@
   "workShort": "",
   "workFull": "",
   "skillsShort": "",
-  "skillsFull": ""
+  "skillsFull": "",
+  "reviews": [
+    {
+      "id": 1,
+      "name": "PRINCE PRINCE PRINCE",
+      "role": "Founder, AK Studio",
+      "quote": "Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional.",
+      "stars": 5
+    },
+    {
+      "id": 2,
+      "name": "Julius Mensah",
+      "role": "Marketing Director",
+      "quote": "The attention to detail was remarkable. Every revision was handled swiftly.",
+      "stars": 5
+    },
+    {
+      "id": 3,
+      "name": "Efua Asante",
+      "role": "Creative Director",
+      "quote": "Working with Prince was smooth from start to finish. He understood the brief immediately.",
+      "stars": 5
+    },
+    {
+      "id": 4,
+      "name": "Kofi Osei",
+      "role": "Business Owner",
+      "quote": "Highly recommended. Prince brings creativity and professionalism to every project.",
+      "stars": 5
+    }
+  ]
 }
