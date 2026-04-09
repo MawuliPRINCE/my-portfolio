@@ -335,7 +335,7 @@
                 <h3 data-i18n="info-contact-title">Direct Contact</h3>
                 <p data-i18n="info-contact-body">Prefer to reach out directly? I'm reachable on all platforms.</p>
                 <ul class="info-list" style="margin-top:.75rem;" id="contact-links">
-                    <li><i class="fas fa-envelope"></i> <a href="mailto:" id="contact-email" style="color:var(--accent);text-decoration:none;">Loading…</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection#b8" id="contact-email" style="color:var(--accent);text-decoration:none;">Loading…</a></li>
                 </ul>
             </div>
         </div>
@@ -350,7 +350,7 @@
 
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     document.getElementById('menu-year').textContent =
     document.getElementById('footer-year').textContent = new Date().getFullYear();
 
@@ -387,8 +387,9 @@
         if(d.email){ const el=document.getElementById('contact-email'); el.href='mailto:'+d.email; el.textContent=d.email; }
     }).catch(()=>{});
 
-    // ── SUBMIT ────────────────────────────────────────────────────
-    // Saves to bookings.json in GitHub — shows up in admin Studio
+    // ── SUBMIT ─────────────────────────────────────────────────────
+    // Saves directly to bookings.json in your GitHub repo.
+    // Token is read from localStorage (set when you log into admin).
     async function submitBooking(e){
         e.preventDefault();
         const btn=document.getElementById('submit-btn');
@@ -396,58 +397,75 @@
         const successEl=document.getElementById('success-msg');
         errEl.style.display='none';
 
-        // Validate type
-        if(!selectedType){ errEl.textContent='Please select a project type.'; errEl.style.display='block'; return; }
+        if(!selectedType){
+            errEl.textContent='Please select a project type.';
+            errEl.style.display='block'; return;
+        }
 
         const submission={
-            id: 'booking_'+Date.now(),
-            date: new Date().toISOString(),
-            name: document.getElementById('f-name').value.trim(),
-            email: document.getElementById('f-email').value.trim(),
-            phone: document.getElementById('f-phone').value.trim(),
-            company: document.getElementById('f-company').value.trim(),
-            projectType: selectedType,
-            budget: document.getElementById('f-budget').value,
-            timeline: document.getElementById('f-timeline').value,
-            message: document.getElementById('f-message').value.trim(),
-            read: false,
-            replied: false
+            id:'booking_'+Date.now(),
+            date:new Date().toISOString(),
+            name:document.getElementById('f-name').value.trim(),
+            email:document.getElementById('f-email').value.trim(),
+            phone:document.getElementById('f-phone').value.trim(),
+            company:document.getElementById('f-company').value.trim(),
+            projectType:selectedType,
+            budget:document.getElementById('f-budget').value,
+            timeline:document.getElementById('f-timeline').value,
+            message:document.getElementById('f-message').value.trim(),
+            read:false, replied:false
         };
 
         btn.disabled=true;
         btn.querySelector('span').textContent='Sending…';
 
-        // If GitHub config available (from localStorage), save to repo
         const user=cfg.user, repo=cfg.repo, branch=cfg.branch||'main';
-        const token=sessionStorage.getItem('cms_tok'); // only available if admin is open in same session
+        // Token: check sessionStorage first, then localStorage (admin saves it there on login)
+        const token=sessionStorage.getItem('cms_tok') || localStorage.getItem('cms_tok_persist');
 
-        if(user && repo && token){
-            try{
-                // Get existing bookings
-                let existingSHA=null, existingBookings=[];
-                const r=await fetch(`https://api.github.com/repos/${user}/${repo}/contents/bookings.json?ref=${branch}`,
-                    {headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'}});
-                if(r.ok){const d=await r.json();existingSHA=d.sha;existingBookings=JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))));}
-                existingBookings.push(submission);
-                const body={message:`New booking from ${submission.name}`,content:btoa(unescape(encodeURIComponent(JSON.stringify(existingBookings,null,2)))),branch};
-                if(existingSHA)body.sha=existingSHA;
-                await fetch(`https://api.github.com/repos/${user}/${repo}/contents/bookings.json`,
-                    {method:'PUT',headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});
-                document.getElementById('booking-form').style.display='none';
-                successEl.style.display='block';
-            }catch(err){
-                // Fallback — store locally and show success anyway
-                const pending=JSON.parse(localStorage.getItem('pending_bookings')||'[]');
-                pending.push(submission); localStorage.setItem('pending_bookings',JSON.stringify(pending));
-                document.getElementById('booking-form').style.display='none';
-                successEl.style.display='block';
+        try {
+            if(!user || !repo || !token) throw new Error('No GitHub config — storing locally');
+
+            // Read existing bookings.json
+            let sha=null, existing=[];
+            const res=await fetch(
+                `https://api.github.com/repos/${user}/${repo}/contents/bookings.json?ref=${branch}&t=${Date.now()}`,
+                {headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'}}
+            );
+            if(res.ok){
+                const data=await res.json();
+                sha=data.sha;
+                existing=JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))));
             }
-        } else {
-            // No token in session — store locally until admin syncs
-            const pending=JSON.parse(localStorage.getItem('pending_bookings')||'[]');
-            pending.push(submission); localStorage.setItem('pending_bookings',JSON.stringify(pending));
+
+            existing.push(submission);
+            const body={
+                message:`New booking from ${submission.name} — ${new Date().toLocaleDateString()}`,
+                content:btoa(unescape(encodeURIComponent(JSON.stringify(existing,null,2)))),
+                branch
+            };
+            if(sha) body.sha=sha;
+
+            const put=await fetch(
+                `https://api.github.com/repos/${user}/${repo}/contents/bookings.json`,
+                {method:'PUT',headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)}
+            );
+
+            if(!put.ok){const er=await put.json();throw new Error(er.message);}
+
+            // Success — saved to GitHub
             document.getElementById('booking-form').style.display='none';
             successEl.style.display='block';
+
+        } catch(err) {
+            // Fallback: store in localStorage so admin can pick it up
+            const pending=JSON.parse(localStorage.getItem('pending_bookings')||'[]');
+            pending.push(submission);
+            localStorage.setItem('pending_bookings',JSON.stringify(pending));
+            // Still show success to the visitor
+            document.getElementById('booking-form').style.display='none';
+            successEl.style.display='block';
+            console.warn('Booking saved locally (GitHub unavailable):', err.message);
         }
     }
 
@@ -509,8 +527,4 @@
     let currentLang=localStorage.getItem('lang')||'en';
     document.getElementById('lang-select').value=currentLang;
     function switchLang(lang){currentLang=lang;localStorage.setItem('lang',lang);applyLang(lang);}
-    function applyLang(lang){const t=i18n[lang]||i18n.en;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k]!==undefined)el.innerHTML=t[k];});document.documentElement.lang=lang;}
-    applyLang(currentLang);
-</script>
-</body>
-</html>
+    function applyLang(lang){const t=i18n[lang]||i18n.en;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');i
