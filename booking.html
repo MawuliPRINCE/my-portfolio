@@ -387,9 +387,13 @@
         if(d.email){ const el=document.getElementById('contact-email'); el.href='mailto:'+d.email; el.textContent=d.email; }
     }).catch(()=>{});
 
-    // ── SUBMIT ─────────────────────────────────────────────────────
-    // Saves directly to bookings.json in your GitHub repo.
-    // Token is read from localStorage (set when you log into admin).
+    // ── SUBMIT ────────────────────────────────────────────────────
+    // Uses Formspree to reliably deliver bookings to your email.
+    // IMPORTANT: Replace YOUR_FORM_ID below with your Formspree form ID.
+    // 1. Go to https://formspree.io → New Form → copy the form ID (e.g. xpzgkdvw)
+    // 2. Replace YOUR_FORM_ID with it
+    const FORMSPREE_ID = 'YOUR_FORM_ID';
+
     async function submitBooking(e){
         e.preventDefault();
         const btn=document.getElementById('submit-btn');
@@ -419,53 +423,44 @@
         btn.disabled=true;
         btn.querySelector('span').textContent='Sending…';
 
-        const user=cfg.user, repo=cfg.repo, branch=cfg.branch||'main';
-        // Token: check sessionStorage first, then localStorage (admin saves it there on login)
-        const token=sessionStorage.getItem('cms_tok') || localStorage.getItem('cms_tok_persist');
-
         try {
-            if(!user || !repo || !token) throw new Error('No GitHub config — storing locally');
+            if(FORMSPREE_ID === 'YOUR_FORM_ID') throw new Error('Formspree not configured');
 
-            // Read existing bookings.json
-            let sha=null, existing=[];
-            const res=await fetch(
-                `https://api.github.com/repos/${user}/${repo}/contents/bookings.json?ref=${branch}&t=${Date.now()}`,
-                {headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json'}}
-            );
-            if(res.ok){
-                const data=await res.json();
-                sha=data.sha;
-                existing=JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))));
-            }
+            // Send via Formspree — delivers to your email automatically
+            const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                    name: submission.name,
+                    email: submission.email,
+                    phone: submission.phone,
+                    company: submission.company,
+                    projectType: submission.projectType,
+                    budget: submission.budget,
+                    timeline: submission.timeline,
+                    message: submission.message,
+                    _subject: `New Booking: ${submission.projectType} from ${submission.name}`,
+                })
+            });
 
-            existing.push(submission);
-            const body={
-                message:`New booking from ${submission.name} — ${new Date().toLocaleDateString()}`,
-                content:btoa(unescape(encodeURIComponent(JSON.stringify(existing,null,2)))),
-                branch
-            };
-            if(sha) body.sha=sha;
+            if(!res.ok) throw new Error('Formspree error');
 
-            const put=await fetch(
-                `https://api.github.com/repos/${user}/${repo}/contents/bookings.json`,
-                {method:'PUT',headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)}
-            );
+            // Also queue in localStorage so admin can sync it to bookings.json
+            const pending=JSON.parse(localStorage.getItem('pending_bookings')||'[]');
+            pending.push(submission);
+            localStorage.setItem('pending_bookings',JSON.stringify(pending));
 
-            if(!put.ok){const er=await put.json();throw new Error(er.message);}
-
-            // Success — saved to GitHub
             document.getElementById('booking-form').style.display='none';
             successEl.style.display='block';
 
         } catch(err) {
-            // Fallback: store in localStorage so admin can pick it up
+            // Fallback — store locally and still show success
             const pending=JSON.parse(localStorage.getItem('pending_bookings')||'[]');
             pending.push(submission);
             localStorage.setItem('pending_bookings',JSON.stringify(pending));
-            // Still show success to the visitor
             document.getElementById('booking-form').style.display='none';
             successEl.style.display='block';
-            console.warn('Booking saved locally (GitHub unavailable):', err.message);
+            console.warn('Booking saved locally:', err.message);
         }
     }
 
