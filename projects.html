@@ -88,11 +88,11 @@
       opacity: 0;
       transition: opacity .7s;
       cursor: pointer;
-      pointer-events: none;   /* ← key fix: invisible slides can't be clicked */
+      pointer-events: none;
     }
     .slide.active {
       opacity: 1;
-      pointer-events: all;    /* ← only the visible slide receives clicks */
+      pointer-events: all;
     }
 
     .slide-media { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -191,12 +191,47 @@
     .read-more-btn i { transition: transform 0.3s; }
     .read-more-btn.expanded i { transform: rotate(180deg); }
 
-    /* Gallery */
-    .modal-gallery { display: grid; grid-template-columns: repeat(3,1fr); gap: .85rem; }
-    @media (max-width: 600px) { .modal-gallery { grid-template-columns: repeat(2,1fr); gap: .5rem; } }
-    .gallery-item { aspect-ratio: 16/10; overflow: hidden; background: var(--surface); border: 1px solid var(--border); cursor: pointer; position: relative; }
-    .gallery-item img, .gallery-item video { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
-    .gallery-item:hover img, .gallery-item:hover video { transform: scale(1.05); }
+    /* Gallery - modal only masonry */
+    .modal-overlay .modal-gallery {
+      display: block;
+      column-count: 3;
+      column-gap: .85rem;
+    }
+    @media (max-width: 600px) {
+      .modal-overlay .modal-gallery {
+        column-count: 2;
+        column-gap: .5rem;
+      }
+    }
+    .modal-overlay .modal-gallery .gallery-item {
+      display: block;
+      break-inside: avoid;
+      margin: 0 0 .85rem;
+      aspect-ratio: auto;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      position: relative;
+    }
+    @media (max-width: 600px) {
+      .modal-overlay .modal-gallery .gallery-item {
+        margin-bottom: .5rem;
+      }
+    }
+    .modal-overlay .modal-gallery .gallery-item img,
+    .modal-overlay .modal-gallery .gallery-item video {
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      object-fit: contain;
+      display: block;
+      transition: none;
+    }
+    .modal-overlay .modal-gallery .gallery-item:hover img,
+    .modal-overlay .modal-gallery .gallery-item:hover video {
+      transform: none;
+    }
 
     /* Preview iframe */
     .preview-section { margin-bottom: 2.5rem; }
@@ -245,10 +280,10 @@
 <nav class="menu" id="menu">
   <div class="menu-divider"></div>
   <ul>
-    <li><a href="index.html"    onclick="closeMenu()" data-i18n="nav-home">Home</a></li>
-    <li><a href="about.html"    onclick="closeMenu()" data-i18n="nav-about">About</a></li>
+    <li><a href="index.html" onclick="closeMenu()" data-i18n="nav-home">Home</a></li>
+    <li><a href="about.html" onclick="closeMenu()" data-i18n="nav-about">About</a></li>
     <li><a href="projects.html" onclick="closeMenu()" class="active" data-i18n="nav-projects">Projects</a></li>
-    <li><a href="booking.html"  onclick="closeMenu()" data-i18n="nav-booking">Book Me</a></li>
+    <li><a href="booking.html" onclick="closeMenu()" data-i18n="nav-booking">Book Me</a></li>
   </ul>
   <p class="menu-footer">© <span id="menu-year"></span> Prince</p>
 </nav>
@@ -314,9 +349,9 @@
       const res = await fetch(JSON_URL + '?t=' + Date.now());
       if (!res.ok) throw new Error();
       allProjects = await res.json();
-      recents      = allProjects.filter(p => p.isRecent);
+      recents = allProjects.filter(p => p.isRecent);
       projectsOnly = allProjects.filter(p => !p.isRecent);
-      filtered     = [...projectsOnly];
+      filtered = [...projectsOnly];
       renderFilters(); renderProjects(); renderRecents();
     } catch(e) {
       document.getElementById('projects-wrap').innerHTML = `<div class="state-box"><h3>Could not load</h3><p>Check projects.json exists in your repo.</p></div>`;
@@ -332,8 +367,8 @@
   }
 
   const menuEl=document.getElementById('menu'), backdrop=document.getElementById('menu-backdrop'), hamBtn=document.getElementById('hamburger');
-  function openMenu()   { menuEl.classList.add('open'); backdrop.classList.add('open'); hamBtn.classList.add('open'); document.body.style.overflow='hidden'; }
-  function closeMenu()  { menuEl.classList.remove('open'); backdrop.classList.remove('open'); hamBtn.classList.remove('open'); document.body.style.overflow=''; }
+  function openMenu() { menuEl.classList.add('open'); backdrop.classList.add('open'); hamBtn.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeMenu() { menuEl.classList.remove('open'); backdrop.classList.remove('open'); hamBtn.classList.remove('open'); document.body.style.overflow=''; }
   function toggleMenu() { menuEl.classList.contains('open') ? closeMenu() : openMenu(); }
   document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeMenu(); closeModal(); closeLightbox({target:document.getElementById('lightbox')}); } });
   let mTX=0;
@@ -390,7 +425,6 @@
     countEl.textContent=recents.length+' items';
     wrap.innerHTML=recents.map((p,i)=>{
       const cover=getCover(p), isVid=cover&&isVideoUrl(cover);
-      // Store project ID as data attribute for reliable click handling
       return `<div class="slide ${i===0?'active':''}" data-id="${esc(p.id)}">
         ${cover?isVid
           ?`<video class="slide-media" src="${esc(cover)}" muted loop autoplay playsinline disablepictureinpicture style="pointer-events:none;"></video>`
@@ -405,7 +439,6 @@
       </div>`;
     }).join('');
 
-    // Use event delegation on the wrapper — reads data-id from the active slide
     wrap.addEventListener('click', () => {
       const activeSlide = wrap.querySelector('.slide.active');
       if(activeSlide) openModal(activeSlide.dataset.id);
@@ -466,7 +499,7 @@
         <script>window._previewUrl="${esc(p.previewUrl)}";<\/script>`:''}
       <div class="modal-grid">
         <div>
-          ${p.description ? (()=>{
+          ${p.description ? (()=> {
             const full=esc(p.description).replace(/\n/g,'<br/>');
             const isLong=full.length>380;
             return `<p class="modal-description ${isLong?'':'expanded'}" id="modal-desc" ${isLong?`data-full="${full.replace(/"/g,'&quot;')}"`:''}>${isLong?full.substring(0,380)+'…':full}</p>
