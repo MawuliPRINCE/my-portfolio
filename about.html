@@ -1,49 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About — Ismael Asumanu Prince</title>
-    <meta name="description" content="Ismael Asumanu Prince — Graphic Designer and Brand Identity Designer based in Ghana.">
-    <meta property="og:title" content="About — Ismael Asumanu Prince">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://mawuliprince.github.io/my-portfolio/about.html">
-    <meta property="og:image" content="https://mawuliprince.github.io/my-portfolio/og-image.jpg">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-size='80' font-family='serif' fill='%23ff4500'>P</text></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Ismael Asumanu Prince</title>
+  <meta name="description" content="Ismael Asumanu Prince — Graphic Designer and Brand Identity Designer based in Ghana.">
+  <meta property="og:title" content="About — Ismael Asumanu Prince">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mawuliprince.github.io/my-portfolio/about.html">
+  <meta property="og:image" content="https://mawuliprince.github.io/my-portfolio/og-image.jpg">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-size='80' font-family='serif' fill='%23ff4500'>P</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
     :root {
-        --bg:#faf9f7; --surface:#f2f0ec; --text:#111; --muted:#888;
-        --border:#e0ddd8; --accent:#ff4500; --accent-dim:rgba(255,69,0,0.08);
-        --dark:#0d0d0d; --dark-surface:#161616;
-        --footer-bg:#0d0d0d; --footer-text:#f0ede8;
-        --gold:#c8a96e;
+      --bg:#faf9f7; --surface:#f2f0ec; --text:#111; --muted:#888;
+      --border:#e0ddd8; --accent:#ff4500; --accent-dim:rgba(255,69,0,0.08);
+      --dark:#0d0d0d; --dark-surface:#161616;
+      --footer-bg:#0d0d0d; --footer-text:#f0ede8;
+      --gold:#c8a96e;
     }
     body.dark {
-        --bg:#0d0d0d; --surface:#161616; --text:#f0ede8; --muted:#555;
-        --border:#2a2a2a; --accent-dim:rgba(255,69,0,0.1);
-        --footer-bg:#fff; --footer-text:#111;
+      --bg:#0d0d0d; --surface:#161616; --text:#f0ede8; --muted:#555;
+      --border:#2a2a2a; --accent-dim:rgba(255,69,0,0.1);
+      --footer-bg:#fff; --footer-text:#111;
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
     html{scroll-behavior:smooth;}
-    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;transition:background .3s,color .3s;}
+    body{
+      font-family:'Space Grotesk',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      transition:background .3s,color .3s;
+    }
 
-    /* ── HEADER ── */
     header{position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:clamp(14px,2.5vw,20px) clamp(20px,4vw,48px);background:rgba(250,249,247,0.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:background .3s;}
     body.dark header{background:rgba(13,13,13,0.94);}
     .logo{color:var(--accent);font-size:clamp(17px,2vw,22px);font-weight:700;text-decoration:none;letter-spacing:-.01em;}
     .header-right{display:flex;align-items:center;gap:6px;}
-    .lang-select{appearance:none;-webkit-appearance:none;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.08em;padding:6px 26px 6px 10px;border-radius:20px;cursor:pointer;outline:none;transition:border-color .2s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;}
+    .lang-select{appearance:none;-webkit-appearance:none;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.08em;padding:6px 26px 6px 10px;border-radius:20px;cursor:pointer;outline:none;transition:border-color .2s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;}
     .lang-select:hover{border-color:var(--accent);}
     .icon-btn{width:38px;height:38px;border-radius:50%;border:none;background:none;color:var(--text);font-size:clamp(14px,1.4vw,17px);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s;}
     .icon-btn:hover{color:var(--accent);background:var(--accent-dim);}
     .hamburger .fa-bars{display:block;}.hamburger .fa-times{display:none;}
     .hamburger.open .fa-bars{display:none;}.hamburger.open .fa-times{display:block;}
 
-    /* ── MENU ── */
     .menu-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);z-index:98;opacity:0;pointer-events:none;transition:opacity .3s;}
     .menu-backdrop.open{opacity:1;pointer-events:all;}
     .menu{position:fixed;top:0;right:-100%;width:min(300px,85vw);height:100vh;background:var(--bg);display:flex;flex-direction:column;justify-content:center;align-items:center;transition:right .35s cubic-bezier(.4,0,.2,1);z-index:99;box-shadow:-8px 0 40px rgba(0,0,0,0.12);}
@@ -57,606 +61,812 @@
 
     .page{padding-top:clamp(60px,8vw,76px);}
 
-    /* ══ HERO — full dark panel ══ */
-    .hero{
-        background:var(--dark);
-        color:#f0ede8;
-        padding:clamp(64px,10vw,120px) clamp(24px,6vw,96px);
-        display:grid;
-        grid-template-columns:1fr 420px;
-        gap:clamp(40px,6vw,80px);
-        align-items:end;
-        position:relative;
-        overflow:hidden;
-        border-bottom:1px solid #1a1a1a;
+    .about-page .hero{
+      background:var(--dark);
+      color:#f0ede8;
+      padding:clamp(72px,10vw,128px) clamp(24px,6vw,96px);
+      display:grid;
+      grid-template-columns:minmax(0,1.2fr) minmax(280px,420px);
+      gap:clamp(36px,6vw,88px);
+      align-items:end;
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid #1a1a1a;
     }
-    body.dark .hero{border-bottom-color:var(--border);}
-
-    /* Faint grid texture */
-    .hero::before{
-        content:'';position:absolute;inset:0;
-        background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
-        background-size:60px 60px;
-        pointer-events:none;
+    body.dark .about-page .hero{border-bottom-color:var(--border);}
+    .about-page .hero::before{
+      content:'';position:absolute;inset:0;
+      background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
+      background-size:60px 60px;
+      pointer-events:none;
     }
-
-    .hero-left{position:relative;z-index:1;}
-
-    .hero-label{
-        font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;
-        color:var(--accent);margin-bottom:1.5rem;
-        display:flex;align-items:center;gap:.75rem;
+    .about-page .hero-left{position:relative;z-index:1;max-width:680px;}
+    .about-page .hero-label{
+      font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;
+      color:var(--accent);margin-bottom:1.1rem;
+      display:flex;align-items:center;gap:.75rem;
     }
-    .hero-label::after{content:'';width:40px;height:1px;background:var(--accent);}
-
-    .hero-title{
-        font-family:'Cormorant Garamond',serif;
-        font-size:clamp(48px,7.5vw,96px);
-        font-weight:300;line-height:.9;letter-spacing:-.03em;
-        color:#fff;margin-bottom:2rem;
+    .about-page .hero-label::after{content:'';width:40px;height:1px;background:var(--accent);}
+    .about-page .hero-title{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(48px,7.5vw,96px);
+      font-weight:300;
+      line-height:.9;
+      letter-spacing:-.03em;
+      color:#fff;
+      margin-bottom:1.5rem;
+      max-width:9ch;
     }
-    .hero-title em{font-style:italic;color:var(--accent);}
-
-    .hero-bio{
-        font-size:clamp(14px,1.5vw,16px);
-        color:rgba(240,237,232,0.6);
-        line-height:1.8;font-weight:300;
-        max-width:520px;
+    .about-page .hero-title em{font-style:italic;color:var(--accent);}
+    .about-page .hero-bio{
+      font-size:clamp(14px,1.5vw,16px);
+      color:rgba(240,237,232,0.6);
+      line-height:1.9;
+      font-weight:300;
+      max-width:58ch;
     }
-
-    /* Right side — stat + skills */
-    .hero-right{position:relative;z-index:1;display:flex;flex-direction:column;gap:2rem;}
-
-
-
-    .hero-tags{display:flex;flex-wrap:wrap;gap:.4rem;}
-    .hero-tag{
-        font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
-        padding:6px 14px;border:1px solid rgba(255,255,255,0.1);
-        color:rgba(240,237,232,0.5);
-        transition:all .2s;
+    .about-page .hero-right{
+      position:relative;z-index:1;display:flex;flex-direction:column;gap:1.25rem;
+      align-self:center;justify-self:end;width:100%;max-width:420px;
     }
-    .hero-tag:hover{border-color:var(--accent);color:var(--accent);}
-
-    /* ══ STORY — two column editorial ══ */
-    .story-section{
-        display:grid;grid-template-columns:1fr 1fr;
-        border-bottom:1px solid var(--border);
+    .about-page .hero-tags{display:flex;flex-wrap:wrap;gap:.5rem;align-content:start;}
+    .about-page .hero-tag{
+      font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+      padding:6px 14px;border:1px solid rgba(255,255,255,0.1);
+      color:rgba(240,237,232,0.5);
+      transition:all .2s;
     }
+    .about-page .hero-tag:hover{border-color:var(--accent);color:var(--accent);}
 
-    .story-left{
-        padding:clamp(48px,7vw,80px) clamp(24px,5vw,64px);
-        border-right:1px solid var(--border);
-        display:flex;flex-direction:column;justify-content:space-between;
-        gap:2.5rem;
+    .about-page .story-section{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:72px 96px;
+      padding:clamp(72px,8vw,110px) clamp(24px,6vw,96px);
+      border-bottom:1px solid var(--border);
+      position:relative;
+      transition:opacity .7s ease, transform .7s ease;
     }
-
-    .story-right{
-        padding:clamp(48px,7vw,80px) clamp(24px,5vw,64px);
-        display:flex;flex-direction:column;gap:2.5rem;
+    .about-page .story-section.fade-out{
+      opacity:0;
+      transform:scale(.985);
     }
-
-    .section-label{
-        font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;
-        color:var(--accent);display:flex;align-items:center;gap:.6rem;margin-bottom:1.5rem;
+    .about-page .story-card{
+      min-width:0;
+      font-family:'Space Grotesk',sans-serif;
     }
-    .section-label::before{content:'';width:20px;height:1px;background:var(--accent);}
-
-    .story-heading{
-        font-family:'Cormorant Garamond',serif;
-        font-size:clamp(28px,3.5vw,44px);font-weight:400;
-        line-height:1.1;color:var(--text);
+    .about-page .story-card h3{
+      display:flex;
+      align-items:center;
+      gap:.8rem;
+      font-size:clamp(1.5rem,2.2vw,2.1rem);
+      font-weight:700;
+      color:var(--accent);
+      margin-bottom:1rem;
+      font-family:'Space Grotesk',sans-serif;
     }
-    .story-heading em{font-style:italic;color:var(--accent);}
-
-    .story-body{
-        font-size:clamp(14px,1.4vw,16px);color:var(--muted);
-        line-height:1.85;font-weight:300;
+    .about-page .story-card h3 i{
+      font-size:.9em;
     }
-
-    /* Clickable detail pills */
-    .detail-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem;}
-    .detail-pill{
-        display:inline-flex;align-items:center;gap:.4rem;
-        font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;
-        padding:7px 14px;border:1px solid var(--border);
-        color:var(--muted);cursor:pointer;
-        transition:all .2s;user-select:none;
+    .about-page .story-preview{
+      font-size:clamp(1rem,1.35vw,1.15rem);
+      line-height:1.9;
+      color:var(--text);
+      max-width:34ch;
+      font-family:'Space Grotesk',sans-serif;
     }
-    .detail-pill:hover{border-color:var(--accent);color:var(--accent);}
-    .detail-pill i{font-size:.6rem;transition:transform .2s;}
-    .detail-pill.open{background:var(--accent);border-color:var(--accent);color:#fff;}
-    .detail-pill.open i{transform:rotate(45deg);}
-
-    /* Expandable detail panels */
-    .detail-panel{
-        display:none;background:var(--surface);border:1px solid var(--border);
-        border-top:2px solid var(--accent);padding:1.25rem 1.5rem;margin-top:.5rem;
-        font-size:clamp(13px,1.3vw,15px);color:var(--muted);line-height:1.8;
+    .about-page .story-more{
+      margin-top:1.4rem;
+      border:none;
+      background:none;
+      color:var(--accent);
+      font-family:'Space Grotesk',sans-serif;
+      font-size:1rem;
+      cursor:pointer;
+      padding:0;
+      transition:opacity .2s ease, transform .2s ease;
     }
-    .detail-panel.open{display:block;animation:panelIn .25s ease;}
-    @keyframes panelIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
-    .detail-panel strong{color:var(--text);font-weight:500;}
-    .detail-panel ul{padding-left:0;list-style:none;display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem;}
-    .detail-panel li{font-size:.7rem;border:1px solid var(--border);padding:4px 10px;color:var(--muted);}
-
-    /* Timeline */
-    .timeline{display:flex;flex-direction:column;gap:0;}
-    .tl-item{display:flex;gap:1.25rem;padding:1.25rem 0;border-bottom:1px solid var(--border);align-items:flex-start;}
-    .tl-item:last-child{border-bottom:none;}
-    .tl-year{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--accent);width:52px;flex-shrink:0;padding-top:.05rem;}
-    .tl-content{}
-    .tl-title{font-size:.82rem;font-weight:500;color:var(--text);margin-bottom:.2rem;}
-    .tl-sub{font-size:.72rem;color:var(--muted);line-height:1.5;}
-
-    /* ══ STATS BAR ══ */
-    .stats-bar{
-        display:grid;grid-template-columns:repeat(2,1fr);
-        background:var(--dark);
-        border-bottom:1px solid #222;
-    }
-    body.dark .stats-bar{border-bottom-color:var(--border);}
-
-    .stat-cell{
-        padding:clamp(36px,5vw,56px) clamp(24px,4vw,48px);
-        border-right:1px solid #1a1a1a;
-        display:flex;flex-direction:column;gap:.5rem;
-    }
-    .stat-cell:last-child{border-right:none;}
-    .stat-big{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,7vw,88px);font-weight:300;line-height:.9;color:#fff;letter-spacing:-.03em;}
-    .stat-big span{color:var(--accent);}
-    .stat-name{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(240,237,232,0.35);}
-
-    /* ══ REVIEWS — horizontal strip ══ */
-    .reviews-section{
-        background:var(--surface);
-        border-bottom:1px solid var(--border);
-        overflow:hidden;
+    .about-page .story-more:hover{
+      opacity:.8;
+      transform:translateX(3px);
     }
 
-    .reviews-header{
-        display:flex;align-items:center;justify-content:space-between;
-        padding:clamp(32px,4vw,48px) clamp(24px,5vw,64px) clamp(20px,3vw,32px);
-        border-bottom:1px solid var(--border);
-        flex-wrap:wrap;gap:1rem;
+    .about-page .story-detail-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.94);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      opacity:0;
+      visibility:hidden;
+      transition:opacity .7s ease, visibility .7s ease;
+      z-index:300;
+    }
+    .about-page .story-detail-overlay.active{
+      opacity:1;
+      visibility:visible;
+    }
+    .about-page .story-detail-content{
+      width:min(900px,92vw);
+      max-height:88vh;
+      overflow:auto;
+      background:transparent;
+      backdrop-filter:none;
+      -webkit-backdrop-filter:none;
+      border:none;
+      box-shadow:none;
+      padding:clamp(28px,4vw,56px);
+      position:relative;
+      transform:translateY(36px);
+      opacity:0;
+      transition:transform .7s ease, opacity .7s ease;
+    }
+    .about-page .story-detail-overlay.active .story-detail-content{
+      transform:translateY(0);
+      opacity:1;
+    }
+    .about-page .story-detail-close{
+      position:absolute;
+      top:18px;
+      right:22px;
+      border:none;
+      background:none;
+      color:var(--accent);
+      font-size:2rem;
+      line-height:1;
+      cursor:pointer;
+    }
+    .about-page #storyDetailTitle{
+      color:var(--accent);
+      font-family:'Space Grotesk',sans-serif;
+      font-size:clamp(2rem,3vw,3rem);
+      margin-bottom:1.25rem;
+      display:flex;
+      align-items:center;
+      gap:.8rem;
+      font-weight:700;
+    }
+    .about-page #storyDetailBody,
+    .about-page #storyDetailBody p,
+    .about-page #storyDetailBody li{
+      font-size:clamp(1rem,1.25vw,1.08rem);
+      line-height:1.9;
+      color:#eee;
+      font-family:'Space Grotesk',sans-serif;
+    }
+    .about-page #storyDetailBody ul{
+      margin-top:1rem;
+      padding-left:1.25rem;
     }
 
-    .reviews-header-left{}
-    .reviews-eyebrow{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;}
-    .reviews-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3vw,34px);font-weight:400;color:var(--text);}
-
-    .rev-controls{display:flex;gap:.4rem;}
-    .rev-btn{width:40px;height:40px;border:1px solid var(--border);background:none;color:var(--text);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .2s;}
-    .rev-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
-
-    /* Slider */
-    .reviews-track-wrap{overflow:hidden;}
-    .reviews-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1);will-change:transform;}
-    .review-slide{
-        min-width:100%;width:100%;flex-shrink:0;
-        display:grid;grid-template-columns:repeat(2,1fr);
-        gap:1px;background:var(--border);
+    .about-page .stats-bar{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      background:var(--dark);
+      border-bottom:1px solid #222;
+      text-align:center;
     }
-    .review-item{
-        background:var(--bg);
-        padding:clamp(24px,3.5vw,40px);
-        display:flex;flex-direction:column;gap:1.25rem;
+    body.dark .about-page .stats-bar{border-bottom-color:var(--border);}
+    .about-page .stat-cell{
+      padding:clamp(40px,5vw,64px) clamp(24px,4vw,56px);
+      border-right:1px solid #1a1a1a;
+      display:flex;
+      flex-direction:column;
+      gap:.75rem;
+      justify-content:center;
+      align-items:center;
+      min-height:220px;
+    }
+    .about-page .stat-cell:last-child{border-right:none;}
+    .about-page .stat-big{
+      font-family:'Space Grotesk',sans-serif;
+      font-size:clamp(56px,7vw,88px);
+      font-weight:700;
+      line-height:.95;
+      color:#fff;
+      letter-spacing:-.04em;
+    }
+    .about-page .stat-big span{color:var(--accent);}
+    .about-page .stat-name{
+      font-family:'Space Grotesk',sans-serif;
+      font-size:.72rem;
+      font-weight:700;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:rgba(240,237,232,0.7);
+      margin-top:0;
+      text-align:center;
     }
 
-    .review-quote-mark{
-        font-family:'Cormorant Garamond',serif;
-        font-size:3rem;line-height:.7;
-        color:var(--accent);opacity:.3;font-weight:300;
-        margin-bottom:-.25rem;
+    .about-page .reviews-section{
+      background:var(--surface);
+      border-bottom:1px solid var(--border);
+      overflow:hidden;
     }
-    .review-text{
-        font-family:'Cormorant Garamond',serif;
-        font-size:clamp(15px,1.8vw,18px);
-        font-style:italic;font-weight:300;
-        line-height:1.65;color:var(--text);flex:1;
+    .about-page .reviews-header{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:clamp(40px,4vw,56px) clamp(24px,5vw,72px) clamp(22px,3vw,32px);
+      border-bottom:1px solid var(--border);
+      flex-wrap:wrap;gap:1rem;
     }
-    .review-bottom{display:flex;align-items:center;gap:.75rem;padding-top:1rem;border-top:1px solid var(--border);}
-    .review-av{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;font-size:.7rem;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-    .review-name{font-size:.82rem;font-weight:500;color:var(--text);}
-    .review-role{font-size:.65rem;color:var(--muted);}
-    .review-stars{font-size:.65rem;color:var(--gold);letter-spacing:2px;margin-top:.1rem;}
+    .about-page .reviews-header-left{max-width:560px;}
+    .about-page .reviews-eyebrow{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;font-family:'Space Grotesk',sans-serif;}
+    .about-page .reviews-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(22px,3vw,34px);font-weight:700;color:var(--text);line-height:1.1;}
+    .about-page .rev-controls{display:flex;gap:.4rem;}
+    .about-page .rev-btn{width:40px;height:40px;border:1px solid var(--border);background:none;color:var(--text);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .2s;}
+    .about-page .rev-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
 
-    /* Dots */
-    .rev-dots{display:flex;gap:.35rem;padding:1rem clamp(24px,5vw,64px);background:var(--surface);}
-    .rev-dot{width:5px;height:5px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .3s;}
-    .rev-dot.active{background:var(--accent);width:16px;border-radius:3px;}
+    .about-page .reviews-track-wrap{overflow:hidden;position:relative;}
+    .about-page .reviews-track{display:flex;will-change:transform;}
+    .about-page .review-slide{
+      min-width:100%;
+      width:100%;
+      flex-shrink:0;
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:1px;
+      background:var(--border);
+    }
+    .about-page .review-item{
+      background:var(--bg);
+      padding:clamp(28px,3.5vw,44px);
+      display:flex;flex-direction:column;gap:1.25rem;min-height:100%;
+      font-family:'Space Grotesk',sans-serif;
+    }
+    .about-page .review-quote-mark{
+      font-family:'Cormorant Garamond',serif;
+      font-size:3rem;line-height:.7;
+      color:var(--accent);opacity:.3;font-weight:300;
+      margin-bottom:-.25rem;
+    }
+    .about-page .review-text{
+      font-family:'Space Grotesk',sans-serif;
+      font-size:clamp(15px,1.8vw,18px);
+      font-weight:400;
+      line-height:1.75;color:var(--text);flex:1;max-width:34ch;
+    }
+    .about-page .review-bottom{display:flex;align-items:center;gap:.75rem;padding-top:1rem;border-top:1px solid var(--border);margin-top:auto;}
+    .about-page .review-av{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;font-size:.7rem;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .about-page .review-name{font-size:.82rem;font-weight:700;color:var(--text);font-family:'Space Grotesk',sans-serif;}
+    .about-page .review-role{font-size:.65rem;color:var(--muted);font-family:'Space Grotesk',sans-serif;}
+    .about-page .review-stars{font-size:.65rem;color:var(--gold);letter-spacing:2px;margin-top:.1rem;}
 
-    /* ══ FOOTER ══ */
-    footer{background:var(--footer-bg);color:var(--footer-text);padding:clamp(48px,7vw,80px) clamp(24px,5vw,80px) clamp(32px,4vw,48px);transition:background .3s,color .3s;}
-    .footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(128,128,128,0.15);margin-bottom:2rem;}
-    .footer-head{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4.5vw,52px);font-weight:400;line-height:1;}
-    .footer-accent-bar{width:36px;height:2px;background:var(--accent);margin:.85rem 0 1.1rem;}
-    footer p{font-size:clamp(13px,1.3vw,15px);color:var(--footer-text);opacity:.55;max-width:400px;line-height:1.7;font-weight:300;}
-    .social-row{display:flex;gap:.65rem;flex-wrap:wrap;}
-    .social-icon{width:42px;height:42px;border-radius:50%;border:1px solid rgba(128,128,128,0.25);display:flex;align-items:center;justify-content:center;color:var(--footer-text);text-decoration:none;font-size:14px;opacity:.65;transition:all .2s;}
-    .social-icon:hover{color:var(--accent);border-color:var(--accent);opacity:1;transform:translateY(-2px);}
-    .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.65rem;color:var(--footer-text);opacity:.3;}
-    .go-to-top{width:40px;height:40px;border-radius:50%;background:var(--accent);border:none;color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s;opacity:1;}
-    .go-to-top:hover{transform:translateY(-3px);}
+    .about-page .rev-dots{display:flex;gap:.35rem;padding:1rem clamp(24px,5vw,72px) 1.4rem;background:var(--surface);}
+    .about-page .rev-dot{width:5px;height:5px;border-radius:50%;background:var(--border);transition:all .3s;}
+    .about-page .rev-dot.active{background:var(--accent);width:16px;border-radius:3px;}
 
-    /* ══ REVEAL ══ */
+    .about-page footer{background:var(--footer-bg);color:var(--footer-text);padding:clamp(56px,7vw,88px) clamp(24px,5vw,80px) clamp(32px,4vw,48px);transition:background .3s,color .3s;font-family:'Space Grotesk',sans-serif;}
+    .about-page .footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2.5rem;padding-bottom:2.75rem;border-bottom:1px solid rgba(128,128,128,0.15);margin-bottom:2rem;}
+    .about-page .footer-top>div:first-child{max-width:560px;}
+    .about-page .footer-head{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4.5vw,52px);font-weight:700;line-height:1;}
+    .about-page .footer-accent-bar{width:36px;height:2px;background:var(--accent);margin:.85rem 0 1.1rem;}
+    .about-page footer p{font-size:clamp(13px,1.3vw,15px);color:var(--footer-text);opacity:.55;max-width:46ch;line-height:1.85;font-weight:400;font-family:'Space Grotesk',sans-serif;}
+    .about-page .social-row{display:flex;gap:.65rem;flex-wrap:wrap;}
+    .about-page .social-icon{width:42px;height:42px;border-radius:50%;border:1px solid rgba(128,128,128,0.25);display:flex;align-items:center;justify-content:center;color:var(--footer-text);text-decoration:none;font-size:14px;opacity:.65;transition:all .2s;}
+    .about-page .social-icon:hover{color:var(--accent);border-color:var(--accent);opacity:1;transform:translateY(-2px);}
+    .about-page .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.65rem;color:var(--footer-text);opacity:.3;padding-top:.25rem;font-family:'Space Grotesk',sans-serif;}
+    .about-page .go-to-top{width:40px;height:40px;border-radius:50%;background:var(--accent);border:none;color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s;opacity:1;}
+    .about-page .go-to-top:hover{transform:translateY(-3px);}
+
     .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease;}
     .reveal.visible{opacity:1;transform:translateY(0);}
 
-    /* ══ RESPONSIVE ══ */
+    @media(max-width:1100px){
+      .about-page .hero{grid-template-columns:minmax(0,1fr) minmax(260px,360px);gap:clamp(28px,5vw,56px);}
+      .about-page .review-slide{grid-template-columns:repeat(2,minmax(0,1fr));}
+    }
     @media(max-width:900px){
-        .hero{grid-template-columns:1fr;}
-        .hero-right{flex-direction:row;flex-wrap:wrap;}
-
-        .story-section{grid-template-columns:1fr;}
-        .story-left{border-right:none;border-bottom:1px solid var(--border);}
-        .stats-bar{grid-template-columns:1fr 1fr;}
-        .review-slide{grid-template-columns:1fr;}
-        .footer-top{flex-direction:column;}
+      .about-page .hero{grid-template-columns:1fr;align-items:start;padding-top:clamp(64px,9vw,96px);padding-bottom:clamp(56px,8vw,88px);}
+      .about-page .hero-left{max-width:100%;}
+      .about-page .hero-title{max-width:10ch;}
+      .about-page .hero-bio{max-width:62ch;}
+      .about-page .hero-right{justify-self:start;max-width:100%;}
+      .about-page .story-section{grid-template-columns:1fr;gap:42px;padding:56px 24px;}
+      .about-page .story-preview{max-width:unset;}
+      .about-page .review-slide{grid-template-columns:1fr;}
+      .about-page .review-text{max-width:40ch;}
     }
     @media(max-width:600px){
-        .stats-bar{grid-template-columns:1fr;}
-        .stat-cell{border-right:none;border-bottom:1px solid #1a1a1a;}
-        .stat-cell:last-child{border-bottom:none;}
-        .footer-bottom{flex-direction:column;align-items:center;}
+      .about-page .hero{padding:56px 20px 48px;gap:2rem;}
+      .about-page .hero-title{max-width:none;margin-bottom:1.1rem;line-height:.95;}
+      .about-page .hero-bio{font-size:.95rem;line-height:1.85;}
+      .about-page .story-section{padding:44px 20px;gap:34px;}
+      .about-page .story-card h3{font-size:1.9rem;}
+      .about-page .story-more{font-size:.98rem;}
+      .about-page .story-detail-content{width:100%;max-height:100vh;border-radius:0;padding:28px 22px 32px;}
+      .about-page .stats-bar{grid-template-columns:1fr;}
+      .about-page .stat-cell{min-height:0;padding:32px 20px;border-right:none;border-bottom:1px solid #1a1a1a;}
+      .about-page .stat-cell:last-child{border-bottom:none;}
+      .about-page .reviews-header{padding:32px 20px 18px;align-items:flex-start;}
+      .about-page .review-item{padding:24px 20px;}
+      .about-page .review-text{max-width:100%;}
+      .about-page .rev-dots{padding:.9rem 20px 1.25rem;}
+      .about-page footer{padding:48px 20px 32px;}
+      .about-page .footer-top{gap:2rem;padding-bottom:2rem;}
+      .about-page .footer-bottom{flex-direction:column;align-items:center;}
     }
-    </style>
+  </style>
 </head>
 <body>
 
 <div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
 
 <header>
-    <a href="index.html" class="logo">Prince</a>
-    <div class="header-right">
-        <select class="lang-select" id="lang-select" onchange="switchLang(this.value)">
-            <option value="en">EN</option><option value="fr">FR</option>
-            <option value="es">ES</option><option value="de">DE</option>
-        </select>
-        <button class="icon-btn" onclick="toggleTheme()"><i class="fas fa-lightbulb"></i></button>
-        <button class="icon-btn hamburger" id="hamburger" onclick="toggleMenu()">
-            <i class="fas fa-bars"></i><i class="fas fa-times"></i>
-        </button>
-    </div>
+  <a href="index.html" class="logo">Prince</a>
+  <div class="header-right">
+    <select class="lang-select" id="lang-select" onchange="switchLang(this.value)">
+      <option value="en">EN</option><option value="fr">FR</option>
+      <option value="es">ES</option><option value="de">DE</option>
+    </select>
+    <button class="icon-btn" onclick="toggleTheme()"><i class="fas fa-lightbulb"></i></button>
+    <button class="icon-btn hamburger" id="hamburger" onclick="toggleMenu()">
+      <i class="fas fa-bars"></i><i class="fas fa-times"></i>
+    </button>
+  </div>
 </header>
 
 <nav class="menu" id="menu">
-    <div class="menu-divider"></div>
-    <ul>
-        <li><a href="index.html"    onclick="closeMenu()" data-i18n="nav-home">Home</a></li>
-        <li><a href="about.html"    onclick="closeMenu()" class="active" data-i18n="nav-about">About</a></li>
-        <li><a href="projects.html" onclick="closeMenu()" data-i18n="nav-projects">Projects</a></li>
-        <li><a href="booking.html"  onclick="closeMenu()" data-i18n="nav-booking">Book Me</a></li>
-    </ul>
-    <p class="menu-footer">© <span id="menu-year"></span> Prince</p>
+  <div class="menu-divider"></div>
+  <ul>
+    <li><a href="index.html" onclick="closeMenu()" data-i18n="nav-home">Home</a></li>
+    <li><a href="about.html" onclick="closeMenu()" class="active" data-i18n="nav-about">About</a></li>
+    <li><a href="projects.html" onclick="closeMenu()" data-i18n="nav-projects">Projects</a></li>
+    <li><a href="booking.html" onclick="closeMenu()" data-i18n="nav-booking">Book Me</a></li>
+  </ul>
+  <p class="menu-footer">© <span id="menu-year"></span> Prince</p>
 </nav>
 
-<div class="page">
+<div class="page about-page">
 
-    <!-- ══ HERO ══ -->
-    <section class="hero">
-        <div class="hero-left">
-            <p class="hero-label" data-i18n="hero-label">About Me</p>
-            <h1 class="hero-title" data-i18n="hero-title">
-                The designer<br>behind the <em>work</em>
-            </h1>
-            <p class="hero-bio" data-i18n="hero-bio">
-                Graphic Designer and Brand Identity specialist based in Ghana. Currently studying at the University of Education, Winneba — committed to crafting visuals that are clean, intentional, and memorable.
-            </p>
-        </div>
-        <div class="hero-right">
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-label" data-i18n="hero-label">About Me</p>
+      <h1 class="hero-title" data-i18n="hero-title">
+        The designer<br>behind the <em>work</em>
+      </h1>
+      <p class="hero-bio" data-i18n="hero-bio">
+        Graphic Designer and Brand Identity specialist based in Ghana. Currently studying at the University of Education, Winneba — committed to crafting visuals that are clean, intentional, and memorable.
+      </p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-tags" id="hero-tags">
+        <span class="hero-tag">Brand Identity</span>
+        <span class="hero-tag">Typography</span>
+        <span class="hero-tag">Photoshop</span>
+        <span class="hero-tag">Illustrator</span>
+        <span class="hero-tag">InDesign</span>
+        <span class="hero-tag">Layout Design</span>
+      </div>
+    </div>
+  </section>
 
-            <div class="hero-tags" id="hero-tags">
-                <span class="hero-tag">Brand Identity</span>
-                <span class="hero-tag">Typography</span>
-                <span class="hero-tag">Photoshop</span>
-                <span class="hero-tag">Illustrator</span>
-                <span class="hero-tag">InDesign</span>
-                <span class="hero-tag">Layout Design</span>
-            </div>
-        </div>
-    </section>
+  <section class="story-section" id="info-section">
+    <div class="story-card reveal" data-detail="about">
+      <h3><i class="fas fa-user"></i> <span data-i18n="pill-about">About Me</span></h3>
+      <p class="story-preview" id="about-preview">
+        Dedicated graphic design student at the University of Education, Winneba with a passion for creativity and attention to detail...
+      </p>
+      <button class="story-more" type="button" data-i18n="see-more">See more →</button>
+    </div>
 
-    <!-- ══ STORY ══ -->
-    <section class="story-section">
-        <div class="story-left reveal">
-            <div>
-                <p class="section-label" data-i18n="section-story">The Story</p>
-                <h2 class="story-heading" data-i18n="story-heading">
-                    Turning ideas<br>into <em>visual identity</em>
-                </h2>
-            </div>
-            <p class="story-body" id="story-body" data-i18n="story-body">
-                Dedicated to creating designs that solve real problems and leave lasting impressions. Every project starts with listening — understanding the brand, the audience, and the goal — before a single line is drawn.
-            </p>
-            <div>
-                <p style="font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;" data-i18n="explore-label">Explore</p>
-                <div class="detail-pills">
-                    <button class="detail-pill" data-panel="about" onclick="togglePanel(this)">
-                        <span data-i18n="pill-about">About Me</span><i class="fas fa-plus"></i>
-                    </button>
-                    <button class="detail-pill" data-panel="edu" onclick="togglePanel(this)">
-                        <span data-i18n="pill-edu">Education</span><i class="fas fa-plus"></i>
-                    </button>
-                    <button class="detail-pill" data-panel="skills" onclick="togglePanel(this)">
-                        <span data-i18n="pill-skills">Skills</span><i class="fas fa-plus"></i>
-                    </button>
-                </div>
-                <div class="detail-panel" id="panel-about">
-                    <p id="panel-about-text">Dedicated graphic design student at the University of Education, Winneba. Passionate about creativity, visual communication, and clean aesthetics. Always eager to learn and collaborate on meaningful projects.</p>
-                </div>
-                <div class="detail-panel" id="panel-edu">
-                    <p><strong>University of Education, Winneba</strong><br>Bachelor's Degree in Graphic Design — Expected 2026<br>Focus: Visual communication, branding, typography, digital media.</p>
-                </div>
-                <div class="detail-panel" id="panel-skills">
-                    <ul id="skills-list">
-                        <li>Adobe Photoshop</li><li>Adobe Illustrator</li><li>Adobe InDesign</li>
-                        <li>Brand Identity</li><li>Typography</li><li>Layout Design</li>
-                        <li>Color Theory</li><li>Visual Communication</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div class="story-card reveal" data-detail="education">
+      <h3><i class="fas fa-graduation-cap"></i> <span data-i18n="pill-edu">Education</span></h3>
+      <p class="story-preview" id="education-preview">
+        University of Education, Winneba<br>Bachelor’s Degree in Graphic Design | Expected 2026...
+      </p>
+      <button class="story-more" type="button" data-i18n="see-more">See more →</button>
+    </div>
 
-        <div class="story-right reveal">
-            <div>
-                <p class="section-label" data-i18n="section-journey">Journey</p>
-                <div class="timeline" id="timeline">
-                    <div class="tl-item">
-                        <div class="tl-year">2023</div>
-                        <div class="tl-content">
-                            <div class="tl-title" data-i18n="tl-freelance-title">Started Freelancing</div>
-                            <div class="tl-sub" data-i18n="tl-freelance-sub">Began taking on client projects — brand identities, logos, and print design.</div>
-                        </div>
-                    </div>
-                    <div class="tl-item">
-                        <div class="tl-year">2022</div>
-                        <div class="tl-content">
-                            <div class="tl-title" data-i18n="tl-uni-title">University — Graphic Design</div>
-                            <div class="tl-sub" data-i18n="tl-uni-sub">Enrolled at the University of Education, Winneba. Building foundations in design theory, typography, and visual communication.</div>
-                        </div>
-                    </div>
-                    <div class="tl-item">
-                        <div class="tl-year">2021</div>
-                        <div class="tl-content">
-                            <div class="tl-title" data-i18n="tl-start-title">First Design Tools</div>
-                            <div class="tl-sub" data-i18n="tl-start-sub">Discovered Adobe Photoshop and Illustrator. Started experimenting with typography and visual composition.</div>
-                        </div>
-                    </div>
-                    <div class="tl-item">
-                        <div class="tl-year">2026</div>
-                        <div class="tl-content">
-                            <div class="tl-title" data-i18n="tl-future-title">Expected Graduation</div>
-                            <div class="tl-sub" data-i18n="tl-future-sub">Bachelor's in Graphic Design — ready to take on more ambitious projects and collaborations.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="story-card reveal" data-detail="work">
+      <h3><i class="fas fa-briefcase"></i> <span data-i18n="section-journey">Work Experience</span></h3>
+      <p class="story-preview" id="work-preview">
+        Freelance Graphic Designer (2023–Present)<br>Designed custom graphics and layouts for various clients...
+      </p>
+      <button class="story-more" type="button" data-i18n="see-more">See more →</button>
+    </div>
 
-    <!-- ══ STATS ══ -->
-    <section class="stats-bar">
-        <div class="stat-cell reveal">
-            <div class="stat-big"><span id="stat-years">2</span><span style="color:var(--accent)">+</span></div>
-            <p class="stat-name" data-i18n="stat-experience">Years Experience</p>
-        </div>
-        <div class="stat-cell reveal">
-            <div class="stat-big" id="stat-projects">10<span style="color:var(--accent)">+</span></div>
-            <p class="stat-name" data-i18n="stat-projects">Projects Delivered</p>
+    <div class="story-card reveal" data-detail="skills">
+      <h3><i class="fas fa-tools"></i> <span data-i18n="pill-skills">Skills</span></h3>
+      <p class="story-preview" id="skills-preview">
+        Adobe Photoshop, Illustrator, InDesign<br>Typography, Layout Design, Branding...
+      </p>
+      <button class="story-more" type="button" data-i18n="see-more">See more →</button>
+    </div>
+  </section>
+
+  <div class="story-detail-overlay" id="storyDetailOverlay">
+    <div class="story-detail-content">
+      <button class="story-detail-close" type="button" aria-label="Close">×</button>
+      <h3 id="storyDetailTitle"></h3>
+      <div id="storyDetailBody"></div>
+    </div>
+  </div>
+
+  <section class="stats-bar">
+    <div class="stat-cell reveal">
+      <div class="stat-big"><span id="stat-years">2</span><span style="color:var(--accent)">+</span></div>
+      <p class="stat-name" data-i18n="stat-experience">Years Experience</p>
+    </div>
+    <div class="stat-cell reveal">
+      <div class="stat-big"><span id="stat-projects-num">10</span><span style="color:var(--accent)">+</span></div>
+      <p class="stat-name" data-i18n="stat-projects">Projects Delivered</p>
+    </div>
+  </section>
+
+  <section class="reviews-section">
+    <div class="reviews-header reveal">
+      <div class="reviews-header-left">
+        <p class="reviews-eyebrow" data-i18n="section-reviews">Client Reviews</p>
+        <h2 class="reviews-title" data-i18n="reviews-title">What clients say</h2>
+      </div>
+      <div class="rev-controls">
+        <button class="rev-btn" onclick="shiftReview(-1)"><i class="fas fa-arrow-left"></i></button>
+        <button class="rev-btn" onclick="shiftReview(1)"><i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <div class="reviews-track-wrap">
+      <div class="reviews-track" id="reviews-track">
+        <div class="review-slide">
+          <div class="review-item">
+            <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r1">Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional.</p></div>
+            <div class="review-bottom"><div class="review-av">AK</div><div><div class="review-name">Ama Korkor</div><div class="review-role" data-i18n="r1-role">Founder, AK Studio</div><div class="review-stars">★★★★★</div></div></div>
+          </div>
+          <div class="review-item">
+            <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r2">The attention to detail was remarkable. Every revision was handled swiftly and the result spoke for itself.</p></div>
+            <div class="review-bottom"><div class="review-av">JM</div><div><div class="review-name">Julius Mensah</div><div class="review-role" data-i18n="r2-role">Marketing Director</div><div class="review-stars">★★★★★</div></div></div>
+          </div>
+          <div class="review-item">
+            <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r3">Working with Prince was smooth from start to finish. He understood the brief immediately.</p></div>
+            <div class="review-bottom"><div class="review-av">EA</div><div><div class="review-name">Efua Asante</div><div class="review-role" data-i18n="r3-role">Creative Director</div><div class="review-stars">★★★★★</div></div></div>
+          </div>
         </div>
 
-    </section>
-
-    <!-- ══ REVIEWS ══ -->
-    <section class="reviews-section">
-        <div class="reviews-header reveal">
-            <div class="reviews-header-left">
-                <p class="reviews-eyebrow" data-i18n="section-reviews">Client Reviews</p>
-                <h2 class="reviews-title" data-i18n="reviews-title">What clients say</h2>
-            </div>
-            <div class="rev-controls">
-                <button class="rev-btn" onclick="shiftReview(-1)"><i class="fas fa-arrow-left"></i></button>
-                <button class="rev-btn" onclick="shiftReview(1)"><i class="fas fa-arrow-right"></i></button>
-            </div>
+        <div class="review-slide">
+          <div class="review-item">
+            <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r4">Highly recommended. Prince brings creativity and professionalism to every project. Our brand has never looked better.</p></div>
+            <div class="review-bottom"><div class="review-av">KO</div><div><div class="review-name">Kofi Osei</div><div class="review-role" data-i18n="r4-role">Business Owner</div><div class="review-stars">★★★★★</div></div></div>
+          </div>
+          <div class="review-item">
+            <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r1">Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional.</p></div>
+            <div class="review-bottom"><div class="review-av">AK</div><div><div class="review-name">Ama Korkor</div><div class="review-role" data-i18n="r1-role">Founder, AK Studio</div><div class="review-stars">★★★★★</div></div></div>
+          </div>
+          <div class="review-item">
+            <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r2">The attention to detail was remarkable. Every revision was handled swiftly.</p></div>
+            <div class="review-bottom"><div class="review-av">JM</div><div><div class="review-name">Julius Mensah</div><div class="review-role" data-i18n="r2-role">Marketing Director</div><div class="review-stars">★★★★★</div></div></div>
+          </div>
         </div>
+      </div>
+    </div>
+    <div class="rev-dots" id="rev-dots"></div>
+  </section>
 
-        <div class="reviews-track-wrap">
-            <div class="reviews-track" id="reviews-track">
-
-                <!-- Slide 1 — 3 reviews -->
-                <div class="review-slide">
-                    <div class="review-item">
-                        <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r1">Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional.</p></div>
-                        <div class="review-bottom"><div class="review-av">AK</div><div><div class="review-name">Ama Korkor</div><div class="review-role" data-i18n="r1-role">Founder, AK Studio</div><div class="review-stars">★★★★★</div></div></div>
-                    </div>
-                    <div class="review-item">
-                        <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r2">The attention to detail was remarkable. Every revision was handled swiftly and the result spoke for itself.</p></div>
-                        <div class="review-bottom"><div class="review-av">JM</div><div><div class="review-name">Julius Mensah</div><div class="review-role" data-i18n="r2-role">Marketing Director</div><div class="review-stars">★★★★★</div></div></div>
-                    </div>
-                    <div class="review-item">
-                        <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r3">Working with Prince was smooth from start to finish. He understood the brief immediately.</p></div>
-                        <div class="review-bottom"><div class="review-av">EA</div><div><div class="review-name">Efua Asante</div><div class="review-role" data-i18n="r3-role">Creative Director</div><div class="review-stars">★★★★★</div></div></div>
-                    </div>
-                </div>
-
-                <!-- Slide 2 -->
-                <div class="review-slide">
-                    <div class="review-item">
-                        <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r4">Highly recommended. Prince brings creativity and professionalism to every project. Our brand has never looked better.</p></div>
-                        <div class="review-bottom"><div class="review-av">KO</div><div><div class="review-name">Kofi Osei</div><div class="review-role" data-i18n="r4-role">Business Owner</div><div class="review-stars">★★★★★</div></div></div>
-                    </div>
-                    <div class="review-item">
-                        <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r1">Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional.</p></div>
-                        <div class="review-bottom"><div class="review-av">AK</div><div><div class="review-name">Ama Korkor</div><div class="review-role" data-i18n="r1-role">Founder, AK Studio</div><div class="review-stars">★★★★★</div></div></div>
-                    </div>
-                    <div class="review-item">
-                        <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r2">The attention to detail was remarkable. Every revision was handled swiftly.</p></div>
-                        <div class="review-bottom"><div class="review-av">JM</div><div><div class="review-name">Julius Mensah</div><div class="review-role" data-i18n="r2-role">Marketing Director</div><div class="review-stars">★★★★★</div></div></div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <div class="rev-dots" id="rev-dots"></div>
-    </section>
-
-    <!-- ══ FOOTER ══ -->
-    <footer id="contact">
-        <div class="footer-top">
-            <div>
-                <h2 class="footer-head" data-i18n="footer-title">Let's Connect</h2>
-                <div class="footer-accent-bar"></div>
-                <p data-i18n="footer-desc">Ready to start your next project or want to collaborate? I'm always open to new opportunities.</p>
-            </div>
-            <div class="social-row">
-                <a href="#" class="social-icon" id="social-email"    ><i class="fas fa-envelope"></i></a>
-                <a href="#" class="social-icon" id="social-linkedin" ><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" class="social-icon" id="social-dribbble" ><i class="fab fa-dribbble"></i></a>
-                <a href="#" class="social-icon" id="social-instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="social-icon" id="social-behance"  ><i class="fab fa-behance"></i></a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <span>© <span id="footer-year"></span> Ismael Asumanu Prince</span>
-            <button class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
-        </div>
-    </footer>
+  <footer id="contact">
+    <div class="footer-top">
+      <div>
+        <h2 class="footer-head" data-i18n="footer-title">Let's Connect</h2>
+        <div class="footer-accent-bar"></div>
+        <p data-i18n="footer-desc">Ready to start your next project or want to collaborate? I'm always open to new opportunities.</p>
+      </div>
+      <div class="social-row">
+        <a href="#" class="social-icon" id="social-email"><i class="fas fa-envelope"></i></a>
+        <a href="#" class="social-icon" id="social-linkedin"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="social-icon" id="social-dribbble"><i class="fab fa-dribbble"></i></a>
+        <a href="#" class="social-icon" id="social-instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon" id="social-behance"><i class="fab fa-behance"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="footer-year"></span> Ismael Asumanu Prince</span>
+      <button class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+    </div>
+  </footer>
 
 </div>
 
 <script>
-const yr=new Date().getFullYear();
-['menu-year','footer-year'].forEach(id=>document.getElementById(id).textContent=yr);
+  const yr=new Date().getFullYear();
+  ['menu-year','footer-year'].forEach(id=>document.getElementById(id).textContent=yr);
 
-// ── THEME ──
-function toggleTheme(){document.body.classList.toggle('dark');localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
-if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
+  function toggleTheme(){document.body.classList.toggle('dark');localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
+  if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
 
-// ── MENU ──
-const menuEl=document.getElementById('menu'),backdrop=document.getElementById('menu-backdrop'),hamburger=document.getElementById('hamburger');
-function openMenu(){menuEl.classList.add('open');backdrop.classList.add('open');hamburger.classList.add('open');document.body.style.overflow='hidden';}
-function closeMenu(){menuEl.classList.remove('open');backdrop.classList.remove('open');hamburger.classList.remove('open');document.body.style.overflow='';}
-function toggleMenu(){menuEl.classList.contains('open')?closeMenu():openMenu();}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
-let mTX=0;
-menuEl.addEventListener('touchstart',e=>{mTX=e.touches[0].clientX;},{passive:true});
-menuEl.addEventListener('touchend',e=>{if(e.changedTouches[0].clientX-mTX>60)closeMenu();},{passive:true});
+  const menuEl=document.getElementById('menu'),backdrop=document.getElementById('menu-backdrop'),hamburger=document.getElementById('hamburger');
+  function openMenu(){menuEl.classList.add('open');backdrop.classList.add('open');hamburger.classList.add('open');document.body.style.overflow='hidden';}
+  function closeMenu(){menuEl.classList.remove('open');backdrop.classList.remove('open');hamburger.classList.remove('open');document.body.style.overflow='';}
+  function toggleMenu(){menuEl.classList.contains('open')?closeMenu():openMenu();}
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){
+      closeMenu();
+      closeStoryOverlay();
+    }
+  });
+  let mTX=0;
+  menuEl.addEventListener('touchstart',e=>{mTX=e.touches[0].clientX;},{passive:true});
+  menuEl.addEventListener('touchend',e=>{if(e.changedTouches[0].clientX-mTX>60)closeMenu();},{passive:true});
 
-// ── SCROLL REVEAL ──
-const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});},{threshold:.1});
-document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+  const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
 
-// ── DETAIL PILLS ──
-function togglePanel(btn){
-    const panelId='panel-'+btn.dataset.panel;
-    const panel=document.getElementById(panelId);
-    const isOpen=panel.classList.contains('open');
-    // close all
-    document.querySelectorAll('.detail-panel').forEach(p=>p.classList.remove('open'));
-    document.querySelectorAll('.detail-pill').forEach(b=>b.classList.remove('open'));
-    if(!isOpen){panel.classList.add('open');btn.classList.add('open');}
-}
+  function animateCount(el, end){
+    const duration = 1200;
+    const startTime = performance.now();
+    function step(now){
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(end * eased);
+      if(progress < 1) requestAnimationFrame(step);
+    }
+    el.textContent = '0';
+    requestAnimationFrame(step);
+  }
 
-// ── COUNTER (projects stat only) ──
-let counted=false;
-const cntObs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-        if(e.isIntersecting&&!counted){
-            counted=true;
-            const total=new Date().getFullYear()-2023+1;
-            let i=0;
-            const iv=setInterval(()=>{
-                const el=document.getElementById('stat-years');if(el)el.textContent=i;
-                if(i>=total)clearInterval(iv);i++;
-            },350);
+  const statsBar = document.querySelector('.stats-bar');
+  const statYearsEl = document.getElementById('stat-years');
+  const statProjectsEl = document.getElementById('stat-projects-num');
+
+  if(statsBar && statYearsEl && statProjectsEl){
+    const statsObs = new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const yearsTotal = new Date().getFullYear() - 2023 + 1;
+          const projectsTotal = parseInt(statProjectsEl.dataset.total || statProjectsEl.textContent, 10) || 10;
+          animateCount(statYearsEl, yearsTotal);
+          animateCount(statProjectsEl, projectsTotal);
         }
+      });
+    }, { threshold: .45 });
+    statsObs.observe(statsBar);
+  }
+
+  const track=document.getElementById('reviews-track');
+  const dotsEl=document.getElementById('rev-dots');
+  let reviewAnimationFrame = null;
+  let currentOffset = 0;
+  let reviewSpeed = 0.45;
+  let reviewSlidesCount = 0;
+
+  function updateReviewDots(){
+    if(!dotsEl || !reviewSlidesCount || !track.firstElementChild) return;
+    const slideWidth = track.firstElementChild.offsetWidth || 1;
+    const activeIndex = Math.floor((currentOffset / slideWidth) % reviewSlidesCount);
+    dotsEl.querySelectorAll('.rev-dot').forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
+  }
+
+  function startContinuousReviews(){
+    cancelAnimationFrame(reviewAnimationFrame);
+    if(!track.children.length) return;
+    const totalWidth = track.scrollWidth / 2;
+    function animate(){
+      currentOffset += reviewSpeed;
+      if(currentOffset >= totalWidth){ currentOffset = 0; }
+      track.style.transform = `translateX(-${currentOffset}px)`;
+      updateReviewDots();
+      reviewAnimationFrame = requestAnimationFrame(animate);
+    }
+    reviewAnimationFrame = requestAnimationFrame(animate);
+  }
+
+  function setupContinuousReviews(){
+    if(!track) return;
+    const originalSlides = Array.from(track.children).slice(0, reviewSlidesCount || track.children.length);
+    reviewSlidesCount = originalSlides.length;
+    track.innerHTML = '';
+    originalSlides.concat(originalSlides).forEach(slide => track.appendChild(slide.cloneNode(true)));
+
+    if(dotsEl){
+      dotsEl.innerHTML = '';
+      for(let i = 0; i < reviewSlidesCount; i++){
+        const d = document.createElement('div');
+        d.className = 'rev-dot' + (i === 0 ? ' active' : '');
+        dotsEl.appendChild(d);
+      }
+    }
+    currentOffset = 0;
+    track.style.transform = 'translateX(0)';
+    startContinuousReviews();
+  }
+
+  function shiftReview(dir){
+    if(!track.firstElementChild) return;
+    const slideWidth = track.firstElementChild.offsetWidth || 0;
+    currentOffset += dir * slideWidth;
+    const totalWidth = track.scrollWidth / 2;
+    if(currentOffset < 0) currentOffset += totalWidth;
+    if(currentOffset >= totalWidth) currentOffset -= totalWidth;
+    track.style.transform = `translateX(-${currentOffset}px)`;
+    updateReviewDots();
+  }
+
+  window.addEventListener('resize', () => {
+    if(track){
+      currentOffset = 0;
+      track.style.transform = 'translateX(0)';
+      startContinuousReviews();
+    }
+  });
+
+  const storySection = document.getElementById('info-section');
+  const storyOverlay = document.getElementById('storyDetailOverlay');
+  const storyTitle = document.getElementById('storyDetailTitle');
+  const storyBody = document.getElementById('storyDetailBody');
+  const storyClose = document.querySelector('.story-detail-close');
+
+  const storyDetails = {
+    about: {
+      icon: 'fa-user',
+      title: 'About Me',
+      body: `
+        <p>Dedicated graphic design student at the University of Education, Winneba with a passion for creativity and attention to detail.</p>
+        <p>I strive to create simple, effective designs while learning and growing in the field. I love clean aesthetics, meaningful visuals, and solving creative challenges. Always eager to take on new projects and collaborate.</p>
+      `
+    },
+    education: {
+      icon: 'fa-graduation-cap',
+      title: 'Education',
+      body: `
+        <p><strong>University of Education, Winneba</strong><br>Bachelor’s Degree in Graphic Design | Expected 2026</p>
+        <p>Currently pursuing a degree in Graphic Design with a focus on visual communication, layout design, branding, typography, and digital media.</p>
+      `
+    },
+    work: {
+      icon: 'fa-briefcase',
+      title: 'Work Experience',
+      body: `
+        <p><strong>Freelance Graphic Designer</strong><br>2023–Present</p>
+        <p>Designed custom graphics and layouts for various clients while managing multiple projects independently and translating creative concepts into polished visual outcomes.</p>
+      `
+    },
+    skills: {
+      icon: 'fa-tools',
+      title: 'Skills',
+      body: `
+        <ul>
+          <li>Adobe Photoshop</li>
+          <li>Adobe Illustrator</li>
+          <li>Adobe InDesign</li>
+          <li>Typography</li>
+          <li>Layout Design</li>
+          <li>Branding</li>
+          <li>Visual Communication</li>
+          <li>Color Theory</li>
+        </ul>
+      `
+    }
+  };
+
+  document.querySelectorAll('.story-card').forEach(card => {
+    const btn = card.querySelector('.story-more');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const key = card.dataset.detail;
+      const item = storyDetails[key];
+      if (!item) return;
+
+      storyTitle.innerHTML = `<i class="fas ${item.icon}"></i> ${item.title}`;
+      storyBody.innerHTML = item.body;
+
+      storySection.classList.add('fade-out');
+      setTimeout(() => {
+        storyOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }, 350);
     });
-},{threshold:.3});
-cntObs.observe(document.querySelector('.stats-bar'));
+  });
 
-// ── REVIEWS SLIDER ──
-const track=document.getElementById('reviews-track');
-const dotsEl=document.getElementById('rev-dots');
-const slides=Array.from(track.querySelectorAll('.review-slide'));
-let revIdx=0;
-slides.forEach((_,i)=>{const d=document.createElement('div');d.className='rev-dot'+(i===0?' active':'');d.onclick=()=>goReview(i);dotsEl.appendChild(d);});
-function goReview(idx){
-    revIdx=((idx%slides.length)+slides.length)%slides.length;
-    track.style.transform=`translateX(-${revIdx*track.parentElement.offsetWidth}px)`;
-    dotsEl.querySelectorAll('.rev-dot').forEach((d,i)=>d.classList.toggle('active',i===revIdx));
-}
-function shiftReview(dir){goReview(revIdx+dir);}
-let revTimer=setInterval(()=>shiftReview(1),6000);
-track.addEventListener('mouseenter',()=>clearInterval(revTimer));
-track.addEventListener('mouseleave',()=>{revTimer=setInterval(()=>shiftReview(1),6000);});
-let rTX=0;
-track.addEventListener('touchstart',e=>{rTX=e.touches[0].clientX;},{passive:true});
-track.addEventListener('touchend',e=>{const d=rTX-e.changedTouches[0].clientX;if(Math.abs(d)>40)shiftReview(d>0?1:-1);},{passive:true});
+  function closeStoryOverlay() {
+    if(!storyOverlay.classList.contains('active')) return;
+    storyOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      storySection.classList.remove('fade-out');
+    }, 250);
+  }
 
-// ── LANGUAGE ──
-const i18n={
-en:{'nav-home':'Home','nav-about':'About','nav-projects':'Projects','nav-booking':'Book Me','hero-label':'About Me','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Graphic Designer and Brand Identity specialist based in Ghana. Currently studying at the University of Education, Winneba — committed to crafting visuals that are clean, intentional, and memorable.','section-story':'The Story','story-heading':'Turning ideas<br>into <em>visual identity</em>','story-body':'Dedicated to creating designs that solve real problems and leave lasting impressions. Every project starts with listening — understanding the brand, the audience, and the goal.','explore-label':'Explore','pill-about':'About Me','pill-edu':'Education','pill-skills':'Skills','section-journey':'Journey','tl-freelance-title':'Started Freelancing','tl-freelance-sub':'Began taking on client projects — brand identities, logos, and print design.','tl-uni-title':'University — Graphic Design','tl-uni-sub':'Enrolled at University of Education, Winneba. Building foundations in design theory, typography, and visual communication.','tl-start-title':'First Design Tools','tl-start-sub':'Discovered Adobe Photoshop and Illustrator. Started experimenting with typography and visual composition.','tl-future-title':'Expected Graduation','tl-future-sub':'Bachelor\'s in Graphic Design — ready for ambitious projects and collaborations.','stat-experience':'Years Experience','stat-projects':'Projects Delivered','section-reviews':'Client Reviews','reviews-title':'What clients say','r1':'Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional.','r1-role':'Founder, AK Studio','r2':'The attention to detail was remarkable. Every revision handled swiftly.','r2-role':'Marketing Director','r3':'Working with Prince was smooth from start to finish.','r3-role':'Creative Director','r4':'Highly recommended. Prince brings creativity and professionalism to every project.','r4-role':'Business Owner','footer-title':'Let\'s Connect','footer-desc':'Ready to start your next project or want to collaborate? I\'m always open to new opportunities.'},
-fr:{'nav-home':'Accueil','nav-about':'À Propos','nav-projects':'Projets','nav-booking':'Me Réserver','hero-label':'À Propos','hero-title':'Le designer<br>derrière le <em>travail</em>','hero-bio':'Designer graphique et spécialiste en identité de marque basé au Ghana, étudiant à l\'Université de Winneba.','section-story':'L\'histoire','story-heading':'Transformer les idées<br>en <em>identité visuelle</em>','story-body':'Dédié à créer des designs qui résolvent de vrais problèmes et laissent des impressions durables.','explore-label':'Explorer','pill-about':'À Propos','pill-edu':'Formation','pill-skills':'Compétences','section-journey':'Parcours','tl-freelance-title':'Début du Freelance','tl-freelance-sub':'Premiers projets clients — identités de marque, logos et impression.','tl-uni-title':'Université — Design Graphique','tl-uni-sub':'Inscrit à l\'Université de Winneba. Fondements en théorie du design, typographie et communication visuelle.','tl-start-title':'Premiers Outils','tl-start-sub':'Découverte de Photoshop et Illustrator. Expérimentation en typographie et composition.','tl-future-title':'Diplôme Prévu','tl-future-sub':'Licence en Design Graphique — prêt pour des projets ambitieux.','stat-experience':'Ans d\'expérience','stat-projects':'Projets livrés','section-reviews':'Avis clients','reviews-title':'Ce que disent les clients','r1':'Prince a livré une identité qui a capturé notre vision. Propre, précis et professionnel.','r1-role':'Fondatrice, AK Studio','r2':'L\'attention aux détails était remarquable.','r2-role':'Directeur Marketing','r3':'Travailler avec Prince était fluide du début à la fin.','r3-role':'Directeur Créatif','r4':'Fortement recommandé. Créativité et professionnalisme à chaque projet.','r4-role':'Chef d\'entreprise','footer-title':'Connectons-nous','footer-desc':'Prêt à démarrer votre prochain projet ?'},
-es:{'nav-home':'Inicio','nav-about':'Acerca','nav-projects':'Proyectos','nav-booking':'Reservarme','hero-label':'Acerca de Mí','hero-title':'El diseñador<br>detrás del <em>trabajo</em>','hero-bio':'Diseñador gráfico y especialista en identidad de marca con sede en Ghana.','section-story':'La historia','story-heading':'Transformar ideas<br>en <em>identidad visual</em>','story-body':'Dedicado a crear diseños que resuelven problemas reales y dejan impresiones duraderas.','explore-label':'Explorar','pill-about':'Acerca de Mí','pill-edu':'Educación','pill-skills':'Habilidades','section-journey':'Trayectoria','tl-freelance-title':'Inicio Freelance','tl-freelance-sub':'Primeros proyectos — identidades de marca, logos y diseño impreso.','tl-uni-title':'Universidad — Diseño Gráfico','tl-uni-sub':'Universidad de Winneba. Fundamentos de diseño, tipografía y comunicación visual.','tl-start-title':'Primeras Herramientas','tl-start-sub':'Descubrí Photoshop e Illustrator. Experimentación con tipografía y composición.','tl-future-title':'Graduación Prevista','tl-future-sub':'Licenciatura en Diseño Gráfico — listo para proyectos ambiciosos.','stat-experience':'Años de experiencia','stat-projects':'Proyectos entregados','section-reviews':'Reseñas','reviews-title':'Lo que dicen los clientes','r1':'Prince entregó una identidad que capturó nuestra visión.','r1-role':'Fundadora, AK Studio','r2':'La atención al detalle fue notable.','r2-role':'Director de Marketing','r3':'Trabajar con Prince fue fluido.','r3-role':'Director Creativo','r4':'Muy recomendable. Creatividad y profesionalismo.','r4-role':'Dueño de negocio','footer-title':'Conectemos','footer-desc':'¿Listo para comenzar su próximo proyecto?'},
-de:{'nav-home':'Startseite','nav-about':'Über mich','nav-projects':'Projekte','nav-booking':'Buchen','hero-label':'Über mich','hero-title':'Der Designer<br>hinter der <em>Arbeit</em>','hero-bio':'Grafikdesigner und Markenidentitätsspezialist aus Ghana, Universität Winneba.','section-story':'Die Geschichte','story-heading':'Ideen in<br><em>visuelle Identität</em> verwandeln','story-body':'Engagiert für Designs, die echte Probleme lösen und bleibende Eindrücke hinterlassen.','explore-label':'Erkunden','pill-about':'Über mich','pill-edu':'Ausbildung','pill-skills':'Fähigkeiten','section-journey':'Werdegang','tl-freelance-title':'Freelance gestartet','tl-freelance-sub':'Erste Kundenprojekte — Markenidentitäten, Logos und Druckdesign.','tl-uni-title':'Universität — Grafikdesign','tl-uni-sub':'Universität Winneba. Grundlagen in Designtheorie, Typografie und visueller Kommunikation.','tl-start-title':'Erste Design-Tools','tl-start-sub':'Photoshop und Illustrator entdeckt. Experimentieren mit Typografie und Komposition.','tl-future-title':'Erwarteter Abschluss','tl-future-sub':'Bachelor in Grafikdesign — bereit für ehrgeizige Projekte.','stat-experience':'Jahre Erfahrung','stat-projects':'Projekte geliefert','section-reviews':'Kundenbewertungen','reviews-title':'Was Kunden sagen','r1':'Prince lieferte eine Markenidentität, die unsere Vision einfing.','r1-role':'Gründerin, AK Studio','r2':'Die Liebe zum Detail war bemerkenswert.','r2-role':'Marketingdirektor','r3':'Die Zusammenarbeit verlief reibungslos.','r3-role':'Kreativdirektor','r4':'Sehr empfehlenswert. Kreativität und Professionalität.','r4-role':'Geschäftsinhaber','footer-title':'Verbinden wir uns','footer-desc':'Bereit für Ihr nächstes Projekt?'}
-};
+  storyClose.addEventListener('click', closeStoryOverlay);
+  storyOverlay.addEventListener('click', e => {
+    if (e.target === storyOverlay) closeStoryOverlay();
+  });
 
-let currentLang=localStorage.getItem('lang')||'en';
-document.getElementById('lang-select').value=currentLang;
-function switchLang(lang){currentLang=lang;localStorage.setItem('lang',lang);applyLang(lang);}
-function applyLang(lang){
+  const i18n={
+    en:{'nav-home':'Home','nav-about':'About','nav-projects':'Projects','nav-booking':'Book Me','hero-label':'About Me','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Graphic Designer and Brand Identity specialist based in Ghana. Currently studying at the University of Education, Winneba — committed to crafting visuals that are clean, intentional, and memorable.','pill-about':'About Me','pill-edu':'Education','pill-skills':'Skills','section-journey':'Work Experience','see-more':'See more →','stat-experience':'Years Experience','stat-projects':'Projects Delivered','section-reviews':'Client Reviews','reviews-title':'What clients say','r1':'Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional.','r1-role':'Founder, AK Studio','r2':'The attention to detail was remarkable. Every revision handled swiftly.','r2-role':'Marketing Director','r3':'Working with Prince was smooth from start to finish.','r3-role':'Creative Director','r4':'Highly recommended. Prince brings creativity and professionalism to every project.','r4-role':'Business Owner','footer-title':'Let\'s Connect','footer-desc':'Ready to start your next project or want to collaborate? I\'m always open to new opportunities.'},
+    fr:{'nav-home':'Accueil','nav-about':'À Propos','nav-projects':'Projets','nav-booking':'Me Réserver','hero-label':'À Propos','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Designer graphique et spécialiste en identité de marque basé au Ghana, étudiant à l\'Université de Winneba.','pill-about':'À Propos','pill-edu':'Formation','pill-skills':'Compétences','section-journey':'Expérience','see-more':'Voir plus →','stat-experience':'Ans d\'expérience','stat-projects':'Projets livrés','section-reviews':'Avis clients','reviews-title':'Ce que disent les clients','r1':'Prince a livré une identité qui a capturé notre vision. Propre, précis et professionnel.','r1-role':'Fondatrice, AK Studio','r2':'L\'attention aux détails était remarquable.','r2-role':'Directeur Marketing','r3':'Travailler avec Prince était fluide du début à la fin.','r3-role':'Directeur Créatif','r4':'Fortement recommandé. Créativité et professionnalisme à chaque projet.','r4-role':'Chef d\'entreprise','footer-title':'Connectons-nous','footer-desc':'Prêt à démarrer votre prochain projet ?'},
+    es:{'nav-home':'Inicio','nav-about':'Acerca','nav-projects':'Proyectos','nav-booking':'Reservarme','hero-label':'Acerca de Mí','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Diseñador gráfico y especialista en identidad de marca con sede en Ghana.','pill-about':'Acerca de Mí','pill-edu':'Educación','pill-skills':'Habilidades','section-journey':'Experiencia laboral','see-more':'Ver más →','stat-experience':'Años de experiencia','stat-projects':'Proyectos entregados','section-reviews':'Reseñas','reviews-title':'Lo que dicen los clientes','r1':'Prince entregó una identidad que capturó nuestra visión.','r1-role':'Fundadora, AK Studio','r2':'La atención al detalle fue notable.','r2-role':'Director de Marketing','r3':'Trabajar con Prince fue fluido.','r3-role':'Director Creativo','r4':'Muy recomendable. Creatividad y profesionalismo.','r4-role':'Dueño de negocio','footer-title':'Conectemos','footer-desc':'¿Listo para comenzar su próximo proyecto?'},
+    de:{'nav-home':'Startseite','nav-about':'Über mich','nav-projects':'Projekte','nav-booking':'Buchen','hero-label':'Über mich','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Grafikdesigner und Markenidentitätsspezialist aus Ghana, Universität Winneba.','pill-about':'Über mich','pill-edu':'Ausbildung','pill-skills':'Fähigkeiten','section-journey':'Berufserfahrung','see-more':'Mehr sehen →','stat-experience':'Jahre Erfahrung','stat-projects':'Projekte geliefert','section-reviews':'Kundenbewertungen','reviews-title':'Was Kunden sagen','r1':'Prince lieferte eine Markenidentität, die unsere Vision einfing.','r1-role':'Gründerin, AK Studio','r2':'Die Liebe zum Detail war bemerkenswert.','r2-role':'Marketingdirektor','r3':'Die Zusammenarbeit verlief reibungslos.','r3-role':'Kreativdirektor','r4':'Sehr empfehlenswert. Kreativität und Professionalität.','r4-role':'Geschäftsinhaber','footer-title':'Verbinden wir uns','footer-desc':'Bereit für Ihr nächstes Projekt?'}
+  };
+
+  let currentLang=localStorage.getItem('lang')||'en';
+  document.getElementById('lang-select').value=currentLang;
+  function switchLang(lang){currentLang=lang;localStorage.setItem('lang',lang);applyLang(lang);}
+  function applyLang(lang){
     const t=i18n[lang]||i18n.en;
     document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k]!==undefined)el.innerHTML=t[k];});
     document.documentElement.lang=lang;
-}
-applyLang(currentLang);
+  }
+  applyLang(currentLang);
 
-// ── CMS ──
-fetch('https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-about.json?t='+Date.now())
-  .then(r=>r.ok?r.json():null).then(d=>{
-    if(!d)return;
-    // Update pill short texts
-    const map=[['pill-about',d.aboutShort],['pill-edu',d.eduShort],['pill-skills',d.skillsShort]];
-    map.forEach(([k,v])=>{if(v)document.querySelectorAll(`[data-i18n="${k}"]`).forEach(el=>el.textContent=v);});
-    // Update panel content
-    if(d.aboutFull){const el=document.getElementById('panel-about-text');if(el)el.innerHTML=d.aboutFull.replace(/\n/g,'<br>');}
-    if(d.skillsFull){
-        const el=document.getElementById('skills-list');
-        if(el)el.innerHTML=d.skillsFull.split('\n').filter(Boolean).map(s=>`<li>${s}</li>`).join('');
+  setupContinuousReviews();
+
+  fetch('https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-about.json?t='+Date.now())
+    .then(r=>r.ok?r.json():null).then(d=>{
+      if(!d)return;
+
+      const map=[['pill-about',d.aboutShort],['pill-edu',d.eduShort],['pill-skills',d.skillsShort]];
+      map.forEach(([k,v])=>{if(v)document.querySelectorAll(`[data-i18n="${k}"]`).forEach(el=>el.textContent=v);});
+
+      if(d.aboutShort){
+        const preview = document.getElementById('about-preview');
+        if(preview) preview.innerHTML = d.aboutShort.replace(/\n/g,'<br>') + '...';
+      }
+
+      if(d.eduShort){
+        const preview = document.getElementById('education-preview');
+        if(preview) preview.innerHTML = d.eduShort.replace(/\n/g,'<br>') + '...';
+      }
+
+      if(d.skillsShort){
+        const preview = document.getElementById('skills-preview');
+        if(preview) preview.innerHTML = d.skillsShort.replace(/\n/g,'<br>') + '...';
+      }
+
+      if(d.aboutFull){
+        storyDetails.about.body = `<p>${d.aboutFull.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')}</p>`;
+      }
+
+      if(d.eduFull){
+        storyDetails.education.body = `<p>${d.eduFull.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')}</p>`;
+      }
+
+      if(d.workFull){
+        storyDetails.work.body = `<p>${d.workFull.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')}</p>`;
+      }
+
+      if(d.workShort){
+        const preview = document.getElementById('work-preview');
+        if(preview) preview.innerHTML = d.workShort.replace(/\n/g,'<br>') + '...';
+      }
+
+      if(d.skillsFull){
+        const items = d.skillsFull.split('\n').filter(Boolean);
+        storyDetails.skills.body = `<ul>${items.map(s=>`<li>${s}</li>`).join('')}</ul>`;
         const tags=document.getElementById('hero-tags');
-        if(tags)tags.innerHTML=d.skillsFull.split('\n').filter(Boolean).map(s=>`<span class="hero-tag">${s}</span>`).join('');
-    }
-    if(d.projectsCount){document.getElementById('stat-projects').innerHTML=d.projectsCount+'<span style="color:var(--accent)">+</span>';}
-    // Load CMS reviews
-    if(d.reviews&&d.reviews.length){
+        if(tags)tags.innerHTML=items.map(s=>`<span class="hero-tag">${s}</span>`).join('');
+      }
+
+      if(d.projectsCount){
+        const total = parseInt(d.projectsCount, 10) || 10;
+        statProjectsEl.dataset.total = total;
+        statProjectsEl.textContent = total;
+      }
+
+      if(d.reviews&&d.reviews.length){
         const groupSize=3;
         const groups=[];
         for(let i=0;i<d.reviews.length;i+=groupSize)groups.push(d.reviews.slice(i,i+groupSize));
         track.innerHTML=groups.map(g=>`
-            <div class="review-slide">
-                ${g.map(r=>`
-                <div class="review-item">
-                    <div><div class="review-quote-mark">"</div><p class="review-text">${r.quote||''}</p></div>
-                    <div class="review-bottom">
-                        <div class="review-av">${(r.name||'?').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase()}</div>
-                        <div><div class="review-name">${r.name||''}</div><div class="review-role">${r.role||''}</div><div class="review-stars">${'★'.repeat(Math.min(5,r.stars||5))}</div></div>
-                    </div>
-                </div>`).join('')}
-            </div>`).join('');
-        dotsEl.innerHTML='';
-        groups.forEach((_,i)=>{const dot=document.createElement('div');dot.className='rev-dot'+(i===0?' active':'');dot.onclick=()=>goReview(i);dotsEl.appendChild(dot);});
-        revIdx=0;track.style.transform='translateX(0)';
-    }
-  }).catch(()=>{});
+          <div class="review-slide">
+            ${g.map(r=>`
+            <div class="review-item">
+              <div><div class="review-quote-mark">"</div><p class="review-text">${r.quote||''}</p></div>
+              <div class="review-bottom">
+                <div class="review-av">${(r.name||'?').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase()}</div>
+                <div><div class="review-name">${r.name||''}</div><div class="review-role">${r.role||''}</div><div class="review-stars">${'★'.repeat(Math.min(5,r.stars||5))}</div></div>
+              </div>
+            </div>`).join('')}
+          </div>`).join('');
+        setupContinuousReviews();
+      }
+    }).catch(()=>{});
 
-fetch('https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json?t='+Date.now())
-  .then(r=>r.ok?r.json():null).then(d=>{
-    if(!d)return;
-    const s={'social-email':d.email?'mailto:'+d.email:null,'social-linkedin':d.linkedin,'social-dribbble':d.dribbble,'social-instagram':d.instagram,'social-behance':d.behance};
-    Object.entries(s).forEach(([id,href])=>{if(href)document.getElementById(id).href=href;});
-    if(d.contactDesc)document.querySelector('[data-i18n="footer-desc"]').textContent=d.contactDesc;
-  }).catch(()=>{});
+  fetch('https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json?t='+Date.now())
+    .then(r=>r.ok?r.json():null).then(d=>{
+      if(!d)return;
+      const s={'social-email':d.email?'mailto:'+d.email:null,'social-linkedin':d.linkedin,'social-dribbble':d.dribbble,'social-instagram':d.instagram,'social-behance':d.behance};
+      Object.entries(s).forEach(([id,href])=>{if(href)document.getElementById(id).href=href;});
+      if(d.contactDesc)document.querySelector('[data-i18n="footer-desc"]').textContent=d.contactDesc;
+    }).catch(()=>{});
 </script>
 </body>
 </html>
