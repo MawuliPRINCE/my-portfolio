@@ -596,12 +596,11 @@
   let reviewSpeed = 0.45;
   let reviewSlidesCount = 0;
 
-  /* NEW HELPER: Responsive grouping (mobile = 1 review per slide) */
   function getReviewsPerSlide() {
     const w = window.innerWidth;
-    if (w <= 900) return 1;      // mobile → 1 review per slide (full width)
-    if (w <= 1100) return 2;     // tablet
-    return 3;                    // desktop (unchanged)
+    if (w <= 900) return 1;      // mobile → exactly ONE review per slide
+    if (w <= 1100) return 2;
+    return 3;                    // desktop unchanged
   }
 
   function updateReviewDots(){
@@ -625,11 +624,10 @@
     reviewAnimationFrame = requestAnimationFrame(animate);
   }
 
-  /* UPDATED setupContinuousReviews – now fully responsive */
   function setupContinuousReviews(){
     if(!track) return;
 
-    // Extract ALL individual review items (handles both static HTML and fetched data)
+    // Extract base review items (handles both initial HTML and fetched data)
     let slidesToUse;
     if (reviewSlidesCount > 0 && track.children.length === reviewSlidesCount * 2) {
       slidesToUse = Array.from(track.children).slice(0, reviewSlidesCount);
@@ -649,7 +647,7 @@
     const itemsPerSlide = getReviewsPerSlide();
     reviewSlidesCount = Math.ceil(allItems.length / itemsPerSlide);
 
-    // Rebuild slides with correct number of reviews per slide
+    // Rebuild slides with correct grouping
     track.innerHTML = '';
     for(let i = 0; i < allItems.length; i += itemsPerSlide){
       const slide = document.createElement('div');
@@ -659,7 +657,7 @@
       track.appendChild(slide);
     }
 
-    // Duplicate for seamless infinite scroll
+    // Duplicate for seamless infinite loop
     const builtSlides = Array.from(track.children);
     builtSlides.forEach(slide => track.appendChild(slide.cloneNode(true)));
 
@@ -689,7 +687,6 @@
     updateReviewDots();
   }
 
-  /* UPDATED resize handler – now calls full setup for responsiveness */
   window.addEventListener('resize', () => {
     if(track){
       setupContinuousReviews();
@@ -702,46 +699,10 @@
   const storyBody = document.getElementById('storyDetailBody');
   const storyClose = document.querySelector('.story-detail-close');
   const storyDetails = {
-    about: {
-      icon: 'fa-user',
-      title: 'About Me',
-      body: `
-        <p>Dedicated graphic design student at the University of Education, Winneba with a passion for creativity and attention to detail.</p>
-        <p>I strive to create simple, effective designs while learning and growing in the field. I love clean aesthetics, meaningful visuals, and solving creative challenges. Always eager to take on new projects and collaborate.</p>
-      `
-    },
-    education: {
-      icon: 'fa-graduation-cap',
-      title: 'Education',
-      body: `
-        <p><strong>University of Education, Winneba</strong><br>Bachelor’s Degree in Graphic Design | Expected 2026</p>
-        <p>Currently pursuing a degree in Graphic Design with a focus on visual communication, layout design, branding, typography, and digital media.</p>
-      `
-    },
-    work: {
-      icon: 'fa-briefcase',
-      title: 'Work Experience',
-      body: `
-        <p><strong>Freelance Graphic Designer</strong><br>2023–Present</p>
-        <p>Designed custom graphics and layouts for various clients while managing multiple projects independently and translating creative concepts into polished visual outcomes.</p>
-      `
-    },
-    skills: {
-      icon: 'fa-tools',
-      title: 'Skills',
-      body: `
-        <ul>
-          <li>Adobe Photoshop</li>
-          <li>Adobe Illustrator</li>
-          <li>Adobe InDesign</li>
-          <li>Typography</li>
-          <li>Layout Design</li>
-          <li>Branding</li>
-          <li>Visual Communication</li>
-          <li>Color Theory</li>
-        </ul>
-      `
-    }
+    about: { icon: 'fa-user', title: 'About Me', body: `<p>Dedicated graphic design student at the University of Education, Winneba with a passion for creativity and attention to detail.</p><p>I strive to create simple, effective designs while learning and growing in the field. I love clean aesthetics, meaningful visuals, and solving creative challenges. Always eager to take on new projects and collaborate.</p>` },
+    education: { icon: 'fa-graduation-cap', title: 'Education', body: `<p><strong>University of Education, Winneba</strong><br>Bachelor’s Degree in Graphic Design | Expected 2026</p><p>Currently pursuing a degree in Graphic Design with a focus on visual communication, layout design, branding, typography, and digital media.</p>` },
+    work: { icon: 'fa-briefcase', title: 'Work Experience', body: `<p><strong>Freelance Graphic Designer</strong><br>2023–Present</p><p>Designed custom graphics and layouts for various clients while managing multiple projects independently and translating creative concepts into polished visual outcomes.</p>` },
+    skills: { icon: 'fa-tools', title: 'Skills', body: `<ul><li>Adobe Photoshop</li><li>Adobe Illustrator</li><li>Adobe InDesign</li><li>Typography</li><li>Layout Design</li><li>Branding</li><li>Visual Communication</li><li>Color Theory</li></ul>` }
   };
   document.querySelectorAll('.story-card').forEach(card => {
     const btn = card.querySelector('.story-more');
@@ -787,10 +748,10 @@
   }
   applyLang(currentLang);
 
-  /* Initial setup (uses current screen size) */
+  /* Initial setup (hardcoded reviews) */
   setupContinuousReviews();
 
-  /* Fetch with responsive grouping */
+  /* Fetch with responsive grouping + fix for mobile stacking */
   fetch('https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-about.json?t='+Date.now())
     .then(r=>r.ok?r.json():null).then(d=>{
       if(!d)return;
@@ -833,7 +794,8 @@
         statProjectsEl.textContent = total;
       }
       if(d.reviews&&d.reviews.length){
-        const groupSize = getReviewsPerSlide();   /* ← RESPONSIVE */
+        reviewSlidesCount = 0;                    // CRITICAL FIX: forces setup to treat new HTML as base slides
+        const groupSize = getReviewsPerSlide();   // mobile = 1, tablet = 2, desktop = 3
         const groups=[];
         for(let i=0;i<d.reviews.length;i+=groupSize)groups.push(d.reviews.slice(i,i+groupSize));
         track.innerHTML=groups.map(g=>`
