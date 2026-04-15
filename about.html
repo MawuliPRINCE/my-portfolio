@@ -36,7 +36,6 @@
       overflow-x:hidden;
       transition:background .3s,color .3s;
     }
-
     header{position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:clamp(14px,2.5vw,20px) clamp(20px,4vw,48px);background:rgba(250,249,247,0.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:background .3s;}
     body.dark header{background:rgba(13,13,13,0.94);}
     .logo{color:var(--accent);font-size:clamp(17px,2vw,22px);font-weight:700;text-decoration:none;letter-spacing:-.01em;}
@@ -47,7 +46,6 @@
     .icon-btn:hover{color:var(--accent);background:var(--accent-dim);}
     .hamburger .fa-bars{display:block;}.hamburger .fa-times{display:none;}
     .hamburger.open .fa-bars{display:none;}.hamburger.open .fa-times{display:block;}
-
     .menu-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);z-index:98;opacity:0;pointer-events:none;transition:opacity .3s;}
     .menu-backdrop.open{opacity:1;pointer-events:all;}
     .menu{position:fixed;top:0;right:-100%;width:min(300px,85vw);height:100vh;background:var(--bg);display:flex;flex-direction:column;justify-content:center;align-items:center;transition:right .35s cubic-bezier(.4,0,.2,1);z-index:99;box-shadow:-8px 0 40px rgba(0,0,0,0.12);}
@@ -58,9 +56,7 @@
     .menu a:hover,.menu a.active{color:var(--accent);background:var(--accent-dim);}
     .menu-divider{width:36px;height:2px;background:var(--accent);margin-bottom:2rem;}
     .menu-footer{position:absolute;bottom:2rem;font-size:.65rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
-
     .page{padding-top:clamp(60px,8vw,76px);}
-
     .about-page .hero{
       background:var(--dark);
       color:#f0ede8;
@@ -117,7 +113,6 @@
       transition:all .2s;
     }
     .about-page .hero-tag:hover{border-color:var(--accent);color:var(--accent);}
-
     .about-page .story-section{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
@@ -170,7 +165,6 @@
       opacity:.8;
       transform:translateX(3px);
     }
-
     .about-page .story-detail-overlay{
       position:fixed;
       inset:0;
@@ -240,7 +234,6 @@
       margin-top:1rem;
       padding-left:1.25rem;
     }
-
     .about-page .stats-bar{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
@@ -279,7 +272,6 @@
       margin-top:0;
       text-align:center;
     }
-
     .about-page .reviews-section{
       background:var(--surface);
       border-bottom:1px solid var(--border);
@@ -297,7 +289,6 @@
     .about-page .rev-controls{display:flex;gap:.4rem;}
     .about-page .rev-btn{width:40px;height:40px;border:1px solid var(--border);background:none;color:var(--text);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .2s;}
     .about-page .rev-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
-
     .about-page .reviews-track-wrap{overflow:hidden;position:relative;}
     .about-page .reviews-track{display:flex;will-change:transform;}
     .about-page .review-slide{
@@ -332,11 +323,9 @@
     .about-page .review-name{font-size:.82rem;font-weight:700;color:var(--text);font-family:'Space Grotesk',sans-serif;}
     .about-page .review-role{font-size:.65rem;color:var(--muted);font-family:'Space Grotesk',sans-serif;}
     .about-page .review-stars{font-size:.65rem;color:var(--gold);letter-spacing:2px;margin-top:.1rem;}
-
     .about-page .rev-dots{display:flex;gap:.35rem;padding:1rem clamp(24px,5vw,72px) 1.4rem;background:var(--surface);}
     .about-page .rev-dot{width:5px;height:5px;border-radius:50%;background:var(--border);transition:all .3s;}
     .about-page .rev-dot.active{background:var(--accent);width:16px;border-radius:3px;}
-
     .about-page footer{background:var(--footer-bg);color:var(--footer-text);padding:clamp(56px,7vw,88px) clamp(24px,5vw,80px) clamp(32px,4vw,48px);transition:background .3s,color .3s;font-family:'Space Grotesk',sans-serif;}
     .about-page .footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2.5rem;padding-bottom:2.75rem;border-bottom:1px solid rgba(128,128,128,0.15);margin-bottom:2rem;}
     .about-page .footer-top>div:first-child{max-width:560px;}
@@ -349,10 +338,8 @@
     .about-page .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.65rem;color:var(--footer-text);opacity:.3;padding-top:.25rem;font-family:'Space Grotesk',sans-serif;}
     .about-page .go-to-top{width:40px;height:40px;border-radius:50%;background:var(--accent);border:none;color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s;opacity:1;}
     .about-page .go-to-top:hover{transform:translateY(-3px);}
-
     .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease;}
     .reveal.visible{opacity:1;transform:translateY(0);}
-
     @media(max-width:1100px){
       .about-page .hero{grid-template-columns:minmax(0,1fr) minmax(260px,360px);gap:clamp(28px,5vw,56px);}
       .about-page .review-slide{grid-template-columns:repeat(2,minmax(0,1fr));}
@@ -390,9 +377,7 @@
   </style>
 </head>
 <body>
-
 <div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
-
 <header>
   <a href="index.html" class="logo">Prince</a>
   <div class="header-right">
@@ -406,7 +391,6 @@
     </button>
   </div>
 </header>
-
 <nav class="menu" id="menu">
   <div class="menu-divider"></div>
   <ul>
@@ -417,9 +401,7 @@
   </ul>
   <p class="menu-footer">© <span id="menu-year"></span> Prince</p>
 </nav>
-
 <div class="page about-page">
-
   <section class="hero">
     <div class="hero-left">
       <p class="hero-label" data-i18n="hero-label">About Me</p>
@@ -441,7 +423,6 @@
       </div>
     </div>
   </section>
-
   <section class="story-section" id="info-section">
     <div class="story-card reveal" data-detail="about">
       <h3><i class="fas fa-user"></i> <span data-i18n="pill-about">About Me</span></h3>
@@ -450,7 +431,6 @@
       </p>
       <button class="story-more" type="button" data-i18n="see-more">See more →</button>
     </div>
-
     <div class="story-card reveal" data-detail="education">
       <h3><i class="fas fa-graduation-cap"></i> <span data-i18n="pill-edu">Education</span></h3>
       <p class="story-preview" id="education-preview">
@@ -458,7 +438,6 @@
       </p>
       <button class="story-more" type="button" data-i18n="see-more">See more →</button>
     </div>
-
     <div class="story-card reveal" data-detail="work">
       <h3><i class="fas fa-briefcase"></i> <span data-i18n="section-journey">Work Experience</span></h3>
       <p class="story-preview" id="work-preview">
@@ -466,7 +445,6 @@
       </p>
       <button class="story-more" type="button" data-i18n="see-more">See more →</button>
     </div>
-
     <div class="story-card reveal" data-detail="skills">
       <h3><i class="fas fa-tools"></i> <span data-i18n="pill-skills">Skills</span></h3>
       <p class="story-preview" id="skills-preview">
@@ -475,7 +453,6 @@
       <button class="story-more" type="button" data-i18n="see-more">See more →</button>
     </div>
   </section>
-
   <div class="story-detail-overlay" id="storyDetailOverlay">
     <div class="story-detail-content">
       <button class="story-detail-close" type="button" aria-label="Close">×</button>
@@ -483,7 +460,6 @@
       <div id="storyDetailBody"></div>
     </div>
   </div>
-
   <section class="stats-bar">
     <div class="stat-cell reveal">
       <div class="stat-big"><span id="stat-years">2</span><span style="color:var(--accent)">+</span></div>
@@ -494,7 +470,6 @@
       <p class="stat-name" data-i18n="stat-projects">Projects Delivered</p>
     </div>
   </section>
-
   <section class="reviews-section">
     <div class="reviews-header reveal">
       <div class="reviews-header-left">
@@ -506,7 +481,6 @@
         <button class="rev-btn" onclick="shiftReview(1)"><i class="fas fa-arrow-right"></i></button>
       </div>
     </div>
-
     <div class="reviews-track-wrap">
       <div class="reviews-track" id="reviews-track">
         <div class="review-slide">
@@ -523,7 +497,6 @@
             <div class="review-bottom"><div class="review-av">EA</div><div><div class="review-name">Efua Asante</div><div class="review-role" data-i18n="r3-role">Creative Director</div><div class="review-stars">★★★★★</div></div></div>
           </div>
         </div>
-
         <div class="review-slide">
           <div class="review-item">
             <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r4">Highly recommended. Prince brings creativity and professionalism to every project. Our brand has never looked better.</p></div>
@@ -542,7 +515,6 @@
     </div>
     <div class="rev-dots" id="rev-dots"></div>
   </section>
-
   <footer id="contact">
     <div class="footer-top">
       <div>
@@ -563,16 +535,13 @@
       <button class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
     </div>
   </footer>
-
 </div>
 
 <script>
   const yr=new Date().getFullYear();
   ['menu-year','footer-year'].forEach(id=>document.getElementById(id).textContent=yr);
-
   function toggleTheme(){document.body.classList.toggle('dark');localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
   if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
-
   const menuEl=document.getElementById('menu'),backdrop=document.getElementById('menu-backdrop'),hamburger=document.getElementById('hamburger');
   function openMenu(){menuEl.classList.add('open');backdrop.classList.add('open');hamburger.classList.add('open');document.body.style.overflow='hidden';}
   function closeMenu(){menuEl.classList.remove('open');backdrop.classList.remove('open');hamburger.classList.remove('open');document.body.style.overflow='';}
@@ -586,10 +555,8 @@
   let mTX=0;
   menuEl.addEventListener('touchstart',e=>{mTX=e.touches[0].clientX;},{passive:true});
   menuEl.addEventListener('touchend',e=>{if(e.changedTouches[0].clientX-mTX>60)closeMenu();},{passive:true});
-
   const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});},{threshold:.1});
   document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
-
   function animateCount(el, end){
     const duration = 1200;
     const startTime = performance.now();
@@ -602,11 +569,9 @@
     el.textContent = '0';
     requestAnimationFrame(step);
   }
-
   const statsBar = document.querySelector('.stats-bar');
   const statYearsEl = document.getElementById('stat-years');
   const statProjectsEl = document.getElementById('stat-projects-num');
-
   if(statsBar && statYearsEl && statProjectsEl){
     const statsObs = new IntersectionObserver(entries=>{
       entries.forEach(entry=>{
@@ -621,12 +586,23 @@
     statsObs.observe(statsBar);
   }
 
+  /* ============================================= */
+  /* TESTIMONIAL SLIDER – ONLY THIS PART WAS CHANGED */
+  /* ============================================= */
   const track=document.getElementById('reviews-track');
   const dotsEl=document.getElementById('rev-dots');
   let reviewAnimationFrame = null;
   let currentOffset = 0;
   let reviewSpeed = 0.45;
   let reviewSlidesCount = 0;
+
+  /* NEW HELPER: Responsive grouping (mobile = 1 review per slide) */
+  function getReviewsPerSlide() {
+    const w = window.innerWidth;
+    if (w <= 900) return 1;      // mobile → 1 review per slide (full width)
+    if (w <= 1100) return 2;     // tablet
+    return 3;                    // desktop (unchanged)
+  }
 
   function updateReviewDots(){
     if(!dotsEl || !reviewSlidesCount || !track.firstElementChild) return;
@@ -649,13 +625,45 @@
     reviewAnimationFrame = requestAnimationFrame(animate);
   }
 
+  /* UPDATED setupContinuousReviews – now fully responsive */
   function setupContinuousReviews(){
     if(!track) return;
-    const originalSlides = Array.from(track.children).slice(0, reviewSlidesCount || track.children.length);
-    reviewSlidesCount = originalSlides.length;
-    track.innerHTML = '';
-    originalSlides.concat(originalSlides).forEach(slide => track.appendChild(slide.cloneNode(true)));
 
+    // Extract ALL individual review items (handles both static HTML and fetched data)
+    let slidesToUse;
+    if (reviewSlidesCount > 0 && track.children.length === reviewSlidesCount * 2) {
+      slidesToUse = Array.from(track.children).slice(0, reviewSlidesCount);
+    } else {
+      slidesToUse = Array.from(track.children);
+    }
+
+    const allItems = [];
+    slidesToUse.forEach(slide => {
+      Array.from(slide.querySelectorAll('.review-item')).forEach(item => {
+        allItems.push(item.cloneNode(true));
+      });
+    });
+
+    if(allItems.length === 0) return;
+
+    const itemsPerSlide = getReviewsPerSlide();
+    reviewSlidesCount = Math.ceil(allItems.length / itemsPerSlide);
+
+    // Rebuild slides with correct number of reviews per slide
+    track.innerHTML = '';
+    for(let i = 0; i < allItems.length; i += itemsPerSlide){
+      const slide = document.createElement('div');
+      slide.className = 'review-slide';
+      const chunk = allItems.slice(i, i + itemsPerSlide);
+      chunk.forEach(item => slide.appendChild(item));
+      track.appendChild(slide);
+    }
+
+    // Duplicate for seamless infinite scroll
+    const builtSlides = Array.from(track.children);
+    builtSlides.forEach(slide => track.appendChild(slide.cloneNode(true)));
+
+    // Rebuild dots
     if(dotsEl){
       dotsEl.innerHTML = '';
       for(let i = 0; i < reviewSlidesCount; i++){
@@ -664,6 +672,7 @@
         dotsEl.appendChild(d);
       }
     }
+
     currentOffset = 0;
     track.style.transform = 'translateX(0)';
     startContinuousReviews();
@@ -680,11 +689,10 @@
     updateReviewDots();
   }
 
+  /* UPDATED resize handler – now calls full setup for responsiveness */
   window.addEventListener('resize', () => {
     if(track){
-      currentOffset = 0;
-      track.style.transform = 'translateX(0)';
-      startContinuousReviews();
+      setupContinuousReviews();
     }
   });
 
@@ -693,7 +701,6 @@
   const storyTitle = document.getElementById('storyDetailTitle');
   const storyBody = document.getElementById('storyDetailBody');
   const storyClose = document.querySelector('.story-detail-close');
-
   const storyDetails = {
     about: {
       icon: 'fa-user',
@@ -736,7 +743,6 @@
       `
     }
   };
-
   document.querySelectorAll('.story-card').forEach(card => {
     const btn = card.querySelector('.story-more');
     if (!btn) return;
@@ -744,10 +750,8 @@
       const key = card.dataset.detail;
       const item = storyDetails[key];
       if (!item) return;
-
       storyTitle.innerHTML = `<i class="fas ${item.icon}"></i> ${item.title}`;
       storyBody.innerHTML = item.body;
-
       storySection.classList.add('fade-out');
       setTimeout(() => {
         storyOverlay.classList.add('active');
@@ -755,7 +759,6 @@
       }, 350);
     });
   });
-
   function closeStoryOverlay() {
     if(!storyOverlay.classList.contains('active')) return;
     storyOverlay.classList.remove('active');
@@ -764,19 +767,16 @@
       storySection.classList.remove('fade-out');
     }, 250);
   }
-
   storyClose.addEventListener('click', closeStoryOverlay);
   storyOverlay.addEventListener('click', e => {
     if (e.target === storyOverlay) closeStoryOverlay();
   });
-
   const i18n={
     en:{'nav-home':'Home','nav-about':'About','nav-projects':'Projects','nav-booking':'Book Me','hero-label':'About Me','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Graphic Designer and Brand Identity specialist based in Ghana. Currently studying at the University of Education, Winneba — committed to crafting visuals that are clean, intentional, and memorable.','pill-about':'About Me','pill-edu':'Education','pill-skills':'Skills','section-journey':'Work Experience','see-more':'See more →','stat-experience':'Years Experience','stat-projects':'Projects Delivered','section-reviews':'Client Reviews','reviews-title':'What clients say','r1':'Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional.','r1-role':'Founder, AK Studio','r2':'The attention to detail was remarkable. Every revision handled swiftly.','r2-role':'Marketing Director','r3':'Working with Prince was smooth from start to finish.','r3-role':'Creative Director','r4':'Highly recommended. Prince brings creativity and professionalism to every project.','r4-role':'Business Owner','footer-title':'Let\'s Connect','footer-desc':'Ready to start your next project or want to collaborate? I\'m always open to new opportunities.'},
     fr:{'nav-home':'Accueil','nav-about':'À Propos','nav-projects':'Projets','nav-booking':'Me Réserver','hero-label':'À Propos','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Designer graphique et spécialiste en identité de marque basé au Ghana, étudiant à l\'Université de Winneba.','pill-about':'À Propos','pill-edu':'Formation','pill-skills':'Compétences','section-journey':'Expérience','see-more':'Voir plus →','stat-experience':'Ans d\'expérience','stat-projects':'Projets livrés','section-reviews':'Avis clients','reviews-title':'Ce que disent les clients','r1':'Prince a livré une identité qui a capturé notre vision. Propre, précis et professionnel.','r1-role':'Fondatrice, AK Studio','r2':'L\'attention aux détails était remarquable.','r2-role':'Directeur Marketing','r3':'Travailler avec Prince était fluide du début à la fin.','r3-role':'Directeur Créatif','r4':'Fortement recommandé. Créativité et professionnalisme à chaque projet.','r4-role':'Chef d\'entreprise','footer-title':'Connectons-nous','footer-desc':'Prêt à démarrer votre prochain projet ?'},
     es:{'nav-home':'Inicio','nav-about':'Acerca','nav-projects':'Proyectos','nav-booking':'Reservarme','hero-label':'Acerca de Mí','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Diseñador gráfico y especialista en identidad de marca con sede en Ghana.','pill-about':'Acerca de Mí','pill-edu':'Educación','pill-skills':'Habilidades','section-journey':'Experiencia laboral','see-more':'Ver más →','stat-experience':'Años de experiencia','stat-projects':'Proyectos entregados','section-reviews':'Reseñas','reviews-title':'Lo que dicen los clientes','r1':'Prince entregó una identidad que capturó nuestra visión.','r1-role':'Fundadora, AK Studio','r2':'La atención al detalle fue notable.','r2-role':'Director de Marketing','r3':'Trabajar con Prince fue fluido.','r3-role':'Director Creativo','r4':'Muy recomendable. Creatividad y profesionalismo.','r4-role':'Dueño de negocio','footer-title':'Conectemos','footer-desc':'¿Listo para comenzar su próximo proyecto?'},
     de:{'nav-home':'Startseite','nav-about':'Über mich','nav-projects':'Projekte','nav-booking':'Buchen','hero-label':'Über mich','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Grafikdesigner und Markenidentitätsspezialist aus Ghana, Universität Winneba.','pill-about':'Über mich','pill-edu':'Ausbildung','pill-skills':'Fähigkeiten','section-journey':'Berufserfahrung','see-more':'Mehr sehen →','stat-experience':'Jahre Erfahrung','stat-projects':'Projekte geliefert','section-reviews':'Kundenbewertungen','reviews-title':'Was Kunden sagen','r1':'Prince lieferte eine Markenidentität, die unsere Vision einfing.','r1-role':'Gründerin, AK Studio','r2':'Die Liebe zum Detail war bemerkenswert.','r2-role':'Marketingdirektor','r3':'Die Zusammenarbeit verlief reibungslos.','r3-role':'Kreativdirektor','r4':'Sehr empfehlenswert. Kreativität und Professionalität.','r4-role':'Geschäftsinhaber','footer-title':'Verbinden wir uns','footer-desc':'Bereit für Ihr nächstes Projekt?'}
   };
-
   let currentLang=localStorage.getItem('lang')||'en';
   document.getElementById('lang-select').value=currentLang;
   function switchLang(lang){currentLang=lang;localStorage.setItem('lang',lang);applyLang(lang);}
@@ -787,62 +787,53 @@
   }
   applyLang(currentLang);
 
+  /* Initial setup (uses current screen size) */
   setupContinuousReviews();
 
+  /* Fetch with responsive grouping */
   fetch('https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-about.json?t='+Date.now())
     .then(r=>r.ok?r.json():null).then(d=>{
       if(!d)return;
-
       const map=[['pill-about',d.aboutShort],['pill-edu',d.eduShort],['pill-skills',d.skillsShort]];
       map.forEach(([k,v])=>{if(v)document.querySelectorAll(`[data-i18n="${k}"]`).forEach(el=>el.textContent=v);});
-
       if(d.aboutShort){
         const preview = document.getElementById('about-preview');
         if(preview) preview.innerHTML = d.aboutShort.replace(/\n/g,'<br>') + '...';
       }
-
       if(d.eduShort){
         const preview = document.getElementById('education-preview');
         if(preview) preview.innerHTML = d.eduShort.replace(/\n/g,'<br>') + '...';
       }
-
       if(d.skillsShort){
         const preview = document.getElementById('skills-preview');
         if(preview) preview.innerHTML = d.skillsShort.replace(/\n/g,'<br>') + '...';
       }
-
       if(d.aboutFull){
         storyDetails.about.body = `<p>${d.aboutFull.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')}</p>`;
       }
-
       if(d.eduFull){
         storyDetails.education.body = `<p>${d.eduFull.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')}</p>`;
       }
-
       if(d.workFull){
         storyDetails.work.body = `<p>${d.workFull.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')}</p>`;
       }
-
       if(d.workShort){
         const preview = document.getElementById('work-preview');
         if(preview) preview.innerHTML = d.workShort.replace(/\n/g,'<br>') + '...';
       }
-
       if(d.skillsFull){
         const items = d.skillsFull.split('\n').filter(Boolean);
         storyDetails.skills.body = `<ul>${items.map(s=>`<li>${s}</li>`).join('')}</ul>`;
         const tags=document.getElementById('hero-tags');
         if(tags)tags.innerHTML=items.map(s=>`<span class="hero-tag">${s}</span>`).join('');
       }
-
       if(d.projectsCount){
         const total = parseInt(d.projectsCount, 10) || 10;
         statProjectsEl.dataset.total = total;
         statProjectsEl.textContent = total;
       }
-
       if(d.reviews&&d.reviews.length){
-        const groupSize=3;
+        const groupSize = getReviewsPerSlide();   /* ← RESPONSIVE */
         const groups=[];
         for(let i=0;i<d.reviews.length;i+=groupSize)groups.push(d.reviews.slice(i,i+groupSize));
         track.innerHTML=groups.map(g=>`
