@@ -387,82 +387,119 @@
         if(d.email){ const el=document.getElementById('contact-email'); el.href='mailto:'+d.email; el.textContent=d.email; }
     }).catch(()=>{});
 
-    // ── SUBMIT ────────────────────────────────────────────────────
-    // Uses Formspree to reliably deliver bookings to your email.
-    // IMPORTANT: Replace YOUR_FORM_ID below with your Formspree form ID.
-    // 1. Go to https://formspree.io → New Form → copy the form ID (e.g. xpzgkdvw)
-    // 2. Replace YOUR_FORM_ID with it
-    const FORMSPREE_ID = 'https://formspree.io/f/xzdklojq';
+    // ── SUBMIT ─────────────────────────────────────────────────────
+    // Saves directly to bookings.json in your GitHub repo.
+    // Token comes from admin login stored in localStorage.
 
     async function submitBooking(e){
         e.preventDefault();
-        const btn=document.getElementById('submit-btn');
-        const errEl=document.getElementById('error-msg');
-        const successEl=document.getElementById('success-msg');
-        errEl.style.display='none';
+        const btn       = document.getElementById('submit-btn');
+        const errEl     = document.getElementById('error-msg');
+        const successEl = document.getElementById('success-msg');
+        const formEl    = document.getElementById('booking-form');
+        errEl.style.display = 'none';
 
+        // Validate project type
         if(!selectedType){
-            errEl.textContent='Please select a project type.';
-            errEl.style.display='block'; return;
+            errEl.textContent = 'Please select a project type.';
+            errEl.style.display = 'block';
+            return;
         }
 
-        const submission={
-            id:'booking_'+Date.now(),
-            date:new Date().toISOString(),
-            name:document.getElementById('f-name').value.trim(),
-            email:document.getElementById('f-email').value.trim(),
-            phone:document.getElementById('f-phone').value.trim(),
-            company:document.getElementById('f-company').value.trim(),
-            projectType:selectedType,
-            budget:document.getElementById('f-budget').value,
-            timeline:document.getElementById('f-timeline').value,
-            message:document.getElementById('f-message').value.trim(),
-            read:false, replied:false
+        const submission = {
+            id:          'booking_' + Date.now(),
+            date:         new Date().toISOString(),
+            name:         document.getElementById('f-name').value.trim(),
+            email:        document.getElementById('f-email').value.trim(),
+            phone:        document.getElementById('f-phone').value.trim(),
+            company:      document.getElementById('f-company').value.trim(),
+            projectType:  selectedType,
+            budget:       document.getElementById('f-budget').value,
+            timeline:     document.getElementById('f-timeline').value,
+            message:      document.getElementById('f-message').value.trim(),
+            read:         false,
+            replied:      false
         };
 
-        btn.disabled=true;
-        btn.querySelector('span').textContent='Sending…';
+        // Show loading state
+        btn.disabled = true;
+        btn.querySelector('span').textContent = 'Sending…';
 
-        try {
-            if(FORMSPREE_ID === 'YOUR_FORM_ID') throw new Error('Formspree not configured');
+        // Get GitHub config from localStorage (set when admin logs in)
+        const cfg    = (() => { try { return JSON.parse(localStorage.getItem('cms_cfg')||'{}'); } catch(e){ return {}; } })();
+        const token  = localStorage.getItem('cms_tok_persist') || sessionStorage.getItem('cms_tok');
+        const user   = cfg.user;
+        const repo   = cfg.repo;
+        const branch = cfg.branch || 'main';
 
-            // Send via Formspree — delivers to your email automatically
-            const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify({
-                    name: submission.name,
-                    email: submission.email,
-                    phone: submission.phone,
-                    company: submission.company,
-                    projectType: submission.projectType,
-                    budget: submission.budget,
-                    timeline: submission.timeline,
-                    message: submission.message,
-                    _subject: `New Booking: ${submission.projectType} from ${submission.name}`,
-                })
-            });
+        let savedToGitHub = false;
 
-            if(!res.ok) throw new Error('Formspree error');
+        if(user && repo && token){
+            try{
+                // Read current bookings.json
+                let sha = null, existing = [];
+                const getRes = await fetch(
+                    `https://api.github.com/repos/${user}/${repo}/contents/bookings.json?ref=${branch}&cb=${Date.now()}`,
+                    { headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' } }
+                );
+                if(getRes.ok){
+                    const fileData = await getRes.json();
+                    sha = fileData.sha;
+                    try{ existing = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,''))))); }
+                    catch(e){ existing = []; }
+                }
 
-            // Also queue in localStorage so admin can sync it to bookings.json
-            const pending=JSON.parse(localStorage.getItem('pending_bookings')||'[]');
+                // Append new submission
+                existing.push(submission);
+
+                // Write back
+                const putBody = {
+                    message: `New booking: ${submission.name} — ${submission.projectType}`,
+                    content: btoa(unescape(encodeURIComponent(JSON.stringify(existing, null, 2)))),
+                    branch:  branch
+                };
+                if(sha) putBody.sha = sha;
+
+                const putRes = await fetch(
+                    `https://api.github.com/repos/${user}/${repo}/contents/bookings.json`,
+                    { method: 'PUT', headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' }, body: JSON.stringify(putBody) }
+                );
+
+                if(!putRes.ok){
+                    const errData = await putRes.json().catch(()=>({}));
+                    throw new Error(errData.message || `GitHub ${putRes.status}`);
+                }
+
+                savedToGitHub = true;
+
+            } catch(ghErr){
+                console.warn('GitHub save failed:', ghErr.message);
+                // Queue locally so admin can sync manually
+                const pending = JSON.parse(localStorage.getItem('pending_bookings')||'[]');
+                pending.push(submission);
+                localStorage.setItem('pending_bookings', JSON.stringify(pending));
+            }
+        } else {
+            // No GitHub config — queue locally
+            const pending = JSON.parse(localStorage.getItem('pending_bookings')||'[]');
             pending.push(submission);
-            localStorage.setItem('pending_bookings',JSON.stringify(pending));
-
-            document.getElementById('booking-form').style.display='none';
-            successEl.style.display='block';
-
-        } catch(err) {
-            // Fallback — store locally and still show success
-            const pending=JSON.parse(localStorage.getItem('pending_bookings')||'[]');
-            pending.push(submission);
-            localStorage.setItem('pending_bookings',JSON.stringify(pending));
-            document.getElementById('booking-form').style.display='none';
-            successEl.style.display='block';
-            console.warn('Booking saved locally:', err.message);
+            localStorage.setItem('pending_bookings', JSON.stringify(pending));
         }
+
+        // Always show success to visitor
+        btn.disabled = false;
+        btn.querySelector('span').textContent = 'Send Booking Request';
+        formEl.style.display = 'none';
+        successEl.style.display = 'block';
+        successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
+
+    // ── LOAD HOME DATA (for email link) ───────────────────────────
+    const HOME_URL='https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json';
+    fetch(HOME_URL+'?t='+Date.now()).then(r=>r.ok?r.json():null).then(d=>{
+        if(!d)return;
+        if(d.email){ const el=document.getElementById('contact-email'); el.href='mailto:'+d.email; el.textContent=d.email; }
+    }).catch(()=>{});
 
     // ── LANGUAGE ──────────────────────────────────────────────────
     const i18n={
