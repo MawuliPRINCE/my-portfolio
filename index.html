@@ -11,11 +11,11 @@
     <meta property="og:url" content="https://mawuliprince.github.io/my-portfolio/">
     <meta property="og:image" content="https://mawuliprince.github.io/my-portfolio/og-image.jpg">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-size='80' font-family='serif' fill='%23ff4500'>P</text></svg>">
-   
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         :root {
             --bg: #faf9f7;
@@ -28,6 +28,7 @@
             --footer-bg: #0d0d0d;
             --footer-text: #f0ede8;
         }
+
         body.dark {
             --bg: #0d0d0d;
             --surface: #161616;
@@ -35,150 +36,191 @@
             --muted: #555;
             --border: #2a2a2a;
             --accent-dim: rgba(255,69,0,0.12);
-            --footer-bg: #ffffff;
-            --footer-text: #111111;
+            --footer-bg: #000;
+            --footer-text: #f0ede8;
         }
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        *, *::before, *::after {
+            margin: 0; padding: 0; box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
         html { scroll-behavior: smooth; }
+
         body {
             font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            background: var(--bg); color: var(--text);
+            overflow-x: hidden; min-height: 100vh;
+            display: flex; flex-direction: column;
+            transition: background .3s, color .3s;
         }
-        /* HEADER */
+
+        /* ── HEADER — matches about.html & projects.html exactly ── */
         header {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
             display: flex; justify-content: space-between; align-items: center;
             padding: clamp(14px,2.5vw,22px) clamp(20px,4vw,40px);
-            transition: all .4s ease;
+            transition: background .4s, border-color .4s, box-shadow .4s;
         }
-        header.at-top { background: transparent; border-bottom: transparent; }
+
+        header.at-top {
+            background: transparent;
+            border-bottom: 1px solid transparent;
+        }
+
         header.scrolled {
             background: rgba(250,249,247,0.94);
             backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.04);
         }
         body.dark header.scrolled { background: rgba(13,13,13,0.94); }
+
         .logo {
             color: var(--accent);
-            font-size: clamp(20px, 2.5vw, 28px);
-            font-weight: 700;
-            text-decoration: none;
-        }
-        header.at-top .logo { color: #fff; }
-        .header-right { display: flex; align-items: center; gap: 8px; }
-        
-        .lang-select {
-            padding: 8px 32px 8px 14px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.3);
-            background: rgba(0,0,0,0.4);
-            color: #fff;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 2L6 7L11 2' fill='none' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; 
-            background-position: right 12px center;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-        }
-        body:not(.dark) header.scrolled .lang-select {
-            background: var(--surface);
-            color: var(--text);
-            border-color: var(--border);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 2L6 7L11 2' fill='none' stroke='%23333' stroke-width='1.5'/%3E%3C/svg%3E");
+            font-size: clamp(18px,2vw+0.5rem,24px);
+            font-weight: 700; text-decoration: none; letter-spacing: -.01em;
         }
 
+        .header-right { display: flex; align-items: center; gap: 6px; }
+
+        /* Language select — same pill style as about/projects */
+        .lang-select {
+            appearance: none; -webkit-appearance: none;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .72rem; font-weight: 500; letter-spacing: .08em;
+            padding: 6px 28px 6px 10px; border-radius: 20px;
+            cursor: pointer; outline: none; transition: all .2s;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23fff'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 10px center;
+        }
+
+        /* Adapts when header becomes solid */
+        header.scrolled .lang-select {
+            background: var(--surface);
+            border-color: var(--border);
+            color: var(--text);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 10px center;
+        }
+        .lang-select:hover { border-color: var(--accent); }
+
+        /* Icon buttons — same circle style as about/projects */
         .icon-btn {
-            width: 42px; height: 42px; border-radius: 50%;
-            border: none; background: none;
-            color: #fff; 
-            font-size: 1.1rem;
-            cursor: pointer;
+            width: 40px; height: 40px; border-radius: 50%;
+            border: none; background: none; color: #fff;
+            font-size: clamp(15px,1.5vw,18px); cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: color .2s, background .2s;
         }
-        body:not(.dark) header.scrolled .icon-btn { 
-            color: var(--text); 
-        }
-        .icon-btn:hover {
-            color: var(--accent);
-        }
-        .hamburger .fa-bars { display: block; }
+        header.scrolled .icon-btn { color: var(--text); }
+        .icon-btn:hover { color: var(--accent) !important; background: var(--accent-dim); }
+
+        /* Hamburger icon swap */
+        .hamburger .fa-bars  { display: block; }
         .hamburger .fa-times { display: none; }
-        .hamburger.open .fa-bars { display: none; }
+        .hamburger.open .fa-bars  { display: none; }
         .hamburger.open .fa-times { display: block; }
 
-        /* MENU */
+        /* ── MENU BACKDROP ── */
         .menu-backdrop {
             position: fixed; inset: 0;
             background: rgba(0,0,0,0.5);
-            z-index: 98; opacity: 0; pointer-events: none;
-            transition: opacity .3s;
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            z-index: 98; opacity: 0; pointer-events: none; transition: opacity .3s;
         }
         .menu-backdrop.open { opacity: 1; pointer-events: all; }
+
+        /* ── SLIDE MENU ── */
         .menu {
             position: fixed; top: 0; right: -100%;
             width: min(300px,85vw); height: 100vh;
             background: var(--bg);
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            z-index: 99; transition: right .35s cubic-bezier(.4,0,.2,1);
+            transition: right .35s cubic-bezier(.4,0,.2,1);
+            z-index: 99; box-shadow: -8px 0 40px rgba(0,0,0,0.12);
         }
         .menu.open { right: 0; }
+
         .menu ul { list-style: none; text-align: center; width: 100%; padding: 0 2rem; }
-        .menu li { margin: 6px 0; }
+        .menu li { margin: 4px 0; }
         .menu a {
             color: var(--text); text-decoration: none;
             font-size: clamp(18px,4vw,22px); font-weight: 500;
             display: block; padding: 14px 20px; border-radius: 8px;
+            transition: background .2s, color .2s;
         }
         .menu a:hover, .menu a.active { color: var(--accent); background: var(--accent-dim); }
+        .menu-divider { width: 36px; height: 2px; background: var(--accent); margin-bottom: 2rem; }
+        .menu-footer {
+            position: absolute; bottom: 2rem;
+            font-size: .65rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase;
+        }
 
-        /* HERO */
+        /* ── HERO ── */
         .hero {
             position: relative;
             width: 100%; min-height: 100vh;
             display: flex; align-items: center; justify-content: flex-start;
-            overflow: hidden;
-            background: #0d0d0d;
-            flex: 1;
+            overflow: hidden; background: #0d0d0d; flex: 1;
         }
+
         .hero-bg {
             position: absolute; inset: 0;
             width: 100%; height: 100%;
-            object-fit: cover; z-index: 0;
+            object-fit: cover; z-index: 0; display: block;
         }
+
         .hero-overlay {
             position: absolute; inset: 0; z-index: 1;
-            background: linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.1) 100%);
+            background: linear-gradient(
+                to right,
+                rgba(0,0,0,0.72) 0%,
+                rgba(0,0,0,0.45) 50%,
+                rgba(0,0,0,0.1) 100%
+            );
         }
+
         .hero-content {
             position: relative; z-index: 2;
             padding: 0 clamp(24px,6vw,100px);
             max-width: 760px;
         }
+
         .hero-eyebrow {
             font-size: .65rem; letter-spacing: .35em; text-transform: uppercase;
             color: var(--accent); margin-bottom: 1.25rem;
+            display: flex; align-items: center; gap: .75rem;
+            opacity: 0; transform: translateY(16px);
+            animation: riseUp .8s ease .2s forwards;
         }
+        .hero-eyebrow::after { content: ''; width: 40px; height: 1px; background: var(--accent); }
+
         .hero-name {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(58px, 9.5vw, 110px);
+            font-size: clamp(58px,9.5vw,110px);
             font-weight: 600; line-height: .92; letter-spacing: -.03em;
             color: #fff; margin-bottom: 1rem;
+            opacity: 0; transform: translateY(24px);
+            animation: riseUp .9s ease .4s forwards;
         }
         .hero-name em { font-style: italic; color: var(--accent); }
+
         .hero-role {
             font-size: clamp(13px,1.6vw,17px);
             color: rgba(255,255,255,0.8);
-            letter-spacing: .2em; text-transform: uppercase;
-            margin-bottom: 2.8rem;
+            letter-spacing: .2em; text-transform: uppercase; margin-bottom: 2.8rem;
+            opacity: 0; transform: translateY(16px);
+            animation: riseUp .8s ease .6s forwards;
         }
+
+        @keyframes riseUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* ── EXPLORE BUTTON — subtle bounce, fills on hover ── */
         .explore-btn {
             display: inline-flex; align-items: center; gap: .75rem;
             text-decoration: none; color: #fff;
@@ -187,12 +229,18 @@
             border: 1px solid rgba(255,255,255,0.5);
             padding: 14px 32px; border-radius: 50px;
             position: relative; overflow: hidden;
-            animation: riseUp .8s ease forwards, subtleBounce 3s ease 1s infinite;
+            opacity: 0;
+            animation: riseUp .8s ease .85s forwards, subtleBounce 3s ease 2s infinite;
+            transition: border-color .3s, color .3s;
         }
+
         @keyframes subtleBounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+            40%       { transform: translateY(-6px); }
+            65%       { transform: translateY(-3px); }
         }
+
+        /* Orange fill slides in from left on hover */
         .explore-btn::before {
             content: ''; position: absolute; inset: 0;
             background: var(--accent);
@@ -200,67 +248,118 @@
             transition: transform .4s cubic-bezier(.4,0,.2,1);
             z-index: -1;
         }
+        .explore-btn:hover { border-color: var(--accent); animation-play-state: paused; }
         .explore-btn:hover::before { transform: scaleX(1); }
-        .explore-btn:hover { border-color: var(--accent); }
 
-        /* FOOTER */
+        .explore-icon { transition: transform .3s; }
+        .explore-btn:hover .explore-icon { transform: translateX(4px); }
+
+        /* Vertical scroll line */
+        .hero-scroll-line {
+            position: absolute; bottom: 0; left: clamp(24px,6vw,100px);
+            width: 1px; height: clamp(60px,8vw,90px);
+            background: linear-gradient(to bottom, rgba(255,255,255,0.35), transparent);
+            z-index: 2;
+            animation: lineDrop 1s ease 1.5s both;
+        }
+        @keyframes lineDrop {
+            from { transform: scaleY(0); transform-origin: top; }
+            to   { transform: scaleY(1); transform-origin: top; }
+        }
+
+        /* ── FOOTER ── */
         footer {
-            background: var(--footer-bg);
-            color: var(--footer-text);
+            background: var(--footer-bg); color: var(--footer-text);
             padding: clamp(48px,7vw,90px) clamp(24px,5vw,80px) 50px;
             margin-top: auto;
         }
+
         .footer-top {
             display: flex; justify-content: space-between;
             align-items: flex-start; flex-wrap: wrap;
             gap: 2.5rem; padding-bottom: 2.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            margin-bottom: 2.5rem;
         }
+
         footer h2 {
             font-family: 'Cormorant Garamond', serif;
             font-size: clamp(30px,5vw,50px); font-weight: 600;
         }
+
         .footer-accent { width: 40px; height: 2px; background: var(--accent); margin: 1rem 0 1.5rem; }
-        footer p { max-width: 420px; line-height: 1.7; opacity: 0.85; }
+
+        footer p { max-width: 420px; line-height: 1.7; opacity: .85; }
+
         .social-row { display: flex; gap: .8rem; flex-wrap: wrap; }
+
         .social-icon {
             width: 46px; height: 46px; border-radius: 50%;
             border: 1px solid rgba(255,255,255,0.2);
             display: flex; align-items: center; justify-content: center;
-            color: var(--footer-text); font-size: 1.1rem;
+            color: var(--footer-text); text-decoration: none; font-size: 1rem;
             transition: all .3s;
         }
         .social-icon:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
+
         .footer-bottom {
-            margin-top: 3rem;
             display: flex; justify-content: space-between;
             align-items: center; flex-wrap: wrap; gap: 1rem;
-            font-size: .75rem; opacity: 0.6;
+            font-size: .72rem; opacity: .5; letter-spacing: .05em;
         }
+
         .go-to-top {
-            width: 48px; height: 48px; border-radius: 50%;
+            width: 46px; height: 46px; border-radius: 50%;
             background: var(--accent); border: none;
-            color: #fff; font-size: 1.1rem;
-            cursor: pointer;
+            color: #fff; font-size: 1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background .2s, transform .2s;
         }
         .go-to-top:hover { background: #e03a00; transform: translateY(-3px); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .footer-top { flex-direction: column; }
+            .footer-bottom { flex-direction: column; align-items: center; }
+        }
     </style>
+
+    <!-- ── GOOGLE ANALYTICS ── -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DGBR94DXDC');
+    </script>
+
+    <!-- ── MICROSOFT CLARITY ── -->
+    <script>
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "CLARITY_PROJECT_ID");
+    </script>
 </head>
 <body>
+
     <div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
 
     <!-- HEADER -->
     <header id="site-header" class="at-top">
         <a href="index.html" class="logo">Prince</a>
         <div class="header-right">
-            <select class="lang-select" id="lang-select" onchange="switchLang(this.value)">
+            <select class="lang-select" id="lang-select" onchange="switchLang(this.value)" aria-label="Language">
                 <option value="en">EN</option>
                 <option value="fr">FR</option>
                 <option value="es">ES</option>
                 <option value="de">DE</option>
             </select>
-            <button class="icon-btn" onclick="toggleTheme()"><i class="fas fa-lightbulb"></i></button>
-            <button class="icon-btn hamburger" id="hamburger" onclick="toggleMenu()">
+            <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+                <i class="fas fa-lightbulb"></i>
+            </button>
+            <button class="icon-btn hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
                 <i class="fas fa-bars"></i>
                 <i class="fas fa-times"></i>
             </button>
@@ -269,30 +368,42 @@
 
     <!-- MENU -->
     <nav class="menu" id="menu">
+        <div class="menu-divider"></div>
         <ul>
-            <li><a href="index.html" class="active" onclick="closeMenu()" data-i18n="nav-home">Home</a></li>
-            <li><a href="about.html" onclick="closeMenu()" data-i18n="nav-about">About</a></li>
+            <li><a href="index.html"    class="active" onclick="closeMenu()" data-i18n="nav-home">Home</a></li>
+            <li><a href="about.html"    onclick="closeMenu()" data-i18n="nav-about">About</a></li>
             <li><a href="projects.html" onclick="closeMenu()" data-i18n="nav-projects">Projects</a></li>
-            <li><a href="#contact" onclick="closeMenu()" data-i18n="nav-contact">Contact</a></li>
+            <li><a href="#contact"      onclick="closeMenu()" data-i18n="nav-contact">Contact</a></li>
         </ul>
         <p class="menu-footer">© <span id="menu-year"></span> Prince</p>
     </nav>
 
     <!-- HERO -->
     <section class="hero" id="home">
+        <!--
+        BACKGROUND — uncomment ONE:
+        IMAGE:  <img class="hero-bg" src="your-image.jpg" alt="bg"/>
+        VIDEO:  <video class="hero-bg" autoplay muted loop playsinline><source src="your-video.mp4" type="video/mp4"></video>
+        -->
         <div class="hero-overlay"></div>
+
         <div class="hero-content">
             <p class="hero-eyebrow" data-i18n="hero-eyebrow">Portfolio</p>
-            <h1 class="hero-name" id="hero-name">Ismael Asumanu<br><em>Prince</em></h1>
-            <p class="hero-role" id="hero-role" data-i18n="hero-role">Graphic Designer · Brand Identity Designer</p>
+            <h1 class="hero-name" id="hero-name">
+                Ismael Asumanu<br><em>Prince</em>
+            </h1>
+            <p class="hero-role" id="hero-role" data-i18n="hero-role">Graphic Designer &nbsp;·&nbsp; Brand Identity Designer</p>
+
             <a href="projects.html" class="explore-btn">
                 <span data-i18n="explore">Explore Works</span>
-                <i class="fas fa-arrow-right"></i>
+                <i class="fas fa-arrow-right explore-icon"></i>
             </a>
         </div>
+
+        <div class="hero-scroll-line"></div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- FOOTER / CONTACT -->
     <footer id="contact">
         <div class="footer-top">
             <div>
@@ -301,29 +412,181 @@
                 <p id="footer-desc" data-i18n="footer-desc">Ready to start your next project or want to collaborate? I'm always open to new opportunities.</p>
             </div>
             <div class="social-row">
-                <a href="#" class="social-icon" id="social-email" title="Email"><i class="fas fa-envelope"></i></a>
-                <a href="#" class="social-icon" id="social-linkedin" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" class="social-icon" id="social-dribbble" title="Dribbble"><i class="fab fa-dribbble"></i></a>
+                <a href="#" class="social-icon" id="social-email"     title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="#" class="social-icon" id="social-linkedin"  title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-icon" id="social-dribbble"  title="Dribbble"><i class="fab fa-dribbble"></i></a>
                 <a href="#" class="social-icon" id="social-instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="social-icon" id="social-behance" title="Behance"><i class="fab fa-behance"></i></a>
+                <a href="#" class="social-icon" id="social-behance"   title="Behance"><i class="fab fa-behance"></i></a>
             </div>
         </div>
         <div class="footer-bottom">
             <span>© <span id="footer-year"></span> Ismael Asumanu Prince</span>
-            <button class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+            <button class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+                <i class="fas fa-arrow-up"></i>
+            </button>
         </div>
     </footer>
 
     <script>
         // Year
-        document.getElementById('menu-year').textContent = document.getElementById('footer-year').textContent = new Date().getFullYear();
+        document.getElementById('menu-year').textContent =
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-        // === PROFESSIONAL TRANSLATIONS (unchanged) ===
+        // ── THEME ─────────────────────────────────────────
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        }
+        if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+
+        // ── MENU ──────────────────────────────────────────
+        const menuEl   = document.getElementById('menu');
+        const backdrop = document.getElementById('menu-backdrop');
+        const hamBtn   = document.getElementById('hamburger');
+
+        function openMenu()   { menuEl.classList.add('open'); backdrop.classList.add('open'); hamBtn.classList.add('open'); document.body.style.overflow='hidden'; }
+        function closeMenu()  { menuEl.classList.remove('open'); backdrop.classList.remove('open'); hamBtn.classList.remove('open'); document.body.style.overflow=''; }
+        function toggleMenu() { menuEl.classList.contains('open') ? closeMenu() : openMenu(); }
+
+        // Close on Escape
+        document.addEventListener('keydown', e => { if(e.key==='Escape') closeMenu(); });
+
+        // Swipe right to close on mobile
+        let mTouchX = 0;
+        menuEl.addEventListener('touchstart', e => { mTouchX = e.touches[0].clientX; }, { passive: true });
+        menuEl.addEventListener('touchend',   e => { if(e.changedTouches[0].clientX - mTouchX > 60) closeMenu(); }, { passive: true });
+
+        // ── HEADER SCROLL STATE ───────────────────────────
+        const hdr = document.getElementById('site-header');
+        function handleScroll() {
+            if (window.scrollY > 60) {
+                hdr.classList.remove('at-top');
+                hdr.classList.add('scrolled');
+            } else {
+                hdr.classList.add('at-top');
+                hdr.classList.remove('scrolled');
+            }
+        }
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+
+        // ── VIDEO SMART CONTROL ───────────────────────────
+        let heroVideo;
+        function setupVideoControl() {
+            heroVideo = document.querySelector('#home video');
+            if (!heroVideo) return;
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) { if (heroVideo.paused) heroVideo.play().catch(()=>{}); }
+                    else heroVideo.pause();
+                });
+            }, { threshold: 0.3 });
+            obs.observe(document.getElementById('home'));
+        }
+
+        // ── CMS DATA ──────────────────────────────────────
+        const SITE_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json';
+
+        fetch(SITE_URL + '?t=' + Date.now())
+          .then(r => r.ok ? r.json() : null)
+          .then(d => {
+            if (!d) return;
+
+            // Name
+            const h1 = document.getElementById('hero-name');
+            if (d.name && h1) {
+                const name  = d.name.trim();
+                const idx   = name.lastIndexOf(' ');
+                const first = idx > -1 ? name.slice(0, idx) : '';
+                const last  = idx > -1 ? name.slice(idx + 1) : name;
+                h1.innerHTML = (first ? first + '<br>' : '') + '<em>' + last + '</em>';
+            }
+
+            if (d.role) document.getElementById('hero-role').textContent = d.role;
+            if (d.contactDesc) document.getElementById('footer-desc').textContent = d.contactDesc;
+
+            // Social links
+            const socials = {
+                'social-email':    d.email    ? 'mailto:' + d.email : null,
+                'social-linkedin': d.linkedin || null,
+                'social-dribbble': d.dribbble || null,
+                'social-instagram':d.instagram|| null,
+                'social-behance':  d.behance  || null,
+            };
+            Object.entries(socials).forEach(([id,href]) => { if(href) document.getElementById(id).href = href; });
+
+            // Hero background
+            if (d.heroBg) {
+                const hero = document.getElementById('home');
+                const existing = hero.querySelector('.hero-bg');
+                if (existing) existing.remove();
+
+                const isVid = /\.(mp4|webm|mov|ogg)(\?|$)/i.test(d.heroBg) || d.heroBg.includes('/video/upload/');
+                let media;
+
+                if (isVid) {
+                    media = document.createElement('video');
+                    media.className = 'hero-bg';
+                    media.muted = true; media.autoplay = true; media.loop = true;
+                    media.setAttribute('muted',''); media.setAttribute('autoplay','');
+                    media.setAttribute('loop',''); media.setAttribute('playsinline','');
+                    media.setAttribute('preload','auto');
+                    const src = document.createElement('source');
+                    src.src = d.heroBg; src.type = 'video/mp4';
+                    media.appendChild(src);
+                    media.src = d.heroBg;
+                } else {
+                    media = document.createElement('img');
+                    media.className = 'hero-bg';
+                    media.alt = '';
+                    media.src = d.heroBg.includes('/upload/') ? d.heroBg.replace('/upload/','/upload/q_auto,f_auto/') : d.heroBg;
+                }
+
+                hero.insertBefore(media, hero.firstChild);
+
+                if (isVid) {
+                    media.load(); media.play().catch(()=>{});
+                    heroVideo = media;
+                    setupVideoControl();
+                }
+            }
+          })
+          .catch(() => {});
+
+        // ── LANGUAGE ──────────────────────────────────────
         const i18n = {
-            en: { "nav-home": "Home", "nav-about": "About", "nav-projects": "Projects", "nav-contact": "Contact", "hero-eyebrow": "Portfolio", "hero-role": "Graphic Designer · Brand Identity Designer", "explore": "Explore Works", "footer-title": "Let's Connect", "footer-desc": "Ready to start your next project or want to collaborate? I'm always open to new opportunities." },
-            fr: { "nav-home": "Accueil", "nav-about": "À propos", "nav-projects": "Projets", "nav-contact": "Contact", "hero-eyebrow": "Portfolio", "hero-role": "Graphiste · Créateur d’identité de marque", "explore": "Découvrir mes travaux", "footer-title": "Entrons en contact", "footer-desc": "Prêt à lancer votre prochain projet ou souhaitez collaborer ? Je suis toujours ouvert aux nouvelles opportunités." },
-            es: { "nav-home": "Inicio", "nav-about": "Sobre mí", "nav-projects": "Proyectos", "nav-contact": "Contacto", "hero-eyebrow": "Portafolio", "hero-role": "Diseñador Gráfico · Creador de Identidad de Marca", "explore": "Descubrir mis trabajos", "footer-title": "Conectemos", "footer-desc": "¿Listo para tu próximo proyecto o quieres colaborar? Siempre estoy abierto a nuevas oportunidades." },
-            de: { "nav-home": "Start", "nav-about": "Über mich", "nav-projects": "Projekte", "nav-contact": "Kontakt", "hero-eyebrow": "Portfolio", "hero-role": "Grafikdesigner · Brand Identity Designer", "explore": "Meine Arbeiten entdecken", "footer-title": "Lass uns verbinden", "footer-desc": "Bereit für dein nächstes Projekt oder möchtest du zusammenarbeiten? Ich bin immer offen für neue Möglichkeiten." }
+            en: {
+                'nav-home':'Home','nav-about':'About','nav-projects':'Projects','nav-contact':'Contact',
+                'hero-eyebrow':'Portfolio',
+                'hero-role':'Graphic Designer · Brand Identity Designer',
+                'explore':'Explore Works',
+                'footer-title':"Let's Connect",
+                'footer-desc':"Ready to start your next project or want to collaborate? I'm always open to new opportunities.",
+            },
+            fr: {
+                'nav-home':'Accueil','nav-about':'À Propos','nav-projects':'Projets','nav-contact':'Contact',
+                'hero-eyebrow':'Portfolio',
+                'hero-role':"Designer Graphique · Designer d'Identité de Marque",
+                'explore':'Explorer les Travaux',
+                'footer-title':'Connectons-nous',
+                'footer-desc':"Prêt à démarrer votre prochain projet ? Je suis toujours ouvert à de nouvelles opportunités.",
+            },
+            es: {
+                'nav-home':'Inicio','nav-about':'Acerca','nav-projects':'Proyectos','nav-contact':'Contacto',
+                'hero-eyebrow':'Portafolio',
+                'hero-role':'Diseñador Gráfico · Diseñador de Identidad de Marca',
+                'explore':'Explorar Trabajos',
+                'footer-title':'Conectemos',
+                'footer-desc':'¿Listo para comenzar su próximo proyecto? Siempre estoy abierto a nuevas oportunidades.',
+            },
+            de: {
+                'nav-home':'Startseite','nav-about':'Über mich','nav-projects':'Projekte','nav-contact':'Kontakt',
+                'hero-eyebrow':'Portfolio',
+                'hero-role':'Grafikdesigner · Markenidentitätsdesigner',
+                'explore':'Arbeiten Erkunden',
+                'footer-title':'Verbinden wir uns',
+                'footer-desc':'Bereit für Ihr nächstes Projekt? Ich bin immer offen für neue Möglichkeiten.',
+            },
         };
 
         let currentLang = localStorage.getItem('lang') || 'en';
@@ -339,154 +602,13 @@
             const t = i18n[lang] || i18n.en;
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (t[key]) el.textContent = t[key];
+                if (t[key] !== undefined) el.innerHTML = t[key];
             });
+            document.documentElement.lang = lang;
         }
+
         applyLang(currentLang);
 
-        // Theme
-        function toggleTheme() {
-            document.body.classList.toggle('dark');
-            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-        }
-        if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
-
-        // Menu
-        const menuEl = document.getElementById('menu');
-        const backdrop = document.getElementById('menu-backdrop');
-        const hamBtn = document.getElementById('hamburger');
-        function openMenu() {
-            menuEl.classList.add('open');
-            backdrop.classList.add('open');
-            hamBtn.classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeMenu() {
-            menuEl.classList.remove('open');
-            backdrop.classList.remove('open');
-            hamBtn.classList.remove('open');
-            document.body.style.overflow = '';
-        }
-        function toggleMenu() { menuEl.classList.contains('open') ? closeMenu() : openMenu(); }
-
-        // Header Scroll
-        const hdr = document.getElementById('site-header');
-        function handleScroll() {
-            if (window.scrollY > 60) {
-                hdr.classList.remove('at-top');
-                hdr.classList.add('scrolled');
-            } else {
-                hdr.classList.add('at-top');
-                hdr.classList.remove('scrolled');
-            }
-        }
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll();
-
-        // ====================== IMPROVED VIDEO + IMAGE BACKGROUND ======================
-        let heroVideo;
-        const SITE_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json';
-
-        fetch(SITE_URL + '?t=' + Date.now())
-            .then(r => r.ok ? r.json() : Promise.reject('Failed to load JSON'))
-            .then(d => {
-                if (!d) return;
-
-                // Name & Role from CMS
-                const h1 = document.getElementById('hero-name');
-                if (d.name && h1) {
-                    const name = d.name.trim();
-                    const idx = name.lastIndexOf(' ');
-                    const first = idx > -1 ? name.slice(0, idx) : '';
-                    const last = idx > -1 ? name.slice(idx + 1) : name;
-                    h1.innerHTML = (first ? first + '<br>' : '') + '<em>' + last + '</em>';
-                }
-                if (d.role) document.getElementById('hero-role').textContent = d.role;
-                if (d.contactDesc) document.getElementById('footer-desc').textContent = d.contactDesc;
-
-                // Social links
-                const socials = {
-                    'social-email': d.email ? 'mailto:' + d.email : null,
-                    'social-linkedin': d.linkedin,
-                    'social-dribbble': d.dribbble,
-                    'social-instagram': d.instagram,
-                    'social-behance': d.behance
-                };
-                Object.entries(socials).forEach(([id, href]) => {
-                    if (href) document.getElementById(id).href = href;
-                });
-
-                // === DYNAMIC BACKGROUND (Fixed) ===
-                if (d.heroBg) {
-                    const hero = document.getElementById('home');
-                    const existing = hero.querySelector('.hero-bg');
-                    if (existing) existing.remove();
-
-                    const url = d.heroBg.trim();
-                    const isVideo = /\.(mp4|webm|mov|ogg)(\?|$)/i.test(url);
-
-                    let media;
-                    if (isVideo) {
-                        media = document.createElement('video');
-                        media.className = 'hero-bg';
-                        media.muted = true;
-                        media.autoplay = true;
-                        media.loop = true;
-                        media.playsInline = true;
-                        media.preload = 'auto';
-
-                        const source = document.createElement('source');
-                        source.src = url;
-
-                        // Dynamic MIME type
-                        if (url.includes('.webm')) source.type = 'video/webm';
-                        else if (url.includes('.mov')) source.type = 'video/quicktime';
-                        else if (url.includes('.ogg')) source.type = 'video/ogg';
-                        else source.type = 'video/mp4';
-
-                        media.appendChild(source);
-
-                        // Error handling
-                        media.onerror = () => console.error('❌ Video failed to load. Check URL or format:', url);
-                        media.onloadeddata = () => console.log('✅ Video background loaded successfully');
-                    } else {
-                        media = document.createElement('img');
-                        media.className = 'hero-bg';
-                        media.alt = '';
-                        media.src = url;
-                        media.onerror = () => console.error('❌ Image background failed to load:', url);
-                    }
-
-                    hero.insertBefore(media, hero.firstChild);
-
-                    if (isVideo) {
-                        heroVideo = media;
-                        media.load();
-                        media.play().catch(e => {
-                            console.warn('Autoplay blocked or video error:', e);
-                        });
-                    }
-                }
-            })
-            .catch(err => {
-                console.error('❌ Failed to load site-home.json:', err);
-            });
-
-        // Video smart control
-        function setupVideoControl() {
-            heroVideo = document.querySelector('#home video');
-            if (!heroVideo) return;
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        if (heroVideo.paused) heroVideo.play().catch(() => {});
-                    } else {
-                        heroVideo.pause();
-                    }
-                });
-            }, { threshold: 0.3 });
-            observer.observe(document.getElementById('home'));
-        }
         window.addEventListener('load', setupVideoControl);
     </script>
 </body>
