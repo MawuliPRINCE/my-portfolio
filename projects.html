@@ -14,7 +14,7 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-siz[...]
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     :root {
@@ -31,7 +31,7 @@
       --sidebar-bg:#0a0a0a; --sidebar-text:#f0ede8;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; transition: background .3s, color .3s; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; transition: background .3s, color .3s; }
     img, video { pointer-events: none; -webkit-user-drag: none; }
     * { -webkit-user-select: none; user-select: none; }
     .modal-description, .modal-info-value, p { -webkit-user-select: text; user-select: text; }
@@ -52,7 +52,7 @@
     .header-right { display: flex; align-items: center; gap: 6px; }
     .icon-btn { width: 38px; height: 38px; border-radius: 50%; border: none; background: none; color: var(--text); font-size: clamp(14px,1.5vw,17px); cursor: pointer; display: flex; align-items: c[...]
     .icon-btn:hover { color: var(--accent); background: var(--accent-light); }
-    .lang-select { appearance: none; -webkit-appearance: none; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: .72re[...]
+    .lang-select { appearance: none; -webkit-appearance: none; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: .72re[...]
     .lang-select:hover { border-color: var(--accent); }
     .hamburger .fa-bars { display: block; }
     .hamburger .fa-times { display: none; }
@@ -118,7 +118,7 @@
     .back-btn:hover { border-color: var(--accent); color: var(--accent); }
     .filters { display: flex; gap: .35rem; overflow-x: auto; flex: 1; }
     .filters::-webkit-scrollbar { display: none; }
-    .filter-btn { font-family: 'Space Grotesk', sans-serif; font-size: .6rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .38rem .9rem; border: 1px solid var(--border);[...]
+    .filter-btn { font-family: 'DM Sans', sans-serif; font-size: .6rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .38rem .9rem; border: 1px solid var(--border);[...]
     .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
     .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
     /* ── CARDS ── */
@@ -180,15 +180,11 @@
     .read-more-btn:hover { text-decoration: underline; }
     .read-more-btn i { transition: transform 0.3s; }
     .read-more-btn.expanded i { transform: rotate(180deg); }
-    /* Gallery - modal only masonry + screenshot protection */
+    /* Gallery - modal only masonry */
     .modal-overlay .modal-gallery {
       display: block;
       column-count: 3;
       column-gap: .85rem;
-      user-select: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
     }
     @media (max-width: 600px) {
       .modal-overlay .modal-gallery {
@@ -207,20 +203,6 @@
       cursor: pointer;
       position: relative;
       border-radius: 16px;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-    /* Screenshot blocking overlay */
-    .gallery-item::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: transparent;
-      pointer-events: auto;
-      z-index: 1;
-      mix-blend-mode: multiply;
     }
     @media (max-width: 600px) {
       .modal-overlay .modal-gallery .gallery-item {
@@ -235,12 +217,6 @@
       object-fit: contain;
       display: block;
       transition: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-touch-callout: none;
-      pointer-events: none;
     }
     .modal-overlay .modal-gallery .gallery-item:hover img,
     .modal-overlay .modal-gallery .gallery-item:hover video {
@@ -532,21 +508,6 @@
   function closeModal(){ document.getElementById('modal').classList.remove('open'); document.body.style.overflow=''; const f=document.getElementById('preview-iframe');if(f)f.src=''; }
   function openLightbox(url,type){ const inner=document.getElementById('lightbox-inner'); inner.innerHTML=type==='video'?`<video class="lightbox-media" src="${url}" controls autoplay loop muted p[...]
   function closeLightbox(e){ if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('lightbox-close')&&!e.target.closest?.('.lightbox-close'))return; document.getEleme[...]
-  // Enhanced screenshot protection
-  document.addEventListener('contextmenu',e=>e.preventDefault());
-  document.addEventListener('dragstart',e=>{if(e.target.tagName==='IMG'||e.target.tagName==='VIDEO')e.preventDefault();});
-  // Block keyboard shortcuts for screenshot
-  document.addEventListener('keydown', e => {
-    const gallery = document.querySelector('.modal-gallery');
-    if (!gallery) return;
-    const isGalleryFocused = gallery.contains(document.activeElement) || document.querySelectorAll('.gallery-item').some(item => item.contains(document.activeElement));
-    if (isGalleryFocused) {
-      // Block common screenshot shortcuts
-      if ((e.ctrlKey || e.metaKey) && (e.shiftKey && e.key === 's')) e.preventDefault(); // Ctrl+Shift+S
-      if ((e.ctrlKey || e.metaKey) && (e.shiftKey && e.key === 'S')) e.preventDefault();
-      if (e.key === 'PrintScreen') e.preventDefault();
-    }
-  });
   function clOpt(url){ if(!url)return url; if(url.includes('res.cloudinary.com')&&url.includes('/upload/')&&!url.includes('q_auto'))return url.replace('/upload/','/upload/q_auto,f_auto,w_auto/');[...]
   function esc(s){ return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   const i18n={
