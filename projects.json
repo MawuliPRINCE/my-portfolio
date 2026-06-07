@@ -15,10 +15,6 @@
     "previewUrl": "",
     "media": [
       {
-        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780264721/jbfz6dytn19y1h1ukd7j.png",
-        "type": "image"
-      },
-      {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780264778/qddliuno89dzohhwouyn.png",
         "type": "image"
       },
@@ -101,11 +97,15 @@
       {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780265379/s1sdzbyqhcpzpuyisd92.png",
         "type": "image"
+      },
+      {
+        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780795686/jnf201ym1ujp2ld9wxlg.jpg",
+        "type": "image"
       }
     ],
     "isRecent": false,
     "isFeatured": false,
-    "coverIndex": 0,
+    "coverIndex": 21,
     "aiPercent": 0
   }
 ]
