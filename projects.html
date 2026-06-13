@@ -12,9 +12,10 @@
   <meta property="og:image" content="https://mawuliprince.github.io/my-portfolio/og-image.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-size='80' font-family='serif' fill='%23ff4500'>P</text></svg>">
+  <!-- Replaced Cormorant Garamond & DM Sans with Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     :root {
@@ -31,7 +32,8 @@
       --sidebar-bg:#0a0a0a; --sidebar-text:#f0ede8;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; transition: background .3s, color .3s; }
+    /* Use Space Grotesk as the universal font */
+    body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; transition: background .3s, color .3s; }
     img, video { pointer-events: none; -webkit-user-drag: none; }
     * { -webkit-user-select: none; user-select: none; }
     .modal-description, .modal-info-value, p { -webkit-user-select: text; user-select: text; }
@@ -43,7 +45,7 @@
     .header-right { display: flex; align-items: center; gap: 6px; }
     .icon-btn { width: 38px; height: 38px; border-radius: 50%; border: none; background: none; color: var(--text); font-size: clamp(14px,1.5vw,17px); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color .2s, background .2s; }
     .icon-btn:hover { color: var(--accent); background: var(--accent-light); }
-    .lang-select { appearance: none; -webkit-appearance: none; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: .72rem; font-weight: 500; letter-spacing: .08em; padding: 6px 28px 6px 10px; border-radius: 20px; cursor: pointer; outline: none; transition: border-color .2s; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+    .lang-select { appearance: none; -webkit-appearance: none; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: .72rem; font-weight: 500; letter-spacing: .08em; padding: 6px 28px 6px 10px; border-radius: 20px; cursor: pointer; outline: none; transition: border-color .2s; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
     .lang-select:hover { border-color: var(--accent); }
     .hamburger .fa-bars { display: block; }
     .hamburger .fa-times { display: none; }
@@ -62,7 +64,7 @@
     .shell { display: flex; min-height: 100vh; padding-top: clamp(56px,8vw,72px); }
     .sidebar { width: 34%; max-width: 460px; min-width: 260px; position: sticky; top: clamp(56px,8vw,72px); height: calc(100vh - clamp(56px,8vw,72px)); background: var(--sidebar-bg); color: var(--sidebar-text); display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
     .sidebar-header { padding: 1.25rem 1.75rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
-    .sidebar-label { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; letter-spacing: .08em; opacity: .5; }
+    .sidebar-label { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; letter-spacing: .08em; opacity: .5; }
     .recents-count { font-size: .6rem; color: var(--accent); letter-spacing: .1em; }
     .slides-wrap { flex: 1; position: relative; overflow: hidden; }
     .slide { position: absolute; inset: 0; opacity: 0; transition: opacity .7s; cursor: pointer; pointer-events: none; }
@@ -72,7 +74,7 @@
     .slide-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #000000ee 0%, transparent 55%); pointer-events: none; }
     .slide-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.75rem; pointer-events: none; }
     .slide-tag { font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; font-weight: 500; }
-    .slide-title { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 600; letter-spacing: .02em; line-height: 1; color: #fff; margin-bottom: .35rem; }
+    .slide-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.9rem; font-weight: 600; letter-spacing: .02em; line-height: 1; color: #fff; margin-bottom: .35rem; }
     .slide-sub { font-size: .75rem; color: rgba(255,255,255,0.5); font-weight: 300; }
     
     /* New Custom Video Control Button */
@@ -91,16 +93,32 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
     .page-hero { padding: clamp(36px,5vw,56px) clamp(20px,4vw,40px) clamp(20px,3vw,32px); border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
-    .page-hero::before { content: 'WORKS'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); font-family: 'Cormorant Garamond', serif; font-size: clamp(60px,10vw,120px); font-weight: 600; color: var(--border); letter-spacing: -.04em; pointer-events: none; user-select: none; line-height: 1; }
+    .page-hero::before { content: 'WORKS'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); font-family: 'Space Grotesk', sans-serif; font-size: clamp(60px,10vw,120px); font-weight: 600; color: var(--border); letter-spacing: -.04em; pointer-events: none; user-select: none; line-height: 1; }
     .page-eyebrow { font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; display: flex; align-items: center; gap: .75rem; }
     .page-eyebrow::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--accent); }
-    .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px,4vw,46px); font-weight: 600; letter-spacing: -.01em; line-height: 1.05; }
-    .topbar { position: sticky; top: clamp(56px,8vw,72px); z-index: 50; background: var(--bg); border-bottom: 1px solid var(--border); padding: .75rem clamp(16px,3vw,28px); display: flex; align-items: center; gap: .6rem; transition: background .3s; }
-    .back-btn { font-size: .6rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); background: none; border: 1px solid var(--border); padding: .4rem .85rem; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: .4rem; transition: all .2s; font-family: 'DM Sans', sans-serif; flex-shrink: 0; border-radius: 20px; }
+    .page-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px,4vw,46px); font-weight: 600; letter-spacing: -.01em; line-height: 1.05; }
+    .topbar { position: sticky; top: clamp(56px,8vw,72px); z-index: 50; background: var(--bg); border-bottom: 1px solid var(--border); padding: .75rem clamp(16px,3vw,28px); display: flex; align-items: center; gap: .6rem; transition: background .3s; flex-wrap: wrap; }
+    .back-btn { font-size: .6rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); background: none; border: 1px solid var(--border); padding: .4rem .85rem; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: .4rem; transition: all .2s; font-family: 'Space Grotesk', sans-serif; flex-shrink: 0; border-radius: 20px; }
     .back-btn:hover { border-color: var(--accent); color: var(--accent); }
+    /* New Search Input */
+    .search-input {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .72rem;
+      font-weight: 400;
+      padding: .4rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--surface);
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s;
+      max-width: 180px;
+      flex-shrink: 0;
+    }
+    .search-input:focus { border-color: var(--accent); }
     .filters { display: flex; gap: .35rem; overflow-x: auto; flex: 1; }
     .filters::-webkit-scrollbar { display: none; }
-    .filter-btn { font-family: 'DM Sans', sans-serif; font-size: .6rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .38rem .9rem; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; white-space: nowrap; transition: all .2s; border-radius: 20px; }
+    .filter-btn { font-family: 'Space Grotesk', sans-serif; font-size: .6rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .38rem .9rem; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; white-space: nowrap; transition: all .2s; border-radius: 20px; }
     .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
     .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
     .projects-wrap { padding: clamp(16px,3vw,28px); display: flex; flex-direction: column; gap: 1px; background: var(--border); }
@@ -118,32 +136,39 @@
     .card-year { font-size: .6rem; font-weight: 500; letter-spacing: .15em; color: var(--muted); text-transform: uppercase; }
     .card-tag { font-size: .58rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 2px 8px; border-radius: 2px; }
     .card-featured { font-size: .58rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 2px; }
-    .card-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px,3vw,32px); font-weight: 600; letter-spacing: -.01em; line-height: 1.1; margin-bottom: .35rem; transition: color .2s; }
+    .card-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(22px,3vw,32px); font-weight: 600; letter-spacing: -.01em; line-height: 1.1; margin-bottom: .35rem; transition: color .2s; }
     .project-card:hover .card-title { color: var(--accent); }
     .card-subtitle { font-size: .82rem; color: var(--muted); font-weight: 300; margin-bottom: .75rem; }
-    .card-tags { display: flex; flex-wrap: wrap; gap: .3rem; }
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .3rem;
+      /* Limit visible tags to two lines, hide overflow */
+      max-height: 2.8rem;
+      overflow: hidden;
+    }
     .tag-pill { font-size: .58rem; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border: 1px solid var(--border); color: var(--muted); border-radius: 2px; }
     .card-arrow { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: .85rem; margin-top: .25rem; transition: all .2s; }
     .project-card:hover .card-arrow { background: var(--accent); border-color: var(--accent); color: #fff; transform: rotate(-45deg); }
     .end-marker { text-align: center; padding: 3rem; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); border-top: 1px solid var(--border); margin-top: 1px; }
     .state-box { padding: 4rem 2rem; text-align: center; color: var(--muted); }
-    .state-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; color: var(--text); margin-bottom: .5rem; }
+    .state-box h3 { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 600; color: var(--text); margin-bottom: .5rem; }
     .state-box p { font-size: .8rem; }
     .modal-overlay { position: fixed; inset: 0; z-index: 200; background: var(--modal-bg); display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity .3s; overflow-y: auto; }
     .modal-overlay.open { opacity: 1; pointer-events: all; }
     .modal-topbar { position: sticky; top: 0; z-index: 10; background: rgba(250,249,247,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: .85rem clamp(16px,3vw,28px); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
     body.dark .modal-topbar { background: rgba(13,13,13,0.92); }
-    .modal-back { font-size: .6rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); background: transparent; border: 1px solid var(--border); padding: .4rem .9rem; cursor: pointer; border-radius: 20px; display: flex; align-items: center; gap: .4rem; transition: all .2s; font-family: 'DM Sans', sans-serif; }
+    .modal-back { font-size: .6rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); background: transparent; border: 1px solid var(--border); padding: .4rem .9rem; cursor: pointer; border-radius: 20px; display: flex; align-items: center; gap: .4rem; transition: all .2s; font-family: 'Space Grotesk', sans-serif; }
     .modal-back:hover { border-color: var(--accent); color: var(--accent); }
-    .modal-title-bar { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; letter-spacing: .02em; }
+    .modal-title-bar { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; letter-spacing: .02em; }
     .modal-body { max-width: 960px; margin: 0 auto; width: 100%; padding: clamp(24px,4vw,48px) clamp(16px,3vw,28px) 5rem; }
     .modal-accent { width: 40px; height: 2px; background: var(--accent); margin-bottom: 1.25rem; }
-    .modal-hero { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.4rem,7vw,5rem); font-weight: 600; letter-spacing: -.02em; line-height: .95; margin-bottom: 1.75rem; }
+    .modal-hero { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.4rem,7vw,5rem); font-weight: 600; letter-spacing: -.02em; line-height: .95; margin-bottom: 1.75rem; }
     .modal-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-bottom: 2rem; padding-bottom: 1.75rem; border-bottom: 1px solid var(--border); }
     .modal-year { font-size: .6rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
     .modal-tag { font-size: .6rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 3px 10px; border-radius: 2px; }
     .modal-action-row { display: flex; gap: .6rem; margin-left: auto; flex-wrap: wrap; }
-    .modal-btn { font-size: .62rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--accent); text-decoration: none; border: 1px solid var(--accent); padding: .5rem 1.1rem; border-radius: 20px; transition: all .2s; display: flex; align-items: center; gap: .35rem; cursor: pointer; background: none; font-family: 'DM Sans', sans-serif; }
+    .modal-btn { font-size: .62rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--accent); text-decoration: none; border: 1px solid var(--accent); padding: .5rem 1.1rem; border-radius: 20px; transition: all .2s; display: flex; align-items: center; gap: .35rem; cursor: pointer; background: none; font-family: 'Space Grotesk', sans-serif; }
     .modal-btn:hover { background: var(--accent); color: #fff; }
     .modal-grid { display: grid; grid-template-columns: 1fr 260px; gap: 3rem; margin-bottom: 3rem; }
     .modal-info-list { display: flex; flex-direction: column; }
@@ -214,6 +239,8 @@
       .projects-wrap { padding: 0; gap: 1px; }
       .card-body { flex-direction: column; }
       .card-arrow { display: none; }
+      /* Ensure search input still fits on mobile */
+      .search-input { max-width: 140px; }
     }
   </style>
 </head>
@@ -263,6 +290,8 @@
     </div>
     <div class="topbar">
       <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Home</span></a>
+      <!-- New search input for instant filtering by tags -->
+      <input type="text" id="search-input" class="search-input" placeholder="Search projects..." oninput="applyFilters()" data-i18n-placeholder="search-placeholder" aria-label="Search projects by tag">
       <div class="filters no-scrollbar" id="filters"></div>
     </div>
     <div class="projects-wrap" id="projects-wrap">
@@ -292,6 +321,8 @@
   const SLIDE_MS = 5000;
   let allProjects=[], projectsOnly=[], filtered=[], recents=[];
   let activeFilter='All', currentSlide=0, rafId=null, progressStart=null;
+  // Global search term to be used with tag filtering
+  let searchTerm = '';
   
   window.onload = async () => {
     initTheme();
@@ -339,15 +370,44 @@
       `<button class="filter-btn ${t===activeFilter?'active':''}" onclick="setFilter('${esc(t)}')">${esc(t)}</button>`
     ).join('');
   }
+  
+  // Set the active tag filter and reapply both tag and search filters
   function setFilter(tag) {
     activeFilter = tag;
-    filtered = tag==='All' ? [...projectsOnly] : projectsOnly.filter(p=>p.tags?.includes(tag));
-    renderFilters(); renderProjects();
+    applyFilters();
+  }
+  
+  // Combines tag filter and search term to produce filtered array
+  function applyFilters() {
+    // Update search term from the input field
+    const searchInput = document.getElementById('search-input');
+    searchTerm = searchInput ? searchInput.value.trim().toLowerCase() : '';
+    
+    // Filter by active tag first
+    filtered = activeFilter === 'All' ? [...projectsOnly] : projectsOnly.filter(p => p.tags?.includes(activeFilter));
+    
+    // Then apply search term against project tags (case-insensitive, partial match)
+    if (searchTerm) {
+      filtered = filtered.filter(p => {
+        // If no tags, exclude unless search is empty
+        if (!p.tags || !p.tags.length) return false;
+        // Check if any tag contains the search term
+        return p.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+      });
+    }
+    
+    // Refresh the filter buttons (to keep active state) and render projects
+    renderFilters();
+    renderProjects();
   }
   
   function renderProjects() {
     const wrap = document.getElementById('projects-wrap');
-    if (!filtered.length) { wrap.innerHTML=`<div class="state-box"><h3>Nothing here</h3><p>No projects match this filter.</p></div>`; return; }
+    if (!filtered.length) {
+      // User-friendly "no projects found" message
+      wrap.innerHTML=`<div class="state-box"><h3>Nothing here</h3><p>No projects match this filter.</p></div>`;
+      return;
+    }
     wrap.innerHTML = filtered.map((p,i) => {
       const cover=getCover(p), isVidCover=cover&&isVideoUrl(cover);
       return `
@@ -569,15 +629,15 @@
   function clOpt(url){ if(!url)return url; if(url.includes('res.cloudinary.com')&&url.includes('/upload/')&&!url.includes('q_auto'))return url.replace('/upload/','/upload/q_auto,f_auto,w_auto/'); return url; }
   function esc(s){ return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   const i18n={
-    en:{'eyebrow':'Selected Work','page-title':'Projects & Works','recents':'Recents','end-marker':'- End of selected works -','nav-home':'Home','nav-about':'About','nav-projects':'Projects','nav-booking':'Book Me','back':'Home','filter-all':'All'},
-    fr:{'eyebrow':'Travaux selectionnes','page-title':'Projets & Travaux','recents':'Recents','end-marker':'- Fin des travaux -','nav-home':'Accueil','nav-about':'A Propos','nav-projects':'Projets','nav-booking':'Me Reserver','back':'Accueil','filter-all':'Tous'},
-    es:{'eyebrow':'Trabajo seleccionado','page-title':'Projets y Trabajos','recents':'Recientes','end-marker':'- Fin de trabajos -','nav-home':'Inicio','nav-about':'Acerca','nav-projects':'Proyectos','nav-booking':'Reservarme','back':'Inicio','filter-all':'Todos'},
-    de:{'eyebrow':'Ausgewaehlte Arbeiten','page-title':'Projekte & Arbeiten','recents':'Aktuell','end-marker':'- Ende der Arbeiten -','nav-home':'Startseite','nav-about':'Ueber mich','nav-projects':'Projekte','nav-booking':'Buchen','back':'Startseite','filter-all':'Alle'},
+    en:{'eyebrow':'Selected Work','page-title':'Projects & Works','recents':'Recents','end-marker':'- End of selected works -','nav-home':'Home','nav-about':'About','nav-projects':'Projects','nav-booking':'Book Me','back':'Home','filter-all':'All','search-placeholder':'Search projects...'},
+    fr:{'eyebrow':'Travaux selectionnes','page-title':'Projets & Travaux','recents':'Recents','end-marker':'- Fin des travaux -','nav-home':'Accueil','nav-about':'A Propos','nav-projects':'Projets','nav-booking':'Me Reserver','back':'Accueil','filter-all':'Tous','search-placeholder':'Rechercher...'},
+    es:{'eyebrow':'Trabajo seleccionado','page-title':'Projets y Trabajos','recents':'Recientes','end-marker':'- Fin de trabajos -','nav-home':'Inicio','nav-about':'Acerca','nav-projects':'Proyectos','nav-booking':'Reservarme','back':'Inicio','filter-all':'Todos','search-placeholder':'Buscar proyectos...'},
+    de:{'eyebrow':'Ausgewaehlte Arbeiten','page-title':'Projekte & Arbeiten','recents':'Aktuell','end-marker':'- Ende der Arbeiten -','nav-home':'Startseite','nav-about':'Ueber mich','nav-projects':'Projekte','nav-booking':'Buchen','back':'Startseite','filter-all':'Alle','search-placeholder':'Projekte suchen...'},
   };
   let currentLang=localStorage.getItem('lang')||'en';
   document.getElementById('lang-select').value=currentLang;
   function switchLang(lang){currentLang=lang;localStorage.setItem('lang',lang);applyLang(lang);}
-  function applyLang(lang){const t=i18n[lang]||i18n.en;document.querySelectorAll('[data-i18n]').forEach(el=>{const key=el.getAttribute('data-i18n');if(t[key]!==undefined)el.innerHTML=t[key];});document.documentElement.lang=lang;}
+  function applyLang(lang){const t=i18n[lang]||i18n.en;document.querySelectorAll('[data-i18n]').forEach(el=>{const key=el.getAttribute('data-i18n');if(t[key]!==undefined)el.innerHTML=t[key];});document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const key=el.getAttribute('data-i18n-placeholder');if(t[key]!==undefined)el.placeholder=t[key];});document.documentElement.lang=lang;}
   applyLang(currentLang);
 </script>
 </body>
