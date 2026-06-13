@@ -74,6 +74,11 @@
     .slide-tag { font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; font-weight: 500; }
     .slide-title { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 600; letter-spacing: .02em; line-height: 1; color: #fff; margin-bottom: .35rem; }
     .slide-sub { font-size: .75rem; color: rgba(255,255,255,0.5); font-weight: 300; }
+    
+    /* New Custom Video Control Button */
+    .unmute-btn { position: absolute; top: 1.25rem; right: 1.25rem; z-index: 20; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(255,255,255,0.2); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(4px); transition: all .2s; font-size: .85rem; }
+    .unmute-btn:hover { background: var(--accent); border-color: var(--accent); }
+
     .slide-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #fff; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(8px); transition: background .2s; }
     .slide-nav:hover { background: rgba(255,255,255,0.18); }
     .slide-nav.prev { left: 1rem; }
@@ -287,21 +292,32 @@
   const SLIDE_MS = 5000;
   let allProjects=[], projectsOnly=[], filtered=[], recents=[];
   let activeFilter='All', currentSlide=0, rafId=null, progressStart=null;
+  
   window.onload = async () => {
     initTheme();
     try {
       const res = await fetch(JSON_URL + '?t=' + Date.now());
       if (!res.ok) throw new Error();
       allProjects = await res.json();
-      recents = allProjects.filter(p => p.isRecent);
+      
+      // NEW LOGIC: Extract specific media marked as showInRecents
+      recents = allProjects.flatMap(p => 
+        (p.media || [])
+          .filter(m => m.showInRecents === true)
+          .map(m => ({ ...m, parentProject: p }))
+      );
+      
+      // Keeping your existing projects grid logic
       projectsOnly = allProjects.filter(p => !p.isRecent);
       filtered = [...projectsOnly];
+      
       renderFilters(); renderProjects(); renderRecents();
     } catch(e) {
       document.getElementById('projects-wrap').innerHTML = `<div class="state-box"><h3>Could not load</h3><p>Check projects.json exists in your repo.</p></div>`;
       document.getElementById('slides-wrap').innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.1);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;">No data</div>`;
     }
   };
+  
   function initTheme() { document.body.className = localStorage.getItem('theme') || 'light'; }
   function toggleTheme() {
     const dark = document.body.classList.contains('dark');
@@ -316,6 +332,7 @@
   let mTX=0;
   menuEl.addEventListener('touchstart',e=>{mTX=e.touches[0].clientX;},{passive:true});
   menuEl.addEventListener('touchend',e=>{if(e.changedTouches[0].clientX-mTX>60)closeMenu();},{passive:true});
+  
   function renderFilters() {
     const tags = ['All', ...new Set(projectsOnly.flatMap(p => p.tags||[]))];
     document.getElementById('filters').innerHTML = tags.map(t =>
@@ -327,6 +344,7 @@
     filtered = tag==='All' ? [...projectsOnly] : projectsOnly.filter(p=>p.tags?.includes(tag));
     renderFilters(); renderProjects();
   }
+  
   function renderProjects() {
     const wrap = document.getElementById('projects-wrap');
     if (!filtered.length) { wrap.innerHTML=`<div class="state-box"><h3>Nothing here</h3><p>No projects match this filter.</p></div>`; return; }
@@ -357,15 +375,34 @@
   }
   function getCover(p) { if(!p.media?.length) return null; return p.media[p.coverIndex??0]?.url||p.media[0]?.url||null; }
   function isVideoUrl(url) { return /\.(mp4|webm|mov|ogg)(\?|$)/i.test(url)||url.includes('/video/upload/'); }
+  
+  // Custom Mute/Unmute Function for Recents Section
+  window.toggleMute = function(e, btn) {
+    e.stopPropagation();
+    const slide = btn.closest('.slide');
+    const video = slide.querySelector('video');
+    if(video) {
+      video.muted = !video.muted;
+      btn.innerHTML = video.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+    }
+  };
+
   function renderRecents() {
     const wrap=document.getElementById('slides-wrap'), dotsWrap=document.getElementById('slide-dots'), countEl=document.getElementById('recents-count');
     if(!recents.length){ wrap.innerHTML=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.1);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;">No recents yet</div>`; return; }
     countEl.textContent=recents.length+' items';
-    wrap.innerHTML=recents.map((p,i)=>{
-      const cover=getCover(p), isVid=cover&&isVideoUrl(cover);
+    
+    // Updated builder for individual mapped media items
+    wrap.innerHTML=recents.map((item,i)=>{
+      const p = item.parentProject;
+      const cover = item.url;
+      const isVid = item.type === 'video' || isVideoUrl(cover);
+      
       return `<div class="slide ${i===0?'active':''}" data-id="${esc(p.id)}">
         ${cover?isVid
-          ?`<video class="slide-media" src="${esc(cover)}" muted loop autoplay playsinline disablepictureinpicture style="pointer-events:none;"></video>`
+          // Uses autoplay muted to satisfy browsers, but explicitly overlays an unmute button for audio capability
+          ?`<video class="slide-media" src="${esc(cover)}" muted loop autoplay playsinline disablepictureinpicture style="pointer-events:none;"></video>
+            <button class="unmute-btn" onclick="toggleMute(event, this)" aria-label="Toggle Audio"><i class="fas fa-volume-mute"></i></button>`
           :`<img class="slide-media" src="${clOpt(cover)}" alt="${esc(p.title)}" loading="lazy"/>`
           :`<div class="slide-placeholder">No Image</div>`}
         <div class="slide-overlay"></div>
@@ -376,10 +413,13 @@
         </div>
       </div>`;
     }).join('');
-    wrap.addEventListener('click', () => {
+    
+    wrap.addEventListener('click', (e) => {
+      if(e.target.closest('.unmute-btn')) return; // Ignore clicks if they were on the mute button
       const activeSlide = wrap.querySelector('.slide.active');
       if(activeSlide) openModal(activeSlide.dataset.id);
     });
+    
     dotsWrap.innerHTML=recents.map((_,i)=>`<div class="dot ${i===0?'active':''}" onclick="goSlide(${i})"></div>`).join('');
     const sb=document.getElementById('sidebar');
     sb.addEventListener('mouseenter',()=>cancelAnimationFrame(rafId));
@@ -389,12 +429,27 @@
     wrap.addEventListener('touchend',e=>{const d=slTX-e.changedTouches[0].clientX;if(Math.abs(d)>40){d>0?nextSlide():prevSlide();}},{passive:true});
     resetProgress();
   }
+  
   function goSlide(i){
-    document.querySelectorAll('.slide')[currentSlide]?.classList.remove('active');
-    document.querySelectorAll('.dot')[currentSlide]?.classList.remove('active');
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    // Safely silence standard previous slide to avoid overlapping audio
+    if(slides[currentSlide]) {
+      slides[currentSlide].classList.remove('active');
+      const prevVid = slides[currentSlide].querySelector('video');
+      if(prevVid) { 
+         prevVid.muted = true; 
+         const btn = slides[currentSlide].querySelector('.unmute-btn');
+         if(btn) btn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+      }
+    }
+    if(dots[currentSlide]) dots[currentSlide].classList.remove('active');
+    
     currentSlide=((i%recents.length)+recents.length)%recents.length;
-    document.querySelectorAll('.slide')[currentSlide]?.classList.add('active');
-    document.querySelectorAll('.dot')[currentSlide]?.classList.add('active');
+    
+    if(slides[currentSlide]) slides[currentSlide].classList.add('active');
+    if(dots[currentSlide]) dots[currentSlide].classList.add('active');
     resetProgress();
   }
   function prevSlide(){ goSlide(currentSlide-1); }
@@ -406,6 +461,7 @@
     if(pct>=100){goSlide(currentSlide+1);return;}
     rafId=requestAnimationFrame(animateProgress);
   }
+  
   function openModal(id){
     const p=allProjects.find(x=>x.id===id); if(!p)return;
     document.getElementById('modal-title').textContent=p.title||'Project';
