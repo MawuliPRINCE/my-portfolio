@@ -39,7 +39,8 @@
       },
       {
         "url": "https://res.cloudinary.com/dtjahgffs/video/upload/v1781319871/t8pzwmwxhms1gu9hix0o.mp4",
-        "type": "video"
+        "type": "video",
+        "showInRecents": true
       },
       {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1781319916/nbbpxel98sz9rm99jetx.png",
