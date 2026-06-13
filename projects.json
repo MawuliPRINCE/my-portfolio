@@ -160,7 +160,8 @@
       },
       {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1781063824/dx8x2winac4f4dehq2pd.jpg",
-        "type": "image"
+        "type": "image",
+        "showInRecents": true
       },
       {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1781063827/shcbangwsw4ou71dp4js.png",
