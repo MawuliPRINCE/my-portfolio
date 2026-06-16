@@ -12,7 +12,6 @@
   <meta property="og:image" content="https://mawuliprince.github.io/my-portfolio/og-image.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-size='80' font-family='serif' fill='%23ff4500'>P</text></svg>">
-  <!-- Replaced Cormorant Garamond & DM Sans with Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -32,7 +31,6 @@
       --sidebar-bg:#0a0a0a; --sidebar-text:#f0ede8;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    /* Use Space Grotesk as the universal font */
     body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; transition: background .3s, color .3s; }
     img, video { pointer-events: none; -webkit-user-drag: none; }
     * { -webkit-user-select: none; user-select: none; }
@@ -76,11 +74,8 @@
     .slide-tag { font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; font-weight: 500; }
     .slide-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.9rem; font-weight: 600; letter-spacing: .02em; line-height: 1; color: #fff; margin-bottom: .35rem; }
     .slide-sub { font-size: .75rem; color: rgba(255,255,255,0.5); font-weight: 300; }
-    
-    /* New Custom Video Control Button */
     .unmute-btn { position: absolute; top: 1.25rem; right: 1.25rem; z-index: 20; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(255,255,255,0.2); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(4px); transition: all .2s; font-size: .85rem; }
     .unmute-btn:hover { background: var(--accent); border-color: var(--accent); }
-
     .slide-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #fff; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(8px); transition: background .2s; }
     .slide-nav:hover { background: rgba(255,255,255,0.18); }
     .slide-nav.prev { left: 1rem; }
@@ -100,21 +95,7 @@
     .topbar { position: sticky; top: clamp(56px,8vw,72px); z-index: 50; background: var(--bg); border-bottom: 1px solid var(--border); padding: .75rem clamp(16px,3vw,28px); display: flex; align-items: center; gap: .6rem; transition: background .3s; flex-wrap: wrap; }
     .back-btn { font-size: .6rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); background: none; border: 1px solid var(--border); padding: .4rem .85rem; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: .4rem; transition: all .2s; font-family: 'Space Grotesk', sans-serif; flex-shrink: 0; border-radius: 20px; }
     .back-btn:hover { border-color: var(--accent); color: var(--accent); }
-    /* New Search Input */
-    .search-input {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: .72rem;
-      font-weight: 400;
-      padding: .4rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: var(--surface);
-      color: var(--text);
-      outline: none;
-      transition: border-color .2s;
-      max-width: 180px;
-      flex-shrink: 0;
-    }
+    .search-input { font-family: 'Space Grotesk', sans-serif; font-size: .72rem; font-weight: 400; padding: .4rem 1rem; border: 1px solid var(--border); border-radius: 20px; background: var(--surface); color: var(--text); outline: none; transition: border-color .2s; max-width: 180px; flex-shrink: 0; }
     .search-input:focus { border-color: var(--accent); }
     .filters { display: flex; gap: .35rem; overflow-x: auto; flex: 1; }
     .filters::-webkit-scrollbar { display: none; }
@@ -139,14 +120,7 @@
     .card-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(22px,3vw,32px); font-weight: 600; letter-spacing: -.01em; line-height: 1.1; margin-bottom: .35rem; transition: color .2s; }
     .project-card:hover .card-title { color: var(--accent); }
     .card-subtitle { font-size: .82rem; color: var(--muted); font-weight: 300; margin-bottom: .75rem; }
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .3rem;
-      /* Limit visible tags to two lines, hide overflow */
-      max-height: 2.8rem;
-      overflow: hidden;
-    }
+    .card-tags { display: flex; flex-wrap: wrap; gap: .3rem; max-height: 2.8rem; overflow: hidden; }
     .tag-pill { font-size: .58rem; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border: 1px solid var(--border); color: var(--muted); border-radius: 2px; }
     .card-arrow { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: .85rem; margin-top: .25rem; transition: all .2s; }
     .project-card:hover .card-arrow { background: var(--accent); border-color: var(--accent); color: #fff; transform: rotate(-45deg); }
@@ -184,41 +158,10 @@
     .read-more-btn:hover { text-decoration: underline; }
     .read-more-btn i { transition: transform 0.3s; }
     .read-more-btn.expanded i { transform: rotate(180deg); }
-    .modal-overlay .modal-gallery {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      grid-auto-rows: 8px;
-      grid-auto-flow: row;
-      gap: .85rem;
-    }
-    @media (max-width: 600px) {
-      .modal-overlay .modal-gallery {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: .5rem;
-      }
-    }
-    .modal-overlay .modal-gallery .gallery-item {
-      display: block;
-      margin: 0;
-      aspect-ratio: auto;
-      overflow: hidden;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      cursor: pointer;
-      position: relative;
-      border-radius: 16px;
-    }
-    .modal-overlay .modal-gallery .gallery-item img,
-    .modal-overlay .modal-gallery .gallery-item video {
-      width: 100%;
-      height: auto;
-      max-width: 100%;
-      object-fit: contain;
-      display: block;
-      transition: none;
-    }
-    .modal-overlay .modal-gallery .gallery-item:hover img,
-    .modal-overlay .modal-gallery .gallery-item:hover video { transform: none; }
+    .modal-overlay .modal-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 8px; grid-auto-flow: row; gap: .85rem; }
+    @media (max-width: 600px) { .modal-overlay .modal-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; } }
+    .modal-overlay .modal-gallery .gallery-item { display: block; margin: 0; aspect-ratio: auto; overflow: hidden; background: var(--surface); border: 1px solid var(--border); cursor: pointer; position: relative; border-radius: 16px; }
+    .modal-overlay .modal-gallery .gallery-item img, .modal-overlay .modal-gallery .gallery-item video { width: 100%; height: auto; max-width: 100%; object-fit: contain; display: block; transition: none; }
     .preview-section { margin-bottom: 2.5rem; }
     .section-label { font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); margin-bottom: .85rem; display: flex; align-items: center; gap: .6rem; }
     .section-label::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
@@ -239,9 +182,9 @@
       .projects-wrap { padding: 0; gap: 1px; }
       .card-body { flex-direction: column; }
       .card-arrow { display: none; }
-      /* Ensure search input still fits on mobile */
       .search-input { max-width: 140px; }
     }
+    .broken-media { display: flex; align-items: center; justify-content: center; background: var(--surface); color: var(--muted); font-size: 1.5rem; }
   </style>
 </head>
 <body>
@@ -290,7 +233,6 @@
     </div>
     <div class="topbar">
       <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Home</span></a>
-      <!-- New search input for instant filtering by tags -->
       <input type="text" id="search-input" class="search-input" placeholder="Search projects..." oninput="applyFilters()" data-i18n-placeholder="search-placeholder" aria-label="Search projects by tag">
       <div class="filters no-scrollbar" id="filters"></div>
     </div>
@@ -316,35 +258,36 @@
   <div id="lightbox-inner"></div>
 </div>
 <script>
+  // ⚠️ CHANGE THESE TWO VARIABLES TO MATCH YOUR GITHUB SETUP ⚠️
+  const USER = 'MawuliPRINCE';
+  const REPO = 'my-portfolio';
+  const JSON_URL = `https://raw.githubusercontent.com/${USER}/${REPO}/main/projects.json`;
+  
   document.getElementById('menu-year').textContent = new Date().getFullYear();
-  const JSON_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/projects.json';
   const SLIDE_MS = 5000;
   let allProjects=[], projectsOnly=[], filtered=[], recents=[];
   let activeFilter='All', currentSlide=0, rafId=null, progressStart=null;
-  // Global search term to be used with tag filtering
   let searchTerm = '';
   
   window.onload = async () => {
     initTheme();
     try {
       const res = await fetch(JSON_URL + '?t=' + Date.now());
-      if (!res.ok) throw new Error();
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       allProjects = await res.json();
-      
-      // NEW LOGIC: Extract specific media marked as showInRecents
-      recents = allProjects.flatMap(p => 
-        (p.media || [])
-          .filter(m => m.showInRecents === true)
-          .map(m => ({ ...m, parentProject: p }))
-      );
-      
-      // Keeping your existing projects grid logic
+      console.log('✅ Loaded projects.json:', allProjects);
+      // Validate structure
+      if (!Array.isArray(allProjects)) throw new Error('projects.json is not an array');
+      recents = allProjects.flatMap(p => {
+        if (!p.media) return [];
+        return p.media.filter(m => m.showInRecents).map(m => ({...m, parentProject: p}));
+      });
       projectsOnly = allProjects.filter(p => !p.isRecent);
       filtered = [...projectsOnly];
-      
       renderFilters(); renderProjects(); renderRecents();
     } catch(e) {
-      document.getElementById('projects-wrap').innerHTML = `<div class="state-box"><h3>Could not load</h3><p>Check projects.json exists in your repo.</p></div>`;
+      console.error('❌ Failed to load projects:', e);
+      document.getElementById('projects-wrap').innerHTML = `<div class="state-box"><h3>Could not load</h3><p>Check that projects.json exists at:<br><code>${JSON_URL}</code></p></div>`;
       document.getElementById('slides-wrap').innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.1);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;">No data</div>`;
     }
   };
@@ -371,32 +314,15 @@
     ).join('');
   }
   
-  // Set the active tag filter and reapply both tag and search filters
-  function setFilter(tag) {
-    activeFilter = tag;
-    applyFilters();
-  }
+  function setFilter(tag) { activeFilter = tag; applyFilters(); }
   
-  // Combines tag filter and search term to produce filtered array
   function applyFilters() {
-    // Update search term from the input field
     const searchInput = document.getElementById('search-input');
     searchTerm = searchInput ? searchInput.value.trim().toLowerCase() : '';
-    
-    // Filter by active tag first
     filtered = activeFilter === 'All' ? [...projectsOnly] : projectsOnly.filter(p => p.tags?.includes(activeFilter));
-    
-    // Then apply search term against project tags (case-insensitive, partial match)
     if (searchTerm) {
-      filtered = filtered.filter(p => {
-        // If no tags, exclude unless search is empty
-        if (!p.tags || !p.tags.length) return false;
-        // Check if any tag contains the search term
-        return p.tags.some(tag => tag.toLowerCase().includes(searchTerm));
-      });
+      filtered = filtered.filter(p => (p.tags || []).some(tag => tag.toLowerCase().includes(searchTerm)));
     }
-    
-    // Refresh the filter buttons (to keep active state) and render projects
     renderFilters();
     renderProjects();
   }
@@ -404,19 +330,25 @@
   function renderProjects() {
     const wrap = document.getElementById('projects-wrap');
     if (!filtered.length) {
-      // User-friendly "no projects found" message
       wrap.innerHTML=`<div class="state-box"><h3>Nothing here</h3><p>No projects match this filter.</p></div>`;
       return;
     }
     wrap.innerHTML = filtered.map((p,i) => {
-      const cover=getCover(p), isVidCover=cover&&isVideoUrl(cover);
+      const cover = getCover(p);
+      const isVidCover = cover && isVideoUrl(cover);
+      let coverHTML = '';
+      if (cover) {
+        if (isVidCover) {
+          coverHTML = `<video class="card-cover-video" src="${esc(cover)}" muted loop autoplay playsinline disablepictureinpicture onerror="this.parentElement.innerHTML='<div class=\\'card-cover-none\\'>Video failed</div>'"></video>`;
+        } else {
+          coverHTML = `<img class="card-cover" src="${clOpt(cover)}" alt="${esc(p.title)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'card-cover-none\\'>Image failed</div>'">`;
+        }
+      } else {
+        coverHTML = `<div class="card-cover-none">No Image</div>`;
+      }
       return `
         <div class="project-card" onclick="openModal('${esc(p.id)}')" style="animation-delay:${i*0.065}s">
-          ${cover
-            ? isVidCover
-              ? `<video class="card-cover-video" src="${esc(cover)}" muted loop autoplay playsinline disablepictureinpicture style="pointer-events:none;display:block;"></video>`
-              : `<img class="card-cover" src="${clOpt(cover)}" alt="${esc(p.title)}" loading="lazy"/>`
-            : `<div class="card-cover-none">No Image</div>`}
+          ${coverHTML}
           <div class="card-body">
             <div class="card-body-left">
               <div class="card-meta">
@@ -436,7 +368,6 @@
   function getCover(p) { if(!p.media?.length) return null; return p.media[p.coverIndex??0]?.url||p.media[0]?.url||null; }
   function isVideoUrl(url) { return /\.(mp4|webm|mov|ogg)(\?|$)/i.test(url)||url.includes('/video/upload/'); }
   
-  // Custom Mute/Unmute Function for Recents Section
   window.toggleMute = function(e, btn) {
     e.stopPropagation();
     const slide = btn.closest('.slide');
@@ -451,20 +382,25 @@
     const wrap=document.getElementById('slides-wrap'), dotsWrap=document.getElementById('slide-dots'), countEl=document.getElementById('recents-count');
     if(!recents.length){ wrap.innerHTML=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.1);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;">No recents yet</div>`; return; }
     countEl.textContent=recents.length+' items';
-    
-    // Updated builder for individual mapped media items
     wrap.innerHTML=recents.map((item,i)=>{
       const p = item.parentProject;
       const cover = item.url;
       const isVid = item.type === 'video' || isVideoUrl(cover);
-      
+      let mediaHTML = '';
+      if (cover) {
+        if (isVid) {
+          mediaHTML = `<video class="slide-media" src="${esc(cover)}" muted loop autoplay playsinline disablepictureinpicture onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"></video>
+            <div class="slide-placeholder" style="display:none;">Video failed</div>
+            <button class="unmute-btn" onclick="toggleMute(event, this)" aria-label="Toggle Audio"><i class="fas fa-volume-mute"></i></button>`;
+        } else {
+          mediaHTML = `<img class="slide-media" src="${clOpt(cover)}" alt="${esc(p.title)}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="slide-placeholder" style="display:none;">Image failed</div>`;
+        }
+      } else {
+        mediaHTML = `<div class="slide-placeholder">No Image</div>`;
+      }
       return `<div class="slide ${i===0?'active':''}" data-id="${esc(p.id)}">
-        ${cover?isVid
-          // Uses autoplay muted to satisfy browsers, but explicitly overlays an unmute button for audio capability
-          ?`<video class="slide-media" src="${esc(cover)}" muted loop autoplay playsinline disablepictureinpicture style="pointer-events:none;"></video>
-            <button class="unmute-btn" onclick="toggleMute(event, this)" aria-label="Toggle Audio"><i class="fas fa-volume-mute"></i></button>`
-          :`<img class="slide-media" src="${clOpt(cover)}" alt="${esc(p.title)}" loading="lazy"/>`
-          :`<div class="slide-placeholder">No Image</div>`}
+        ${mediaHTML}
         <div class="slide-overlay"></div>
         <div class="slide-info">
           ${p.tags?.[0]?`<div class="slide-tag">${esc(p.tags[0])}</div>`:''}
@@ -473,13 +409,11 @@
         </div>
       </div>`;
     }).join('');
-    
     wrap.addEventListener('click', (e) => {
-      if(e.target.closest('.unmute-btn')) return; // Ignore clicks if they were on the mute button
+      if(e.target.closest('.unmute-btn')) return;
       const activeSlide = wrap.querySelector('.slide.active');
       if(activeSlide) openModal(activeSlide.dataset.id);
     });
-    
     dotsWrap.innerHTML=recents.map((_,i)=>`<div class="dot ${i===0?'active':''}" onclick="goSlide(${i})"></div>`).join('');
     const sb=document.getElementById('sidebar');
     sb.addEventListener('mouseenter',()=>cancelAnimationFrame(rafId));
@@ -493,8 +427,6 @@
   function goSlide(i){
     const slides = document.querySelectorAll('.slide');
     const dots = document.querySelectorAll('.dot');
-    
-    // Safely silence standard previous slide to avoid overlapping audio
     if(slides[currentSlide]) {
       slides[currentSlide].classList.remove('active');
       const prevVid = slides[currentSlide].querySelector('video');
@@ -505,9 +437,7 @@
       }
     }
     if(dots[currentSlide]) dots[currentSlide].classList.remove('active');
-    
     currentSlide=((i%recents.length)+recents.length)%recents.length;
-    
     if(slides[currentSlide]) slides[currentSlide].classList.add('active');
     if(dots[currentSlide]) dots[currentSlide].classList.add('active');
     resetProgress();
@@ -549,12 +479,16 @@
         <script>window._previewUrl="${esc(p.previewUrl)}";<\/script>`:''}
       <div class="modal-grid">
         <div>
-          ${p.description ? (()=> {
-            const full=esc(p.description).replace(/\n/g,'<br/>');
-            const isLong=full.length>380;
-            return `<p class="modal-description ${isLong?'':'expanded'}" id="modal-desc" ${isLong?`data-full="${full.replace(/"/g,'&quot;')}"`:''}>${isLong?full.substring(0,380)+'...':full}</p>
-              ${isLong?`<button class="read-more-btn" onclick="toggleReadMore(this)">Continue reading <i class="fas fa-chevron-down"></i></button>`:''}`;
-          })() : `<p class="modal-description" style="opacity:.3">No description added.</p>`}
+          ${(() => {
+            const rawHtml = p.description || '';
+            const stripped = rawHtml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+            const isLong = stripped.length > 380;
+            window.__modalFullDesc = stripped;
+            return `<div class="modal-description ${isLong ? '' : 'expanded'}" id="modal-desc">
+              ${isLong ? stripped.substring(0, 380) + '...' : stripped}
+            </div>
+            ${isLong ? `<button class="read-more-btn" onclick="toggleReadMore(this)">Continue reading <i class="fas fa-chevron-down"></i></button>` : ''}`;
+          })()}
         </div>
         <div class="modal-info-list">
           ${p.subtitle?`<div class="modal-info-item"><span class="modal-info-label">Role</span><span class="modal-info-value">${esc(p.subtitle)}</span></div>`:''}
@@ -565,8 +499,13 @@
       ${media.length?`
         <p class="section-label">Gallery</p>
         <div class="modal-gallery">
-          ${media.map(m=>{const isVid=m.type==='video'||isVideoUrl(m.url);return`<div class="gallery-item" onclick="openLightbox('${esc(m.url)}','${isVid?'video':'image'}')">
-            ${isVid?`<video src="${esc(m.url)}" muted loop playsinline autoplay></video>`:`<img src="${clOpt(m.url)}" alt="" loading="lazy"/>`}
+          ${media.map(m=>{
+            const isVid=m.type==='video'||isVideoUrl(m.url);
+            return`<div class="gallery-item" onclick="openLightbox('${esc(m.url)}','${isVid?'video':'image'}')">
+            ${isVid
+              ?`<video src="${esc(m.url)}" muted loop playsinline autoplay onerror="this.parentElement.innerHTML='<div class=\\'broken-media\\'><i class=\\'fas fa-exclamation-triangle\\'></i></div>'"></video>`
+              :`<img src="${clOpt(m.url)}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'broken-media\\'><i class=\\'fas fa-exclamation-triangle\\'></i></div>'"/>`
+            }
           </div>`;}).join('')}
         </div>`:''}
     `;
@@ -575,6 +514,30 @@
     document.body.style.overflow='hidden';
     requestAnimationFrame(initOrderedMasonry);
   }
+  window.toggleReadMore = function(btn) {
+    const desc = document.getElementById('modal-desc');
+    if (!desc || !window.__modalFullDesc) return;
+    const expanded = desc.classList.contains('expanded');
+    if (expanded) {
+      desc.innerHTML = window.__modalFullDesc.substring(0, 380) + '...';
+      desc.classList.remove('expanded');
+      btn.innerHTML = 'Continue reading <i class="fas fa-chevron-down"></i>';
+      btn.classList.remove('expanded');
+    } else {
+      desc.innerHTML = window.__modalFullDesc;
+      desc.classList.add('expanded');
+      btn.innerHTML = 'Read less <i class="fas fa-chevron-up"></i>';
+      btn.classList.add('expanded');
+    }
+  };
+  function togglePreview(){
+    const s=document.getElementById('preview-section'), f=document.getElementById('preview-iframe'); if(!s)return;
+    if(s.style.display==='none'){s.style.display='block';f.src=window._previewUrl||'';s.scrollIntoView({behavior:'smooth',block:'start'});}
+    else{s.style.display='none';f.src='';}
+  }
+  function closeModal(){ document.getElementById('modal').classList.remove('open'); document.body.style.overflow=''; const f=document.getElementById('preview-iframe');if(f)f.src=''; }
+  function openLightbox(url,type){ const inner=document.getElementById('lightbox-inner'); inner.innerHTML=type==='video'?`<video class="lightbox-media" src="${url}" controls autoplay loop muted playsinline></video>`:`<img class="lightbox-media" src="${clOpt(url)}" alt=""/>`; document.getElementById('lightbox').classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeLightbox(e){ if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('lightbox-close')&&!e.target.closest?.('.lightbox-close'))return; document.getElementById('lightbox').classList.remove('open'); document.getElementById('lightbox-inner').innerHTML=''; document.body.style.overflow=''; }
   function initOrderedMasonry(){
     const gallery=document.querySelector('.modal-gallery'); if(!gallery)return;
     const resizeItems=()=>{
@@ -587,13 +550,11 @@
         const borderY=parseFloat(itemStyles.borderTopWidth)+parseFloat(itemStyles.borderBottomWidth);
         const itemWidth=item.getBoundingClientRect().width;
         let ratio=0;
-
         if(media?.tagName==='IMG'&&media.naturalWidth){
           ratio=media.naturalHeight/media.naturalWidth;
         } else if(media?.tagName==='VIDEO'&&media.videoWidth){
           ratio=media.videoHeight/media.videoWidth;
         }
-
         const mediaHeight=ratio&&itemWidth ? itemWidth*ratio : itemWidth*.75;
         const span=Math.ceil((mediaHeight+borderY+gap)/(row+gap));
         item.style.gridRowEnd=`span ${Math.max(span,1)}`;
@@ -610,22 +571,6 @@
     });
   }
   window.addEventListener('resize',()=>requestAnimationFrame(initOrderedMasonry));
-  window.toggleReadMore = function(btn){
-    const desc=document.getElementById('modal-desc'); if(!desc)return;
-    const expanded=desc.classList.contains('expanded');
-    if(expanded){ desc.innerHTML=desc.dataset.full.substring(0,380)+'...'; desc.classList.remove('expanded'); btn.innerHTML=`Continue reading <i class="fas fa-chevron-down"></i>`; btn.classList.remove('expanded'); }
-    else{ desc.innerHTML=desc.dataset.full; desc.classList.add('expanded'); btn.innerHTML=`Read less <i class="fas fa-chevron-up"></i>`; btn.classList.add('expanded'); }
-  };
-  function togglePreview(){
-    const s=document.getElementById('preview-section'), f=document.getElementById('preview-iframe'); if(!s)return;
-    if(s.style.display==='none'){s.style.display='block';f.src=window._previewUrl||'';s.scrollIntoView({behavior:'smooth',block:'start'});}
-    else{s.style.display='none';f.src='';}
-  }
-  function closeModal(){ document.getElementById('modal').classList.remove('open'); document.body.style.overflow=''; const f=document.getElementById('preview-iframe');if(f)f.src=''; }
-  function openLightbox(url,type){ const inner=document.getElementById('lightbox-inner'); inner.innerHTML=type==='video'?`<video class="lightbox-media" src="${url}" controls autoplay loop muted playsinline></video>`:`<img class="lightbox-media" src="${clOpt(url)}" alt=""/>`; document.getElementById('lightbox').classList.add('open'); document.body.style.overflow='hidden'; }
-  function closeLightbox(e){ if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('lightbox-close')&&!e.target.closest?.('.lightbox-close'))return; document.getElementById('lightbox').classList.remove('open'); document.getElementById('lightbox-inner').innerHTML=''; document.body.style.overflow=''; }
-  document.addEventListener('contextmenu',e=>e.preventDefault());
-  document.addEventListener('dragstart',e=>{if(e.target.tagName==='IMG'||e.target.tagName==='VIDEO')e.preventDefault();});
   function clOpt(url){ if(!url)return url; if(url.includes('res.cloudinary.com')&&url.includes('/upload/')&&!url.includes('q_auto'))return url.replace('/upload/','/upload/q_auto,f_auto,w_auto/'); return url; }
   function esc(s){ return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   const i18n={
