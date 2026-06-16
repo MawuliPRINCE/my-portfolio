@@ -587,7 +587,7 @@
   }
 
   /* ============================================= */
-  /* TESTIMONIAL SLIDER – ONLY THIS PART WAS CHANGED */
+  /* TESTIMONIAL SLIDER */
   /* ============================================= */
   const track=document.getElementById('reviews-track');
   const dotsEl=document.getElementById('rev-dots');
@@ -698,12 +698,15 @@
   const storyTitle = document.getElementById('storyDetailTitle');
   const storyBody = document.getElementById('storyDetailBody');
   const storyClose = document.querySelector('.story-detail-close');
+  
+  // Storage for default details which will be dynamically updated
   const storyDetails = {
     about: { icon: 'fa-user', title: 'About Me', body: `<p>Dedicated graphic design student at the University of Education, Winneba with a passion for creativity and attention to detail.</p><p>I strive to create simple, effective designs while learning and growing in the field. I love clean aesthetics, meaningful visuals, and solving creative challenges. Always eager to take on new projects and collaborate.</p>` },
     education: { icon: 'fa-graduation-cap', title: 'Education', body: `<p><strong>University of Education, Winneba</strong><br>Bachelor’s Degree in Graphic Design | Expected 2026</p><p>Currently pursuing a degree in Graphic Design with a focus on visual communication, layout design, branding, typography, and digital media.</p>` },
     work: { icon: 'fa-briefcase', title: 'Work Experience', body: `<p><strong>Freelance Graphic Designer</strong><br>2023–Present</p><p>Designed custom graphics and layouts for various clients while managing multiple projects independently and translating creative concepts into polished visual outcomes.</p>` },
     skills: { icon: 'fa-tools', title: 'Skills', body: `<ul><li>Adobe Photoshop</li><li>Adobe Illustrator</li><li>Adobe InDesign</li><li>Typography</li><li>Layout Design</li><li>Branding</li><li>Visual Communication</li><li>Color Theory</li></ul>` }
   };
+  
   document.querySelectorAll('.story-card').forEach(card => {
     const btn = card.querySelector('.story-more');
     if (!btn) return;
@@ -720,6 +723,7 @@
       }, 350);
     });
   });
+  
   function closeStoryOverlay() {
     if(!storyOverlay.classList.contains('active')) return;
     storyOverlay.classList.remove('active');
@@ -732,6 +736,7 @@
   storyOverlay.addEventListener('click', e => {
     if (e.target === storyOverlay) closeStoryOverlay();
   });
+  
   const i18n={
     en:{'nav-home':'Home','nav-about':'About','nav-projects':'Projects','nav-booking':'Book Me','hero-label':'About Me','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Graphic Designer and Brand Identity specialist based in Ghana. Currently studying at the University of Education, Winneba — committed to crafting visuals that are clean, intentional, and memorable.','pill-about':'About Me','pill-edu':'Education','pill-skills':'Skills','section-journey':'Work Experience','see-more':'See more →','stat-experience':'Years Experience','stat-projects':'Projects Delivered','section-reviews':'Client Reviews','reviews-title':'What clients say','r1':'Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional.','r1-role':'Founder, AK Studio','r2':'The attention to detail was remarkable. Every revision handled swiftly.','r2-role':'Marketing Director','r3':'Working with Prince was smooth from start to finish.','r3-role':'Creative Director','r4':'Highly recommended. Prince brings creativity and professionalism to every project.','r4-role':'Business Owner','footer-title':'Let\'s Connect','footer-desc':'Ready to start your next project or want to collaborate? I\'m always open to new opportunities.'},
     fr:{'nav-home':'Accueil','nav-about':'À Propos','nav-projects':'Projets','nav-booking':'Me Réserver','hero-label':'À Propos','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Designer graphique et spécialiste en identité de marque basé au Ghana, étudiant à l\'Université de Winneba.','pill-about':'À Propos','pill-edu':'Formation','pill-skills':'Compétences','section-journey':'Expérience','see-more':'Voir plus →','stat-experience':'Ans d\'expérience','stat-projects':'Projets livrés','section-reviews':'Avis clients','reviews-title':'Ce que disent les clients','r1':'Prince a livré une identité qui a capturé notre vision. Propre, précis et professionnel.','r1-role':'Fondatrice, AK Studio','r2':'L\'attention aux détails était remarquable.','r2-role':'Directeur Marketing','r3':'Travailler avec Prince était fluide du début à la fin.','r3-role':'Directeur Créatif','r4':'Fortement recommandé. Créativité et professionnalisme à chaque projet.','r4-role':'Chef d\'entreprise','footer-title':'Connectons-nous','footer-desc':'Prêt à démarrer votre prochain projet ?'},
@@ -755,8 +760,25 @@
   fetch('https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-about.json?t='+Date.now())
     .then(r=>r.ok?r.json():null).then(d=>{
       if(!d)return;
-      const map=[['pill-about',d.aboutShort],['pill-edu',d.eduShort],['pill-skills',d.skillsShort]];
+      
+      // FIXED BUG: Old code was mapping translation titles (pill-about, pill-edu, etc.) 
+      // to short descriptions (d.aboutShort, d.eduShort, etc.), overwriting the section headers. 
+      // We now map title elements only to title values if defined in the schema.
+      const map=[
+        ['pill-about', d.aboutTitle],
+        ['pill-edu', d.eduTitle],
+        ['section-journey', d.workTitle],
+        ['pill-skills', d.skillsTitle]
+      ];
       map.forEach(([k,v])=>{if(v)document.querySelectorAll(`[data-i18n="${k}"]`).forEach(el=>el.textContent=v);});
+
+      // Update the story overlay Titles if custom title properties exist
+      if(d.aboutTitle) storyDetails.about.title = d.aboutTitle;
+      if(d.eduTitle) storyDetails.education.title = d.eduTitle;
+      if(d.workTitle) storyDetails.work.title = d.workTitle;
+      if(d.skillsTitle) storyDetails.skills.title = d.skillsTitle;
+
+      // Update the shortDescription previews (Excerpts/Previews)
       if(d.aboutShort){
         const preview = document.getElementById('about-preview');
         if(preview) preview.innerHTML = d.aboutShort.replace(/\n/g,'<br>') + '...';
@@ -769,6 +791,8 @@
         const preview = document.getElementById('skills-preview');
         if(preview) preview.innerHTML = d.skillsShort.replace(/\n/g,'<br>') + '...';
       }
+
+      // Update fullDescription content for story detail overlays
       if(d.aboutFull){
         storyDetails.about.body = `<p>${d.aboutFull.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')}</p>`;
       }
