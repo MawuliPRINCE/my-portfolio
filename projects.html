@@ -137,19 +137,12 @@
     .modal-title-bar { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; letter-spacing: .02em; }
     .modal-body { max-width: 960px; margin: 0 auto; width: 100%; padding: clamp(24px,4vw,48px) clamp(16px,3vw,28px) 5rem; }
     .modal-accent { width: 40px; height: 2px; background: var(--accent); margin-bottom: 1.25rem; }
-    .modal-hero { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.4rem,7vw,5rem); font-weight: 600; letter-spacing: -.02em; line-height: .95; margin-bottom: 1.75rem; }
-    .modal-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-bottom: 2rem; padding-bottom: 1.75rem; border-bottom: 1px solid var(--border); }
+    .modal-hero { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.4rem,7vw,5rem); font-weight: 600; letter-spacing: -.02em; line-height: .95; margin-bottom: 0.5rem; }
+    .modal-role { font-size: 1rem; color: var(--muted); font-weight: 400; margin-bottom: 1rem; font-family: 'Space Grotesk', sans-serif; }
+    .modal-meta-inline { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
     .modal-year { font-size: .6rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
     .modal-tag { font-size: .6rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 3px 10px; border-radius: 2px; }
-    .modal-action-row { display: flex; gap: .6rem; margin-left: auto; flex-wrap: wrap; }
-    .modal-btn { font-size: .62rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--accent); text-decoration: none; border: 1px solid var(--accent); padding: .5rem 1.1rem; border-radius: 20px; transition: all .2s; display: flex; align-items: center; gap: .35rem; cursor: pointer; background: none; font-family: 'Space Grotesk', sans-serif; }
-    .modal-btn:hover { background: var(--accent); color: #fff; }
-    .modal-grid { display: grid; grid-template-columns: 1fr 260px; gap: 3rem; margin-bottom: 3rem; }
-    .modal-info-list { display: flex; flex-direction: column; }
-    .modal-info-item { padding: .75rem 0; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: .2rem; }
-    .modal-info-label { font-size: .58rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
-    .modal-info-value { font-size: .82rem; }
-    .modal-tags-wrap { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .3rem; }
+    .modal-description-wrapper { margin-bottom: 1.5rem; }
     .modal-description { font-size: .95rem; line-height: 1.9; font-weight: 300; color: var(--text); position: relative; max-height: 215px; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1); }
     .modal-description.expanded { max-height: none; }
     .modal-description::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 85px; background: linear-gradient(transparent, var(--modal-bg)); pointer-events: none; opacity: 1; transition: opacity 0.3s; }
@@ -158,13 +151,16 @@
     .read-more-btn:hover { text-decoration: underline; }
     .read-more-btn i { transition: transform 0.3s; }
     .read-more-btn.expanded i { transform: rotate(180deg); }
-    .modal-overlay .modal-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 8px; grid-auto-flow: row; gap: .85rem; }
+    .modal-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2rem; }
+    .modal-btn { font-size: .62rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--accent); text-decoration: none; border: 1px solid var(--accent); padding: .5rem 1.1rem; border-radius: 20px; transition: all .2s; display: flex; align-items: center; gap: .35rem; cursor: pointer; background: none; font-family: 'Space Grotesk', sans-serif; }
+    .modal-btn:hover { background: var(--accent); color: #fff; }
+    .section-label { font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); margin-bottom: .85rem; display: flex; align-items: center; gap: .6rem; }
+    .section-label::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+    .modal-overlay .modal-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 8px; grid-auto-flow: row; gap: .85rem; margin-top: 1rem; }
     @media (max-width: 600px) { .modal-overlay .modal-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; } }
     .modal-overlay .modal-gallery .gallery-item { display: block; margin: 0; aspect-ratio: auto; overflow: hidden; background: var(--surface); border: 1px solid var(--border); cursor: pointer; position: relative; border-radius: 16px; }
     .modal-overlay .modal-gallery .gallery-item img, .modal-overlay .modal-gallery .gallery-item video { width: 100%; height: auto; max-width: 100%; object-fit: contain; display: block; transition: none; }
     .preview-section { margin-bottom: 2.5rem; }
-    .section-label { font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); margin-bottom: .85rem; display: flex; align-items: center; gap: .6rem; }
-    .section-label::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
     .preview-frame-wrap { position: relative; width: 100%; border: 1px solid var(--border); background: var(--surface); }
     .preview-frame-wrap::before { content: ''; display: block; padding-top: 56.25%; }
     .preview-iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
@@ -173,18 +169,17 @@
     .lightbox-media { max-width: 92vw; max-height: 88vh; object-fit: contain; display: block; }
     .lightbox-close { position: absolute; top: 1.5rem; right: 1.5rem; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: #fff; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s; }
     .lightbox-close:hover { background: var(--accent); border-color: var(--accent); }
+    .broken-media { display: flex; align-items: center; justify-content: center; background: var(--surface); color: var(--muted); font-size: 1.5rem; }
     @media (max-width: 768px) {
       .shell { flex-direction: column; }
       .sidebar { width: 100%; max-width: 100%; height: 55vw; min-height: 220px; position: relative; top: 0; }
       .page-hero::before { display: none; }
-      .modal-grid { grid-template-columns: 1fr; }
       .modal-hero { font-size: 2.4rem; }
       .projects-wrap { padding: 0; gap: 1px; }
       .card-body { flex-direction: column; }
       .card-arrow { display: none; }
       .search-input { max-width: 140px; }
     }
-    .broken-media { display: flex; align-items: center; justify-content: center; background: var(--surface); color: var(--muted); font-size: 1.5rem; }
   </style>
 </head>
 <body>
@@ -276,7 +271,6 @@
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       allProjects = await res.json();
       console.log('✅ Loaded projects.json:', allProjects);
-      // Validate structure
       if (!Array.isArray(allProjects)) throw new Error('projects.json is not an array');
       recents = allProjects.flatMap(p => {
         if (!p.media) return [];
@@ -452,23 +446,39 @@
     rafId=requestAnimationFrame(animateProgress);
   }
   
+  /* ===== UPDATED openModal FUNCTION ===== */
   function openModal(id){
-    const p=allProjects.find(x=>x.id===id); if(!p)return;
-    document.getElementById('modal-title').textContent=p.title||'Project';
-    const media=(p.media||[]).filter(m=>m.url);
-    const hasPreview=!!p.previewUrl, hasLink=!!p.link;
-    document.getElementById('modal-body').innerHTML=`
+    const p = allProjects.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('modal-title').textContent = p.title || 'Project';
+    const media = (p.media || []).filter(m => m.url);
+    const hasPreview = !!p.previewUrl, hasLink = !!p.link;
+    
+    document.getElementById('modal-body').innerHTML = `
       <div class="modal-accent"></div>
-      <div class="modal-hero">${esc(p.title||'Untitled')}</div>
-      <div class="modal-meta-row">
-        ${p.year?`<span class="modal-year">${esc(p.year)}</span>`:''}
-        ${(p.tags||[]).map(t=>`<span class="modal-tag">${esc(t)}</span>`).join('')}
-        <div class="modal-action-row">
-          ${hasPreview?`<button class="modal-btn" onclick="togglePreview()"><i class="fas fa-desktop"></i> Preview Site</button>`:''}
-          ${hasLink?`<a class="modal-btn" href="${esc(p.link)}" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square"></i> View Live</a>`:''}
-        </div>
+      <div class="modal-hero">${esc(p.title || 'Untitled')}</div>
+      ${p.subtitle ? `<div class="modal-role">${esc(p.subtitle)}</div>` : ''}
+      <div class="modal-meta-inline">
+        ${p.year ? `<span class="modal-year">${esc(p.year)}</span>` : ''}
+        ${(p.tags || []).map(t => `<span class="modal-tag">${esc(t)}</span>`).join('')}
       </div>
-      ${hasPreview?`
+      <div class="modal-description-wrapper">
+        ${(() => {
+          const rawHtml = p.description || '';
+          const stripped = rawHtml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+          const isLong = stripped.length > 380;
+          window.__modalFullDesc = stripped;
+          return `<div class="modal-description ${isLong ? '' : 'expanded'}" id="modal-desc">
+            ${isLong ? stripped.substring(0, 380) + '...' : stripped}
+          </div>
+          ${isLong ? `<button class="read-more-btn" onclick="toggleReadMore(this)">Continue reading <i class="fas fa-chevron-down"></i></button>` : ''}`;
+        })()}
+      </div>
+      <div class="modal-actions">
+        ${hasPreview ? `<button class="modal-btn" onclick="togglePreview()"><i class="fas fa-desktop"></i> Preview Site</button>` : ''}
+        ${hasLink ? `<a class="modal-btn" href="${esc(p.link)}" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square"></i> View Live</a>` : ''}
+      </div>
+      ${hasPreview ? `
         <div class="preview-section" id="preview-section" style="display:none;">
           <p class="section-label">Website Preview</p>
           <div class="preview-frame-wrap">
@@ -476,44 +486,28 @@
               sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe>
           </div>
         </div>
-        <script>window._previewUrl="${esc(p.previewUrl)}";<\/script>`:''}
-      <div class="modal-grid">
-        <div>
-          ${(() => {
-            const rawHtml = p.description || '';
-            const stripped = rawHtml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-            const isLong = stripped.length > 380;
-            window.__modalFullDesc = stripped;
-            return `<div class="modal-description ${isLong ? '' : 'expanded'}" id="modal-desc">
-              ${isLong ? stripped.substring(0, 380) + '...' : stripped}
-            </div>
-            ${isLong ? `<button class="read-more-btn" onclick="toggleReadMore(this)">Continue reading <i class="fas fa-chevron-down"></i></button>` : ''}`;
-          })()}
-        </div>
-        <div class="modal-info-list">
-          ${p.subtitle?`<div class="modal-info-item"><span class="modal-info-label">Role</span><span class="modal-info-value">${esc(p.subtitle)}</span></div>`:''}
-          ${p.year?`<div class="modal-info-item"><span class="modal-info-label">Year</span><span class="modal-info-value">${esc(p.year)}</span></div>`:''}
-          ${p.tags?.length?`<div class="modal-info-item"><span class="modal-info-label">Tags</span><div class="modal-tags-wrap">${p.tags.map(t=>`<span class="tag-pill">${esc(t)}</span>`).join('')}</div></div>`:''}
-        </div>
-      </div>
-      ${media.length?`
+        <script>window._previewUrl="${esc(p.previewUrl)}";<\/script>` : ''}
+      ${media.length ? `
         <p class="section-label">Gallery</p>
         <div class="modal-gallery">
-          ${media.map(m=>{
-            const isVid=m.type==='video'||isVideoUrl(m.url);
-            return`<div class="gallery-item" onclick="openLightbox('${esc(m.url)}','${isVid?'video':'image'}')">
-            ${isVid
-              ?`<video src="${esc(m.url)}" muted loop playsinline autoplay onerror="this.parentElement.innerHTML='<div class=\\'broken-media\\'><i class=\\'fas fa-exclamation-triangle\\'></i></div>'"></video>`
-              :`<img src="${clOpt(m.url)}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'broken-media\\'><i class=\\'fas fa-exclamation-triangle\\'></i></div>'"/>`
-            }
-          </div>`;}).join('')}
-        </div>`:''}
+          ${media.map(m => {
+            const isVid = m.type === 'video' || isVideoUrl(m.url);
+            return `<div class="gallery-item" onclick="openLightbox('${esc(m.url)}','${isVid ? 'video' : 'image'}')">
+              ${isVid
+                ? `<video src="${esc(m.url)}" muted loop playsinline autoplay onerror="this.parentElement.innerHTML='<div class=\\'broken-media\\'><i class=\\'fas fa-exclamation-triangle\\'></i></div>'"></video>`
+                : `<img src="${clOpt(m.url)}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'broken-media\\'><i class=\\'fas fa-exclamation-triangle\\'></i></div>'"/>`
+              }
+            </div>`;
+          }).join('')}
+        </div>` : ''}
     `;
+    
     document.getElementById('modal').classList.add('open');
-    document.getElementById('modal').scrollTop=0;
-    document.body.style.overflow='hidden';
+    document.getElementById('modal').scrollTop = 0;
+    document.body.style.overflow = 'hidden';
     requestAnimationFrame(initOrderedMasonry);
   }
+  
   window.toggleReadMore = function(btn) {
     const desc = document.getElementById('modal-desc');
     if (!desc || !window.__modalFullDesc) return;
@@ -530,6 +524,7 @@
       btn.classList.add('expanded');
     }
   };
+  
   function togglePreview(){
     const s=document.getElementById('preview-section'), f=document.getElementById('preview-iframe'); if(!s)return;
     if(s.style.display==='none'){s.style.display='block';f.src=window._previewUrl||'';s.scrollIntoView({behavior:'smooth',block:'start'});}
