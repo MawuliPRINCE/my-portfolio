@@ -407,6 +407,11 @@
         "type": "image"
       },
       {
+        "url": "https://res.cloudinary.com/dtjahgffs/video/upload/v1782062965/iczlwrcrycuk2uyg29hi.mp4",
+        "type": "video",
+        "showInRecents": false
+      },
+      {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780264779/txz6ie8y8oahdytmshtd.png",
         "type": "image"
       },
@@ -429,6 +434,11 @@
       {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780264854/qisi26tbhfxhecamyik3.png",
         "type": "image"
+      },
+      {
+        "url": "https://res.cloudinary.com/dtjahgffs/video/upload/v1782062902/xvnkpu2vzp7k9npob7hc.mp4",
+        "type": "video",
+        "showInRecents": false
       },
       {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780264865/axuaghuq0xnin7wptg3v.png",
@@ -494,7 +504,7 @@
     ],
     "isRecent": false,
     "isFeatured": false,
-    "coverIndex": 21,
+    "coverIndex": 23,
     "aiPercent": 0,
     "collaborators": [],
     "projectOrder": 3,
