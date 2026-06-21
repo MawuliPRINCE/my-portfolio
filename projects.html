@@ -272,12 +272,31 @@
       allProjects = await res.json();
       console.log('✅ Loaded projects.json:', allProjects);
       if (!Array.isArray(allProjects)) throw new Error('projects.json is not an array');
-      recents = allProjects.flatMap(p => {
-        if (!p.media) return [];
+      
+      // --- SORTING for recents (CMS order) ---
+      // Get all projects that contain at least one media item shown in recents.
+      const recentsProjects = allProjects.filter(p => p.media && p.media.some(m => m.showInRecents));
+      // Sort them: use recentOrder if the project is marked as recent, else fallback to projectOrder
+      recentsProjects.sort((a, b) => {
+        const orderA = Number.isFinite(a.isRecent ? a.recentOrder : a.projectOrder) ? (a.isRecent ? a.recentOrder : a.projectOrder) : Infinity;
+        const orderB = Number.isFinite(b.isRecent ? b.recentOrder : b.projectOrder) ? (b.isRecent ? b.recentOrder : b.projectOrder) : Infinity;
+        return orderA - orderB;
+      });
+      // Build the recents array, keeping the media order inside each project
+      recents = recentsProjects.flatMap(p => {
         return p.media.filter(m => m.showInRecents).map(m => ({...m, parentProject: p}));
       });
+      
+      // Projects for the main list (non‑recent projects)
       projectsOnly = allProjects.filter(p => !p.isRecent);
+      // Sort main list by projectOrder
+      projectsOnly.sort((a, b) => {
+        const orderA = Number.isFinite(a.projectOrder) ? a.projectOrder : Infinity;
+        const orderB = Number.isFinite(b.projectOrder) ? b.projectOrder : Infinity;
+        return orderA - orderB;
+      });
       filtered = [...projectsOnly];
+      
       renderFilters(); renderProjects(); renderRecents();
     } catch(e) {
       console.error('❌ Failed to load projects:', e);
