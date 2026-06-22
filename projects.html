@@ -69,11 +69,11 @@
     .slide.active { opacity: 1; pointer-events: all; }
     .slide-media { width: 100%; height: 100%; object-fit: cover; display: block; }
     .slide-placeholder { width: 100%; height: 100%; background: #1a1a1a; display: flex; align-items: center; justify-content: center; color: #333; font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; }
-    .slide-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #000000ee 0%, transparent 55%); pointer-events: none; }
-    .slide-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.75rem; pointer-events: none; }
-    .slide-tag { font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; font-weight: 500; }
-    .slide-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.9rem; font-weight: 600; letter-spacing: .02em; line-height: 1; color: #fff; margin-bottom: .35rem; }
-    .slide-sub { font-size: .75rem; color: rgba(255,255,255,0.5); font-weight: 300; }
+    .slide-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 70%); pointer-events: none; }
+    .slide-info { position: absolute; bottom: 0.75rem; left: 1rem; right: 1rem; padding: 0; pointer-events: none; background: none; }
+    .slide-tag { font-size: 0.5rem; margin-bottom: 0.15rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); font-weight: 500; }
+    .slide-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 600; letter-spacing: .02em; line-height: 1.1; color: #fff; margin-bottom: 0; }
+    .slide-sub { display: none; }   /* completely hidden for less intrusion */
     .unmute-btn { position: absolute; top: 1.25rem; right: 1.25rem; z-index: 20; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(255,255,255,0.2); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(4px); transition: all .2s; font-size: .85rem; }
     .unmute-btn:hover { background: var(--accent); border-color: var(--accent); }
     .slide-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #fff; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(8px); transition: background .2s; }
@@ -272,31 +272,27 @@
       allProjects = await res.json();
       console.log('✅ Loaded projects.json:', allProjects);
       if (!Array.isArray(allProjects)) throw new Error('projects.json is not an array');
-      
+
       // --- SORTING for recents (CMS order) ---
-      // Get all projects that contain at least one media item shown in recents.
       const recentsProjects = allProjects.filter(p => p.media && p.media.some(m => m.showInRecents));
-      // Sort them: use recentOrder if the project is marked as recent, else fallback to projectOrder
       recentsProjects.sort((a, b) => {
         const orderA = Number.isFinite(a.isRecent ? a.recentOrder : a.projectOrder) ? (a.isRecent ? a.recentOrder : a.projectOrder) : Infinity;
         const orderB = Number.isFinite(b.isRecent ? b.recentOrder : b.projectOrder) ? (b.isRecent ? b.recentOrder : b.projectOrder) : Infinity;
         return orderA - orderB;
       });
-      // Build the recents array, keeping the media order inside each project
       recents = recentsProjects.flatMap(p => {
         return p.media.filter(m => m.showInRecents).map(m => ({...m, parentProject: p}));
       });
-      
+
       // Projects for the main list (non‑recent projects)
       projectsOnly = allProjects.filter(p => !p.isRecent);
-      // Sort main list by projectOrder
       projectsOnly.sort((a, b) => {
         const orderA = Number.isFinite(a.projectOrder) ? a.projectOrder : Infinity;
         const orderB = Number.isFinite(b.projectOrder) ? b.projectOrder : Infinity;
         return orderA - orderB;
       });
       filtered = [...projectsOnly];
-      
+
       renderFilters(); renderProjects(); renderRecents();
     } catch(e) {
       console.error('❌ Failed to load projects:', e);
@@ -465,34 +461,30 @@
     rafId=requestAnimationFrame(animateProgress);
   }
   
-  /* ===== UPDATED openModal FUNCTION ===== */
+  /* ===== SAFE openModal – no template injection issues ===== */
   function openModal(id){
     const p = allProjects.find(x => x.id === id);
     if (!p) return;
-    document.getElementById('modal-title').textContent = p.title || 'Project';
+    const title = p.title || 'Untitled';
+    const subtitle = p.subtitle || '';
+    const year = p.year || '';
+    const tags = p.tags || [];
     const media = (p.media || []).filter(m => m.url);
-    const hasPreview = !!p.previewUrl, hasLink = !!p.link;
-    
-    document.getElementById('modal-body').innerHTML = `
+    const hasPreview = !!p.previewUrl;
+    const hasLink = !!p.link;
+    const descriptionRaw = p.description || '';
+
+    document.getElementById('modal-title').textContent = title;
+
+    let html = `
       <div class="modal-accent"></div>
-      <div class="modal-hero">${esc(p.title || 'Untitled')}</div>
-      ${p.subtitle ? `<div class="modal-role">${esc(p.subtitle)}</div>` : ''}
+      <div class="modal-hero">${esc(title)}</div>
+      ${subtitle ? `<div class="modal-role">${esc(subtitle)}</div>` : ''}
       <div class="modal-meta-inline">
-        ${p.year ? `<span class="modal-year">${esc(p.year)}</span>` : ''}
-        ${(p.tags || []).map(t => `<span class="modal-tag">${esc(t)}</span>`).join('')}
+        ${year ? `<span class="modal-year">${esc(year)}</span>` : ''}
+        ${tags.map(t => `<span class="modal-tag">${esc(t)}</span>`).join('')}
       </div>
-      <div class="modal-description-wrapper">
-        ${(() => {
-          const rawHtml = p.description || '';
-          const stripped = rawHtml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-          const isLong = stripped.length > 380;
-          window.__modalFullDesc = stripped;
-          return `<div class="modal-description ${isLong ? '' : 'expanded'}" id="modal-desc">
-            ${isLong ? stripped.substring(0, 380) + '...' : stripped}
-          </div>
-          ${isLong ? `<button class="read-more-btn" onclick="toggleReadMore(this)">Continue reading <i class="fas fa-chevron-down"></i></button>` : ''}`;
-        })()}
-      </div>
+      <div class="modal-description-wrapper" id="desc-wrapper"></div>
       <div class="modal-actions">
         ${hasPreview ? `<button class="modal-btn" onclick="togglePreview()"><i class="fas fa-desktop"></i> Preview Site</button>` : ''}
         ${hasLink ? `<a class="modal-btn" href="${esc(p.link)}" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square"></i> View Live</a>` : ''}
@@ -504,8 +496,7 @@
             <iframe class="preview-iframe" id="preview-iframe" src="" loading="lazy"
               sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe>
           </div>
-        </div>
-        <script>window._previewUrl="${esc(p.previewUrl)}";<\/script>` : ''}
+        </div>` : ''}
       ${media.length ? `
         <p class="section-label">Gallery</p>
         <div class="modal-gallery">
@@ -520,10 +511,36 @@
           }).join('')}
         </div>` : ''}
     `;
-    
+
+    document.getElementById('modal-body').innerHTML = html;
+
+    // --- SAFE DESCRIPTION INSERTION ---
+    const descWrapper = document.getElementById('desc-wrapper');
+    if (descWrapper) {
+      const stripped = descriptionRaw.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+      const isLong = stripped.length > 380;
+      window.__modalFullDesc = stripped;
+
+      const descDiv = document.createElement('div');
+      descDiv.className = `modal-description ${isLong ? '' : 'expanded'}`;
+      descDiv.id = 'modal-desc';
+      descDiv.innerHTML = isLong ? stripped.substring(0, 380) + '...' : stripped;
+      descWrapper.appendChild(descDiv);
+
+      if (isLong) {
+        const btn = document.createElement('button');
+        btn.className = 'read-more-btn';
+        btn.innerHTML = 'Continue reading <i class="fas fa-chevron-down"></i>';
+        btn.onclick = () => toggleReadMore(btn);
+        descWrapper.appendChild(btn);
+      }
+    }
+
+    // --- FINALISE ---
     document.getElementById('modal').classList.add('open');
     document.getElementById('modal').scrollTop = 0;
     document.body.style.overflow = 'hidden';
+    if (hasPreview) window._previewUrl = p.previewUrl;
     requestAnimationFrame(initOrderedMasonry);
   }
   
