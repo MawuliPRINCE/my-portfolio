@@ -389,7 +389,7 @@
   },
   {
     "id": "proj_1780264723478",
-    "title": "CHOP BOX VISUAL IDENTITY",
+    "title": "CHOP BOX ",
     "subtitle": "",
     "description": "",
     "tags": [
@@ -453,23 +453,21 @@
         "type": "image"
       },
       {
-        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780265031/vso41xwxwitk8rnwoiuw.png",
-        "type": "image"
+        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1782144923/sq7tplplme2sim6ciclz.jpg",
+        "type": "image",
+        "showInRecents": false
       },
       {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780265084/uttonganxlajaaaln8vp.png",
         "type": "image"
       },
       {
+        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1782144935/trxwlb8hszpkxe54dldg.jpg",
+        "type": "image",
+        "showInRecents": false
+      },
+      {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780265162/skguptv6jybcaalltgdg.png",
-        "type": "image"
-      },
-      {
-        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780265165/s4zrveq3qgp9zysfu1tp.png",
-        "type": "image"
-      },
-      {
-        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780265168/urglmemonyt32ww8aqum.png",
         "type": "image"
       },
       {
@@ -477,8 +475,28 @@
         "type": "image"
       },
       {
+        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1782144616/fiy6ajgtw6z7wx0e7e5k.jpg",
+        "type": "image",
+        "showInRecents": false
+      },
+      {
+        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1782144679/dsphsvnxe1fnnmhcemac.jpg",
+        "type": "image",
+        "showInRecents": false
+      },
+      {
+        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1782144735/bdv3fzak9okblsmcrhrf.jpg",
+        "type": "image",
+        "showInRecents": false
+      },
+      {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780265246/l85hjgt8go9fug7fesgv.png",
         "type": "image"
+      },
+      {
+        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1782144836/rhtq9uk35umeqv7lbn25.jpg",
+        "type": "image",
+        "showInRecents": false
       },
       {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780265316/b2vd6vbkrhmwgnqoz74r.png",
@@ -486,10 +504,6 @@
       },
       {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780265318/s6hxvh4zxqdvk91kqste.png",
-        "type": "image"
-      },
-      {
-        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780265360/lxpzzvxjgpafliejx4ey.png",
         "type": "image"
       },
       {
@@ -504,7 +518,7 @@
     ],
     "isRecent": false,
     "isFeatured": false,
-    "coverIndex": 23,
+    "coverIndex": 0,
     "aiPercent": 0,
     "collaborators": [],
     "projectOrder": 3,
