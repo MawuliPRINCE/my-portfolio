@@ -335,7 +335,7 @@
                 <h3 data-i18n="info-contact-title">Direct Contact</h3>
                 <p data-i18n="info-contact-body">Prefer to reach out directly? I'm reachable on all platforms.</p>
                 <ul class="info-list" style="margin-top:.75rem;" id="contact-links">
-                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection#b8" id="contact-email" style="color:var(--accent);text-decoration:none;">Loading…</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" id="contact-email" style="color:var(--accent);text-decoration:none;">Loading…</a></li>
                 </ul>
             </div>
         </div>
@@ -350,7 +350,7 @@
 
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
     document.getElementById('menu-year').textContent =
     document.getElementById('footer-year').textContent = new Date().getFullYear();
 
@@ -388,9 +388,6 @@
     }).catch(()=>{});
 
     // ── SUBMIT ─────────────────────────────────────────────────────
-    // Saves directly to bookings.json in your GitHub repo.
-    // Token comes from admin login stored in localStorage.
-
     async function submitBooking(e){
         e.preventDefault();
         const btn       = document.getElementById('submit-btn');
@@ -399,7 +396,6 @@
         const formEl    = document.getElementById('booking-form');
         errEl.style.display = 'none';
 
-        // Validate project type
         if(!selectedType){
             errEl.textContent = 'Please select a project type.';
             errEl.style.display = 'block';
@@ -421,11 +417,9 @@
             replied:      false
         };
 
-        // Show loading state
         btn.disabled = true;
         btn.querySelector('span').textContent = 'Sending…';
 
-        // Get GitHub config from localStorage (set when admin logs in)
         const cfg    = (() => { try { return JSON.parse(localStorage.getItem('cms_cfg')||'{}'); } catch(e){ return {}; } })();
         const token  = localStorage.getItem('cms_tok_persist') || sessionStorage.getItem('cms_tok');
         const user   = cfg.user;
@@ -436,7 +430,6 @@
 
         if(user && repo && token){
             try{
-                // Read current bookings.json
                 let sha = null, existing = [];
                 const getRes = await fetch(
                     `https://api.github.com/repos/${user}/${repo}/contents/bookings.json?ref=${branch}&cb=${Date.now()}`,
@@ -449,10 +442,8 @@
                     catch(e){ existing = []; }
                 }
 
-                // Append new submission
                 existing.push(submission);
 
-                // Write back
                 const putBody = {
                     message: `New booking: ${submission.name} — ${submission.projectType}`,
                     content: btoa(unescape(encodeURIComponent(JSON.stringify(existing, null, 2)))),
@@ -474,32 +465,22 @@
 
             } catch(ghErr){
                 console.warn('GitHub save failed:', ghErr.message);
-                // Queue locally so admin can sync manually
                 const pending = JSON.parse(localStorage.getItem('pending_bookings')||'[]');
                 pending.push(submission);
                 localStorage.setItem('pending_bookings', JSON.stringify(pending));
             }
         } else {
-            // No GitHub config — queue locally
             const pending = JSON.parse(localStorage.getItem('pending_bookings')||'[]');
             pending.push(submission);
             localStorage.setItem('pending_bookings', JSON.stringify(pending));
         }
 
-        // Always show success to visitor
         btn.disabled = false;
         btn.querySelector('span').textContent = 'Send Booking Request';
         formEl.style.display = 'none';
         successEl.style.display = 'block';
         successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-
-    // ── LOAD HOME DATA (for email link) ───────────────────────────
-    const HOME_URL='https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json';
-    fetch(HOME_URL+'?t='+Date.now()).then(r=>r.ok?r.json():null).then(d=>{
-        if(!d)return;
-        if(d.email){ const el=document.getElementById('contact-email'); el.href='mailto:'+d.email; el.textContent=d.email; }
-    }).catch(()=>{});
 
     // ── LANGUAGE ──────────────────────────────────────────────────
     const i18n={
@@ -559,4 +540,8 @@
     let currentLang=localStorage.getItem('lang')||'en';
     document.getElementById('lang-select').value=currentLang;
     function switchLang(lang){currentLang=lang;localStorage.setItem('lang',lang);applyLang(lang);}
-    function applyLang(lang){const t=i18n[lang]||i18n.en;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');i
+    function applyLang(lang){const t=i18n[lang]||i18n.en;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k]!==undefined)el.innerHTML=t[k];});}
+    applyLang(currentLang);
+</script>
+</body>
+</html>
