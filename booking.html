@@ -335,7 +335,7 @@
                 <h3 data-i18n="info-contact-title">Direct Contact</h3>
                 <p data-i18n="info-contact-body">Prefer to reach out directly? I'm reachable on all platforms.</p>
                 <ul class="info-list" style="margin-top:.75rem;" id="contact-links">
-                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" id="contact-email" style="color:var(--accent);text-decoration:none;">Loading…</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="#" id="contact-email" style="color:var(--accent);text-decoration:none;">Loading…</a></li>
                 </ul>
             </div>
         </div>
@@ -420,13 +420,12 @@
         btn.disabled = true;
         btn.querySelector('span').textContent = 'Sending…';
 
+        // Get GitHub credentials from localStorage (works if CMS is on same domain)
         const cfg    = (() => { try { return JSON.parse(localStorage.getItem('cms_cfg')||'{}'); } catch(e){ return {}; } })();
         const token  = localStorage.getItem('cms_tok_persist') || sessionStorage.getItem('cms_tok');
         const user   = cfg.user;
         const repo   = cfg.repo;
         const branch = cfg.branch || 'main';
-
-        let savedToGitHub = false;
 
         if(user && repo && token){
             try{
@@ -441,35 +440,25 @@
                     try{ existing = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,''))))); }
                     catch(e){ existing = []; }
                 }
-
                 existing.push(submission);
-
                 const putBody = {
                     message: `New booking: ${submission.name} — ${submission.projectType}`,
                     content: btoa(unescape(encodeURIComponent(JSON.stringify(existing, null, 2)))),
                     branch:  branch
                 };
                 if(sha) putBody.sha = sha;
-
-                const putRes = await fetch(
+                await fetch(
                     `https://api.github.com/repos/${user}/${repo}/contents/bookings.json`,
                     { method: 'PUT', headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' }, body: JSON.stringify(putBody) }
                 );
-
-                if(!putRes.ok){
-                    const errData = await putRes.json().catch(()=>({}));
-                    throw new Error(errData.message || `GitHub ${putRes.status}`);
-                }
-
-                savedToGitHub = true;
-
             } catch(ghErr){
-                console.warn('GitHub save failed:', ghErr.message);
+                console.warn('GitHub save failed, storing locally:', ghErr.message);
                 const pending = JSON.parse(localStorage.getItem('pending_bookings')||'[]');
                 pending.push(submission);
                 localStorage.setItem('pending_bookings', JSON.stringify(pending));
             }
         } else {
+            // No token – save to localStorage so CMS can sync when opened
             const pending = JSON.parse(localStorage.getItem('pending_bookings')||'[]');
             pending.push(submission);
             localStorage.setItem('pending_bookings', JSON.stringify(pending));
@@ -540,7 +529,14 @@
     let currentLang=localStorage.getItem('lang')||'en';
     document.getElementById('lang-select').value=currentLang;
     function switchLang(lang){currentLang=lang;localStorage.setItem('lang',lang);applyLang(lang);}
-    function applyLang(lang){const t=i18n[lang]||i18n.en;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k]!==undefined)el.innerHTML=t[k];});}
+    function applyLang(lang){
+        const t=i18n[lang]||i18n.en;
+        document.querySelectorAll('[data-i18n]').forEach(el=>{
+            const key=el.getAttribute('data-i18n');
+            if(t[key]!==undefined) el.innerHTML=t[key];
+        });
+        document.documentElement.lang=lang;
+    }
     applyLang(currentLang);
 </script>
 </body>
