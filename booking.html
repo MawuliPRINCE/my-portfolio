@@ -420,53 +420,16 @@
         btn.disabled = true;
         btn.querySelector('span').textContent = 'Sending…';
 
-        // Try GitHub, fallback to localStorage
-        const cfg    = (() => { try { return JSON.parse(localStorage.getItem('cms_cfg')||'{}'); } catch(e){ return {}; } })();
-        const token  = localStorage.getItem('cms_tok_persist') || sessionStorage.getItem('cms_tok');
-        const user   = cfg.user;
-        const repo   = cfg.repo;
-        const branch = cfg.branch || 'main';
-
-        let saved = false;
-
-        if(user && repo && token){
-            try{
-                let sha = null;
-                let existing = [];
-                const getRes = await fetch(
-                    `https://api.github.com/repos/${user}/${repo}/contents/bookings.json?ref=${branch}&cb=${Date.now()}`,
-                    { headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' } }
-                );
-                if(getRes.ok){
-                    const fileData = await getRes.json();
-                    sha = fileData.sha;
-                    try{ existing = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,''))))); }
-                    catch(e){ existing = []; }
-                }
-                existing.push(submission);
-                const putBody = {
-                    message: `New booking: ${submission.name} — ${submission.projectType}`,
-                    content: btoa(unescape(encodeURIComponent(JSON.stringify(existing, null, 2)))),
-                    branch:  branch
-                };
-                if(sha) putBody.sha = sha;
-                const putRes = await fetch(
-                    `https://api.github.com/repos/${user}/${repo}/contents/bookings.json`,
-                    { method: 'PUT', headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' }, body: JSON.stringify(putBody) }
-                );
-                if(putRes.ok){
-                    saved = true;
-                } else {
-                    const errData = await putRes.json().catch(()=>({}));
-                    console.warn('GitHub PUT failed:', errData.message);
-                    throw new Error(errData.message || `GitHub ${putRes.status}`);
-                }
-            } catch(e){
-                console.warn('GitHub save failed, storing locally:', e.message);
-            }
-        }
-
-        if(!saved){
+        try {
+            // Use your Cloudflare Worker to push to GitHub
+            const res = await fetch('https://booking-handler.workers.dev', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(submission)
+            });
+            if(!res.ok) throw new Error('Worker error');
+        } catch(e) {
+            // Fallback – save locally so you can sync manually
             const pending = JSON.parse(localStorage.getItem('pending_bookings')||'[]');
             pending.push(submission);
             localStorage.setItem('pending_bookings', JSON.stringify(pending));
