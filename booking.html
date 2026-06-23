@@ -420,16 +420,19 @@
         btn.disabled = true;
         btn.querySelector('span').textContent = 'Sending…';
 
-        // Get GitHub credentials from localStorage (works if CMS is on same domain)
+        // Try GitHub, fallback to localStorage
         const cfg    = (() => { try { return JSON.parse(localStorage.getItem('cms_cfg')||'{}'); } catch(e){ return {}; } })();
         const token  = localStorage.getItem('cms_tok_persist') || sessionStorage.getItem('cms_tok');
         const user   = cfg.user;
         const repo   = cfg.repo;
         const branch = cfg.branch || 'main';
 
+        let saved = false;
+
         if(user && repo && token){
             try{
-                let sha = null, existing = [];
+                let sha = null;
+                let existing = [];
                 const getRes = await fetch(
                     `https://api.github.com/repos/${user}/${repo}/contents/bookings.json?ref=${branch}&cb=${Date.now()}`,
                     { headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' } }
@@ -447,18 +450,23 @@
                     branch:  branch
                 };
                 if(sha) putBody.sha = sha;
-                await fetch(
+                const putRes = await fetch(
                     `https://api.github.com/repos/${user}/${repo}/contents/bookings.json`,
                     { method: 'PUT', headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' }, body: JSON.stringify(putBody) }
                 );
-            } catch(ghErr){
-                console.warn('GitHub save failed, storing locally:', ghErr.message);
-                const pending = JSON.parse(localStorage.getItem('pending_bookings')||'[]');
-                pending.push(submission);
-                localStorage.setItem('pending_bookings', JSON.stringify(pending));
+                if(putRes.ok){
+                    saved = true;
+                } else {
+                    const errData = await putRes.json().catch(()=>({}));
+                    console.warn('GitHub PUT failed:', errData.message);
+                    throw new Error(errData.message || `GitHub ${putRes.status}`);
+                }
+            } catch(e){
+                console.warn('GitHub save failed, storing locally:', e.message);
             }
-        } else {
-            // No token – save to localStorage so CMS can sync when opened
+        }
+
+        if(!saved){
             const pending = JSON.parse(localStorage.getItem('pending_bookings')||'[]');
             pending.push(submission);
             localStorage.setItem('pending_bookings', JSON.stringify(pending));
