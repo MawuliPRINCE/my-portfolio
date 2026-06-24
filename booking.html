@@ -170,6 +170,24 @@
             .turnaround { grid-template-columns:1fr 1fr; }
         }
     </style>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNQ0C2YB4D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-RNQ0C2YB4D');
+    </script>
+
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "xbuxkrh18o");
+    </script>
 </head>
 <body>
 
@@ -418,7 +436,6 @@
         btn.querySelector('span').textContent = 'Sending…';
 
         try {
-            // Your Cloudflare Worker URL
             const res = await fetch('https://booking-handler.booking-handler.workers.dev', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -426,7 +443,6 @@
             });
             if(!res.ok) throw new Error('Worker error');
         } catch(e) {
-            // Fallback – save locally so you can sync manually later
             const pending = JSON.parse(localStorage.getItem('pending_bookings')||'[]');
             pending.push(submission);
             localStorage.setItem('pending_bookings', JSON.stringify(pending));
