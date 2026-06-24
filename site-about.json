@@ -10,30 +10,30 @@
   "reviews": [
     {
       "id": 1,
-      "name": "PRINCE PRINCE PRINCE",
-      "role": "prpt",
-      "quote": "ooooo",
+      "name": "",
+      "role": "",
+      "quote": "",
       "stars": 5
     },
     {
       "id": 2,
-      "name": "Julius Mensah",
-      "role": "Marketing Director",
-      "quote": "The attention to detail was remarkable. Every revision was handled swiftly.",
+      "name": "",
+      "role": "",
+      "quote": "",
       "stars": 5
     },
     {
       "id": 3,
-      "name": "Efua Asante",
-      "role": "Creative Director",
-      "quote": "Working with Prince was smooth from start to finish. He understood the brief immediately.",
+      "name": "",
+      "role": "",
+      "quote": "",
       "stars": 5
     },
     {
       "id": 4,
-      "name": "Kofi Osei",
-      "role": "Business Owner",
-      "quote": "Highly recommended. Prince brings creativity and professionalism to every project.",
+      "name": "",
+      "role": "",
+      "quote": "",
       "stars": 5
     }
   ],
