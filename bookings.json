@@ -18,7 +18,8 @@
     "name": "Debug",
     "projectType": "Test",
     "email": "test@test.com",
-    "message": "hello"
+    "message": "hello",
+    "read": true
   },
   {
     "id": "booking_1782272417152",
