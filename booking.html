@@ -354,9 +354,6 @@
     document.getElementById('menu-year').textContent =
     document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-    // Config — reads from same localStorage as admin
-    const cfg = (() => { try { return JSON.parse(localStorage.getItem('cms_cfg')||'{}'); } catch(e){ return {}; } })();
-
     // ── THEME ─────────────────────────────────────────────────────
     function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('theme', document.body.classList.contains('dark')?'dark':'light'); }
     if(localStorage.getItem('theme')==='dark') document.body.classList.add('dark');
@@ -421,15 +418,15 @@
         btn.querySelector('span').textContent = 'Sending…';
 
         try {
-            // Use your Cloudflare Worker to push to GitHub
-            const res = await fetch('https://booking-handler.workers.devhttps://booking-handler.booking-handler.workers.dev', {
+            // Your Cloudflare Worker URL
+            const res = await fetch('https://booking-handler.booking-handler.workers.dev', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(submission)
             });
             if(!res.ok) throw new Error('Worker error');
         } catch(e) {
-            // Fallback – save locally so you can sync manually
+            // Fallback – save locally so you can sync manually later
             const pending = JSON.parse(localStorage.getItem('pending_bookings')||'[]');
             pending.push(submission);
             localStorage.setItem('pending_bookings', JSON.stringify(pending));
