@@ -73,7 +73,7 @@
     .slide-info { position: absolute; bottom: 0.75rem; left: 1rem; right: 1rem; padding: 0; pointer-events: none; background: none; }
     .slide-tag { font-size: 0.5rem; margin-bottom: 0.15rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); font-weight: 500; }
     .slide-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 600; letter-spacing: .02em; line-height: 1.1; color: #fff; margin-bottom: 0; }
-    .slide-sub { display: none; }   /* completely hidden for less intrusion */
+    .slide-sub { display: none; }
     .unmute-btn { position: absolute; top: 1.25rem; right: 1.25rem; z-index: 20; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(255,255,255,0.2); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(4px); transition: all .2s; font-size: .85rem; }
     .unmute-btn:hover { background: var(--accent); border-color: var(--accent); }
     .slide-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #fff; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(8px); transition: background .2s; }
@@ -181,6 +181,24 @@
       .search-input { max-width: 140px; }
     }
   </style>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNQ0C2YB4D"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RNQ0C2YB4D');
+  </script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "xbuxkrh18o");
+  </script>
 </head>
 <body>
 <div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
