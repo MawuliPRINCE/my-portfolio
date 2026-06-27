@@ -31,7 +31,12 @@
       --sidebar-bg:#0a0a0a; --sidebar-text:#f0ede8;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; transition: background .3s, color .3s; }
+    body { 
+      font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); 
+      min-height: 100vh; overflow-x: hidden; transition: background .3s, color .3s, opacity 0.3s ease;
+      opacity: 1;
+    }
+    body.fade-out { opacity: 0; }
     img, video { pointer-events: none; -webkit-user-drag: none; }
     * { -webkit-user-select: none; user-select: none; }
     .modal-description, .modal-info-value, p { -webkit-user-select: text; user-select: text; }
@@ -117,6 +122,10 @@
     .card-year { font-size: .6rem; font-weight: 500; letter-spacing: .15em; color: var(--muted); text-transform: uppercase; }
     .card-tag { font-size: .58rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 2px 8px; border-radius: 2px; }
     .card-featured { font-size: .58rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 2px; }
+    .card-status { font-size: .58rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: 2px 8px; border-radius: 2px; background: var(--muted); color: var(--bg); }
+    .card-status.completed { background: var(--gold); color: #000; }
+    .card-status.ongoing { background: var(--accent); color: #fff; }
+    .card-status.planned { background: var(--border); color: var(--text); }
     .card-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(22px,3vw,32px); font-weight: 600; letter-spacing: -.01em; line-height: 1.1; margin-bottom: .35rem; transition: color .2s; }
     .project-card:hover .card-title { color: var(--accent); }
     .card-subtitle { font-size: .82rem; color: var(--muted); font-weight: 300; margin-bottom: .75rem; }
@@ -170,6 +179,48 @@
     .lightbox-close { position: absolute; top: 1.5rem; right: 1.5rem; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: #fff; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s; }
     .lightbox-close:hover { background: var(--accent); border-color: var(--accent); }
     .broken-media { display: flex; align-items: center; justify-content: center; background: var(--surface); color: var(--muted); font-size: 1.5rem; }
+
+    /* Skeleton loading */
+    .skeleton {
+        background: linear-gradient(90deg, var(--surface) 25%, var(--border) 50%, var(--surface) 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        border-radius: 4px;
+    }
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+    .skeleton-card { padding: 1rem; background: var(--card-bg); margin-bottom: 1px; }
+    .skeleton-cover { height: 0; padding-bottom: 43.75%; }
+    .skeleton-title { height: 2rem; width: 60%; margin: 1rem 0; }
+    .skeleton-meta { height: 0.8rem; width: 40%; margin-bottom: 0.5rem; }
+    .skeleton-tag { height: 1.2rem; width: 80px; display: inline-block; }
+
+    /* Smart scroll button */
+    .scroll-top-btn {
+        position: fixed; bottom: 2rem; right: 2rem;
+        width: 48px; height: 48px; border-radius: 50%;
+        background: var(--accent); color: #fff; border: none;
+        cursor: pointer; display: flex; align-items: center; justify-content: center;
+        opacity: 0; pointer-events: none;
+        transition: opacity 0.3s, transform 0.2s;
+        z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .scroll-top-btn.visible { opacity: 1; pointer-events: all; }
+    .scroll-top-btn:hover { transform: translateY(-3px); }
+    .scroll-progress-ring {
+        position: absolute; top: -4px; left: -4px;
+        width: 56px; height: 56px;
+        transform: rotate(-90deg);
+    }
+    .scroll-progress-ring circle {
+        fill: none; stroke: var(--accent); stroke-width: 3;
+        stroke-dasharray: 157; stroke-dashoffset: 157;
+        transition: stroke-dashoffset 0.1s linear;
+        opacity: 0.6;
+    }
+
     @media (max-width: 768px) {
       .shell { flex-direction: column; }
       .sidebar { width: 100%; max-width: 100%; height: 55vw; min-height: 220px; position: relative; top: 0; }
@@ -250,10 +301,10 @@
       <div class="filters no-scrollbar" id="filters"></div>
     </div>
     <div class="projects-wrap" id="projects-wrap">
-      <div class="state-box">
-        <div class="spinner" style="margin:0 auto 1rem;border-color:var(--border);border-top-color:var(--accent);"></div>
-        <p>Loading projects...</p>
-      </div>
+      <!-- Skeleton loading placeholders -->
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-meta"></div><div class="skeleton skeleton-tag"></div></div>
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-meta"></div><div class="skeleton skeleton-tag"></div></div>
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-meta"></div><div class="skeleton skeleton-tag"></div></div>
     </div>
     <div class="end-marker"><span data-i18n="end-marker">- End of selected works -</span></div>
   </div>
@@ -270,8 +321,16 @@
   <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
   <div id="lightbox-inner"></div>
 </div>
+
+<!-- Smart scroll button -->
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+    <svg class="scroll-progress-ring" viewBox="0 0 56 56">
+        <circle cx="28" cy="28" r="25"></circle>
+    </svg>
+    <i class="fas fa-arrow-up" style="font-size:1.2rem; z-index:1;"></i>
+</button>
+
 <script>
-  // ⚠️ CHANGE THESE TWO VARIABLES TO MATCH YOUR GITHUB SETUP ⚠️
   const USER = 'MawuliPRINCE';
   const REPO = 'my-portfolio';
   const JSON_URL = `https://raw.githubusercontent.com/${USER}/${REPO}/main/projects.json`;
@@ -281,17 +340,73 @@
   let allProjects=[], projectsOnly=[], filtered=[], recents=[];
   let activeFilter='All', currentSlide=0, rafId=null, progressStart=null;
   let searchTerm = '';
-  
+
+  // ── THEME ─────────────────────────────────────────
+  function toggleTheme() {
+      const dark = document.body.classList.contains('dark');
+      document.body.className = dark ? 'light' : 'dark';
+      localStorage.setItem('theme', dark ? 'light' : 'dark');
+  }
+  (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark' || saved === 'light') {
+          if (saved === 'dark') document.body.classList.add('dark');
+      } else {
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (prefersDark) document.body.classList.add('dark');
+      }
+  })();
+
+  // ── MENU ──────────────────────────────────────────
+  const menuEl=document.getElementById('menu'), backdrop=document.getElementById('menu-backdrop'), hamBtn=document.getElementById('hamburger');
+  function openMenu() { menuEl.classList.add('open'); backdrop.classList.add('open'); hamBtn.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeMenu() { menuEl.classList.remove('open'); backdrop.classList.remove('open'); hamBtn.classList.remove('open'); document.body.style.overflow=''; }
+  function toggleMenu() { menuEl.classList.contains('open') ? closeMenu() : openMenu(); }
+  document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeMenu(); closeModal(); closeLightbox({target:document.getElementById('lightbox')}); } });
+  let mTX=0;
+  menuEl.addEventListener('touchstart',e=>{mTX=e.touches[0].clientX;},{passive:true});
+  menuEl.addEventListener('touchend',e=>{if(e.changedTouches[0].clientX-mTX>60)closeMenu();},{passive:true});
+
+  // ── SMART SCROLL BUTTON ─────────────────────────
+  const scrollBtn = document.getElementById('scrollTopBtn');
+  const progressCircle = document.querySelector('.scroll-progress-ring circle');
+  const circumference = 2 * Math.PI * 25;
+
+  function updateScrollProgress() {
+      const scrollY = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = docHeight ? Math.min(scrollY / docHeight, 1) : 0;
+      if (scrollY > 300) scrollBtn.classList.add('visible');
+      else scrollBtn.classList.remove('visible');
+      if (progressCircle) {
+          const offset = circumference - scrollPercent * circumference;
+          progressCircle.style.strokeDashoffset = offset;
+      }
+  }
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+  updateScrollProgress();
+
+  // ── PAGE TRANSITIONS ────────────────────────────
+  document.querySelectorAll('a:not([target="_blank"]):not([href^="#"]):not([href^="mailto:"])').forEach(link => {
+      if (link.hostname === window.location.hostname || link.hostname === 'mawuliprince.github.io') {
+          link.addEventListener('click', function(e) {
+              e.preventDefault();
+              const href = this.getAttribute('href');
+              document.body.classList.add('fade-out');
+              setTimeout(() => { window.location = href; }, 300);
+          });
+      }
+  });
+
+  // ── DATA LOADING ─────────────────────────────────
   window.onload = async () => {
-    initTheme();
     try {
       const res = await fetch(JSON_URL + '?t=' + Date.now());
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       allProjects = await res.json();
-      console.log('✅ Loaded projects.json:', allProjects);
       if (!Array.isArray(allProjects)) throw new Error('projects.json is not an array');
 
-      // --- SORTING for recents (CMS order) ---
+      // Sorting for recents (CMS order)
       const recentsProjects = allProjects.filter(p => p.media && p.media.some(m => m.showInRecents));
       recentsProjects.sort((a, b) => {
         const orderA = Number.isFinite(a.isRecent ? a.recentOrder : a.projectOrder) ? (a.isRecent ? a.recentOrder : a.projectOrder) : Infinity;
@@ -302,7 +417,7 @@
         return p.media.filter(m => m.showInRecents).map(m => ({...m, parentProject: p}));
       });
 
-      // Projects for the main list (non‑recent projects)
+      // Main list (non‑recent projects)
       projectsOnly = allProjects.filter(p => !p.isRecent);
       projectsOnly.sort((a, b) => {
         const orderA = Number.isFinite(a.projectOrder) ? a.projectOrder : Infinity;
@@ -311,38 +426,24 @@
       });
       filtered = [...projectsOnly];
 
-      renderFilters(); renderProjects(); renderRecents();
+      renderFilters();
+      renderProjects();
+      renderRecents();
     } catch(e) {
       console.error('❌ Failed to load projects:', e);
       document.getElementById('projects-wrap').innerHTML = `<div class="state-box"><h3>Could not load</h3><p>Check that projects.json exists at:<br><code>${JSON_URL}</code></p></div>`;
       document.getElementById('slides-wrap').innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.1);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;">No data</div>`;
     }
   };
-  
-  function initTheme() { document.body.className = localStorage.getItem('theme') || 'light'; }
-  function toggleTheme() {
-    const dark = document.body.classList.contains('dark');
-    document.body.className = dark ? 'light' : 'dark';
-    localStorage.setItem('theme', dark ? 'light' : 'dark');
-  }
-  const menuEl=document.getElementById('menu'), backdrop=document.getElementById('menu-backdrop'), hamBtn=document.getElementById('hamburger');
-  function openMenu() { menuEl.classList.add('open'); backdrop.classList.add('open'); hamBtn.classList.add('open'); document.body.style.overflow='hidden'; }
-  function closeMenu() { menuEl.classList.remove('open'); backdrop.classList.remove('open'); hamBtn.classList.remove('open'); document.body.style.overflow=''; }
-  function toggleMenu() { menuEl.classList.contains('open') ? closeMenu() : openMenu(); }
-  document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeMenu(); closeModal(); closeLightbox({target:document.getElementById('lightbox')}); } });
-  let mTX=0;
-  menuEl.addEventListener('touchstart',e=>{mTX=e.touches[0].clientX;},{passive:true});
-  menuEl.addEventListener('touchend',e=>{if(e.changedTouches[0].clientX-mTX>60)closeMenu();},{passive:true});
-  
+
+  // ── FILTERS & RENDER ────────────────────────────
   function renderFilters() {
     const tags = ['All', ...new Set(projectsOnly.flatMap(p => p.tags||[]))];
     document.getElementById('filters').innerHTML = tags.map(t =>
       `<button class="filter-btn ${t===activeFilter?'active':''}" onclick="setFilter('${esc(t)}')">${esc(t)}</button>`
     ).join('');
   }
-  
   function setFilter(tag) { activeFilter = tag; applyFilters(); }
-  
   function applyFilters() {
     const searchInput = document.getElementById('search-input');
     searchTerm = searchInput ? searchInput.value.trim().toLowerCase() : '';
@@ -353,7 +454,7 @@
     renderFilters();
     renderProjects();
   }
-  
+
   function renderProjects() {
     const wrap = document.getElementById('projects-wrap');
     if (!filtered.length) {
@@ -382,6 +483,7 @@
                 ${p.year?`<span class="card-year">${esc(p.year)}</span>`:''}
                 ${p.tags?.[0]?`<span class="card-tag">${esc(p.tags[0])}</span>`:''}
                 ${p.isFeatured?`<span class="card-featured">Featured</span>`:''}
+                ${p.status?`<span class="card-status ${p.status}">${p.status}</span>`:''}
               </div>
               <div class="card-title">${esc(p.title||'Untitled')}</div>
               ${p.subtitle?`<div class="card-subtitle">${esc(p.subtitle)}</div>`:''}
@@ -394,17 +496,8 @@
   }
   function getCover(p) { if(!p.media?.length) return null; return p.media[p.coverIndex??0]?.url||p.media[0]?.url||null; }
   function isVideoUrl(url) { return /\.(mp4|webm|mov|ogg)(\?|$)/i.test(url)||url.includes('/video/upload/'); }
-  
-  window.toggleMute = function(e, btn) {
-    e.stopPropagation();
-    const slide = btn.closest('.slide');
-    const video = slide.querySelector('video');
-    if(video) {
-      video.muted = !video.muted;
-      btn.innerHTML = video.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
-    }
-  };
 
+  // ── RECENTS SLIDER ────────────────────────────────
   function renderRecents() {
     const wrap=document.getElementById('slides-wrap'), dotsWrap=document.getElementById('slide-dots'), countEl=document.getElementById('recents-count');
     if(!recents.length){ wrap.innerHTML=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.1);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;">No recents yet</div>`; return; }
@@ -432,7 +525,6 @@
         <div class="slide-info">
           ${p.tags?.[0]?`<div class="slide-tag">${esc(p.tags[0])}</div>`:''}
           <div class="slide-title">${esc(p.title||'Untitled')}</div>
-          ${p.subtitle?`<div class="slide-sub">${esc(p.subtitle)}</div>`:''}
         </div>
       </div>`;
     }).join('');
@@ -450,18 +542,13 @@
     wrap.addEventListener('touchend',e=>{const d=slTX-e.changedTouches[0].clientX;if(Math.abs(d)>40){d>0?nextSlide():prevSlide();}},{passive:true});
     resetProgress();
   }
-  
   function goSlide(i){
     const slides = document.querySelectorAll('.slide');
     const dots = document.querySelectorAll('.dot');
     if(slides[currentSlide]) {
       slides[currentSlide].classList.remove('active');
       const prevVid = slides[currentSlide].querySelector('video');
-      if(prevVid) { 
-         prevVid.muted = true; 
-         const btn = slides[currentSlide].querySelector('.unmute-btn');
-         if(btn) btn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-      }
+      if(prevVid) { prevVid.muted = true; const btn = slides[currentSlide].querySelector('.unmute-btn'); if(btn) btn.innerHTML = '<i class="fas fa-volume-mute"></i>'; }
     }
     if(dots[currentSlide]) dots[currentSlide].classList.remove('active');
     currentSlide=((i%recents.length)+recents.length)%recents.length;
@@ -478,8 +565,8 @@
     if(pct>=100){goSlide(currentSlide+1);return;}
     rafId=requestAnimationFrame(animateProgress);
   }
-  
-  /* ===== SAFE openModal – no template injection issues ===== */
+
+  // ── MODAL (safe description injection) ────────────
   function openModal(id){
     const p = allProjects.find(x => x.id === id);
     if (!p) return;
@@ -532,7 +619,7 @@
 
     document.getElementById('modal-body').innerHTML = html;
 
-    // --- SAFE DESCRIPTION INSERTION ---
+    // Safe description insertion
     const descWrapper = document.getElementById('desc-wrapper');
     if (descWrapper) {
       const stripped = descriptionRaw.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
@@ -554,14 +641,13 @@
       }
     }
 
-    // --- FINALISE ---
     document.getElementById('modal').classList.add('open');
     document.getElementById('modal').scrollTop = 0;
     document.body.style.overflow = 'hidden';
     if (hasPreview) window._previewUrl = p.previewUrl;
     requestAnimationFrame(initOrderedMasonry);
   }
-  
+
   window.toggleReadMore = function(btn) {
     const desc = document.getElementById('modal-desc');
     if (!desc || !window.__modalFullDesc) return;
@@ -599,25 +685,16 @@
         const borderY=parseFloat(itemStyles.borderTopWidth)+parseFloat(itemStyles.borderBottomWidth);
         const itemWidth=item.getBoundingClientRect().width;
         let ratio=0;
-        if(media?.tagName==='IMG'&&media.naturalWidth){
-          ratio=media.naturalHeight/media.naturalWidth;
-        } else if(media?.tagName==='VIDEO'&&media.videoWidth){
-          ratio=media.videoHeight/media.videoWidth;
-        }
+        if(media?.tagName==='IMG'&&media.naturalWidth){ ratio=media.naturalHeight/media.naturalWidth; }
+        else if(media?.tagName==='VIDEO'&&media.videoWidth){ ratio=media.videoHeight/media.videoWidth; }
         const mediaHeight=ratio&&itemWidth ? itemWidth*ratio : itemWidth*.75;
         const span=Math.ceil((mediaHeight+borderY+gap)/(row+gap));
         item.style.gridRowEnd=`span ${Math.max(span,1)}`;
       });
     };
     requestAnimationFrame(resizeItems);
-    gallery.querySelectorAll('img').forEach(img=>{
-      if(img.complete&&img.naturalWidth){ requestAnimationFrame(resizeItems); return; }
-      img.addEventListener('load',resizeItems,{once:true});
-    });
-    gallery.querySelectorAll('video').forEach(video=>{
-      video.addEventListener('loadedmetadata',resizeItems,{once:true});
-      video.addEventListener('loadeddata',resizeItems,{once:true});
-    });
+    gallery.querySelectorAll('img').forEach(img=>{ if(img.complete&&img.naturalWidth){ requestAnimationFrame(resizeItems); return; } img.addEventListener('load',resizeItems,{once:true}); });
+    gallery.querySelectorAll('video').forEach(video=>{ video.addEventListener('loadedmetadata',resizeItems,{once:true}); video.addEventListener('loadeddata',resizeItems,{once:true}); });
   }
   window.addEventListener('resize',()=>requestAnimationFrame(initOrderedMasonry));
   function clOpt(url){ if(!url)return url; if(url.includes('res.cloudinary.com')&&url.includes('/upload/')&&!url.includes('q_auto'))return url.replace('/upload/','/upload/q_auto,f_auto,w_auto/'); return url; }
