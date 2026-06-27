@@ -113,8 +113,14 @@
     .project-card:hover { background: var(--surface); }
     .project-card:hover::after { width: 100%; }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    .card-cover { width: 100%; aspect-ratio: 16/7; object-fit: cover; display: block; background: var(--surface); }
-    .card-cover-video { width: 100%; aspect-ratio: 16/7; object-fit: cover; display: block; background: var(--surface); pointer-events: none; }
+    .card-cover, .card-cover-video {
+        width: 100%; aspect-ratio: 16/7; object-fit: cover; display: block; background: var(--surface);
+        transition: transform 0.4s ease;
+    }
+    .project-card:hover .card-cover,
+    .project-card:hover .card-cover-video {
+        transform: scale(1.03);
+    }
     .card-cover-none { width: 100%; aspect-ratio: 16/7; background: var(--surface); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; }
     .card-body { padding: clamp(16px,2.5vw,28px); display: flex; align-items: flex-start; gap: 1rem; }
     .card-body-left { flex: 1; min-width: 0; }
@@ -179,6 +185,16 @@
     .lightbox-close { position: absolute; top: 1.5rem; right: 1.5rem; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: #fff; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s; }
     .lightbox-close:hover { background: var(--accent); border-color: var(--accent); }
     .broken-media { display: flex; align-items: center; justify-content: center; background: var(--surface); color: var(--muted); font-size: 1.5rem; }
+    .lightbox-sound-btn {
+        position: absolute; bottom: 2rem; right: 2rem; z-index: 10;
+        background: rgba(0,0,0,0.5); color: #fff;
+        border: 1px solid rgba(255,255,255,0.3);
+        width: 42px; height: 42px; border-radius: 50%;
+        cursor: pointer; display: flex; align-items: center; justify-content: center;
+        font-size: 1rem; backdrop-filter: blur(4px);
+        transition: background .2s, border-color .2s;
+    }
+    .lightbox-sound-btn:hover { background: var(--accent); border-color: var(--accent); }
 
     /* Skeleton loading */
     .skeleton {
@@ -187,10 +203,7 @@
         animation: shimmer 1.5s infinite;
         border-radius: 4px;
     }
-    @keyframes shimmer {
-        0% { background-position: -200% 0; }
-        100% { background-position: 200% 0; }
-    }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
     .skeleton-card { padding: 1rem; background: var(--card-bg); margin-bottom: 1px; }
     .skeleton-cover { height: 0; padding-bottom: 43.75%; }
     .skeleton-title { height: 2rem; width: 60%; margin: 1rem 0; }
@@ -221,6 +234,17 @@
         opacity: 0.6;
     }
 
+    /* Scroll reveal */
+    .scroll-reveal {
+        opacity: 0;
+        transform: translateY(24px) scale(0.97);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .scroll-reveal.revealed {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
     @media (max-width: 768px) {
       .shell { flex-direction: column; }
       .sidebar { width: 100%; max-width: 100%; height: 55vw; min-height: 220px; position: relative; top: 0; }
@@ -235,21 +259,10 @@
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNQ0C2YB4D"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-RNQ0C2YB4D');
-  </script>
+  <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-RNQ0C2YB4D'); </script>
 
   <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-      (function(c,l,a,r,i,t,y){
-          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window, document, "clarity", "script", "xbuxkrh18o");
-  </script>
+  <script type="text/javascript"> (function(c,l,a,r,i,t,y){ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}; t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i; y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y); })(window, document, "clarity", "script", "xbuxkrh18o"); </script>
 </head>
 <body>
 <div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
@@ -301,7 +314,7 @@
       <div class="filters no-scrollbar" id="filters"></div>
     </div>
     <div class="projects-wrap" id="projects-wrap">
-      <!-- Skeleton loading placeholders -->
+      <!-- Skeleton placeholders -->
       <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-meta"></div><div class="skeleton skeleton-tag"></div></div>
       <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-meta"></div><div class="skeleton skeleton-tag"></div></div>
       <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-meta"></div><div class="skeleton skeleton-tag"></div></div>
@@ -322,11 +335,8 @@
   <div id="lightbox-inner"></div>
 </div>
 
-<!-- Smart scroll button -->
 <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
-    <svg class="scroll-progress-ring" viewBox="0 0 56 56">
-        <circle cx="28" cy="28" r="25"></circle>
-    </svg>
+    <svg class="scroll-progress-ring" viewBox="0 0 56 56"><circle cx="28" cy="28" r="25"></circle></svg>
     <i class="fas fa-arrow-up" style="font-size:1.2rem; z-index:1;"></i>
 </button>
 
@@ -406,18 +416,14 @@
       allProjects = await res.json();
       if (!Array.isArray(allProjects)) throw new Error('projects.json is not an array');
 
-      // Sorting for recents (CMS order)
       const recentsProjects = allProjects.filter(p => p.media && p.media.some(m => m.showInRecents));
       recentsProjects.sort((a, b) => {
         const orderA = Number.isFinite(a.isRecent ? a.recentOrder : a.projectOrder) ? (a.isRecent ? a.recentOrder : a.projectOrder) : Infinity;
         const orderB = Number.isFinite(b.isRecent ? b.recentOrder : b.projectOrder) ? (b.isRecent ? b.recentOrder : b.projectOrder) : Infinity;
         return orderA - orderB;
       });
-      recents = recentsProjects.flatMap(p => {
-        return p.media.filter(m => m.showInRecents).map(m => ({...m, parentProject: p}));
-      });
+      recents = recentsProjects.flatMap(p => p.media.filter(m => m.showInRecents).map(m => ({...m, parentProject: p})));
 
-      // Main list (non‑recent projects)
       projectsOnly = allProjects.filter(p => !p.isRecent);
       projectsOnly.sort((a, b) => {
         const orderA = Number.isFinite(a.projectOrder) ? a.projectOrder : Infinity;
@@ -475,7 +481,7 @@
         coverHTML = `<div class="card-cover-none">No Image</div>`;
       }
       return `
-        <div class="project-card" onclick="openModal('${esc(p.id)}')" style="animation-delay:${i*0.065}s">
+        <div class="project-card scroll-reveal" onclick="openModal('${esc(p.id)}')" style="animation-delay:${i*0.065}s">
           ${coverHTML}
           <div class="card-body">
             <div class="card-body-left">
@@ -566,7 +572,7 @@
     rafId=requestAnimationFrame(animateProgress);
   }
 
-  // ── MODAL (safe description injection) ────────────
+  // ── MODAL ─────────────────────────────────────────
   function openModal(id){
     const p = allProjects.find(x => x.id === id);
     if (!p) return;
@@ -619,7 +625,6 @@
 
     document.getElementById('modal-body').innerHTML = html;
 
-    // Safe description insertion
     const descWrapper = document.getElementById('desc-wrapper');
     if (descWrapper) {
       const stripped = descriptionRaw.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
@@ -664,15 +669,51 @@
       btn.classList.add('expanded');
     }
   };
-  
+
   function togglePreview(){
     const s=document.getElementById('preview-section'), f=document.getElementById('preview-iframe'); if(!s)return;
     if(s.style.display==='none'){s.style.display='block';f.src=window._previewUrl||'';s.scrollIntoView({behavior:'smooth',block:'start'});}
     else{s.style.display='none';f.src='';}
   }
   function closeModal(){ document.getElementById('modal').classList.remove('open'); document.body.style.overflow=''; const f=document.getElementById('preview-iframe');if(f)f.src=''; }
-  function openLightbox(url,type){ const inner=document.getElementById('lightbox-inner'); inner.innerHTML=type==='video'?`<video class="lightbox-media" src="${url}" controls autoplay loop muted playsinline></video>`:`<img class="lightbox-media" src="${clOpt(url)}" alt=""/>`; document.getElementById('lightbox').classList.add('open'); document.body.style.overflow='hidden'; }
-  function closeLightbox(e){ if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('lightbox-close')&&!e.target.closest?.('.lightbox-close'))return; document.getElementById('lightbox').classList.remove('open'); document.getElementById('lightbox-inner').innerHTML=''; document.body.style.overflow=''; }
+
+  // ── LIGHTBOX WITH SOUND TOGGLE ──────────────────
+  function openLightbox(url, type) {
+    const inner = document.getElementById('lightbox-inner');
+    if (type === 'video') {
+      inner.innerHTML = `
+        <video class="lightbox-media" id="lightbox-video" src="${url}" controls autoplay loop muted playsinline></video>
+        <button class="lightbox-sound-btn" onclick="toggleLightboxSound()" title="Toggle sound">
+          <i class="fas fa-volume-mute"></i>
+        </button>
+      `;
+      window._lightboxVideo = document.getElementById('lightbox-video');
+    } else {
+      inner.innerHTML = `<img class="lightbox-media" src="${clOpt(url)}" alt=""/>`;
+    }
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function toggleLightboxSound() {
+    const video = window._lightboxVideo;
+    if (!video) return;
+    video.muted = !video.muted;
+    const btn = document.querySelector('.lightbox-sound-btn i');
+    if (btn) btn.className = video.muted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+  }
+
+  function closeLightbox(e) {
+    if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close') && !e.target.closest?.('.lightbox-close')) return;
+    document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lightbox-inner').innerHTML = '';
+    document.body.style.overflow = '';
+    if (window._lightboxVideo) {
+      window._lightboxVideo.pause();
+      window._lightboxVideo = null;
+    }
+  }
+
   function initOrderedMasonry(){
     const gallery=document.querySelector('.modal-gallery'); if(!gallery)return;
     const resizeItems=()=>{
@@ -697,8 +738,10 @@
     gallery.querySelectorAll('video').forEach(video=>{ video.addEventListener('loadedmetadata',resizeItems,{once:true}); video.addEventListener('loadeddata',resizeItems,{once:true}); });
   }
   window.addEventListener('resize',()=>requestAnimationFrame(initOrderedMasonry));
+
   function clOpt(url){ if(!url)return url; if(url.includes('res.cloudinary.com')&&url.includes('/upload/')&&!url.includes('q_auto'))return url.replace('/upload/','/upload/q_auto,f_auto,w_auto/'); return url; }
   function esc(s){ return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
   const i18n={
     en:{'eyebrow':'Selected Work','page-title':'Projects & Works','recents':'Recents','end-marker':'- End of selected works -','nav-home':'Home','nav-about':'About','nav-projects':'Projects','nav-booking':'Book Me','back':'Home','filter-all':'All','search-placeholder':'Search projects...'},
     fr:{'eyebrow':'Travaux selectionnes','page-title':'Projets & Travaux','recents':'Recents','end-marker':'- Fin des travaux -','nav-home':'Accueil','nav-about':'A Propos','nav-projects':'Projets','nav-booking':'Me Reserver','back':'Accueil','filter-all':'Tous','search-placeholder':'Rechercher...'},
@@ -710,6 +753,22 @@
   function switchLang(lang){currentLang=lang;localStorage.setItem('lang',lang);applyLang(lang);}
   function applyLang(lang){const t=i18n[lang]||i18n.en;document.querySelectorAll('[data-i18n]').forEach(el=>{const key=el.getAttribute('data-i18n');if(t[key]!==undefined)el.innerHTML=t[key];});document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const key=el.getAttribute('data-i18n-placeholder');if(t[key]!==undefined)el.placeholder=t[key];});document.documentElement.lang=lang;}
   applyLang(currentLang);
+</script>
+
+<!-- Scroll reveal observer -->
+<script>
+  const scrollRevealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        scrollRevealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.scroll-reveal').forEach(el => {
+    scrollRevealObserver.observe(el);
+  });
 </script>
 </body>
 </html>
