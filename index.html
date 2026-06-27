@@ -11,6 +11,18 @@
     <meta property="og:url" content="https://mawuliprince.github.io/my-portfolio/">
     <meta property="og:image" content="https://mawuliprince.github.io/my-portfolio/og-image.jpg">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-size='80' font-family='serif' fill='%23ff4500'>P</text></svg>">
+
+    <!-- Content Security Policy (fixed: unsafe-inline for scripts to allow inline JS) -->
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net https://www.clarity.ms;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+      font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+      img-src 'self' data: https://*.cloudinary.com https://raw.githubusercontent.com;
+      connect-src 'self' https://raw.githubusercontent.com https://api.github.com https://booking-handler.booking-handler.workers.dev https://www.google-analytics.com;
+      frame-src 'self' https://analytics.google.com;
+    ">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -332,7 +344,7 @@
             fill: none;
             stroke: var(--accent);
             stroke-width: 3;
-            stroke-dasharray: 157; /* 2*pi*25 */
+            stroke-dasharray: 157;
             stroke-dashoffset: 157;
             transition: stroke-dashoffset 0.1s linear;
             opacity: 0.6;
@@ -411,7 +423,6 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <p class="hero-eyebrow" data-i18n="hero-eyebrow">Portfolio</p>
-            <!-- Dynamic greeting inserted by JS -->
             <h1 class="hero-name" id="hero-greeting">
                 Good morning,<br>I'm <em>Ismael</em>
             </h1>
@@ -427,7 +438,6 @@
         <div class="hero-scroll-line"></div>
     </section>
 
-    <!-- Footer with scroll‑reveal -->
     <footer id="contact" class="scroll-reveal">
         <div class="footer-top">
             <div>
