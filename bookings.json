@@ -10,7 +10,7 @@
     "budget": "Let's discuss",
     "timeline": "Flexible",
     "message": "The",
-    "read": false,
+    "read": true,
     "replied": false
   }
 ]
