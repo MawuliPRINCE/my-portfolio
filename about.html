@@ -34,8 +34,10 @@
       background:var(--bg);
       color:var(--text);
       overflow-x:hidden;
-      transition:background .3s,color .3s;
+      transition:background .3s,color .3s, opacity 0.3s ease;
+      opacity: 1;
     }
+    body.fade-out { opacity: 0; }
     header{position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:clamp(14px,2.5vw,20px) clamp(20px,4vw,48px);background:rgba(250,249,247,0.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:background .3s;}
     body.dark header{background:rgba(13,13,13,0.94);}
     .logo{color:var(--accent);font-size:clamp(17px,2vw,22px);font-weight:700;text-decoration:none;letter-spacing:-.01em;}
@@ -336,10 +338,33 @@
     .about-page .social-icon{width:42px;height:42px;border-radius:50%;border:1px solid rgba(128,128,128,0.25);display:flex;align-items:center;justify-content:center;color:var(--footer-text);text-decoration:none;font-size:14px;opacity:.65;transition:all .2s;}
     .about-page .social-icon:hover{color:var(--accent);border-color:var(--accent);opacity:1;transform:translateY(-2px);}
     .about-page .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.65rem;color:var(--footer-text);opacity:.3;padding-top:.25rem;font-family:'Space Grotesk',sans-serif;}
-    .about-page .go-to-top{width:40px;height:40px;border-radius:50%;background:var(--accent);border:none;color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s;opacity:1;}
-    .about-page .go-to-top:hover{transform:translateY(-3px);}
     .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease;}
     .reveal.visible{opacity:1;transform:translateY(0);}
+    
+    /* Smart scroll button */
+    .scroll-top-btn {
+        position: fixed; bottom: 2rem; right: 2rem;
+        width: 48px; height: 48px; border-radius: 50%;
+        background: var(--accent); color: #fff; border: none;
+        cursor: pointer; display: flex; align-items: center; justify-content: center;
+        opacity: 0; pointer-events: none;
+        transition: opacity 0.3s, transform 0.2s;
+        z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .scroll-top-btn.visible { opacity: 1; pointer-events: all; }
+    .scroll-top-btn:hover { transform: translateY(-3px); }
+    .scroll-progress-ring {
+        position: absolute; top: -4px; left: -4px;
+        width: 56px; height: 56px;
+        transform: rotate(-90deg);
+    }
+    .scroll-progress-ring circle {
+        fill: none; stroke: var(--accent); stroke-width: 3;
+        stroke-dasharray: 157; stroke-dashoffset: 157;
+        transition: stroke-dashoffset 0.1s linear;
+        opacity: 0.6;
+    }
+
     @media(max-width:1100px){
       .about-page .hero{grid-template-columns:minmax(0,1fr) minmax(260px,360px);gap:clamp(28px,5vw,56px);}
       .about-page .review-slide{grid-template-columns:repeat(2,minmax(0,1fr));}
@@ -395,8 +420,6 @@
   </script>
 </head>
 <body>
-<!-- The rest of the about page body remains exactly the same as your original about.html -->
-<!-- I'm including the full body for completeness, but it's identical to the earlier version -->
 <div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
 <header>
   <a href="index.html" class="logo">Prince</a>
@@ -425,8 +448,8 @@
   <section class="hero">
     <div class="hero-left">
       <p class="hero-label" data-i18n="hero-label">About Me</p>
-      <h1 class="hero-title" data-i18n="hero-title">
-        The designer<br>behind the <em>work</em>
+      <h1 class="hero-title">
+        Ismael Asumanu<br><em>Prince</em>
       </h1>
       <p class="hero-bio" data-i18n="hero-bio">
         Graphic Designer and Brand Identity specialist based in Ghana. Currently studying at the University of Education, Winneba — committed to crafting visuals that are clean, intentional, and memorable.
@@ -490,7 +513,7 @@
       <p class="stat-name" data-i18n="stat-projects">Projects Delivered</p>
     </div>
   </section>
-  <section class="reviews-section">
+  <section class="reviews-section" id="reviews-section">
     <div class="reviews-header reveal">
       <div class="reviews-header-left">
         <p class="reviews-eyebrow" data-i18n="section-reviews">Client Reviews</p>
@@ -503,34 +526,7 @@
     </div>
     <div class="reviews-track-wrap">
       <div class="reviews-track" id="reviews-track">
-        <div class="review-slide">
-          <div class="review-item">
-            <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r1">Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional.</p></div>
-            <div class="review-bottom"><div class="review-av">AK</div><div><div class="review-name">Ama Korkor</div><div class="review-role" data-i18n="r1-role">Founder, AK Studio</div><div class="review-stars">★★★★★</div></div></div>
-          </div>
-          <div class="review-item">
-            <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r2">The attention to detail was remarkable. Every revision was handled swiftly and the result spoke for itself.</p></div>
-            <div class="review-bottom"><div class="review-av">JM</div><div><div class="review-name">Julius Mensah</div><div class="review-role" data-i18n="r2-role">Marketing Director</div><div class="review-stars">★★★★★</div></div></div>
-          </div>
-          <div class="review-item">
-            <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r3">Working with Prince was smooth from start to finish. He understood the brief immediately.</p></div>
-            <div class="review-bottom"><div class="review-av">EA</div><div><div class="review-name">Efua Asante</div><div class="review-role" data-i18n="r3-role">Creative Director</div><div class="review-stars">★★★★★</div></div></div>
-          </div>
-        </div>
-        <div class="review-slide">
-          <div class="review-item">
-            <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r4">Highly recommended. Prince brings creativity and professionalism to every project. Our brand has never looked better.</p></div>
-            <div class="review-bottom"><div class="review-av">KO</div><div><div class="review-name">Kofi Osei</div><div class="review-role" data-i18n="r4-role">Business Owner</div><div class="review-stars">★★★★★</div></div></div>
-          </div>
-          <div class="review-item">
-            <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r1">Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional.</p></div>
-            <div class="review-bottom"><div class="review-av">AK</div><div><div class="review-name">Ama Korkor</div><div class="review-role" data-i18n="r1-role">Founder, AK Studio</div><div class="review-stars">★★★★★</div></div></div>
-          </div>
-          <div class="review-item">
-            <div><div class="review-quote-mark">"</div><p class="review-text" data-i18n="r2">The attention to detail was remarkable. Every revision was handled swiftly.</p></div>
-            <div class="review-bottom"><div class="review-av">JM</div><div><div class="review-name">Julius Mensah</div><div class="review-role" data-i18n="r2-role">Marketing Director</div><div class="review-stars">★★★★★</div></div></div>
-          </div>
-        </div>
+        <!-- dynamically filled -->
       </div>
     </div>
     <div class="rev-dots" id="rev-dots"></div>
@@ -552,16 +548,35 @@
     </div>
     <div class="footer-bottom">
       <span>© <span id="footer-year"></span> Ismael Asumanu Prince</span>
-      <button class="go-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
     </div>
   </footer>
 </div>
 
+<!-- Smart scroll button -->
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+    <svg class="scroll-progress-ring" viewBox="0 0 56 56">
+        <circle cx="28" cy="28" r="25"></circle>
+    </svg>
+    <i class="fas fa-arrow-up" style="font-size:1.2rem; z-index:1;"></i>
+</button>
+
 <script>
   const yr=new Date().getFullYear();
   ['menu-year','footer-year'].forEach(id=>document.getElementById(id).textContent=yr);
+
+  // ── THEME ─────────────────────────────────────────────────────
   function toggleTheme(){document.body.classList.toggle('dark');localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
-  if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
+  (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark' || saved === 'light') {
+          if (saved === 'dark') document.body.classList.add('dark');
+      } else {
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (prefersDark) document.body.classList.add('dark');
+      }
+  })();
+
+  // ── MENU ──────────────────────────────────────────────────────
   const menuEl=document.getElementById('menu'),backdrop=document.getElementById('menu-backdrop'),hamburger=document.getElementById('hamburger');
   function openMenu(){menuEl.classList.add('open');backdrop.classList.add('open');hamburger.classList.add('open');document.body.style.overflow='hidden';}
   function closeMenu(){menuEl.classList.remove('open');backdrop.classList.remove('open');hamburger.classList.remove('open');document.body.style.overflow='';}
@@ -575,8 +590,43 @@
   let mTX=0;
   menuEl.addEventListener('touchstart',e=>{mTX=e.touches[0].clientX;},{passive:true});
   menuEl.addEventListener('touchend',e=>{if(e.changedTouches[0].clientX-mTX>60)closeMenu();},{passive:true});
+
+  // ── SMART SCROLL BUTTON ─────────────────────────────────────
+  const scrollBtn = document.getElementById('scrollTopBtn');
+  const progressCircle = document.querySelector('.scroll-progress-ring circle');
+  const circumference = 2 * Math.PI * 25;
+
+  function updateScrollProgress() {
+      const scrollY = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = docHeight ? Math.min(scrollY / docHeight, 1) : 0;
+      if (scrollY > 300) scrollBtn.classList.add('visible');
+      else scrollBtn.classList.remove('visible');
+      if (progressCircle) {
+          const offset = circumference - scrollPercent * circumference;
+          progressCircle.style.strokeDashoffset = offset;
+      }
+  }
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+  updateScrollProgress();
+
+  // ── PAGE TRANSITIONS ──────────────────────────────────────
+  document.querySelectorAll('a:not([target="_blank"]):not([href^="#"]):not([href^="mailto:"])').forEach(link => {
+      if (link.hostname === window.location.hostname || link.hostname === 'mawuliprince.github.io') {
+          link.addEventListener('click', function(e) {
+              e.preventDefault();
+              const href = this.getAttribute('href');
+              document.body.classList.add('fade-out');
+              setTimeout(() => { window.location = href; }, 300);
+          });
+      }
+  });
+
+  // ── REVEAL OBSERVER ────────────────────────────────────────
   const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});},{threshold:.1});
   document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+
+  // ── ANIMATED COUNTERS ─────────────────────────────────────
   function animateCount(el, end){
     const duration = 1200;
     const startTime = performance.now();
@@ -646,7 +696,6 @@
 
   function setupContinuousReviews(){
     if(!track) return;
-
     let slidesToUse;
     if (reviewSlidesCount > 0 && track.children.length === reviewSlidesCount * 2) {
       slidesToUse = Array.from(track.children).slice(0, reviewSlidesCount);
@@ -662,7 +711,6 @@
     });
 
     if(allItems.length === 0) return;
-
     const itemsPerSlide = getReviewsPerSlide();
     reviewSlidesCount = Math.ceil(allItems.length / itemsPerSlide);
 
@@ -751,10 +799,10 @@
   });
   
   const i18n={
-    en:{'nav-home':'Home','nav-about':'About','nav-projects':'Projects','nav-booking':'Book Me','hero-label':'About Me','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Graphic Designer and Brand Identity specialist based in Ghana. Currently studying at the University of Education, Winneba — committed to crafting visuals that are clean, intentional, and memorable.','pill-about':'About Me','pill-edu':'Education','pill-skills':'Skills','section-journey':'Work Experience','see-more':'See more →','stat-experience':'Years Experience','stat-projects':'Projects Delivered','section-reviews':'Client Reviews','reviews-title':'What clients say','r1':'Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional.','r1-role':'Founder, AK Studio','r2':'The attention to detail was remarkable. Every revision handled swiftly.','r2-role':'Marketing Director','r3':'Working with Prince was smooth from start to finish.','r3-role':'Creative Director','r4':'Highly recommended. Prince brings creativity and professionalism to every project.','r4-role':'Business Owner','footer-title':'Let\'s Connect','footer-desc':'Ready to start your next project or want to collaborate? I\'m always open to new opportunities.'},
-    fr:{'nav-home':'Accueil','nav-about':'À Propos','nav-projects':'Projets','nav-booking':'Me Réserver','hero-label':'À Propos','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Designer graphique et spécialiste en identité de marque basé au Ghana, étudiant à l\'Université de Winneba.','pill-about':'À Propos','pill-edu':'Formation','pill-skills':'Compétences','section-journey':'Expérience','see-more':'Voir plus →','stat-experience':'Ans d\'expérience','stat-projects':'Projets livrés','section-reviews':'Avis clients','reviews-title':'Ce que disent les clients','r1':'Prince a livré une identité qui a capturé notre vision. Propre, précis et professionnel.','r1-role':'Fondatrice, AK Studio','r2':'L\'attention aux détails était remarquable.','r2-role':'Directeur Marketing','r3':'Travailler avec Prince était fluide du début à la fin.','r3-role':'Directeur Créatif','r4':'Fortement recommandé. Créativité et professionnalisme à chaque projet.','r4-role':'Chef d\'entreprise','footer-title':'Connectons-nous','footer-desc':'Prêt à démarrer votre prochain projet ?'},
-    es:{'nav-home':'Inicio','nav-about':'Acerca','nav-projects':'Proyectos','nav-booking':'Reservarme','hero-label':'Acerca de Mí','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Diseñador gráfico y especialista en identidad de marca con sede en Ghana.','pill-about':'Acerca de Mí','pill-edu':'Educación','pill-skills':'Habilidades','section-journey':'Experiencia laboral','see-more':'Ver más →','stat-experience':'Años de experiencia','stat-projects':'Proyectos entregados','section-reviews':'Reseñas','reviews-title':'Lo que dicen los clientes','r1':'Prince entregó una identidad que capturó nuestra visión.','r1-role':'Fundadora, AK Studio','r2':'La atención al detalle fue notable.','r2-role':'Director de Marketing','r3':'Trabajar con Prince fue fluido.','r3-role':'Director Creativo','r4':'Muy recomendable. Creatividad y profesionalismo.','r4-role':'Dueño de negocio','footer-title':'Conectemos','footer-desc':'¿Listo para comenzar su próximo proyecto?'},
-    de:{'nav-home':'Startseite','nav-about':'Über mich','nav-projects':'Projekte','nav-booking':'Buchen','hero-label':'Über mich','hero-title':'The designer<br>behind the <em>work</em>','hero-bio':'Grafikdesigner und Markenidentitätsspezialist aus Ghana, Universität Winneba.','pill-about':'Über mich','pill-edu':'Ausbildung','pill-skills':'Fähigkeiten','section-journey':'Berufserfahrung','see-more':'Mehr sehen →','stat-experience':'Jahre Erfahrung','stat-projects':'Projekte geliefert','section-reviews':'Kundenbewertungen','reviews-title':'Was Kunden sagen','r1':'Prince lieferte eine Markenidentität, die unsere Vision einfing.','r1-role':'Gründerin, AK Studio','r2':'Die Liebe zum Detail war bemerkenswert.','r2-role':'Marketingdirektor','r3':'Die Zusammenarbeit verlief reibungslos.','r3-role':'Kreativdirektor','r4':'Sehr empfehlenswert. Kreativität und Professionalität.','r4-role':'Geschäftsinhaber','footer-title':'Verbinden wir uns','footer-desc':'Bereit für Ihr nächstes Projekt?'}
+    en:{'nav-home':'Home','nav-about':'About','nav-projects':'Projects','nav-booking':'Book Me','hero-label':'About Me','hero-title':'Ismael Asumanu<br><em>Prince</em>','hero-bio':'Graphic Designer and Brand Identity specialist based in Ghana. Currently studying at the University of Education, Winneba — committed to crafting visuals that are clean, intentional, and memorable.','pill-about':'About Me','pill-edu':'Education','pill-skills':'Skills','section-journey':'Work Experience','see-more':'See more →','stat-experience':'Years Experience','stat-projects':'Projects Delivered','section-reviews':'Client Reviews','reviews-title':'What clients say','r1':'Prince delivered a brand identity that perfectly captured our vision. Clean, precise, and professional.','r1-role':'Founder, AK Studio','r2':'The attention to detail was remarkable. Every revision handled swiftly.','r2-role':'Marketing Director','r3':'Working with Prince was smooth from start to finish.','r3-role':'Creative Director','r4':'Highly recommended. Prince brings creativity and professionalism to every project.','r4-role':'Business Owner','footer-title':'Let\'s Connect','footer-desc':'Ready to start your next project or want to collaborate? I\'m always open to new opportunities.'},
+    fr:{'nav-home':'Accueil','nav-about':'À Propos','nav-projects':'Projets','nav-booking':'Me Réserver','hero-label':'À Propos','hero-title':'Ismael Asumanu<br><em>Prince</em>','hero-bio':'Designer graphique et spécialiste en identité de marque basé au Ghana, étudiant à l\'Université de Winneba.','pill-about':'À Propos','pill-edu':'Formation','pill-skills':'Compétences','section-journey':'Expérience','see-more':'Voir plus →','stat-experience':'Ans d\'expérience','stat-projects':'Projets livrés','section-reviews':'Avis clients','reviews-title':'Ce que disent les clients','r1':'Prince a livré une identité qui a capturé notre vision. Propre, précis et professionnel.','r1-role':'Fondatrice, AK Studio','r2':'L\'attention aux détails était remarquable.','r2-role':'Directeur Marketing','r3':'Travailler avec Prince était fluide du début à la fin.','r3-role':'Directeur Créatif','r4':'Fortement recommandé. Créativité et professionnalisme à chaque projet.','r4-role':'Chef d\'entreprise','footer-title':'Connectons-nous','footer-desc':'Prêt à démarrer votre prochain projet ?'},
+    es:{'nav-home':'Inicio','nav-about':'Acerca','nav-projects':'Proyectos','nav-booking':'Reservarme','hero-label':'Acerca de Mí','hero-title':'Ismael Asumanu<br><em>Prince</em>','hero-bio':'Diseñador gráfico y especialista en identidad de marca con sede en Ghana.','pill-about':'Acerca de Mí','pill-edu':'Educación','pill-skills':'Habilidades','section-journey':'Experiencia laboral','see-more':'Ver más →','stat-experience':'Años de experiencia','stat-projects':'Proyectos entregados','section-reviews':'Reseñas','reviews-title':'Lo que dicen los clientes','r1':'Prince entregó una identidad que capturó nuestra visión.','r1-role':'Fundadora, AK Studio','r2':'La atención al detalle fue notable.','r2-role':'Director de Marketing','r3':'Trabajar con Prince fue fluido.','r3-role':'Director Creativo','r4':'Muy recomendable. Creatividad y profesionalismo.','r4-role':'Dueño de negocio','footer-title':'Conectemos','footer-desc':'¿Listo para comenzar su próximo proyecto?'},
+    de:{'nav-home':'Startseite','nav-about':'Über mich','nav-projects':'Projekte','nav-booking':'Buchen','hero-label':'Über mich','hero-title':'Ismael Asumanu<br><em>Prince</em>','hero-bio':'Grafikdesigner und Markenidentitätsspezialist aus Ghana, Universität Winneba.','pill-about':'Über mich','pill-edu':'Ausbildung','pill-skills':'Fähigkeiten','section-journey':'Berufserfahrung','see-more':'Mehr sehen →','stat-experience':'Jahre Erfahrung','stat-projects':'Projekte geliefert','section-reviews':'Kundenbewertungen','reviews-title':'Was Kunden sagen','r1':'Prince lieferte eine Markenidentität, die unsere Vision einfing.','r1-role':'Gründerin, AK Studio','r2':'Die Liebe zum Detail war bemerkenswert.','r2-role':'Marketingdirektor','r3':'Die Zusammenarbeit verlief reibungslos.','r3-role':'Kreativdirektor','r4':'Sehr empfehlenswert. Kreativität und Professionalität.','r4-role':'Geschäftsinhaber','footer-title':'Verbinden wir uns','footer-desc':'Bereit für Ihr nächstes Projekt?'}
   };
   let currentLang=localStorage.getItem('lang')||'en';
   document.getElementById('lang-select').value=currentLang;
@@ -808,29 +856,25 @@
         storyDetails.education.body = `<p>${eFull.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')}</p>`;
       }
 
-      // 3. WORK EXPERIENCE (Fixed mapping logic)
-      const wShort = d.workShort || d.experienceShort; // Checks alternative keys just in case
+      // 3. WORK EXPERIENCE
+      const wShort = d.workShort || d.experienceShort;
       if(wShort){
         const preview = document.getElementById('work-preview');
         if(preview) preview.innerHTML = wShort.replace(/\n/g,'<br>') + '...';
       }
-      const wFull = d.workFull || d.experienceFull || wShort; // Safely falls back to the short text if full is missing
+      const wFull = d.workFull || d.experienceFull || wShort;
       if(wFull){
         storyDetails.work.body = `<p>${wFull.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')}</p>`;
       }
 
-      // 4. SKILLS (Fixed missing short text logic)
+      // 4. SKILLS
       const previewSkills = document.getElementById('skills-preview');
       const sShort = d.skillsShort;
-      
       if(d.skillsFull){
         const items = d.skillsFull.split('\n').filter(Boolean);
         storyDetails.skills.body = `<ul>${items.map(s=>`<li>${s}</li>`).join('')}</ul>`;
-        
         const tags=document.getElementById('hero-tags');
         if(tags) tags.innerHTML = items.map(s=>`<span class="hero-tag">${s}</span>`).join('');
-
-        // If you don't supply a "skillsShort" in your CMS, we auto-generate it from the first 3 skills!
         if(!sShort && previewSkills && items.length > 0){
           previewSkills.innerHTML = items.slice(0, 3).join(', ') + '...';
         }
@@ -839,13 +883,9 @@
         previewSkills.innerHTML = sShort.replace(/\n/g,'<br>') + '...';
       }
 
-      // 5. STATS & REVIEWS
-      if(d.projectsCount){
-        const total = parseInt(d.projectsCount, 10) || 10;
-        statProjectsEl.dataset.total = total;
-        statProjectsEl.textContent = total;
-      }
-      if(d.reviews&&d.reviews.length){
+      // 5. STATS & REVIEWS (with auto‑hide when empty)
+      const reviewsSection = document.querySelector('.reviews-section');
+      if(d.reviews && d.reviews.length){
         reviewSlidesCount = 0;                    
         const groupSize = getReviewsPerSlide();   
         const groups=[];
@@ -862,6 +902,16 @@
             </div>`).join('')}
           </div>`).join('');
         setupContinuousReviews();
+        if(reviewsSection) reviewsSection.style.display = '';
+      } else {
+        // No reviews – hide the whole section
+        if(reviewsSection) reviewsSection.style.display = 'none';
+      }
+
+      if(d.projectsCount){
+        const total = parseInt(d.projectsCount, 10) || 10;
+        statProjectsEl.dataset.total = total;
+        statProjectsEl.textContent = total;
       }
     }).catch(()=>{});
 
