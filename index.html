@@ -51,22 +51,21 @@
             background: var(--bg); color: var(--text);
             overflow-x: hidden; min-height: 100vh;
             display: flex; flex-direction: column;
-            transition: background .3s, color .3s;
+            transition: background .3s, color .3s, opacity 0.3s ease;
+            opacity: 1;
         }
+        body.fade-out { opacity: 0; }
 
-        /* ── HEADER — matches about.html & projects.html exactly ── */
         header {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
             display: flex; justify-content: space-between; align-items: center;
             padding: clamp(14px,2.5vw,22px) clamp(20px,4vw,40px);
             transition: background .4s, border-color .4s, box-shadow .4s;
         }
-
         header.at-top {
             background: transparent;
             border-bottom: 1px solid transparent;
         }
-
         header.scrolled {
             background: rgba(250,249,247,0.94);
             backdrop-filter: blur(16px);
@@ -84,7 +83,6 @@
 
         .header-right { display: flex; align-items: center; gap: 6px; }
 
-        /* Language select — same pill style as about/projects */
         .lang-select {
             appearance: none; -webkit-appearance: none;
             background: rgba(255,255,255,0.12);
@@ -97,8 +95,6 @@
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23fff'/%3E%3C/svg%3E");
             background-repeat: no-repeat; background-position: right 10px center;
         }
-
-        /* Adapts when header becomes solid */
         header.scrolled .lang-select {
             background: var(--surface);
             border-color: var(--border);
@@ -108,7 +104,6 @@
         }
         .lang-select:hover { border-color: var(--accent); }
 
-        /* Icon buttons — same circle style as about/projects */
         .icon-btn {
             width: 40px; height: 40px; border-radius: 50%;
             border: none; background: none; color: #fff;
@@ -119,13 +114,11 @@
         header.scrolled .icon-btn { color: var(--text); }
         .icon-btn:hover { color: var(--accent) !important; background: var(--accent-dim); }
 
-        /* Hamburger icon swap */
         .hamburger .fa-bars  { display: block; }
         .hamburger .fa-times { display: none; }
         .hamburger.open .fa-bars  { display: none; }
         .hamburger.open .fa-times { display: block; }
 
-        /* ── MENU BACKDROP ── */
         .menu-backdrop {
             position: fixed; inset: 0;
             background: rgba(0,0,0,0.5);
@@ -134,7 +127,6 @@
         }
         .menu-backdrop.open { opacity: 1; pointer-events: all; }
 
-        /* ── SLIDE MENU ── */
         .menu {
             position: fixed; top: 0; right: -100%;
             width: min(300px,85vw); height: 100vh;
@@ -161,20 +153,17 @@
             font-size: .65rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase;
         }
 
-        /* ── HERO ── */
         .hero {
             position: relative;
             width: 100%; min-height: 100vh;
             display: flex; align-items: center; justify-content: flex-start;
             overflow: hidden; background: #0d0d0d; flex: 1;
         }
-
         .hero-bg {
             position: absolute; inset: 0;
             width: 100%; height: 100%;
             object-fit: cover; z-index: 0; display: block;
         }
-
         .hero-overlay {
             position: absolute; inset: 0; z-index: 1;
             background: linear-gradient(
@@ -184,13 +173,11 @@
                 rgba(0,0,0,0.1) 100%
             );
         }
-
         .hero-content {
             position: relative; z-index: 2;
             padding: 0 clamp(24px,6vw,100px);
             max-width: 760px;
         }
-
         .hero-eyebrow {
             font-size: .65rem; letter-spacing: .35em; text-transform: uppercase;
             color: var(--accent); margin-bottom: 1.25rem;
@@ -199,7 +186,6 @@
             animation: riseUp .8s ease .2s forwards;
         }
         .hero-eyebrow::after { content: ''; width: 40px; height: 1px; background: var(--accent); }
-
         .hero-name {
             font-family: 'Cormorant Garamond', serif;
             font-size: clamp(58px,9.5vw,110px);
@@ -209,7 +195,6 @@
             animation: riseUp .9s ease .4s forwards;
         }
         .hero-name em { font-style: italic; color: var(--accent); }
-
         .hero-role {
             font-size: clamp(13px,1.6vw,17px);
             color: rgba(255,255,255,0.8);
@@ -217,10 +202,14 @@
             opacity: 0; transform: translateY(16px);
             animation: riseUp .8s ease .6s forwards;
         }
-
+        .hero-intro {
+            font-size: 1rem; color: rgba(255,255,255,0.7); max-width: 500px;
+            margin-top: -1.5rem; margin-bottom: 2rem;
+            opacity: 0; transform: translateY(16px);
+            animation: riseUp .8s ease .7s forwards;
+        }
         @keyframes riseUp { to { opacity: 1; transform: translateY(0); } }
 
-        /* ── EXPLORE BUTTON — subtle bounce, fills on hover ── */
         .explore-btn {
             display: inline-flex; align-items: center; gap: .75rem;
             text-decoration: none; color: #fff;
@@ -233,14 +222,11 @@
             animation: riseUp .8s ease .85s forwards, subtleBounce 3s ease 2s infinite;
             transition: border-color .3s, color .3s;
         }
-
         @keyframes subtleBounce {
             0%, 100% { transform: translateY(0); }
             40%       { transform: translateY(-6px); }
             65%       { transform: translateY(-3px); }
         }
-
-        /* Orange fill slides in from left on hover */
         .explore-btn::before {
             content: ''; position: absolute; inset: 0;
             background: var(--accent);
@@ -250,11 +236,9 @@
         }
         .explore-btn:hover { border-color: var(--accent); animation-play-state: paused; }
         .explore-btn:hover::before { transform: scaleX(1); }
-
         .explore-icon { transition: transform .3s; }
         .explore-btn:hover .explore-icon { transform: translateX(4px); }
 
-        /* Vertical scroll line */
         .hero-scroll-line {
             position: absolute; bottom: 0; left: clamp(24px,6vw,100px);
             width: 1px; height: clamp(60px,8vw,90px);
@@ -267,13 +251,11 @@
             to   { transform: scaleY(1); transform-origin: top; }
         }
 
-        /* ── FOOTER ── */
         footer {
             background: var(--footer-bg); color: var(--footer-text);
             padding: clamp(48px,7vw,90px) clamp(24px,5vw,80px) 50px;
             margin-top: auto;
         }
-
         .footer-top {
             display: flex; justify-content: space-between;
             align-items: flex-start; flex-wrap: wrap;
@@ -281,18 +263,13 @@
             border-bottom: 1px solid rgba(255,255,255,0.08);
             margin-bottom: 2.5rem;
         }
-
         footer h2 {
             font-family: 'Cormorant Garamond', serif;
             font-size: clamp(30px,5vw,50px); font-weight: 600;
         }
-
         .footer-accent { width: 40px; height: 2px; background: var(--accent); margin: 1rem 0 1.5rem; }
-
         footer p { max-width: 420px; line-height: 1.7; opacity: .85; }
-
         .social-row { display: flex; gap: .8rem; flex-wrap: wrap; }
-
         .social-icon {
             width: 46px; height: 46px; border-radius: 50%;
             border: 1px solid rgba(255,255,255,0.2);
@@ -301,13 +278,11 @@
             transition: all .3s;
         }
         .social-icon:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
-
         .footer-bottom {
             display: flex; justify-content: space-between;
             align-items: center; flex-wrap: wrap; gap: 1rem;
             font-size: .72rem; opacity: .5; letter-spacing: .05em;
         }
-
         .go-to-top {
             width: 46px; height: 46px; border-radius: 50%;
             background: var(--accent); border: none;
@@ -317,7 +292,63 @@
         }
         .go-to-top:hover { background: #e03a00; transform: translateY(-3px); }
 
-        /* ── RESPONSIVE ── */
+        /* Smart scroll button */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.2s;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .scroll-top-btn.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .scroll-top-btn:hover {
+            transform: translateY(-3px);
+        }
+        .scroll-progress-ring {
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: 56px;
+            height: 56px;
+            transform: rotate(-90deg);
+        }
+        .scroll-progress-ring circle {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 3;
+            stroke-dasharray: 157; /* 2*pi*25 */
+            stroke-dashoffset: 157;
+            transition: stroke-dashoffset 0.1s linear;
+            opacity: 0.6;
+        }
+
+        /* Scroll reveal */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(24px) scale(0.97);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
         @media (max-width: 600px) {
             .footer-top { flex-direction: column; }
             .footer-bottom { flex-direction: column; align-items: center; }
@@ -346,7 +377,6 @@
 
     <div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
 
-    <!-- HEADER -->
     <header id="site-header" class="at-top">
         <a href="index.html" class="logo">Prince</a>
         <div class="header-right">
@@ -366,7 +396,6 @@
         </div>
     </header>
 
-    <!-- MENU -->
     <nav class="menu" id="menu">
         <div class="menu-divider"></div>
         <ul>
@@ -378,33 +407,28 @@
         <p class="menu-footer">© <span id="menu-year"></span> Prince</p>
     </nav>
 
-    <!-- HERO -->
     <section class="hero" id="home">
-        <!--
-        BACKGROUND — uncomment ONE:
-        IMAGE:  <img class="hero-bg" src="your-image.jpg" alt="bg"/>
-        VIDEO:  <video class="hero-bg" autoplay muted loop playsinline><source src="your-video.mp4" type="video/mp4"></video>
-        -->
         <div class="hero-overlay"></div>
-
         <div class="hero-content">
             <p class="hero-eyebrow" data-i18n="hero-eyebrow">Portfolio</p>
-            <h1 class="hero-name" id="hero-name">
-                Ismael Asumanu<br><em>Prince</em>
+            <!-- Dynamic greeting inserted by JS -->
+            <h1 class="hero-name" id="hero-greeting">
+                Good morning,<br>I'm <em>Ismael</em>
             </h1>
             <p class="hero-role" id="hero-role" data-i18n="hero-role">Graphic Designer &nbsp;·&nbsp; Brand Identity Designer</p>
-
+            <p class="hero-intro" id="hero-intro">
+                Welcome to my portfolio — clean, intentional design that tells your brand’s story.
+            </p>
             <a href="projects.html" class="explore-btn">
                 <span data-i18n="explore">Explore Works</span>
                 <i class="fas fa-arrow-right explore-icon"></i>
             </a>
         </div>
-
         <div class="hero-scroll-line"></div>
     </section>
 
-    <!-- FOOTER / CONTACT -->
-    <footer id="contact">
+    <!-- Footer with scroll‑reveal -->
+    <footer id="contact" class="scroll-reveal">
         <div class="footer-top">
             <div>
                 <h2 data-i18n="footer-title">Let's Connect</h2>
@@ -427,6 +451,14 @@
         </div>
     </footer>
 
+    <!-- Smart scroll button with progress ring -->
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+        <svg class="scroll-progress-ring" viewBox="0 0 56 56">
+            <circle cx="28" cy="28" r="25"></circle>
+        </svg>
+        <i class="fas fa-arrow-up" style="font-size:1.2rem; z-index:1;"></i>
+    </button>
+
     <script>
         // Year
         document.getElementById('menu-year').textContent =
@@ -437,7 +469,15 @@
             document.body.classList.toggle('dark');
             localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
         }
-        if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+        (function() {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') {
+                if (saved === 'dark') document.body.classList.add('dark');
+            } else {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (prefersDark) document.body.classList.add('dark');
+            }
+        })();
 
         // ── MENU ──────────────────────────────────────────
         const menuEl   = document.getElementById('menu');
@@ -448,10 +488,8 @@
         function closeMenu()  { menuEl.classList.remove('open'); backdrop.classList.remove('open'); hamBtn.classList.remove('open'); document.body.style.overflow=''; }
         function toggleMenu() { menuEl.classList.contains('open') ? closeMenu() : openMenu(); }
 
-        // Close on Escape
         document.addEventListener('keydown', e => { if(e.key==='Escape') closeMenu(); });
 
-        // Swipe right to close on mobile
         let mTouchX = 0;
         menuEl.addEventListener('touchstart', e => { mTouchX = e.touches[0].clientX; }, { passive: true });
         menuEl.addEventListener('touchend',   e => { if(e.changedTouches[0].clientX - mTouchX > 60) closeMenu(); }, { passive: true });
@@ -470,50 +508,77 @@
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll();
 
-        // ── VIDEO SMART CONTROL ───────────────────────────
-        let heroVideo;
-        function setupVideoControl() {
-            heroVideo = document.querySelector('#home video');
-            if (!heroVideo) return;
-            const obs = new IntersectionObserver(entries => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) { if (heroVideo.paused) heroVideo.play().catch(()=>{}); }
-                    else heroVideo.pause();
-                });
-            }, { threshold: 0.3 });
-            obs.observe(document.getElementById('home'));
+        // ── SMART SCROLL BUTTON ─────────────────────────
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        const progressCircle = document.querySelector('.scroll-progress-ring circle');
+        const circumference = 2 * Math.PI * 25;
+
+        function updateScrollProgress() {
+            const scrollY = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = docHeight ? Math.min(scrollY / docHeight, 1) : 0;
+
+            if (scrollY > 300) {
+                scrollBtn.classList.add('visible');
+            } else {
+                scrollBtn.classList.remove('visible');
+            }
+
+            if (progressCircle) {
+                const offset = circumference - scrollPercent * circumference;
+                progressCircle.style.strokeDashoffset = offset;
+            }
         }
+        window.addEventListener('scroll', updateScrollProgress, { passive: true });
+        updateScrollProgress();
+
+        // ── PERSONALISED GREETING (with non‑breaking space) ──
+        function setGreeting() {
+            const hour = new Date().getHours();
+            let greeting;
+            if (hour < 12) greeting = 'Good morning';
+            else if (hour < 18) greeting = 'Good afternoon';
+            else greeting = 'Good evening';
+            
+            const el = document.getElementById('hero-greeting');
+            if (el) el.innerHTML = `${greeting.replace(' ', '&nbsp;')},<br>I'm <em>Ismael</em>`;
+        }
+        setGreeting();
+
+        // ── PAGE TRANSITIONS ────────────────────────────
+        document.querySelectorAll('a:not([target="_blank"]):not([href^="#"]):not([href^="mailto:"])').forEach(link => {
+            if (link.hostname === window.location.hostname || link.hostname === 'mawuliprince.github.io') {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    document.body.classList.add('fade-out');
+                    setTimeout(() => {
+                        window.location = href;
+                    }, 300);
+                });
+            }
+        });
+
+        // ── SCROLL REVEAL (micro‑animations) ────────────
+        const scrollRevealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    scrollRevealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            scrollRevealObserver.observe(el);
+        });
 
         // ── CMS DATA ──────────────────────────────────────
         const SITE_URL = 'https://raw.githubusercontent.com/MawuliPRINCE/my-portfolio/main/site-home.json';
-
         fetch(SITE_URL + '?t=' + Date.now())
           .then(r => r.ok ? r.json() : null)
           .then(d => {
             if (!d) return;
-
-            // Name
-            const h1 = document.getElementById('hero-name');
-            if (d.name && h1) {
-                const name  = d.name.trim();
-                const idx   = name.lastIndexOf(' ');
-                const first = idx > -1 ? name.slice(0, idx) : '';
-                const last  = idx > -1 ? name.slice(idx + 1) : name;
-                h1.innerHTML = (first ? first + '<br>' : '') + '<em>' + last + '</em>';
-            }
-
-            if (d.role) document.getElementById('hero-role').textContent = d.role;
-            if (d.contactDesc) document.getElementById('footer-desc').textContent = d.contactDesc;
-
-            // Social links
-            const socials = {
-                'social-email':    d.email    ? 'mailto:' + d.email : null,
-                'social-linkedin': d.linkedin || null,
-                'social-dribbble': d.dribbble || null,
-                'social-instagram':d.instagram|| null,
-                'social-behance':  d.behance  || null,
-            };
-            Object.entries(socials).forEach(([id,href]) => { if(href) document.getElementById(id).href = href; });
 
             // Hero background
             if (d.heroBg) {
@@ -523,7 +588,6 @@
 
                 const isVid = /\.(mp4|webm|mov|ogg)(\?|$)/i.test(d.heroBg) || d.heroBg.includes('/video/upload/');
                 let media;
-
                 if (isVid) {
                     media = document.createElement('video');
                     media.className = 'hero-bg';
@@ -541,15 +605,24 @@
                     media.alt = '';
                     media.src = d.heroBg.includes('/upload/') ? d.heroBg.replace('/upload/','/upload/q_auto,f_auto/') : d.heroBg;
                 }
-
                 hero.insertBefore(media, hero.firstChild);
-
                 if (isVid) {
                     media.load(); media.play().catch(()=>{});
-                    heroVideo = media;
-                    setupVideoControl();
                 }
             }
+
+            // Social links
+            const socials = {
+                'social-email':    d.email    ? 'mailto:' + d.email : null,
+                'social-linkedin': d.linkedin || null,
+                'social-dribbble': d.dribbble || null,
+                'social-instagram':d.instagram|| null,
+                'social-behance':  d.behance  || null,
+            };
+            Object.entries(socials).forEach(([id,href]) => { if(href) document.getElementById(id).href = href; });
+
+            if (d.contactDesc) document.getElementById('footer-desc').textContent = d.contactDesc;
+            if (d.role) document.getElementById('hero-role').textContent = d.role;
           })
           .catch(() => {});
 
@@ -608,8 +681,6 @@
         }
 
         applyLang(currentLang);
-
-        window.addEventListener('load', setupVideoControl);
     </script>
 </body>
 </html>
