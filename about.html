@@ -107,14 +107,9 @@
       position:relative;z-index:1;display:flex;flex-direction:column;gap:1.25rem;
       align-self:center;justify-self:end;width:100%;max-width:420px;
     }
-    .about-page .hero-tags{display:flex;flex-wrap:wrap;gap:.5rem;align-content:start;}
-    .about-page .hero-tag{
-      font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
-      padding:6px 14px;border:1px solid rgba(255,255,255,0.1);
-      color:rgba(240,237,232,0.5);
-      transition:all .2s;
-    }
-    .about-page .hero-tag:hover{border-color:var(--accent);color:var(--accent);}
+    /* Hero tags removed – no skills shown */
+    .about-page .hero-tags{display:none;}
+
     .about-page .story-section{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
@@ -338,9 +333,18 @@
     .about-page .social-icon{width:42px;height:42px;border-radius:50%;border:1px solid rgba(128,128,128,0.25);display:flex;align-items:center;justify-content:center;color:var(--footer-text);text-decoration:none;font-size:14px;opacity:.65;transition:all .2s;}
     .about-page .social-icon:hover{color:var(--accent);border-color:var(--accent);opacity:1;transform:translateY(-2px);}
     .about-page .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.65rem;color:var(--footer-text);opacity:.3;padding-top:.25rem;font-family:'Space Grotesk',sans-serif;}
-    .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease;}
-    .reveal.visible{opacity:1;transform:translateY(0);}
-    
+
+    /* Scroll reveal */
+    .scroll-reveal {
+        opacity: 0;
+        transform: translateY(24px) scale(0.97);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .scroll-reveal.revealed {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
     /* Smart scroll button */
     .scroll-top-btn {
         position: fixed; bottom: 2rem; right: 2rem;
@@ -445,6 +449,7 @@
   <p class="menu-footer">© <span id="menu-year"></span> Prince</p>
 </nav>
 <div class="page about-page">
+  <!-- Hero – your name, no skills -->
   <section class="hero">
     <div class="hero-left">
       <p class="hero-label" data-i18n="hero-label">About Me</p>
@@ -456,39 +461,34 @@
       </p>
     </div>
     <div class="hero-right">
-      <div class="hero-tags" id="hero-tags">
-        <span class="hero-tag">Brand Identity</span>
-        <span class="hero-tag">Typography</span>
-        <span class="hero-tag">Photoshop</span>
-        <span class="hero-tag">Illustrator</span>
-        <span class="hero-tag">InDesign</span>
-        <span class="hero-tag">Layout Design</span>
-      </div>
+      <!-- Hero tags intentionally left empty – no skills -->
     </div>
   </section>
+
+  <!-- Story cards (About, Education, Work, Skills) with scroll-reveal -->
   <section class="story-section" id="info-section">
-    <div class="story-card reveal" data-detail="about">
+    <div class="story-card scroll-reveal" data-detail="about">
       <h3><i class="fas fa-user"></i> <span data-i18n="pill-about">About Me</span></h3>
       <p class="story-preview" id="about-preview">
         Dedicated graphic design student at the University of Education, Winneba with a passion for creativity and attention to detail...
       </p>
       <button class="story-more" type="button" data-i18n="see-more">See more →</button>
     </div>
-    <div class="story-card reveal" data-detail="education">
+    <div class="story-card scroll-reveal" data-detail="education">
       <h3><i class="fas fa-graduation-cap"></i> <span data-i18n="pill-edu">Education</span></h3>
       <p class="story-preview" id="education-preview">
         University of Education, Winneba<br>Bachelor’s Degree in Graphic Design | Expected 2026...
       </p>
       <button class="story-more" type="button" data-i18n="see-more">See more →</button>
     </div>
-    <div class="story-card reveal" data-detail="work">
+    <div class="story-card scroll-reveal" data-detail="work">
       <h3><i class="fas fa-briefcase"></i> <span data-i18n="section-journey">Work Experience</span></h3>
       <p class="story-preview" id="work-preview">
         Freelance Graphic Designer (2023–Present)<br>Designed custom graphics and layouts for various clients...
       </p>
       <button class="story-more" type="button" data-i18n="see-more">See more →</button>
     </div>
-    <div class="story-card reveal" data-detail="skills">
+    <div class="story-card scroll-reveal" data-detail="skills">
       <h3><i class="fas fa-tools"></i> <span data-i18n="pill-skills">Skills</span></h3>
       <p class="story-preview" id="skills-preview">
         Adobe Photoshop, Illustrator, InDesign<br>Typography, Layout Design, Branding...
@@ -496,6 +496,8 @@
       <button class="story-more" type="button" data-i18n="see-more">See more →</button>
     </div>
   </section>
+
+  <!-- Detail overlay -->
   <div class="story-detail-overlay" id="storyDetailOverlay">
     <div class="story-detail-content">
       <button class="story-detail-close" type="button" aria-label="Close">×</button>
@@ -503,7 +505,9 @@
       <div id="storyDetailBody"></div>
     </div>
   </div>
-  <section class="stats-bar">
+
+  <!-- Stats bar -->
+  <section class="stats-bar scroll-reveal">
     <div class="stat-cell reveal">
       <div class="stat-big"><span id="stat-years">2</span><span style="color:var(--accent)">+</span></div>
       <p class="stat-name" data-i18n="stat-experience">Years Experience</p>
@@ -513,7 +517,9 @@
       <p class="stat-name" data-i18n="stat-projects">Projects Delivered</p>
     </div>
   </section>
-  <section class="reviews-section" id="reviews-section">
+
+  <!-- Reviews section (auto-hidden when empty) -->
+  <section class="reviews-section scroll-reveal" id="reviews-section">
     <div class="reviews-header reveal">
       <div class="reviews-header-left">
         <p class="reviews-eyebrow" data-i18n="section-reviews">Client Reviews</p>
@@ -531,7 +537,8 @@
     </div>
     <div class="rev-dots" id="rev-dots"></div>
   </section>
-  <footer id="contact">
+
+  <footer id="contact" class="scroll-reveal">
     <div class="footer-top">
       <div>
         <h2 class="footer-head" data-i18n="footer-title">Let's Connect</h2>
@@ -622,7 +629,20 @@
       }
   });
 
-  // ── REVEAL OBSERVER ────────────────────────────────────────
+  // ── SCROLL REVEAL (micro‑animations) ───────────────────────
+  const scrollRevealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        scrollRevealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.scroll-reveal').forEach(el => {
+    scrollRevealObserver.observe(el);
+  });
+
+  // ── REVEAL (for existing .reveal elements) ─────────────────
   const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});},{threshold:.1});
   document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
 
@@ -873,8 +893,7 @@
       if(d.skillsFull){
         const items = d.skillsFull.split('\n').filter(Boolean);
         storyDetails.skills.body = `<ul>${items.map(s=>`<li>${s}</li>`).join('')}</ul>`;
-        const tags=document.getElementById('hero-tags');
-        if(tags) tags.innerHTML = items.map(s=>`<span class="hero-tag">${s}</span>`).join('');
+        // No longer updating hero tags
         if(!sShort && previewSkills && items.length > 0){
           previewSkills.innerHTML = items.slice(0, 3).join(', ') + '...';
         }
