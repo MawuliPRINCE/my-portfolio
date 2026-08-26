@@ -53,7 +53,13 @@
     "coverIndex": 1,
     "aiPercent": 0,
     "projectOrder": 3,
-    "recentOrder": 0
+    "recentOrder": 0,
+    "isHidden": false,
+    "seoTitle": "",
+    "seoDescription": "",
+    "seoImage": "",
+    "projectType": "",
+    "clientTestimonial": ""
   },
   {
     "id": "proj_1782055251567",
@@ -142,7 +148,13 @@
     "coverIndex": 0,
     "aiPercent": 0,
     "projectOrder": 5,
-    "recentOrder": 0
+    "recentOrder": 0,
+    "isHidden": false,
+    "seoTitle": "",
+    "seoDescription": "",
+    "seoImage": "",
+    "projectType": "",
+    "clientTestimonial": ""
   },
   {
     "id": "proj_1781345437740",
@@ -253,7 +265,13 @@
     "coverIndex": 0,
     "aiPercent": 0,
     "projectOrder": 1,
-    "recentOrder": 0
+    "recentOrder": 0,
+    "isHidden": false,
+    "seoTitle": "",
+    "seoDescription": "",
+    "seoImage": "",
+    "projectType": "",
+    "clientTestimonial": ""
   },
   {
     "id": "proj_1781319653778",
@@ -329,7 +347,13 @@
     "coverIndex": 0,
     "aiPercent": 0,
     "projectOrder": 2,
-    "recentOrder": 0
+    "recentOrder": 0,
+    "isHidden": true,
+    "seoTitle": "",
+    "seoDescription": "",
+    "seoImage": "",
+    "projectType": "",
+    "clientTestimonial": ""
   },
   {
     "id": "proj_1781062806683",
@@ -446,7 +470,13 @@
     "coverIndex": 0,
     "aiPercent": 0,
     "projectOrder": 0,
-    "recentOrder": 0
+    "recentOrder": 0,
+    "isHidden": false,
+    "seoTitle": "",
+    "seoDescription": "",
+    "seoImage": "",
+    "projectType": "",
+    "clientTestimonial": ""
   },
   {
     "id": "proj_1780264723478",
@@ -584,6 +614,12 @@
     "aiPercent": 0,
     "collaborators": [],
     "projectOrder": 4,
-    "recentOrder": 0
+    "recentOrder": 0,
+    "isHidden": false,
+    "seoTitle": "",
+    "seoDescription": "",
+    "seoImage": "",
+    "projectType": "",
+    "clientTestimonial": ""
   }
 ]
