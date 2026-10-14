@@ -8,7 +8,23 @@
     "year": "2026",
     "link": "",
     "previewUrl": "",
-    "media": [],
+    "media": [
+      {
+        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1791956380/ajfjumwh6y6wzvaadg0n.jpg",
+        "type": "image",
+        "showInRecents": true
+      },
+      {
+        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1791956399/zqmndedh2slvhceu8gfk.jpg",
+        "type": "image",
+        "showInRecents": true
+      },
+      {
+        "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1791956397/hxli4bbhmdc0xduho7no.jpg",
+        "type": "image",
+        "showInRecents": true
+      }
+    ],
     "collaborators": [],
     "isRecent": true,
     "isFeatured": false,
