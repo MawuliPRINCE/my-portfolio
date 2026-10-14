@@ -4,7 +4,8 @@
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Prince CMS — Studio</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-size='80' font-family='serif' fill='%23ff4500'>P</text></svg>">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://*.cloudinary.com https://raw.githubusercontent.com; media-src 'self' https://*.cloudinary.com; connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://*.cloudinary.com; frame-src 'self' https://analytics.google.com;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://*.cloudinary.com https://raw.githubusercontent.com; media-src 'self' https://*.cloudinary.com; connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://*.cloudinary.com; frame-src 'self' https://analytics.google.com;">
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
 <style>
 :root{
   --bg:#0d0d0d;--surface:#161616;--surface2:#1e1e1e;--text:#f0ede8;--muted:#666;
@@ -151,6 +152,8 @@ label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:upper
 .stars-row{display:flex;gap:.2rem;}
 .star{font-size:1.1rem;cursor:pointer;color:var(--border);transition:color .15s;}
 .star.on{color:var(--warn);}
+.review-delete{background:transparent;border:1px solid var(--err);color:var(--err);width:26px;height:26px;border-radius:4px;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;}
+.review-delete:hover{background:var(--err);color:#fff;}
 
 .bookings-shell{flex:1;overflow-y:auto;padding:1.5rem;}
 .booking-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1rem;margin-bottom:.75rem;cursor:pointer;transition:border-color .15s;}
@@ -181,6 +184,20 @@ label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:upper
 .stat-label{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.35rem;}
 .stat-sub{font-size:.65rem;color:var(--muted);margin-top:.2rem;}
 .analytics-section{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;margin-bottom:1.25rem;}
+.ga-title{font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;}
+.ga-setup{display:flex;gap:.5rem;align-items:center;}
+.ga-setup input{flex:1;}
+.ga-connected{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;}
+.ga-connected a{color:var(--accent);text-decoration:none;font-size:.75rem;}
+.ga-connected a:hover{text-decoration:underline;}
+.ga-dot{width:8px;height:8px;border-radius:50%;background:var(--success);}
+.health-row{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.75rem;}
+.health-row:last-child{border-bottom:none;}
+.health-key{color:var(--muted);}
+.health-val{color:var(--text);}
+.health-val.ok{color:var(--success);}
+.health-val.warn{color:var(--warn);}
+.health-val.err{color:var(--err);}
 
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;align-items:center;justify-content:center;}
 .overlay.show{display:flex;}
@@ -294,7 +311,6 @@ label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:upper
           <button class="st" onclick="switchSiteTab('about')">👤 About Page</button>
           <button class="st" onclick="switchSiteTab('projects-page')">📁 Projects Page</button>
         </div>
-        <!-- Home -->
         <div class="site-section on" id="ss-home">
           <div class="card">
             <p class="card-title">Identity</p>
@@ -331,7 +347,6 @@ label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:upper
           </div>
           <button class="btn btn-p" style="max-width:240px;" onclick="saveSiteContent('home')">Save &amp; Publish Home</button>
         </div>
-        <!-- About -->
         <div class="site-section" id="ss-about">
           <div class="card">
             <p class="card-title">About Me Card</p>
@@ -370,7 +385,6 @@ label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:upper
           </div>
           <button class="btn btn-p" style="max-width:240px;" onclick="saveSiteContent('about')">Save &amp; Publish About</button>
         </div>
-        <!-- Projects Page -->
         <div class="site-section" id="ss-projects-page">
           <div class="card">
             <p class="card-title">Page Labels</p>
@@ -433,9 +447,12 @@ label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:upper
         </div>
         <div class="analytics-section">
           <p class="ga-title">Google Analytics</p>
-          <div id="ga-setup-area"><div class="ga-setup"><input id="ga-id-update" placeholder="G-XXXX"/><button class="btn btn-p btn-sm" onclick="saveGaId()">Connect GA</button></div><div id="ga-report-frame" style="display:none;"><iframe id="ga-iframe"></iframe></div></div>
+          <div id="ga-setup-area"></div>
         </div>
-        <div class="analytics-section"><p>Health</p><div id="health-list"></div></div>
+        <div class="analytics-section">
+          <p class="ga-title">Health</p>
+          <div id="health-list"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -474,10 +491,34 @@ async function checkPasscode() {
   else document.getElementById('passcode-error').style.display = 'block';
 }
 
+// ==================== SAFE HTML ====================
+const ALLOWED_TAGS = ['p','br','b','strong','i','em','u','s','strike','h1','h2','h3','h4','h5','h6','ul','ol','li','a','span','blockquote','code','pre','div'];
+const ALLOWED_ATTR = ['href','target','rel','style','class'];
+function safeHTML(html){
+  if(!html) return '';
+  if(typeof DOMPurify !== 'undefined'){
+    try {
+      return DOMPurify.sanitize(String(html), {
+        ALLOWED_TAGS,
+        ALLOWED_ATTR,
+        ALLOW_DATA_ATTR: false,
+        ADD_ATTR: ['target']
+      });
+    } catch(e){ console.warn('DOMPurify error:', e); }
+  }
+  // Fallback: strip the risky stuff
+  let s = String(html);
+  s = s.replace(/<\s*(script|iframe|object|embed|link|meta|style|form|input|button|textarea|select)[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, '');
+  s = s.replace(/<\s*(script|iframe|object|embed|link|meta|style|form|input|button|textarea|select)[^>]*\/?>/gi, '');
+  s = s.replace(/\son\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '');
+  s = s.replace(/(href|src|action)\s*=\s*(?:"|')?\s*javascript:[^"'\s>]*/gi, '$1=""');
+  return s;
+}
+
 // ==================== STATE ====================
 let config={}, projects=[], activeId=null, projSHA=null;
 let siteData={home:{},about:{}};
-let homeSHA=null, aboutSHA=null, bookingsSHA=null, reviewsSHA=null;
+let homeSHA=null, aboutSHA=null, bookingsSHA=null;
 let bookings=[], reviews=[];
 const richEditorMap = {};
 let selectedProjects = new Set();
@@ -517,6 +558,7 @@ class RichTextEditor {
   }
   sanitize(html) {
     if(!html) return '';
+    // Normalise <font> tags into <span style="..."> for editor friendliness
     const temp = document.createElement('div'); temp.innerHTML = html;
     temp.querySelectorAll('font').forEach(f => {
       const span = document.createElement('span'); span.innerHTML = f.innerHTML;
@@ -524,7 +566,8 @@ class RichTextEditor {
       if (f.size) span.style.fontSize = f.size==='1'?'0.75em':f.size==='3'?'1em':'1.4em';
       f.replaceWith(span);
     });
-    return temp.innerHTML;
+    // Then run the security sanitizer
+    return safeHTML(temp.innerHTML);
   }
   bindToolbar(toolbar) {
     toolbar.querySelectorAll('button[data-cmd]').forEach(btn=>{
@@ -534,7 +577,7 @@ class RichTextEditor {
         if(cmd==='h1'||cmd==='h2'||cmd==='h3') document.execCommand('formatBlock',false,cmd);
         else if(cmd==='createLink') {
           const url = prompt('Enter URL (include https://):', 'https://');
-          if(url) { document.execCommand('createLink',false,url); this.editableDiv.querySelectorAll('a').forEach(a=>{a.target='_blank';a.rel='noopener';}); }
+          if(url && /^https?:\/\//i.test(url)) { document.execCommand('createLink',false,url); this.editableDiv.querySelectorAll('a').forEach(a=>{a.target='_blank';a.rel='noopener';}); }
         }
         else document.execCommand(cmd,false,null);
         this.editableDiv.focus();
@@ -597,12 +640,18 @@ async function initApp(){
     if(!projects.length){ const draft=localStorage.getItem('cms_projects_draft'); if(draft){ projects=JSON.parse(draft); } }
     normalizeProjects();
     if(hd){ homeSHA=hd.sha; siteData.home=ghDecode(hd.content); fillHomeForm(); }
-    if(ad){ aboutSHA=ad.sha; siteData.about=ghDecode(ad.content); fillAboutForm(); reviews=siteData.about.reviews||getDefaultReviews(); }
-    if(bd){ bookingsSHA=bd.sha; bookings=ghDecode(bd.content); } else { bookings=[]; bookingsSHA=null; }
+    if(ad){ aboutSHA=ad.sha; siteData.about=ghDecode(ad.content); fillAboutForm(); }
+    reviews = Array.isArray(siteData.about.reviews) ? siteData.about.reviews : [];
+    if(bd){
+      bookingsSHA = bd.sha;
+      const parsed = ghDecode(bd.content);
+      bookings = Array.isArray(parsed) ? parsed : [];
+    } else { bookings=[]; bookingsSHA=null; }
+    lastBookingCount = bookings.length;
     document.getElementById('login-screen').style.display='none';
     document.getElementById('app').style.display='flex';
     document.getElementById('repo-display').textContent=`${config.user}/${config.repo}`;
-    renderSidebar(); renderBookings(); renderReviews(); updateAnalytics();
+    renderSidebar(); renderBookings(); renderReviews(); renderAnalytics();
     await syncPendingBookings();
     if(config.gaId) setupGA();
     initRichEditors();
@@ -619,7 +668,7 @@ function switchTab(tab){
   document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',tabIds[i]===tab));
   document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('on',tabIds[i]===tab));
   if(tab==='bookings') refreshBookings();
-  if(tab==='analytics') updateAnalytics();
+  if(tab==='analytics') renderAnalytics();
 }
 function switchSiteTab(tab){
   document.querySelectorAll('.st').forEach(b=>b.classList.remove('on'));
@@ -842,14 +891,14 @@ async function publishAll(){
   const btn=document.getElementById('pub-btn'), sp=document.getElementById('pub-spin');
   btn.disabled=true; sp.style.display='block';
   normalizeProjects();
-  // Version history
   const history = JSON.parse(localStorage.getItem('cms_projects_history')||'[]');
   history.push({timestamp:new Date().toISOString(), data:JSON.parse(JSON.stringify(projects))});
+  if(history.length > 20) history.shift();
   localStorage.setItem('cms_projects_history', JSON.stringify(history));
   try{
     const d = await ghPut('projects.json', JSON.stringify(projects,null,2), projSHA, `CMS update — ${new Date().toLocaleString()}`);
     projSHA = d.content.sha;
-    showStatus('Published ✓','success'); updateAnalytics();
+    showStatus('Published ✓','success'); renderAnalytics();
   }catch(e){ showStatus('Publish failed: '+e.message,'error'); }
   btn.disabled=false; sp.style.display='none';
 }
@@ -889,20 +938,47 @@ async function compressImage(file, maxWidth=1600, quality=0.85){
   });
 }
 async function uploadMedia(e,id){
-  const cloud = config.cloud||localStorage.getItem('cms_cloud');
-  const preset = config.preset||localStorage.getItem('cms_preset');
-  if(!cloud||!preset){ showStatus('Cloudinary not configured','error'); return; }
+  const cloud  = config.cloud  || localStorage.getItem('cms_cloud');
+  const preset = config.preset || localStorage.getItem('cms_preset');
+  if(!cloud || !preset){ showStatus('Cloudinary not configured','error'); return; }
+
   const files = Array.from(e.target.files);
   if(!files.length) return;
-  for(const file of files){
-    const compressed = await compressImage(file);
-    const url = await cloudinaryUpload(compressed, cloud, preset);
-    const p = getProj(id);
-    p.media.push({url, type:compressed.type.startsWith('video/')?'video':'image', showInRecents:false});
-    const g = document.getElementById(`mgrid-${id}`);
-    if(g){ g.innerHTML=renderThumbs(p); initMediaDrag(id); }
+
+  const p = getProj(id);
+  if(!p){ showStatus('Project not found','error'); return; }
+
+  let ok = 0, fail = 0;
+  showStatus(`Uploading ${files.length} file${files.length>1?'s':''}…`, 'info');
+
+  for (const file of files) {
+    try {
+      const compressed = await compressImage(file);
+      const url = await cloudinaryUpload(compressed, cloud, preset);
+      p.media.push({
+        url,
+        type: compressed.type.startsWith('video/') ? 'video' : 'image',
+        showInRecents: true
+      });
+      ok++;
+
+      const grid = document.getElementById(`mgrid-${id}`);
+      if (grid) {
+        grid.innerHTML = renderThumbs(p);
+        if (typeof initMediaDrag === 'function') initMediaDrag(id);
+      }
+    } catch (err) {
+      console.error('Upload failed for', file.name, err);
+      fail++;
+    }
   }
-  showStatus('Uploaded ✓','success');
+
+  e.target.value = '';
+  scheduleAutosave();
+
+  if (ok && !fail)  showStatus(`Uploaded ${ok} file${ok>1?'s':''} ✓`, 'success');
+  if (ok && fail)   showStatus(`Uploaded ${ok}, failed ${fail} — check console`, 'error');
+  if (!ok && fail)  showStatus(`All ${fail} upload${fail>1?'s':''} failed`, 'error');
 }
 async function cloudinaryUpload(file, cloud, preset){
   const fd = new FormData();
@@ -914,7 +990,6 @@ async function cloudinaryUpload(file, cloud, preset){
   return d.secure_url;
 }
 async function uploadSiteMedia(e,inputId,previewId,progressId){
-  // similar to uploadMedia but for site fields
   const cloud=config.cloud||localStorage.getItem('cms_cloud');
   const preset=config.preset||localStorage.getItem('cms_preset');
   if(!cloud||!preset){showStatus('Cloudinary not configured','error');return;}
@@ -924,13 +999,14 @@ async function uploadSiteMedia(e,inputId,previewId,progressId){
     const url=await cloudinaryUpload(compressed,cloud,preset);
     const inp=document.getElementById(inputId); if(inp) inp.value=url;
     previewHeroBg();
+    e.target.value='';
     showStatus('Uploaded ✓','success');
   }catch(err){showStatus('Upload failed: '+err.message,'error');}
 }
-function addManualUrl(id){ /* not used in this simplified version */ }
-function removeMedia(id,index,e){ e.stopPropagation(); const p=getProj(id); p.media.splice(index,1); if(p.coverIndex>=p.media.length) p.coverIndex=0; const g=document.getElementById(`mgrid-${id}`); if(g){g.innerHTML=renderThumbs(p); initMediaDrag(id);} }
-function selectCover(id,index){ const p=getProj(id); p.coverIndex=index; document.querySelectorAll(`#mgrid-${id} .m-thumb`).forEach((el,i)=>{el.classList.toggle('cover-selected',i===index);}); }
-function toggleMediaRecent(id,index,e){ e.stopPropagation(); const p=getProj(id); p.media[index].showInRecents=!p.media[index].showInRecents; const g=document.getElementById(`mgrid-${id}`); if(g){g.innerHTML=renderThumbs(p); initMediaDrag(id);} }
+function addManualUrl(id){ /* not used */ }
+function removeMedia(id,index,e){ e.stopPropagation(); const p=getProj(id); p.media.splice(index,1); if(p.coverIndex>=p.media.length) p.coverIndex=0; const g=document.getElementById(`mgrid-${id}`); if(g){g.innerHTML=renderThumbs(p); initMediaDrag(id);} scheduleAutosave(); }
+function selectCover(id,index){ const p=getProj(id); p.coverIndex=index; document.querySelectorAll(`#mgrid-${id} .m-thumb`).forEach((el,i)=>{el.classList.toggle('cover-selected',i===index);}); scheduleAutosave(); }
+function toggleMediaRecent(id,index,e){ e.stopPropagation(); const p=getProj(id); p.media[index].showInRecents=!p.media[index].showInRecents; const g=document.getElementById(`mgrid-${id}`); if(g){g.innerHTML=renderThumbs(p); initMediaDrag(id);} scheduleAutosave(); }
 function isVidUrl(url){ return /\.(mp4|webm|mov|ogg)(\?|$)/i.test(url)||url.includes('/video/upload/'); }
 
 // ==================== DELETE ====================
@@ -955,7 +1031,7 @@ function fillHomeForm(){
   sf('s-email', d.email); sf('s-linkedin', d.linkedin); sf('s-instagram', d.instagram);
   sf('s-behance', d.behance); sf('s-dribbble', d.dribbble);
   if(d.heroBg) previewHeroBg();
-  if(richEditorMap['contactDesc']) richEditorMap['contactDesc'].innerHTML = d.contactDesc || '';
+  if(richEditorMap['contactDesc']) richEditorMap['contactDesc'].innerHTML = safeHTML(d.contactDesc || '');
 }
 function fillAboutForm(){
   const d = siteData.about;
@@ -963,7 +1039,7 @@ function fillAboutForm(){
   sf('a-work-short', d.workShort); sf('a-skills-short', d.skillsShort);
   sf('a-exp-start', d.expStart||'2023'); sf('a-projects-count', d.projectsCount||'10+');
   const aboutFields = ['aboutFull','eduFull','workFull','skillsFull'];
-  aboutFields.forEach(key=>{ if(richEditorMap[key]) richEditorMap[key].innerHTML = d[key] || ''; });
+  aboutFields.forEach(key=>{ if(richEditorMap[key]) richEditorMap[key].innerHTML = safeHTML(d[key] || ''); });
 }
 function sf(id,val){ const el=document.getElementById(id); if(el) el.value=val||''; }
 function gf(id){ return document.getElementById(id)?.value.trim()||''; }
@@ -972,7 +1048,7 @@ async function saveSiteContent(section){
   if(section==='home'){
     data = {
       name:gf('s-name'), role:gf('s-role'), heroBg:gf('s-herobg'),
-      contactDesc: richEditorMap['contactDesc']?.innerHTML || '',
+      contactDesc: safeHTML(richEditorMap['contactDesc']?.innerHTML || ''),
       email:gf('s-email'), linkedin:gf('s-linkedin'), instagram:gf('s-instagram'),
       behance:gf('s-behance'), dribbble:gf('s-dribbble')
     };
@@ -981,13 +1057,13 @@ async function saveSiteContent(section){
     data = {
       ...siteData.about,
       aboutShort: gf('a-about-short'),
-      aboutFull: richEditorMap['aboutFull']?.innerHTML || '',
+      aboutFull: safeHTML(richEditorMap['aboutFull']?.innerHTML || ''),
       eduShort: gf('a-edu-short'),
-      eduFull: richEditorMap['eduFull']?.innerHTML || '',
+      eduFull: safeHTML(richEditorMap['eduFull']?.innerHTML || ''),
       workShort: gf('a-work-short'),
-      workFull: richEditorMap['workFull']?.innerHTML || '',
+      workFull: safeHTML(richEditorMap['workFull']?.innerHTML || ''),
       skillsShort: gf('a-skills-short'),
-      skillsFull: richEditorMap['skillsFull']?.innerHTML || '',
+      skillsFull: safeHTML(richEditorMap['skillsFull']?.innerHTML || ''),
       expStart: gf('a-exp-start'), projectsCount: gf('a-projects-count'),
       reviews
     };
@@ -1017,21 +1093,271 @@ function previewHeroBg(){
 }
 
 // ==================== REVIEWS ====================
-function getDefaultReviews(){ return [ {id:1,name:'Ama Korkor',role:'Founder',quote:'Great work',stars:5} ]; }
-function renderReviews(){ /* simplified */ }
-function addReview(){ /* simplified */ }
-function saveReviews(){ /* simplified */ }
+function newReviewId(){ return 'rev_' + Date.now() + '_' + Math.random().toString(36).slice(2,6); }
+function renderReviews(){
+  const list = document.getElementById('reviews-list');
+  if(!list) return;
+  if(!reviews.length){
+    list.innerHTML = `<div class="booking-empty"><h3>No reviews yet</h3><p>Click "+ Add Review" to add your first client review.</p></div>`;
+    return;
+  }
+  list.innerHTML = reviews.map((r, i) => {
+    const id = r.id || ('rev_legacy_'+i);
+    if(!r.id) r.id = id;
+    const stars = Math.max(1, Math.min(5, Number(r.stars)||5));
+    return `
+      <div class="review-item" data-id="${esc(id)}">
+        <div class="review-item-head">
+          <span class="review-num">Review #${i+1}</span>
+          <button class="review-delete" title="Delete review" onclick="deleteReview('${esc(id)}')">×</button>
+        </div>
+        <div class="row2">
+          <div class="fg"><label>Name</label>
+            <input type="text" value="${esc(r.name||'')}" oninput="updateReviewField('${esc(id)}','name',this.value)"/></div>
+          <div class="fg"><label>Role / Company</label>
+            <input type="text" value="${esc(r.role||'')}" oninput="updateReviewField('${esc(id)}','role',this.value)"/></div>
+        </div>
+        <div class="fg"><label>Quote</label>
+          <textarea oninput="updateReviewField('${esc(id)}','quote',this.value)" style="min-height:70px;">${esc(r.quote||'')}</textarea></div>
+        <div class="fg"><label>Rating</label>
+          <div class="stars-row">
+            ${[1,2,3,4,5].map(s => `<span class="star ${s<=stars?'on':''}" onclick="setReviewStars('${esc(id)}',${s})" title="${s} star${s>1?'s':''}">★</span>`).join('')}
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+function addReview(){
+  reviews.push({ id: newReviewId(), name:'', role:'', quote:'', stars:5 });
+  renderReviews();
+  showStatus('Review added — fill in details and publish','info');
+}
+function updateReviewField(id, field, value){
+  const r = reviews.find(x => x.id === id);
+  if(!r) return;
+  r[field] = value;
+}
+function setReviewStars(id, stars){
+  const r = reviews.find(x => x.id === id);
+  if(!r) return;
+  r.stars = Math.max(1, Math.min(5, stars));
+  renderReviews();
+}
+async function deleteReview(id){
+  if(!confirm('Delete this review?')) return;
+  reviews = reviews.filter(r => r.id !== id);
+  renderReviews();
+  showStatus('Review removed — publish to apply','info');
+}
+async function saveReviews(){
+  try{
+    const data = { ...siteData.about, reviews };
+    const d = await ghPut('site-about.json', JSON.stringify(data, null, 2), aboutSHA, `Reviews update — ${new Date().toLocaleString()}`);
+    aboutSHA = d.content.sha;
+    siteData.about = data;
+    renderAnalytics();
+    showStatus('Reviews published ✓','success');
+  }catch(e){ showStatus('Publish failed: '+e.message,'error'); }
+}
 
 // ==================== BOOKINGS ====================
-function renderBookings(){ /* simplified */ }
-function refreshBookings(){ /* simplified */ }
-function syncPendingBookings(){ /* simplified */ }
-function clearAllBookings(){ /* simplified */ }
+function updateUnreadBadge(){
+  const badge = document.getElementById('unread-badge');
+  if(!badge) return;
+  const unread = bookings.filter(b => !b.read && !b.replied).length;
+  if(unread > 0){ badge.textContent = unread; badge.style.display = 'inline-block'; }
+  else { badge.style.display = 'none'; }
+}
+function renderBookings(){
+  const list = document.getElementById('bookings-list');
+  if(!list) return;
+  updateUnreadBadge();
+  if(!bookings.length){
+    list.innerHTML = `<div class="booking-empty"><h3>No bookings yet</h3><p>Messages sent through your booking page will appear here.</p></div>`;
+    return;
+  }
+  const sorted = [...bookings].sort((a,b) => new Date(b.date||0) - new Date(a.date||0));
+  list.innerHTML = sorted.map(b => {
+    const status = b.replied ? 'replied' : b.read ? 'read' : 'new';
+    const statusLabel = status === 'new' ? 'New' : status === 'read' ? 'Read' : 'Replied';
+    const dateStr = b.date ? new Date(b.date).toLocaleString() : '';
+    const isUnread = !b.read && !b.replied;
+    return `
+      <div class="booking-card ${isUnread?'unread':''}" onclick="toggleBookingDetail('${esc(b.id)}')">
+        <div class="booking-card-head">
+          <div>
+            <div class="booking-name">${esc(b.name||'Unnamed')}</div>
+            <div class="booking-date">${esc(dateStr)}</div>
+          </div>
+          <div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;justify-content:flex-end;">
+            ${b.projectType ? `<span class="booking-type">${esc(b.projectType)}</span>` : ''}
+            <span class="booking-status bs-${status}">${statusLabel}</span>
+          </div>
+        </div>
+        <div class="booking-preview">${esc((b.message||'').slice(0,140))}${(b.message||'').length>140?'…':''}</div>
+        <div class="booking-detail" id="bd-${esc(b.id)}">
+          <div class="detail-row"><div class="detail-label">Email</div><div class="detail-val"><a href="mailto:${esc(b.email||'')}" style="color:var(--accent);">${esc(b.email||'')}</a></div></div>
+          ${b.phone ? `<div class="detail-row"><div class="detail-label">Phone</div><div class="detail-val"><a href="tel:${esc(b.phone)}" style="color:var(--accent);">${esc(b.phone)}</a></div></div>` : ''}
+          ${b.company ? `<div class="detail-row"><div class="detail-label">Company</div><div class="detail-val">${esc(b.company)}</div></div>` : ''}
+          ${b.budget ? `<div class="detail-row"><div class="detail-label">Budget</div><div class="detail-val">${esc(b.budget)}</div></div>` : ''}
+          ${b.timeline ? `<div class="detail-row"><div class="detail-label">Timeline</div><div class="detail-val">${esc(b.timeline)}</div></div>` : ''}
+          <div class="detail-row"><div class="detail-label">Message</div><div class="detail-val" style="white-space:pre-wrap;">${esc(b.message||'')}</div></div>
+          <div style="display:flex;gap:.5rem;margin-top:.75rem;flex-wrap:wrap;" onclick="event.stopPropagation();">
+            <a class="btn btn-p btn-sm" href="mailto:${esc(b.email||'')}?subject=Re:%20Your%20project%20inquiry">Reply via Email</a>
+            ${!b.read && !b.replied ? `<button class="btn btn-s btn-sm" onclick="setBookingStatus('${esc(b.id)}','read')">Mark Read</button>` : ''}
+            ${!b.replied ? `<button class="btn btn-s btn-sm" onclick="setBookingStatus('${esc(b.id)}','replied')">Mark Replied</button>` : ''}
+            <button class="btn btn-d btn-sm" onclick="deleteBooking('${esc(b.id)}')">Delete</button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+function toggleBookingDetail(id){
+  const el = document.getElementById('bd-'+id);
+  if(el) el.classList.toggle('open');
+}
+async function saveBookings(){
+  try{
+    const d = await ghPut('bookings.json', JSON.stringify(bookings,null,2), bookingsSHA, `Bookings update — ${new Date().toLocaleString()}`);
+    bookingsSHA = d.content.sha;
+    return true;
+  }catch(e){ showStatus('Save failed: '+e.message,'error'); return false; }
+}
+async function setBookingStatus(id, status){
+  const b = bookings.find(x => x.id === id);
+  if(!b) return;
+  if(status === 'read'){ b.read = true; }
+  if(status === 'replied'){ b.read = true; b.replied = true; }
+  renderBookings();
+  if(await saveBookings()) showStatus('Booking updated ✓','success');
+}
+async function deleteBooking(id){
+  if(!confirm('Delete this booking?')) return;
+  bookings = bookings.filter(b => b.id !== id);
+  renderBookings();
+  if(await saveBookings()) showStatus('Booking deleted','success');
+}
+async function refreshBookings(){
+  const list = document.getElementById('bookings-list');
+  if(list) list.innerHTML = '<div class="booking-empty"><h3>Refreshing…</h3></div>';
+  try{
+    const bd = await ghGet('bookings.json');
+    if(bd){
+      bookingsSHA = bd.sha;
+      const parsed = ghDecode(bd.content);
+      bookings = Array.isArray(parsed) ? parsed : [];
+    } else { bookings = []; bookingsSHA = null; }
+    lastBookingCount = bookings.length;
+    renderBookings();
+    renderAnalytics();
+    showStatus('Bookings refreshed','success');
+  }catch(e){
+    showStatus('Refresh failed: '+e.message,'error');
+    renderBookings();
+  }
+}
+async function syncPendingBookings(){
+  try{
+    const pending = JSON.parse(localStorage.getItem('pending_bookings')||'[]');
+    if(!pending.length) return;
+    let added = 0;
+    for(const p of pending){
+      if(!bookings.find(b => b.id === p.id)){ bookings.push(p); added++; }
+    }
+    if(added){
+      localStorage.removeItem('pending_bookings');
+      renderBookings();
+      if(await saveBookings()) showStatus(`Synced ${added} pending booking${added>1?'s':''}`,'success');
+    }
+  }catch(e){ console.error('Sync pending failed:', e); }
+}
+async function clearAllBookings(){
+  if(!bookings.length){ showStatus('No bookings to clear','info'); return; }
+  if(!confirm(`Delete all ${bookings.length} booking(s)? This cannot be undone.`)) return;
+  bookings = [];
+  renderBookings();
+  if(await saveBookings()) showStatus('All bookings cleared','success');
+}
 
 // ==================== ANALYTICS ====================
-function updateAnalytics(){ /* simplified */ }
-function setupGA(){ /* simplified */ }
-function saveGaId(){ /* simplified */ }
+function renderAnalytics(){
+  const totalProjects = projects.length;
+  const recents = projects.filter(p => p.isRecent).length;
+  const hidden = projects.filter(p => p.isHidden).length;
+  const totalBookings = bookings.length;
+  const unreadBookings = bookings.filter(b => !b.read && !b.replied).length;
+  const totalReviews = reviews.length;
+  const totalMedia = projects.reduce((sum, p) => sum + (Array.isArray(p.media) ? p.media.length : 0), 0);
+
+  const setNum = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  setNum('an-projects', totalProjects);
+  setNum('an-recents', recents);
+  setNum('an-bookings', totalBookings);
+  setNum('an-unread', unreadBookings);
+  setNum('an-reviews', totalReviews);
+  setNum('an-media', totalMedia);
+
+  renderHealth({ totalProjects, recents, hidden, totalBookings, unreadBookings, totalReviews, totalMedia });
+}
+function renderHealth(stats){
+  const el = document.getElementById('health-list');
+  if(!el) return;
+  const connected = !!(config.user && config.repo && config.token);
+  const cloud = !!(config.cloud || localStorage.getItem('cms_cloud'));
+  const ga = !!(config.gaId);
+  el.innerHTML = `
+    <div class="health-row"><span class="health-key">GitHub Repo</span><span class="health-val ${connected?'ok':'err'}">${connected ? esc(config.user+'/'+config.repo) : 'Not connected'}</span></div>
+    <div class="health-row"><span class="health-key">Cloudinary</span><span class="health-val ${cloud?'ok':'warn'}">${cloud ? 'Connected' : 'Not configured'}</span></div>
+    <div class="health-row"><span class="health-key">Google Analytics</span><span class="health-val ${ga?'ok':'warn'}">${ga ? 'Connected ('+esc(config.gaId)+')' : 'Not connected'}</span></div>
+    <div class="health-row"><span class="health-key">Hidden Projects</span><span class="health-val">${stats.hidden}</span></div>
+    <div class="health-row"><span class="health-key">DOMPurify (XSS filter)</span><span class="health-val ${typeof DOMPurify!=='undefined'?'ok':'warn'}">${typeof DOMPurify!=='undefined' ? 'Loaded' : 'Fallback mode'}</span></div>
+    <div class="health-row"><span class="health-key">Last loaded</span><span class="health-val">${new Date().toLocaleString()}</span></div>
+  `;
+}
+function setupGA(){
+  const area = document.getElementById('ga-setup-area');
+  if(!area) return;
+  if(config.gaId){
+    const gaUrl = `https://analytics.google.com/analytics/web/#/a/reporting/reporting-overview`;
+    area.innerHTML = `
+      <div class="ga-connected">
+        <span class="ga-dot"></span>
+        <span style="font-size:.78rem;">Connected to <strong>${esc(config.gaId)}</strong></span>
+        <a href="${gaUrl}" target="_blank" rel="noopener">Open Google Analytics ↗</a>
+        <button class="btn btn-s btn-sm" onclick="disconnectGA()" style="margin-left:auto;">Disconnect</button>
+      </div>
+      <p class="hint" style="margin-top:.75rem;">GA doesn't allow embedding dashboards in iframes for security reasons. Click the link above to see your live report.</p>
+    `;
+  } else {
+    area.innerHTML = `
+      <div class="ga-setup">
+        <input id="ga-id-update" placeholder="G-XXXXXXXXXX"/>
+        <button class="btn btn-p btn-sm" onclick="saveGaId()">Connect GA</button>
+      </div>
+      <p class="hint" style="margin-top:.5rem;">Paste your Google Analytics Measurement ID (starts with G-).</p>
+    `;
+  }
+}
+function saveGaId(){
+  const val = (document.getElementById('ga-id-update')?.value || '').trim();
+  if(!val || !/^G-[A-Z0-9]+$/i.test(val)){ showStatus('Invalid GA ID — should look like G-XXXXXXXX','error'); return; }
+  config.gaId = val;
+  const saved = JSON.parse(localStorage.getItem('cms_cfg')||'{}');
+  saved.gaId = val;
+  localStorage.setItem('cms_cfg', JSON.stringify(saved));
+  setupGA();
+  showStatus('Google Analytics connected ✓','success');
+}
+function disconnectGA(){
+  config.gaId = '';
+  const saved = JSON.parse(localStorage.getItem('cms_cfg')||'{}');
+  delete saved.gaId;
+  localStorage.setItem('cms_cfg', JSON.stringify(saved));
+  setupGA();
+  showStatus('Google Analytics disconnected','info');
+}
+// keep old name working for anything that still calls updateAnalytics
+function updateAnalytics(){ renderAnalytics(); }
 
 // ==================== AUTOSAVE ====================
 function scheduleAutosave(){
@@ -1088,13 +1414,15 @@ function startBookingNotifications(){
       const bd = await ghGet('bookings.json');
       if(bd){
         const current = ghDecode(bd.content);
-        if(current.length > lastBookingCount){
+        if(Array.isArray(current) && current.length > lastBookingCount){
           showStatus(`${current.length-lastBookingCount} new booking(s)`,'info');
           if(Notification.permission==='granted'){
             new Notification('New Booking', {body:`${current.length-lastBookingCount} new booking(s)`});
           }
           lastBookingCount = current.length;
+          bookings = current;
           renderBookings();
+          renderAnalytics();
         }
       }
     }catch(e){}
