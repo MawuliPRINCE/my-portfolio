@@ -245,7 +245,7 @@ label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:upper
     <p class="login-section">Cloudinary (for media uploads)</p>
     <div class="row2">
       <div class="fg"><label>Cloud Name</label><input id="cl-cloud" placeholder="your-cloud"/></div>
-      <div class="fg"><label>Upload Preset</label><input id="cl-preset" placeholder="unsigned-preset"/></div>
+      <div class="fg"><label>Upload Preset</label><input id="cl-preset" placeholder="e.g. prince_studio_unsigned"/></div>
     </div>
     <p class="login-section">Analytics (optional)</p>
     <div class="fg"><label>Google Analytics Measurement ID</label><input id="ga-id" placeholder="G-XXXXXXXXXX"/></div>
@@ -506,13 +506,23 @@ function safeHTML(html){
       });
     } catch(e){ console.warn('DOMPurify error:', e); }
   }
-  // Fallback: strip the risky stuff
   let s = String(html);
   s = s.replace(/<\s*(script|iframe|object|embed|link|meta|style|form|input|button|textarea|select)[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, '');
   s = s.replace(/<\s*(script|iframe|object|embed|link|meta|style|form|input|button|textarea|select)[^>]*\/?>/gi, '');
   s = s.replace(/\son\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '');
   s = s.replace(/(href|src|action)\s*=\s*(?:"|')?\s*javascript:[^"'\s>]*/gi, '$1=""');
   return s;
+}
+
+// ==================== VIDEO SAFETY ====================
+// Cloudinary can store videos with codecs browsers can't decode (HEVC, MPEG-4 Part 2, etc.)
+// that cause "audio only, no picture" playback. Adding vc_auto to the delivery URL forces
+// Cloudinary to re-encode to H.264 + AAC on the fly, which every browser can play.
+function makeVideoWebSafe(url){
+  if(!url || typeof url !== 'string') return url;
+  if(!url.includes('/video/upload/')) return url;
+  if(/vc_/.test(url)) return url; // already has a video codec transformation
+  return url.replace('/video/upload/', '/video/upload/vc_auto/');
 }
 
 // ==================== STATE ====================
@@ -558,7 +568,6 @@ class RichTextEditor {
   }
   sanitize(html) {
     if(!html) return '';
-    // Normalise <font> tags into <span style="..."> for editor friendliness
     const temp = document.createElement('div'); temp.innerHTML = html;
     temp.querySelectorAll('font').forEach(f => {
       const span = document.createElement('span'); span.innerHTML = f.innerHTML;
@@ -566,7 +575,6 @@ class RichTextEditor {
       if (f.size) span.style.fontSize = f.size==='1'?'0.75em':f.size==='3'?'1em':'1.4em';
       f.replaceWith(span);
     });
-    // Then run the security sanitizer
     return safeHTML(temp.innerHTML);
   }
   bindToolbar(toolbar) {
@@ -601,6 +609,8 @@ function handleLogin(){
   const u=gv('gh-user'), r=gv('gh-repo'), b=gv('gh-branch')||'main', t=gv('gh-token');
   const cl=gv('cl-cloud'), pr=gv('cl-preset'), ga=gv('ga-id');
   if(!u||!r||!t){ loginErr('GitHub username, repo and token are required.'); return; }
+  if(!cl){ loginErr('Cloudinary Cloud Name is required for uploads.'); return; }
+  if(!pr){ loginErr('Cloudinary Upload Preset is required for uploads.'); return; }
   config={user:u, repo:r, branch:b, token:t, cloud:cl, preset:pr, gaId:ga};
   sessionStorage.setItem('cms_tok',t);
   localStorage.setItem('cms_cfg',JSON.stringify({user:u,repo:r,branch:b,cloud:cl,preset:pr,gaId:ga}));
@@ -609,7 +619,11 @@ function handleLogin(){
 }
 function gv(id){ return document.getElementById(id)?.value.trim()||''; }
 function loginErr(m){ const e=document.getElementById('login-error'); e.textContent='⚠ '+m; e.style.display='block'; }
-function logout(){ sessionStorage.removeItem('cms_tok'); localStorage.removeItem('cms_tok_persist'); location.reload(); }
+function logout(){
+  sessionStorage.removeItem('cms_tok');
+  localStorage.removeItem('cms_tok_persist');
+  location.reload();
+}
 
 // ==================== GITHUB API ====================
 async function ghGet(path){
@@ -954,10 +968,11 @@ async function uploadMedia(e,id){
   for (const file of files) {
     try {
       const compressed = await compressImage(file);
+      const isVideo = compressed.type.startsWith('video/');
       const url = await cloudinaryUpload(compressed, cloud, preset);
       p.media.push({
         url,
-        type: compressed.type.startsWith('video/') ? 'video' : 'image',
+        type: isVideo ? 'video' : 'image',
         showInRecents: true
       });
       ok++;
@@ -985,9 +1000,17 @@ async function cloudinaryUpload(file, cloud, preset){
   fd.append('file', file);
   fd.append('upload_preset', preset);
   const r = await fetch(`https://api.cloudinary.com/v1_1/${cloud}/upload`,{method:'POST',body:fd});
-  if(!r.ok){ const d=await r.json().catch(()=>({})); throw new Error(d.error?.message||`Cloudinary ${r.status}`); }
+  if(!r.ok){
+    const d = await r.json().catch(()=>({}));
+    throw new Error(d.error?.message || `Cloudinary ${r.status}`);
+  }
   const d = await r.json();
-  return d.secure_url;
+
+  // Videos: force browser-safe codec (H.264 + AAC) so they play in every browser.
+  // Without this, a video uploaded with HEVC or MPEG-4 Part 2 plays audio-only
+  // on Chrome/Edge/Firefox (Safari sometimes works).
+  const secureUrl = makeVideoWebSafe(d.secure_url);
+  return secureUrl;
 }
 async function uploadSiteMedia(e,inputId,previewId,progressId){
   const cloud=config.cloud||localStorage.getItem('cms_cloud');
@@ -1304,10 +1327,13 @@ function renderHealth(stats){
   if(!el) return;
   const connected = !!(config.user && config.repo && config.token);
   const cloud = !!(config.cloud || localStorage.getItem('cms_cloud'));
+  const preset = !!(config.preset || localStorage.getItem('cms_preset'));
   const ga = !!(config.gaId);
   el.innerHTML = `
     <div class="health-row"><span class="health-key">GitHub Repo</span><span class="health-val ${connected?'ok':'err'}">${connected ? esc(config.user+'/'+config.repo) : 'Not connected'}</span></div>
-    <div class="health-row"><span class="health-key">Cloudinary</span><span class="health-val ${cloud?'ok':'warn'}">${cloud ? 'Connected' : 'Not configured'}</span></div>
+    <div class="health-row"><span class="health-key">Cloudinary</span><span class="health-val ${cloud?'ok':'warn'}">${cloud ? 'Connected ('+esc(config.cloud||localStorage.getItem('cms_cloud'))+')' : 'Not configured'}</span></div>
+    <div class="health-row"><span class="health-key">Upload Preset</span><span class="health-val ${preset?'ok':'warn'}">${preset ? esc(config.preset||localStorage.getItem('cms_preset')) : 'Not set'}</span></div>
+    <div class="health-row"><span class="health-key">Video Codec Fix</span><span class="health-val ok">Active (vc_auto)</span></div>
     <div class="health-row"><span class="health-key">Google Analytics</span><span class="health-val ${ga?'ok':'warn'}">${ga ? 'Connected ('+esc(config.gaId)+')' : 'Not connected'}</span></div>
     <div class="health-row"><span class="health-key">Hidden Projects</span><span class="health-val">${stats.hidden}</span></div>
     <div class="health-row"><span class="health-key">DOMPurify (XSS filter)</span><span class="health-val ${typeof DOMPurify!=='undefined'?'ok':'warn'}">${typeof DOMPurify!=='undefined' ? 'Loaded' : 'Fallback mode'}</span></div>
@@ -1356,7 +1382,6 @@ function disconnectGA(){
   setupGA();
   showStatus('Google Analytics disconnected','info');
 }
-// keep old name working for anything that still calls updateAnalytics
 function updateAnalytics(){ renderAnalytics(); }
 
 // ==================== AUTOSAVE ====================
