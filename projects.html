@@ -273,7 +273,14 @@
       .card-arrow { display: none; }
       .search-input { max-width: 140px; }
     }
-  </style>
+  .archive-btn{display:none;align-items:center;gap:.75rem;padding:.85rem 1.3rem;border:2px solid var(--accent);color:var(--accent);background:transparent;text-decoration:none;border-radius:6px;font-family:inherit;transition:all .2s;margin-top:1.25rem;width:fit-content;}
+.archive-btn:hover{background:var(--accent);color:#fff;box-shadow:0 6px 20px rgba(255,69,0,.3);transform:translateY(-1px);}
+.archive-btn i{font-size:1.1rem;}
+.archive-btn-text{display:flex;flex-direction:column;gap:.15rem;text-align:left;}
+.archive-btn-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;line-height:1;}
+.archive-btn-hint{font-size:.6rem;font-weight:400;opacity:.75;letter-spacing:.03em;line-height:1;}
+ (max-width:600px){.archive-btn{width:100%;justify-content:center;}}
+</style>
   <!-- Analytics scripts can be inserted here if needed -->
 </head>
 <body>
@@ -324,6 +331,13 @@
       <div class="page-hero">
         <p class="page-eyebrow">Selected Work</p>
         <h1 class="page-title">Projects &amp; Works</h1>
+        <a href="archive.html" class="archive-btn" id="archive-link" aria-label="View Archive">
+          <i class="fas fa-box-archive"></i>
+          <span class="archive-btn-text">
+            <span class="archive-btn-label">View Archive</span>
+            <span class="archive-btn-hint">older work</span>
+          </span>
+        </a>
       </div>
 
       <div class="topbar">
@@ -349,7 +363,6 @@
         <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-meta"></div><div class="skeleton skeleton-tag"></div></div>
       </div>
       <div class="end-marker">- End of selected works -</div>
-<a href="archive.html" class="archive-link" id="archive-link" style="display:none;"><span>Looking for older work?</span><strong>View the Archive →</strong></a>
     </div>
   </div>
 
