@@ -42,7 +42,9 @@
     "coverIndex": 0,
     "aiPercent": 0,
     "projectOrder": 6,
-    "recentOrder": 0
+    "recentOrder": 0,
+    "archiveOrder": 0,
+    "isArchived": false
   },
   {
     "id": "proj_1782148368605",
@@ -97,14 +99,16 @@
     "isFeatured": false,
     "coverIndex": 1,
     "aiPercent": 0,
-    "projectOrder": 3,
+    "projectOrder": 2,
     "recentOrder": 0,
     "isHidden": false,
     "seoTitle": "",
     "seoDescription": "",
     "seoImage": "",
     "projectType": "",
-    "clientTestimonial": ""
+    "clientTestimonial": "",
+    "archiveOrder": 1,
+    "isArchived": false
   },
   {
     "id": "proj_1782055251567",
@@ -192,14 +196,16 @@
     "isFeatured": false,
     "coverIndex": 0,
     "aiPercent": 0,
-    "projectOrder": 5,
+    "projectOrder": 4,
     "recentOrder": 0,
     "isHidden": false,
     "seoTitle": "",
     "seoDescription": "",
     "seoImage": "",
     "projectType": "",
-    "clientTestimonial": ""
+    "clientTestimonial": "",
+    "archiveOrder": 2,
+    "isArchived": false
   },
   {
     "id": "proj_1781345437740",
@@ -316,7 +322,9 @@
     "seoDescription": "",
     "seoImage": "",
     "projectType": "",
-    "clientTestimonial": ""
+    "clientTestimonial": "",
+    "archiveOrder": 3,
+    "isArchived": false
   },
   {
     "id": "proj_1781319653778",
@@ -398,7 +406,9 @@
     "seoDescription": "",
     "seoImage": "",
     "projectType": "",
-    "clientTestimonial": ""
+    "clientTestimonial": "",
+    "archiveOrder": 0,
+    "isArchived": true
   },
   {
     "id": "proj_1781062806683",
@@ -521,7 +531,9 @@
     "seoDescription": "",
     "seoImage": "",
     "projectType": "",
-    "clientTestimonial": ""
+    "clientTestimonial": "",
+    "archiveOrder": 5,
+    "isArchived": false
   },
   {
     "id": "proj_1780264723478",
@@ -658,13 +670,15 @@
     "coverIndex": 0,
     "aiPercent": 0,
     "collaborators": [],
-    "projectOrder": 4,
+    "projectOrder": 3,
     "recentOrder": 0,
     "isHidden": false,
     "seoTitle": "",
     "seoDescription": "",
     "seoImage": "",
     "projectType": "",
-    "clientTestimonial": ""
+    "clientTestimonial": "",
+    "archiveOrder": 6,
+    "isArchived": false
   }
 ]
