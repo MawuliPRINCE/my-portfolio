@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Archive — Ismael Asumanu Prince</title>
+<meta name="description" content="Archive of past work by Ismael Asumanu Prince — Graphic Designer and Brand Identity Designer based in Ghana.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text y='.9em' font-size='80' font-family='serif' fill='%23ff4500'>P</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --bg:#f6f1e8;--bg-2:#f9f5ee;--surface:#f2f0ec;--text:#111;--muted:#8a8378;
+  --border:#e0d8c9;--accent:#ff4500;--accent-light:rgba(255,69,0,0.08);
+  --card-bg:#fbf8f2;--modal-bg:#f6f1e8;
+}
+body.dark{
+  --bg:#0d0d0d;--bg-2:#131313;--surface:#161616;--text:#f0ede8;--muted:#6b6357;
+  --border:#2a2a2a;--card-bg:#131313;--modal-bg:#0d0d0d;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
+img,video{max-width:100%;display:block;}
+
+/* Header */
+.site-header{position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:clamp(14px,2.5vw,20px) clamp(20px,4vw,40px);background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.logo{color:var(--accent);font-size:clamp(17px,2vw,22px);font-weight:700;text-decoration:none;}
+.header-right{display:flex;align-items:center;gap:6px;}
+.icon-btn{width:38px;height:38px;border-radius:50%;border:none;background:none;color:var(--text);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s;}
+.icon-btn:hover{color:var(--accent);background:var(--accent-light);}
+.lang-select{appearance:none;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:.72rem;font-weight:500;letter-spacing:.08em;padding:6px 28px 6px 10px;border-radius:20px;cursor:pointer;}
+.hamburger .fa-bars{display:block;}
+.hamburger .fa-times{display:none;}
+.hamburger.open .fa-bars{display:none;}
+.hamburger.open .fa-times{display:block;}
+.menu-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);z-index:98;opacity:0;pointer-events:none;transition:opacity .3s;}
+.menu-backdrop.open{opacity:1;pointer-events:all;}
+.menu{position:fixed;top:0;right:-100%;width:min(300px,85vw);height:100vh;background:var(--bg);display:flex;flex-direction:column;justify-content:center;align-items:center;transition:right .35s;z-index:99;}
+.menu.open{right:0;}
+.menu ul{list-style:none;text-align:center;width:100%;padding:0 2rem;}
+.menu li{margin:4px 0;}
+.menu a{color:var(--text);text-decoration:none;font-size:clamp(17px,3.5vw,21px);font-weight:500;display:block;padding:13px 20px;border-radius:8px;}
+.menu a:hover,.menu a.active{color:var(--accent);background:var(--accent-light);}
+.menu-divider{width:36px;height:2px;background:var(--accent);margin-bottom:2rem;}
+.menu-footer{position:absolute;bottom:2rem;font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+
+/* Hero */
+.archive-hero{padding:clamp(80px,12vw,140px) clamp(20px,5vw,80px) clamp(40px,6vw,70px);position:relative;overflow:hidden;border-bottom:1px solid var(--border);text-align:left;}
+.archive-hero::before{content:'ARCHIVE';position:absolute;right:-10px;top:50%;transform:translateY(-50%);font-family:'Cormorant Garamond',serif;font-size:clamp(80px,15vw,200px);font-weight:600;color:var(--border);letter-spacing:-.04em;pointer-events:none;user-select:none;line-height:1;opacity:.55;}
+.archive-eyebrow{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:.75rem;position:relative;z-index:1;}
+.archive-eyebrow::after{content:'';width:44px;height:1px;background:var(--accent);}
+.archive-title{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,7vw,88px);font-weight:600;line-height:1;letter-spacing:-.02em;margin-bottom:1.25rem;position:relative;z-index:1;}
+.archive-title em{font-style:italic;color:var(--accent);}
+.archive-sub{font-size:clamp(14px,1.5vw,17px);color:var(--muted);max-width:560px;line-height:1.7;font-weight:300;position:relative;z-index:1;}
+.archive-back{margin-top:1.75rem;position:relative;z-index:1;display:inline-flex;align-items:center;gap:.5rem;font-size:.62rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:.55rem 1.1rem;border-radius:20px;transition:all .2s;}
+.archive-back:hover{color:var(--accent);border-color:var(--accent);}
+
+/* Year sections */
+.archive-body{max-width:1200px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(20px,5vw,60px) clamp(80px,10vw,120px);}
+.year-section{margin-bottom:clamp(60px,8vw,100px);}
+.year-section:last-child{margin-bottom:0;}
+.year-heading{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,48px);font-weight:600;letter-spacing:-.01em;color:var(--muted);margin-bottom:2rem;display:flex;align-items:center;gap:1.25rem;}
+.year-heading::after{content:'';flex:1;height:1px;background:var(--border);}
+.year-heading em{font-style:normal;color:var(--text);}
+.year-count{font-family:'Space Grotesk',sans-serif;font-size:.68rem;color:var(--muted);font-weight:500;letter-spacing:.15em;text-transform:uppercase;}
+
+.year-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:clamp(20px,3vw,32px);}
+
+.card{background:var(--card-bg);border:1px solid var(--border);border-radius:2px;overflow:hidden;cursor:pointer;transition:border-color .25s,transform .25s;position:relative;}
+.card:hover{border-color:var(--muted);transform:translateY(-2px);}
+.card-cover{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:var(--surface);}
+.card-cover-none{width:100%;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.7rem;background:var(--surface);letter-spacing:.1em;text-transform:uppercase;}
+.card-body{padding:1.25rem 1.4rem 1.4rem;}
+.card-meta{display:flex;align-items:center;gap:.6rem;margin-bottom:.65rem;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);flex-wrap:wrap;}
+.card-year{font-weight:600;}
+.card-tag{color:var(--accent);background:var(--accent-light);padding:2px 8px;border-radius:2px;font-weight:500;}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2.4vw,26px);font-weight:600;line-height:1.15;color:var(--text);margin-bottom:.4rem;}
+.card-subtitle{font-size:.82rem;color:var(--muted);font-weight:300;line-height:1.5;}
+.card-arrow{position:absolute;top:1rem;right:1rem;width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.7rem;opacity:0;transition:opacity .2s,color .2s,background .2s,border-color .2s;}
+.card:hover .card-arrow{opacity:1;background:var(--accent);border-color:var(--accent);color:#fff;}
+
+/* Empty state */
+.empty-state{text-align:center;padding:clamp(60px,10vw,120px) 20px;}
+.empty-state h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,42px);font-weight:600;color:var(--text);margin-bottom:1rem;}
+.empty-state p{color:var(--muted);font-size:.9rem;line-height:1.7;max-width:460px;margin:0 auto 1.75rem;}
+.empty-state a{display:inline-flex;align-items:center;gap:.5rem;font-size:.68rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:#fff;background:var(--accent);text-decoration:none;padding:.75rem 1.5rem;border-radius:30px;transition:background .2s;}
+.empty-state a:hover{background:#e03a00;}
+
+/* Loading skeleton */
+.skeleton-wrap{max-width:1200px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(20px,5vw,60px);}
+.skeleton-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;margin-bottom:60px;}
+.skeleton{background:linear-gradient(90deg,var(--surface) 25%,var(--border) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:2px;}
+.skeleton-cover{aspect-ratio:16/10;}
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+
+/* Footer */
+.archive-footer{border-top:1px solid var(--border);padding:clamp(40px,6vw,60px) clamp(20px,5vw,80px);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.archive-footer a{color:var(--accent);text-decoration:none;}
+.archive-footer a:hover{text-decoration:underline;}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;z-index:200;background:var(--modal-bg);overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .3s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-topbar{position:sticky;top:0;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:.85rem 1.5rem;display:flex;align-items:center;justify-content:space-between;z-index:10;}
+.modal-back{font-size:.6rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);background:none;border:1px solid var(--border);padding:.4rem .9rem;border-radius:20px;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;}
+.modal-back:hover{color:var(--accent);border-color:var(--accent);}
+.modal-body{max-width:900px;margin:0 auto;padding:clamp(32px,5vw,56px) clamp(20px,4vw,40px) 5rem;}
+.modal-accent{width:44px;height:2px;background:var(--accent);margin-bottom:1.5rem;}
+.modal-hero{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,72px);font-weight:600;line-height:.98;letter-spacing:-.02em;margin-bottom:.5rem;}
+.modal-sub{font-size:1rem;color:var(--muted);margin-bottom:1.25rem;font-weight:300;}
+.modal-meta{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:1.75rem;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
+.modal-meta .modal-tag{color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:2px;font-weight:500;}
+.modal-desc{font-size:.95rem;line-height:1.85;font-weight:300;color:var(--text);margin-bottom:2rem;}
+.modal-desc h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;margin:1.5rem 0 .75rem;}
+.modal-desc p{margin-bottom:1rem;}
+.modal-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.9rem;margin-top:1rem;}
+.modal-gallery .g-item{border:1px solid var(--border);overflow:hidden;background:var(--surface);}
+.modal-gallery img,.modal-gallery video{width:100%;height:auto;display:block;}
+
+@media (max-width:768px){
+  .archive-hero::before{opacity:.35;}
+  .year-grid{grid-template-columns:1fr;}
+  .archive-footer{flex-direction:column;align-items:flex-start;}
+  .card-arrow{display:none;}
+}
+@media (max-width:480px){
+  .modal-hero{font-size:2rem;}
+  .year-heading{font-size:1.6rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
+
+<header class="site-header">
+  <a href="index.html" class="logo">Prince</a>
+  <div class="header-right">
+    <select class="lang-select" id="lang-select" onchange="switchLang(this.value)" aria-label="Language">
+      <option value="en">EN</option><option value="fr">FR</option><option value="es">ES</option><option value="de">DE</option>
+    </select>
+    <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle theme"><i class="fas fa-lightbulb"></i></button>
+    <button class="icon-btn hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <i class="fas fa-bars"></i><i class="fas fa-times"></i>
+    </button>
+  </div>
+</header>
+
+<nav class="menu" id="menu">
+  <div class="menu-divider"></div>
+  <ul>
+    <li><a href="index.html" onclick="closeMenu()">Home</a></li>
+    <li><a href="about.html" onclick="closeMenu()">About</a></li>
+    <li><a href="projects.html" onclick="closeMenu()">Projects</a></li>
+    <li><a href="archive.html" class="active" onclick="closeMenu()">Archive</a></li>
+    <li><a href="booking.html" onclick="closeMenu()">Book Me</a></li>
+  </ul>
+  <p class="menu-footer">© <span id="menu-year"></span> Prince</p>
+</nav>
+
+<section class="archive-hero">
+  <p class="archive-eyebrow">Older Work</p>
+  <h1 class="archive-title">The <em>Archive</em></h1>
+  <p class="archive-sub">A quiet collection of past projects — everything I've made, kept for the record. Browse by year, or head back to the current work.</p>
+  <a href="projects.html" class="archive-back"><i class="fas fa-arrow-left"></i> Back to current work</a>
+</section>
+
+<div class="archive-body" id="archive-body">
+  <div class="skeleton-wrap">
+    <div class="skeleton-row">
+      <div class="skeleton skeleton-cover"></div>
+      <div class="skeleton skeleton-cover"></div>
+      <div class="skeleton skeleton-cover"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="archive-footer">
+  <span>© <span id="footer-year"></span> Ismael Asumanu Prince</span>
+  <span><a href="projects.html">Current Work →</a></span>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-topbar">
+    <button class="modal-back" onclick="closeModal()"><i class="fas fa-arrow-left"></i> Back to Archive</button>
+    <button class="icon-btn" onclick="closeModal()" aria-label="Close"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="modal-body" id="modal-body"></div>
+</div>
+
+<script>
+document.getElementById('menu-year').textContent = new Date().getFullYear();
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+const USER='MawuliPRINCE';
+const REPO='my-portfolio';
+const JSON_URL=`https://raw.githubusercontent.com/${USER}/${REPO}/main/projects.json`;
+
+let allProjects=[];
+
+// ===== THEME =====
+function toggleTheme(){
+  const dark=document.body.classList.contains('dark');
+  document.body.className=dark?'light':'dark';
+  localStorage.setItem('theme',dark?'light':'dark');
+}
+(function(){
+  const saved=localStorage.getItem('theme');
+  if(saved==='dark')document.body.classList.add('dark');
+  else if(saved==='light')document.body.classList.remove('dark');
+  else if(window.matchMedia('(prefers-color-scheme: dark)').matches)document.body.classList.add('dark');
+})();
+
+// ===== MENU =====
+const menuEl=document.getElementById('menu'),backdrop=document.getElementById('menu-backdrop'),hamBtn=document.getElementById('hamburger');
+function openMenu(){menuEl.classList.add('open');backdrop.classList.add('open');hamBtn.classList.add('open');document.body.style.overflow='hidden';}
+function closeMenu(){menuEl.classList.remove('open');backdrop.classList.remove('open');hamBtn.classList.remove('open');document.body.style.overflow='';}
+function toggleMenu(){menuEl.classList.contains('open')?closeMenu():openMenu();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenu();closeModal();}});
+
+// ===== HELPERS =====
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function isVideoUrl(url){return /\.(mp4|webm|mov|ogg)(\?|$)/i.test(url)||url.includes('/video/upload/');}
+function clOpt(url){
+  if(!url)return url;
+  if(url.includes('res.cloudinary.com')&&url.includes('/upload/')&&!url.includes('q_auto')){
+    return url.replace('/upload/','/upload/q_auto,f_auto,w_auto/');
+  }
+  return url;
+}
+function getCover(p){return p.media?.[p.coverIndex??0]?.url||p.media?.[0]?.url||null;}
+
+// ===== LOAD & RENDER =====
+window.addEventListener('DOMContentLoaded',async()=>{
+  try{
+    const res=await fetch(JSON_URL+'?t='+Date.now());
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    allProjects=await res.json();
+    if(!Array.isArray(allProjects))throw new Error('Invalid data');
+    renderArchive();
+  }catch(e){
+    console.error('Failed to load archive:',e);
+    document.getElementById('archive-body').innerHTML=`
+      <div class="empty-state">
+        <h2>Archive unavailable</h2>
+        <p>We couldn't load the archive right now. Please try again in a moment.</p>
+        <a href="projects.html">← Back to current work</a>
+      </div>`;
+  }
+});
+
+function renderArchive(){
+  const archived=allProjects.filter(p=>!p.isHidden&&p.isArchived);
+  const body=document.getElementById('archive-body');
+
+  if(!archived.length){
+    body.innerHTML=`
+      <div class="empty-state">
+        <h2>Nothing here yet</h2>
+        <p>The archive is empty right now. All my current work is on the main projects page.</p>
+        <a href="projects.html"><i class="fas fa-arrow-right"></i> View current work</a>
+      </div>`;
+    return;
+  }
+
+  // Group by year
+  const byYear={};
+  archived.forEach(p=>{
+    const y=String(p.year||'Undated').trim()||'Undated';
+    if(!byYear[y])byYear[y]=[];
+    byYear[y].push(p);
+  });
+
+  // Sort years descending, "Undated" last
+  const years=Object.keys(byYear).sort((a,b)=>{
+    if(a==='Undated')return 1;
+    if(b==='Undated')return -1;
+    return b.localeCompare(a);
+  });
+
+  // Sort within each year by archiveOrder
+  years.forEach(y=>{
+    byYear[y].sort((a,b)=>(a.archiveOrder??0)-(b.archiveOrder??0));
+  });
+
+  body.innerHTML=years.map(year=>{
+    const projects=byYear[year];
+    return `
+      <section class="year-section">
+        <h2 class="year-heading"><em>${esc(year)}</em> <span class="year-count">${projects.length} ${projects.length===1?'project':'projects'}</span></h2>
+        <div class="year-grid">
+          ${projects.map(p=>renderCard(p)).join('')}
+        </div>
+      </section>`;
+  }).join('');
+}
+
+function renderCard(p){
+  const cover=getCover(p);
+  const isVid=cover&&isVideoUrl(cover);
+  let coverHTML='';
+  if(cover){
+    if(isVid){
+      coverHTML=`<video class="card-cover" src="${esc(cover)}" muted loop autoplay playsinline disablepictureinpicture></video>`;
+    }else{
+      coverHTML=`<img class="card-cover" src="${clOpt(cover)}" alt="${esc(p.title||'')}" loading="lazy">`;
+    }
+  }else{
+    coverHTML=`<div class="card-cover-none">No image</div>`;
+  }
+  const firstTag=p.tags?.[0]||'';
+  return `
+    <article class="card" onclick="openModal('${esc(p.id)}')">
+      ${coverHTML}
+      <div class="card-arrow"><i class="fas fa-arrow-up-right"></i></div>
+      <div class="card-body">
+        <div class="card-meta">
+          ${p.year?`<span class="card-year">${esc(p.year)}</span>`:''}
+          ${firstTag?`<span class="card-tag">${esc(firstTag)}</span>`:''}
+        </div>
+        <h3 class="card-title">${esc(p.title||'Untitled')}</h3>
+        ${p.subtitle?`<p class="card-subtitle">${esc(p.subtitle)}</p>`:''}
+      </div>
+    </article>`;
+}
+
+// ===== MODAL =====
+function openModal(id){
+  const p=allProjects.find(x=>x.id===id);
+  if(!p)return;
+  const media=(p.media||[]).filter(m=>m.url);
+  const desc=(p.description||'').replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,'');
+  document.getElementById('modal-body').innerHTML=`
+    <div class="modal-accent"></div>
+    <h1 class="modal-hero">${esc(p.title||'Untitled')}</h1>
+    ${p.subtitle?`<p class="modal-sub">${esc(p.subtitle)}</p>`:''}
+    <div class="modal-meta">
+      ${p.year?`<span>${esc(p.year)}</span>`:''}
+      ${(p.tags||[]).map(t=>`<span class="modal-tag">${esc(t)}</span>`).join('')}
+    </div>
+    ${p.clientTestimonial?`<div class="modal-desc" style="font-style:italic;border-left:2px solid var(--accent);padding-left:1rem;">“${esc(p.clientTestimonial)}”</div>`:''}
+    <div class="modal-desc">${desc||'<p>No description provided.</p>'}</div>
+    ${media.length?`
+      <p style="font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:.85rem;">Gallery</p>
+      <div class="modal-gallery">
+        ${media.map(m=>{
+          const isVid=m.type==='video'||isVideoUrl(m.url);
+          return `<div class="g-item">${isVid
+            ? `<video src="${esc(m.url)}" muted loop playsinline autoplay></video>`
+            : `<img src="${clOpt(m.url)}" alt="" loading="lazy">`}</div>`;
+        }).join('')}
+      </div>`:''}
+  `;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// ===== LANG (stub — kept simple) =====
+function switchLang(lang){
+  localStorage.setItem('lang',lang);
+  document.documentElement.lang=lang;
+}
+</script>
+</body>
+</html>

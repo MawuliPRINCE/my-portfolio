@@ -349,6 +349,7 @@
         <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-meta"></div><div class="skeleton skeleton-tag"></div></div>
       </div>
       <div class="end-marker">- End of selected works -</div>
+<a href="archive.html" class="archive-link" id="archive-link" style="display:none;"><span>Looking for older work?</span><strong>View the Archive →</strong></a>
     </div>
   </div>
 
@@ -414,7 +415,9 @@
       try {
         const res = await fetch(JSON_URL + '?t=' + Date.now());
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        allProjects = (await res.json()).filter(p => !p.isHidden);
+        const raw = (await res.json()).filter(p => !p.isHidden);
+        allProjects = raw.filter(p => !p.isArchived);
+        const archivedCount = raw.filter(p => p.isArchived).length;
         if (!Array.isArray(allProjects)) throw new Error('Invalid data');
         recents = allProjects.flatMap(p => (p.media||[]).filter(m => m.showInRecents).map(m => ({...m, parentProject: p})));
         projectsOnly = allProjects.filter(p => !p.isRecent);
@@ -432,6 +435,7 @@
         renderFilters();
         renderProjects();
         renderRecents();
+        if(typeof archivedCount !== "undefined" && archivedCount > 0){ const link=document.getElementById("archive-link"); if(link) link.style.display = "flex"; }
       } catch (e) {
         console.error('Failed to load projects:', e);
         document.getElementById('projects-wrap').innerHTML = `<div class="state-box"><h3>Could not load</h3><p>Check projects.json at ${JSON_URL}</p></div>`;
