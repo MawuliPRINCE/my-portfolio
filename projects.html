@@ -503,7 +503,7 @@
             coverHTML = `<div style="position:relative;">
               <video class="card-cover-video" src="${esc(cover)}" muted loop autoplay playsinline disablepictureinpicture
                 onerror="this.parentElement.innerHTML='<div class=\\'card-cover-none\\'>Video failed</div>'"></video>
-              <button class="unmute-btn" style="position:absolute; top:8px; right:8px; z-index:10; background:rgba(0,0,0,0.6); border:none; width:32px; height:32px; border-radius:50%; color:#fff; cursor:pointer;"
+              <button class="unmute-btn" style="position:absolute; top:8px; right:8px; z-index:10; background:rgba(0,0,0,0.6); border:none; width:44px; height:44px; font-size:1rem; display:flex; align-items:center; justify-content:center; border-radius:50%; color:#fff; cursor:pointer;transition:background .2s;"
                 onclick="event.stopPropagation(); toggleCardVideoSound(this)" aria-label="Toggle video sound">
                 <i class="fas fa-volume-mute"></i>
               </button>
@@ -622,6 +622,10 @@
       resetProgress();
     }
 
+    
+    function pauseAllSlideVideos(){
+      document.querySelectorAll(".slide video").forEach(v => { try { v.pause(); } catch(e){} });
+    }
     function goSlide(i) {
       const slides = document.querySelectorAll('.slide');
       const dots = document.querySelectorAll('.dot');
@@ -631,8 +635,9 @@
         if (prevVid) { prevVid.muted = true; const btn = slides[currentSlide].querySelector('.unmute-btn i'); if (btn) btn.className = 'fas fa-volume-mute'; }
       }
       if (dots[currentSlide]) dots[currentSlide].classList.remove('active');
+      pauseAllSlideVideos();
       currentSlide = ((i % recents.length) + recents.length) % recents.length;
-      if (slides[currentSlide]) slides[currentSlide].classList.add('active');
+      if (slides[currentSlide]) slides[currentSlide].classList.add("active");
       if (dots[currentSlide]) dots[currentSlide].classList.add('active');
       resetProgress();
     }
@@ -839,12 +844,26 @@
       if (Math.abs(dx) > 50) lightboxNavigate(dx > 0 ? 1 : -1);
     }, {passive: true});
 
+    // ===== Slideshow mute (added) =====
+    function toggleSlideMute(e, btn){
+      if(e){ e.stopPropagation(); e.preventDefault(); }
+      const slide = btn.closest(".slide");
+      if(!slide) return;
+      const video = slide.querySelector("video");
+      if(!video) return;
+      video.muted = !video.muted;
+      if(!video.muted){ video.play().catch(()=>{}); }
+      const icon = btn.querySelector("i");
+      if(icon) icon.className = video.muted ? "fas fa-volume-mute" : "fas fa-volume-up";
+    }
+
     function toggleCardVideoSound(btn) {
-      const video = btn.parentElement.querySelector('video');
+      const video = btn.parentElement.querySelector("video");
       if (!video) return;
       video.muted = !video.muted;
-      const icon = btn.querySelector('i');
-      if (icon) icon.className = video.muted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+      if (!video.muted) { video.play().catch(()=>{}); }
+      const icon = btn.querySelector("i");
+      if (icon) icon.className = video.muted ? "fas fa-volume-mute" : "fas fa-volume-up";
     }
 
     function toggleShareMenu(e) {
