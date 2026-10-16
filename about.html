@@ -1015,5 +1015,25 @@
       if(d.contactDesc)document.querySelector('[data-i18n="footer-desc"]').textContent=d.contactDesc;
     }).catch(()=>{});
 </script>
+<!-- Core Web Vitals → GA4 -->
+<script src="https://cdn.jsdelivr.net/npm/web-vitals@4/dist/web-vitals.iife.js" defer></script>
+<script>
+  window.addEventListener('load', function(){
+    if(!window.webVitals) return;
+    function send(name, value){
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'web_vitals',
+        metric_name: name,
+        metric_value: Math.round(name === 'CLS' ? value * 1000 : value)
+      });
+    }
+    window.webVitals.onLCP(function(m){ send('LCP', m.value); });
+    window.webVitals.onCLS(function(m){ send('CLS', m.value); });
+    window.webVitals.onINP(function(m){ send('INP', m.value); });
+    window.webVitals.onTTFB(function(m){ send('TTFB', m.value); });
+    window.webVitals.onFCP(function(m){ send('FCP', m.value); });
+  });
+</script>
 </body>
 </html>
