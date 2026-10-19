@@ -10,11 +10,6 @@
     "previewUrl": "",
     "media": [
       {
-        "url": "https://res.cloudinary.com/dtjahgffs/video/upload/v1791956543/ewi5b17svkq0kencs6uy.mp4",
-        "type": "video",
-        "showInRecents": true
-      },
-      {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1791956399/zqmndedh2slvhceu8gfk.jpg",
         "type": "image",
         "showInRecents": true
@@ -28,6 +23,11 @@
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1791956397/hxli4bbhmdc0xduho7no.jpg",
         "type": "image",
         "showInRecents": true
+      },
+      {
+        "url": "https://res.cloudinary.com/dtjahgffs/video/upload/vc_auto/v1792407618/iinzdwj8mvkjlhrdlo0k.mp4",
+        "type": "video",
+        "showInRecents": true
       }
     ],
     "collaborators": [],
@@ -39,7 +39,7 @@
     "seoImage": "",
     "projectType": "",
     "clientTestimonial": "",
-    "coverIndex": 0,
+    "coverIndex": 3,
     "aiPercent": 0,
     "projectOrder": 6,
     "recentOrder": 0,
