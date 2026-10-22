@@ -552,6 +552,11 @@
     "previewUrl": "",
     "media": [
       {
+        "url": "https://res.cloudinary.com/dtjahgffs/video/upload/v1782061341/odx2mmyxdcjlmplnvy8g.mp4",
+        "type": "video",
+        "showInRecents": false
+      },
+      {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780264778/qddliuno89dzohhwouyn.png",
         "type": "image"
       },
@@ -658,11 +663,6 @@
       {
         "url": "https://res.cloudinary.com/dtjahgffs/image/upload/v1780265379/s1sdzbyqhcpzpuyisd92.png",
         "type": "image"
-      },
-      {
-        "url": "https://res.cloudinary.com/dtjahgffs/video/upload/v1782061341/odx2mmyxdcjlmplnvy8g.mp4",
-        "type": "video",
-        "showInRecents": false
       }
     ],
     "isRecent": false,
